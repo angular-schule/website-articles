@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>{% if page.title %}{{ page.title }}{% endif %}</title>
+    <title>{% if page.title %} {{ page.title }} | {% endif %} {{ site.name }}</title>
 		<link rel="stylesheet" href="{{site.baseurl}}/github-markdown.css" />
     <style>
 
