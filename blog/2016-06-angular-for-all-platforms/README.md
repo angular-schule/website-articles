@@ -1,11 +1,22 @@
-# Mobile Apps mit Angular 2 entwickeln
+title: Mobile Apps mit Angular entwickeln
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
+published: 2016-06-15
+last-change: 2016-08-25
+keywords:
+  - Angular
+  - NativeScript
+language: de
+---
+
+# Mobile Apps mit Angular entwickeln
 
 In den letzten Jahre haben mehr als eine Million Entwickler erfolgreich mit AngularJS Single-Page-Anwendungen erstellt. Angular ist damit das populärste Framework um client-seitige Webanwendungen zu entwickeln (siehe z.B.  [Stack Overflow](http://stackoverflow.com/research/developer-survey-2016#most-popular-technologies-per-occupation)). Allerdings blieb das Framework dabei bislang immer auf das Web beschränkt. Das bedeutet, dass man bis dato völlig andere Tools, Programmiersprachen und Frameworks benötigte, um Anwendungen für den Desktop oder für mobile Geräte an den Start zu bringen.
 
 
 ## Plattformunabhängige Architektur
 
-Hier wird Angular 2 interessant. Der komplette Rewrite von AngularJS 1 wurde stark auf Plattformunabhängigkeit ausgerichtet. Das bedeutet, dass das Framework so entworfen wurde, dass diverse Plattformen angesprochen werden können (sei es Web, Mobil, Desktop und sogar [IoT-Geräte](https://medium.com/@urish/building-simon-with-angular2-iot-fceb78bb18e5)).
+Hier wird Angular interessant. Der komplette Rewrite von AngularJS 1 wurde stark auf Plattformunabhängigkeit ausgerichtet. Das bedeutet, dass das Framework so entworfen wurde, dass diverse Plattformen angesprochen werden können (sei es Web, Mobil, Desktop und sogar [IoT-Geräte](https://medium.com/@urish/building-simon-with-angular2-iot-fceb78bb18e5)).
 Vereinfacht ausgedrückt ist die Angular-2-Architektur in zwei Teile aufgeteilt:
 
 - __Plattform-unabhängiger Teil__: hier wir das Markup (HTML) durch einen DOM-Adapter geparst und in so genannte „Proto Views“ compiliert. Dieser Prozess ist nicht spezifisch für eine Zielplattform und die meisten Funktionen können in den verschiedenen Plattformen genutzt werden
@@ -23,7 +34,7 @@ Durch diese durchdachte Architektur ist es möglich, neue Ziele zu definieren. E
 
 Auf Grundlage der plattformunabhängigen Architektur von Angular kann [NativeScript](https://www.nativescript.org/) seine Stärken zeigen. NativeScript ist ein Open-Source-Framework, mit dem man native Apps für iOS, Android und [bald](https://www.nativescript.org/blog/details/nativescript-runtime-preview-for-windows-10) auch Windows 10 bzw. Windows Phone 10 entwickeln kann. „Nativ“ bedeutet, dass tatsächlich echte native UI-Elemente aus der JavaScript-Umgebung heraus angesprochen werden können. Seit Mitte 2015 arbeiten das Angular-Team und das NativeScript-Team zusammen, um beide Frameworks miteinander zu verbinden. Das Ergebnis dieser Zusammenarbeit ist NativeScript 2.0 ([News](http://sdtimes.com/nativescript-2-0-brings-mobile-strategy-options-angularjs-developers/)).
 
-Die Lösung für Angular 2 besteht darin, dass sehr spezielles Markup in HTML definiert wird. Diese Markup kann dann vom DOM-Adapter „Parse5“ geparst werden. Den größten Anteil an der Umsetzung nimmt der „NativeScript Renderer“ ein. Dieser garantiert nicht zuletzt den Austausch zwischen „Proto Views“ und  den nativen UI Komponenten der jeweiligen Platform:
+Die Lösung für Angular besteht darin, dass sehr spezielles Markup in HTML definiert wird. Diese Markup kann dann vom DOM-Adapter „Parse5“ geparst werden. Den größten Anteil an der Umsetzung nimmt der „NativeScript Renderer“ ein. Dieser garantiert nicht zuletzt den Austausch zwischen „Proto Views“ und  den nativen UI Komponenten der jeweiligen Platform:
 
 ![Angular2 with NativeScript](./images/Angular2-with-NativeScript.png "Angular2 with NativeScript")
 
@@ -32,7 +43,7 @@ Die Lösung für Angular 2 besteht darin, dass sehr spezielles Markup in HTML de
 
 ![Login Screen](./images/nativescript-loves-angular.png)
 
-### Kurzum: es funktioniert wunderbar mit Angular 2
+### Kurzum: es funktioniert wunderbar mit Angular
 
 Wenn man erstmal die neue [Template-Syntax](https://angular.io/docs/ts/latest/guide/template-syntax.html) von Angular gelernt hat, dann kann man das bestehende Wissen auf eine NativeScript-App übertragen. Hier ist ein einfaches Beispiel, wie ein Button verarbeitet wird. Es fällt auf, dass dies Komponente kein normales HTML beinhaltet:
 
@@ -117,8 +128,8 @@ Auf der DWX-Developer Week 2016 wird es zwei Vorträge zu NativeScript geben.
 
 * [Introduction to NativeScript][1], 20.06.2016 17:00 - 18:00 Uhr, Track: Cross-Plattform  
   In diesem Talk erfahren Sie, wie NativeScript aufgebaut ist, wie es funktioniert und vor allem wie man performante mobile Apps mit dem Framework entwickeln kann.
-* [Native Mobile Apps mit NativeScript und Angular 2][2], 22.06.2016 09:00 - 10:00 Uhr, Track: Mobile Architekturen
-  In diesem schauen wir uns das Zusammenspiel zwischen NativeScript und Angular 2 genauer an. Als besonderes Schmankerl zeigen wir Ihnen, wie man auf Grundlage von Angular Code für mobile Apps und Webanwendungen wiederverwenden kann.
+* [Native Mobile Apps mit NativeScript und Angular][2], 22.06.2016 09:00 - 10:00 Uhr, Track: Mobile Architekturen
+  In diesem schauen wir uns das Zusammenspiel zwischen NativeScript und Angular genauer an. Als besonderes Schmankerl zeigen wir Ihnen, wie man auf Grundlage von Angular Code für mobile Apps und Webanwendungen wiederverwenden kann.
 
 
 Sie sollten auch den ausführlichen [Getting Started guide](http://docs.nativescript.org/angular/tutorial/ng-chapter-0) durchlesen. Hier erfahren Sie alles Notwendige, um native Apps für iOS und Android auf Basis von Angular2 und NativeScript zu entwickeln.

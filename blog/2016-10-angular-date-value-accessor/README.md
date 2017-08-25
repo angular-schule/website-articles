@@ -1,10 +1,23 @@
-# Angular 2: How to use date input controls with Angular Forms
+title: DateValueAccessor: How to use date input controls with Angular Forms
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
+published: 2016-10-12
+last-change: 2017-10-25
+keywords:
+  - Angular
+  - Forms
+  - DateValueAccessor
+  - DATE_VALUE_ACCESSOR
+language: en  
+---
+
+# Angular: How to use date input controls with Angular Forms
 
 [![Screenshot](img/screenshot.png)](http://johanneshoppe.github.io/angular-date-value-accessor/)
 
 ## The problem
 
-Working with forms is pretty easy in Angular 2.
+Working with forms is pretty easy in Angular.
 You just need to decide between Template-Driven and Reactive Forms and you are ready to start with some bindings and validation. The following code shows a two-way data binding with `ngModel` against a property of type `string`:
 
 ```
@@ -33,7 +46,7 @@ Let's review the possible solutions:
 
 It turns out, that date input control has another, not that well-known property: [`inputEl.valueAsDate`](https://www.w3.org/TR/2012/WD-html5-20121025/common-input-element-apis.html#dom-input-valueasdate)! The `inputEl.valueAsDate` attribute represents the value (still a string) of the element, interpreted as a date. This is exactly what we need. Now we only need to convince Angular to use this property, instead of `inputEl.value`. 
 
-Fortunately Angular 2 is very expansible here. FormControls (both template-driven and reactive) subscribe for values and write values via Directives that implement `ControlValueAccessor`. Take a look at the relevant method [selectValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/shared.ts#L140), which is used in all necessary directives. Normal input controls (e.g. `<input type="text">`) or textareas are handled by the [DefaultValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/default_value_accessor.ts). Another example is the [CheckboxValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/checkbox_value_accessor.ts) which is applied to checkbox input controls.
+Fortunately Angular is very expansible here. FormControls (both template-driven and reactive) subscribe for values and write values via Directives that implement `ControlValueAccessor`. Take a look at the relevant method [selectValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/shared.ts#L140), which is used in all necessary directives. Normal input controls (e.g. `<input type="text">`) or textareas are handled by the [DefaultValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/default_value_accessor.ts). Another example is the [CheckboxValueAccessor](https://github.com/angular/angular/blob/2.1.0-beta.0/modules/%40angular/forms/src/directives/checkbox_value_accessor.ts) which is applied to checkbox input controls.
 
 The job isn't complicated at all. We just need to implement a new value accessor for date input controls.  
 `DateValueAccessor` is a nice name:
