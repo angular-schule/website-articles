@@ -12,8 +12,6 @@ keywords:
 language: en  
 ---
 
-# Angular: How to use date input controls with Angular Forms
-
 [![Screenshot](img/screenshot.png)](http://johanneshoppe.github.io/angular-date-value-accessor/)
 
 ## The problem
