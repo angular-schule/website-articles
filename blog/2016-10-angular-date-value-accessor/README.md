@@ -9,10 +9,9 @@ keywords:
   - Forms
   - DateValueAccessor
   - DATE_VALUE_ACCESSOR
-language: en  
+language: en
+thumbnail: img/screenshot.png
 ---
-
-[![Screenshot](img/screenshot.png)](http://johanneshoppe.github.io/angular-date-value-accessor/)
 
 ## The problem
 
