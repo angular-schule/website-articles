@@ -1,7 +1,7 @@
 ---
 title: Unsere Termine 
-author: Johannes Hoppe
-mail: johannes.hoppe@haushoppe-its.de
+author: Angular.Schule Team
+mail: team@angular.schule
 published: 2017-09-07
 keywords:
   - Angular
