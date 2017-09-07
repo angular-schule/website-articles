@@ -20,11 +20,11 @@ In einem intensiven Workshop-Tag erfahren Sie das wichtigste, um mit Angular zu 
 Wir führen den Tagesworkshop in Zusammenarbeit mit unseren Partnern durch:
 
 
-| Event | Titel                  | Datum      | Ort      | Status                   | Rabat-Code     |
+| Event | Titel                  | Datum      | Ort      | Status                   | Rabatt-Code     |
 |---------------|------------------------|------------|----------|--------------------------|----------------|
 | ADC           | [Angular mit TypeScript](http://adc.ms/2017/agenda) | 20.09.2017 | Köln     | **noch wenige Plätze frei!** | `Angular.Schule`<br>(15% Rabatt) |
-| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-4-mit-typescript-2/) | 09.10.2017 | München  | **noch Plätze frei**!        | `Angular.Schule` |
-| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-typescript/) | 11.10.2017 | München  | AUSGEBUCHT               | `Angular.Schule` |
+| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-4-mit-typescript-2/) | 09.10.2017 | München  | **noch Plätze frei**!        | Auf Anfrage |
+| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-typescript/) | 11.10.2017 | München  | AUSGEBUCHT               | - |
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung. Der Angular-Workshop beginnt mit den Grundlagen von TypeScript 2 und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
 
