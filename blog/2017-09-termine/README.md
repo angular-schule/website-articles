@@ -41,15 +41,17 @@ Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen 
 ## Inhouse-Workshops (3 bis 5 Tage)
 
 Wir sind nur zwei Trainer und arbeiten vorwiegend im Projektgeschäft.
-So bleiben wir stetig mit den neuesten Technologien in Kontakt und kennen die Probleme im echten Entwickler-Alltag.  
-Daher gilt für uns: Klasse statt Masse.
+So sind wir stets den neuesten Technologien in Kontakt und kennen die Probleme im echten Entwickler-Alltag.  
+Daher gilt für uns:  
+**Klasse statt Masse.**  
+
 Wir führen jeweils nur einmal im Monat einen Intensiv-Workshop direkt beim Kunden vor Ort durch. 
 
 
 | Monat         | Status                                               |
 |---------------|------------------------------------------------------|
 | September     | AUSGEBUCHT                                           |
-| Oktober       | noch ein Trainer frei! - [Jetzt Anfragen](/angebot)  |
-| November      | noch zwei Trainer frei! - [Jetzt Anfragen](/angebot) |
+| Oktober       | **noch ein Trainer frei!** - [Jetzt Anfragen](/angebot)  |
+| November      | **noch zwei Trainer frei!** - [Jetzt Anfragen](/angebot) |
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst. Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt. Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projektalltag mit Angular gewappnet.
