@@ -11,6 +11,7 @@ keywords:
   - DATE_VALUE_ACCESSOR
 language: en
 thumbnail: img/screenshot.png
+darken-thumbnail: true
 ---
 
 ## The problem
