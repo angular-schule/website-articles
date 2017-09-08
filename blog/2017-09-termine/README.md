@@ -22,7 +22,7 @@ Wir führen den Tagesworkshop in Zusammenarbeit mit unseren Partnern durch:
 
 | Event | Titel                  | Datum      | Ort      | Status                   | Rabatt-Code     |
 |---------------|------------------------|------------|----------|--------------------------|----------------|
-| ADC           | [Angular mit TypeScript](http://adc.ms/2017/agenda) | 20.09.2017 | Köln     | **noch wenige Plätze frei!** | `Angular.Schule`<br><small>(15% Rabatt, inkl. signiertem Angular-Buch)</small> |
+| ADC           | [Angular mit TypeScript](hhttp://adc.ms/2017/workshops#angular) | 20.09.2017 | Köln     | **noch wenige Plätze frei!** | `Angular.Schule`<br><small>(15% Rabatt, inkl. signiertem Angular-Buch)</small> |
 | WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-4-mit-typescript-2/) | 09.10.2017 | München  | **noch Plätze frei**!        | [`angular.schule`](https://www.eventbrite.de/e/wdc-web-developer-conference-2017-zusatz-workshops-tickets-37722328500?discount=angular.schule)<br><small>(Ticket zum Frühbucherpreis, inkl. signiertem Angular-Buch) |
 | WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-typescript/) | 11.10.2017 | München  | AUSGEBUCHT               | – |
 
