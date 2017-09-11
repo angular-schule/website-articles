@@ -15,6 +15,8 @@ Wir unterscheiden zwischen offenen und geschlossenen Workshops ("Inhouse").
 
 ## Offene Workshops (1 Tag)
 
+![](tagesworkshop.jpg)
+
 Sehr beliebt ist unser Einführungsworkshop zu Angular.  
 An einem intensiven Workshop-Tag erfahren Sie das wichtigste, um mit Angular zu starten.  
 Wir führen den Tagesworkshop in Zusammenarbeit mit unseren Partnern durch:
@@ -39,6 +41,8 @@ Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen 
 
 
 ## Inhouse-Workshops (3 bis 5 Tage)
+
+![](powerworkshop.jpg)
 
 Wir sind nur zwei Trainer und arbeiten vorwiegend im Projektgeschäft.
 So sind wir stets mit den neuesten Technologien in Kontakt und kennen die Probleme im echten Entwickleralltag.  
