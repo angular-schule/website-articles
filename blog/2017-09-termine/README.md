@@ -24,8 +24,8 @@ Wir führen den Tagesworkshop in Zusammenarbeit mit unseren Partnern durch:
 
 | Event | Titel                  | Datum      | Ort      | Status                   | Rabatt-Code     |
 |---------------|------------------------|------------|----------|--------------------------|----------------|
-| ADC           | [Angular mit TypeScript](http://adc.ms/2017/workshops#Angular) | 20.09.2017 | Köln     | **noch wenige Plätze frei!** | `Angular.Schule`<br><small>(15% Rabatt, inkl. signiertem Angular-Buch)</small> |
-| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-4-mit-typescript-2/) | 09.10.2017 | München  | **noch Plätze frei**!        | [`angular.schule`](https://www.eventbrite.de/e/wdc-web-developer-conference-2017-zusatz-workshops-tickets-37722328500?discount=angular.schule)<br><small>(Ticket zum Frühbucherpreis, inkl. signiertem Angular-Buch) |
+| ADC           | [Angular mit TypeScript](http://adc.ms/2017/workshops#Angular) | 20.09.2017 | Köln     | abgeschlossen | `Angular.Schule`<br><small>(15% Rabatt, inkl. signiertem Angular-Buch)</small> |
+| WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-4-mit-typescript-2/) | 09.10.2017 | München  | **noch wenige Plätze frei**!        | [`angular.schule`](https://www.eventbrite.de/e/wdc-web-developer-conference-2017-zusatz-workshops-tickets-37722328500?discount=angular.schule)<br><small>(Ticket zum Frühbucherpreis, inkl. signiertem Angular-Buch) |
 | WDC           | [Angular mit TypeScript](http://www.web-developer-conference.de/angular-typescript/) | 11.10.2017 | München  | AUSGEBUCHT               | – |
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung. Der Angular-Workshop beginnt mit den Grundlagen von TypeScript 2 und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
@@ -54,7 +54,8 @@ Wir führen jeweils nur einmal im Monat einen Intensiv-Workshop direkt beim Kund
 | Monat         | Status                                               |
 |---------------|------------------------------------------------------|
 | September     | AUSGEBUCHT                                           |
-| Oktober       | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| November      | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot) |
+| Oktober       | AUSGEBUCHT  |
+| November      | **noch ein Trainer frei!** – [jetzt anfragen](/angebot) |
+| Dezember      | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot) |
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst. Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt. Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projektalltag mit Angular gewappnet.
