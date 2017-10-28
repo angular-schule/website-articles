@@ -8,6 +8,7 @@ keywords:
   - VSCode
 language: de
 thumbnail: angular-shield-overflow.png
+removed_for_now: [![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 ---
 
 Gut vorbereitet in den Workshop:  
@@ -26,7 +27,6 @@ Unsere Erweiterung installiert eine Reihe hilfreicher Erweiterungen:
 [![](extensions/vscode-icons.png)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) 
 [![](extensions/autoimport.png)](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport) 
 [![](extensions/language-service.png)](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template) 
-<!--[![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)--> 
 [![](extensions/path-intellisense.png)](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 
 Weiterhin werden ein paar Einstellungen angepasst:
