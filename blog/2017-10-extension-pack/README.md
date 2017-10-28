@@ -21,13 +21,13 @@ Unsere Visual Studio Code Extension richtet den Editor für Angular ein.
 
 Die Erweiterung installiert eine Reihe weiterer hilfreicher Erweiterungen:
 
-[<img src="extensions/tslint.png" width="100">](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) 
-[<img src="extensions/EditorConfig.png" width="100">](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) 
-[<img src="extensions/vscode-icons.png" width="100">](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) 
-[<img src="extensions/autoimport.png" width="100">](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport) 
-[<img src="extensions/language-service.png" width="100">](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template) 
-[<img src="extensions/vscode-chrome-debug.png" width="100">](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 
-[<img src="extensions/path-intellisense.png" width="100">](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
+[![](extensions/tslint.png)](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) 
+[![](extensions/EditorConfig.png)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) 
+[![](extensions/vscode-icons.png)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) 
+[![](extensions/autoimport.png)](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport) 
+[![](extensions/language-service.png)](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template) 
+[![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 
+[![](extensions/path-intellisense.png)](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 
 Weiterhin werden ein paar Einstellungen angepasst:
 
