@@ -19,14 +19,14 @@ Unsere Visual Studio Code Extension richtet den Editor für Angular ein.
 
 ---
 
-Die Erweiterung installiert eine Reihe weiterer hilfreicher Erweiterungen:
+Unsere Erweiterung installiert eine Reihe hilfreicher Erweiterungen:
 
 [![](extensions/tslint.png)](https://marketplace.visualstudio.com/items?itemName=eg2.tslint) 
 [![](extensions/EditorConfig.png)](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) 
 [![](extensions/vscode-icons.png)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) 
 [![](extensions/autoimport.png)](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport) 
 [![](extensions/language-service.png)](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template) 
-[![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 
+<!--[![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)--> 
 [![](extensions/path-intellisense.png)](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 
 Weiterhin werden ein paar Einstellungen angepasst:
