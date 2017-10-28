@@ -8,7 +8,6 @@ keywords:
   - VSCode
 language: de
 thumbnail: angular-shield-overflow.png
-removed_for_now: [![](extensions/vscode-chrome-debug.png)](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
 ---
 
 Gut vorbereitet in den Workshop:  
