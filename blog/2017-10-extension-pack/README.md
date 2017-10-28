@@ -1,7 +1,7 @@
 ---
 title: "Angular.Schule: Extension Pack"
-author: Angular.Schule Team
-mail: team@angular.schule
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
 published: 2017-10-28
 keywords:
   - Angular
