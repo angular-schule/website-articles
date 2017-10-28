@@ -3,6 +3,7 @@ title: Unsere Termine bis Ende 2017
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-09-07
+last-change: 2017-10-28
 keywords:
   - Angular
 language: de

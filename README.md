@@ -5,3 +5,5 @@ Pull requests are welcome!
 
 * [blog/2016-10-angular-date-value-accessor](blog/2016-10-angular-date-value-accessor)
 * [blog/2016-06-angular-for-all-platforms](blog/2016-06-angular-for-all-platforms)
+* [blog/2017-09-termine](blog/2017-09-termine)
+* [blog/2017-10-extension-pack](blog/2017-10-extension-pack)
