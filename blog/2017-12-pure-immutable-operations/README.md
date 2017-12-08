@@ -15,26 +15,26 @@ hidden: true
 ## Without any framework
 
 Let's talk about immutability.
-If your work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) (which is on top of [`Redux`)](https://github.com/reactjs/redux) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state.
+If you work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) (which is on top of [`Redux`](https://github.com/reactjs/redux)) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state.
 
-You generally decide between two approaches:
+In general, you can decide between two different approaches:
 
-1. Use an existing framework like [Immutable.js](https://facebook.github.io/immutable-js/) or [seamless-immutable](https://github.com/rtfeldman/seamless-immutable).
-2. Use some pure JavaScript patterns to always create new objects instead of touching existing ones
+1. Use an existing framework like [Immutable.js](https://facebook.github.io/immutable-js/) or [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
+2. Use some pure JavaScript patterns that allow us to always create new objects instead of touching existing ones
   
-In the beginning an existing framework gives you guidance and it's pretty much harder to mess up the state.
-But using pure ECMAScript functions can be fun, too.
+In the beginning, an existing framework gives you guidance makes it pretty much harder to mess up the state.
+However, using pure ECMAScript functions can be fun, too!
 There is no extra layer of abstraction and soon you will like those repeating patterns.
-With a bit practice your code is very easy to read and test.
+With a bit of practice your code is very easy to read and to test.
 Sounds great?
 Let's start!
 
-By the way, we will use TypeScript to have interfaces,
-a bit type checking and the nice access modifiers for the constructor later on.
+By the way, we will use TypeScript in order to have interfaces,
+a bit of type checking and those nice access modifiers for the constructor we'll be using later.
 
 ## 1. Manipulating objects with the spread operator
 
-You have a state like this:
+Imagine, you have a state like this:
 
 ```ts
 export interface State {
@@ -64,9 +64,9 @@ console.log(newState); // {prop1: "test1", prop2: "test2", prop3: "CHANGED!"}
 
 ```
 
-Which is the same as:
+This is the same as:
 
-```
+```ts
 // ...
 
 const prop1 = state.prop1;
@@ -81,7 +81,7 @@ const newState = {
 console.log(newState); // {prop1: "test1", prop2: "test2", prop3: "CHANGED!"}
 ```
 
-But we can also change one or more properties by using the spread operator (`...`):
+However, we can also change one or more properties by using the Object Spread Operator (`...`):
 
 ```ts
 const state = {
@@ -100,13 +100,13 @@ console.log(newState); // {prop1: "test1", prop2: "test2", prop3: "CHANGED!"}
 ```
 
 This is easy to understand and super clean!
-Also the code is not going to break if more poperties are added in the future.
+Also the code is not going to break when more properties are added in the future.
 
 
-# 2. Manipulating objects with `Object.assign`
+# 2. Manipulating objects with `Object.assign()`
 
 Sometimes you want to reuse a bunch of properties from various places.
-[Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) can be very usefull: 
+[Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) can be very useful here: 
 
 ```ts
 const initialState = {
@@ -137,19 +137,19 @@ console.log(newState); // {prop1: "start1", prop2: "test2", prop3: "CHANGED!"}
 ```
 
 The order of arguments is important.
-The first object is the one which properties are going to be assigned by `Object.assign`.
-That first object is mutated, that's why we have to use a new empty object here.
-All other arguments are sources to copy properties from. They are not mutated.
-If the same properties occurs multiple times, the last defined one wins.
+The first object is the one whose properties are going to be assigned by `Object.assign()`.
+That first object is being mutated, so that's why we have to use a new empty object here.
+All other arguments are sources to copy properties from. They are not being mutated.
+If the same properties occur multiple times, the last one defined wins.
 
 
 # 3. - 10. Manipulating arrays
 
-Recently I found a pretty cool snippet on [twitter](https://twitter.com/lukejacksonn/status/928244319760220160).
-It shows 8 immutable arrays operations by using ECMAScript 2015 syntax:
+Recently we found a pretty cool snippet on [Twitter](https://twitter.com/lukejacksonn/status/928244319760220160).
+It shows a collection immutable array operations using ECMAScript 2015 syntax:
 
 ```js
-// immutable-Arrys.js
+// immutable-array.js
 
 clone = x => [...x];
 push = y => x => [...x, y];
@@ -161,16 +161,16 @@ delete = i => x => [...x.slice(0, i), ...x.slice(i + 1)];
 splice = (s, c, ...y) => x => [...x.slice(0, s), ...y, ...x.slice(s + c)];
 ```
 
-All operations return a new array instead of manipulating the existing one.
-Honestly, the code is a little bit tricky to read and understand.
-I decided to refactor it a bit and to verfiy everything with unit tests. _(hint: the above code is proven to be flawless)_
+All those operations return a new array instead of manipulating the existing one – which is the core concept of immutability.
+Honestly, the code is a bit tricky to read and understand.
+I decided to refactor it a bit and to verify everything with unit tests. _(hint: the above code is proven to be flawless)_
 
 ```ts
 // immutable-array.ts
 
 /**
- * Immutable array manipulations.
- * These functions don't mutate the orginal array but return a new one.
+ * Immutable array manipulations
+ * These functions don't mutate the original array but return a new one instead
  *
  * inspired by https://twitter.com/lukejacksonn/status/928244319760220160
  */
@@ -179,45 +179,45 @@ export class ImmutableArray {
   constructor(private arr: any[]) { }
 
   /**
-   * Creates a shallow copy of the array
+   * Create a shallow copy of the array
    */
   clone = () => [...this.arr];
 
   /**
-   * Adds one element to the end of the array
+   * Add one element to the end of the array
    */
   push = newElement => [...this.arr, newElement];
 
   /**
-   * Removes the last element from the array
+   * Remove the last element from the array
    */
   pop = () => this.arr.slice(0, -1);
 
   /**
-   * Adds one elements to the front of the array
+   * Add one elements to the front of the array
    */
   unshift = (newElement) => [newElement, ...this.arr];
 
   /**
-   * Removes the first element from the array
+   * Remove the first element from the array
    */
   shift = () => this.arr.slice(1);
 
   /**
-   * Sorts the elements of an array
+   * Sort the elements of an array
    */
   sort = compareFn => this.clone().sort(compareFn);
 
   /**
-   * Removes an element by index position
+   * Remove an element by index position
    */
   delete = index => [...this.arr.slice(0, index), ...this.arr.slice(index + 1)];
 
   /**
-   * Removes existing elements and/or adds new elements
+   * Remove existing elements and/or adds new elements
    *
    * @param start Index at which to start changing the array
-   * @param deleteCount An integer indicating the number of old array elements to remove.
+   * @param deleteCount An integer indicating the number of old array elements to remove
    * @param elements The elements to add to the array, beginning at the start index.
    *                 If you don't specify any elements, splice() will only remove elements from the array.
    */
@@ -229,7 +229,7 @@ export class ImmutableArray {
 }
 ```
 
-Here is a set of tests which demonstrate the usage of each method:
+As promised, here is a set of **unit tests** that demonstrate the usage of each method:
 
 ```ts
 // immutable-array.spec.ts
@@ -288,10 +288,10 @@ describe('ImmutableArray', function() {
 });
 ```
 
-You will realize that the `sort()` method is just a little fake.
-The original `Array.sort` function will mutate the given array.
-But on the other hand nobody wants to reimplement the original implementation.
-The simplest way of getting a new sorted array is to make a shallow copy first.
+Look closely and you'll realize that the `sort()` method is just a little abstraction of the original `Array.sort()` method.
+This is because `Array.sort()` will mutate the given array, which is what we want to avoid.
+In practice, nobody wants to reimplement the original implementation.
+Thus, the simplest way of getting a new sorted array is to make a shallow copy first.
 
 <!--
 ## Demo
