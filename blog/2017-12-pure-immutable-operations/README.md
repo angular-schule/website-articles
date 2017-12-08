@@ -146,7 +146,7 @@ If the same properties occur multiple times, the last one defined wins.
 # 3. - 10. Manipulating arrays
 
 Recently we found a pretty cool snippet on [Twitter](https://twitter.com/lukejacksonn/status/928244319760220160).
-It shows a collection immutable array operations using ECMAScript 2015 syntax:
+It shows a collection of immutable array operations using ECMAScript 2015 syntax:
 
 ```js
 // immutable-array.js
