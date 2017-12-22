@@ -1,5 +1,5 @@
 ---
-title: Video: Redux mit Angular (angular-redux)
+title: "Video: Redux mit Angular (angular-redux)"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-12-21

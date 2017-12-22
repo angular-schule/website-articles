@@ -1,5 +1,5 @@
 ---
-title: Video: Angular 2 - Überblick mit Live-Coding
+title: "Video: Angular 2 - Überblick mit Live-Coding"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-11-30

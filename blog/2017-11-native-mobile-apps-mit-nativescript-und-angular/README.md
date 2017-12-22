@@ -1,5 +1,5 @@
 ---
-title: Video: Native Mobile Apps mit NativeScript und Angular
+title: "Video: Native Mobile Apps mit NativeScript und Angular"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-11-30

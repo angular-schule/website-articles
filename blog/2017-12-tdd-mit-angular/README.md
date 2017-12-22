@@ -1,5 +1,5 @@
 ---
-title: Video: Testgetriebene Entwicklung (TDD) mit Angular
+title: "Video: Testgetriebene Entwicklung (TDD) mit Angular"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-12-21
