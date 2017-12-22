@@ -1,5 +1,5 @@
 ---
-title: Redux mit Angular (angular-redux)
+title: Video: Redux mit Angular (angular-redux)
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2017-12-21
@@ -11,7 +11,7 @@ keywords:
   - immutable
   - seamless-immutable
 language: de
-thumbnail: crowd.jpg
+thumbnail: teaser.jpg
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/w6Wy3JgLt_E?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
