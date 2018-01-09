@@ -34,4 +34,4 @@ Ich möchte, dass ein Konferenz-Teilnehmer sich mit einem Bleistift bewaffnet in
 Jetzt aber los!
 Der CFP endet am 14. Januar 2018, genau zur Mitternacht.
 
-### Reicht eure Talks beim Themenbereich "Angular" hier ein: [Call for Papers DWX 2018](https://www.developer-week.de/call-for-papers/)
+### Reicht eure Talks zum Themenbereich "Angular" hier ein: [Call for Papers DWX 2018](https://www.developer-week.de/call-for-papers/)
