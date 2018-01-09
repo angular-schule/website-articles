@@ -17,7 +17,7 @@ thumbnail: teaser.jpg
 
 In diesem Vortrag dreht sich alles um qualitativ hochwertige Angular-Apps. Lernen Sie die verschiedenen Teststrategien hierfür kennen. Wir betrachten Unit-Tests und Integrationstests, aber auch E2E-Tests (Oberflächentests) für Angular. Es erwartet Sie eine kurze Einführung zu TDD und BDD. Anschließend wird Ihnen Johannes Hoppe das Tooling vorstellen, um Tests mit Karma und Protractor auszuführen. 
 
-Lernen Sie Best-Practices und Tipps für Ihre Angular-Anwendung kennen. Zum Ende des Session kennen Sie die Testbibliothek von Angular und können Begriffe wie Isolierte Unit-Tests, und Shallow Unit-Tests einordnen.
+Lernen Sie Best-Practices und Tipps für Ihre Angular-Anwendung kennen. Zum Ende des Session kennen Sie die Testbibliothek von Angular und können Begriffe wie Isolierte Unit-Tests und Shallow Unit-Tests einordnen.
 
 * Slides: [presentations.angular.schule/angular_tdd/](https://presentations.angular.schule/angular_tdd/)
 * Demo: [github.com/angular-schule/book-rating-tdd](https://github.com/angular-schule/book-rating-tdd)
