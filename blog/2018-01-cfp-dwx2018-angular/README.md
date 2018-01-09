@@ -13,7 +13,7 @@ thumbnail: dwx2018-header.jpg
 
 In meiner Rolle als [Track-Chair](https://www.developer-week.de/adboard/) für den Themenbereich __Angular__ wurde ich mehrfach gefragt, nach welchen Kriterien ich die Auswahl treffen werde.
 
-Der Track soll einen ganzheitlichen Einblick in die Welt von Angular für Einsteiger sowie fortgeschrittene Entwickler bieten. Es werden Vorträge zu Themen gesucht, welche bei der __Lösung konkreter Aufgaben__ helfen bzw. den Herausforderungen von Angular-Anwendungen begegnen. Gern gesehen ist ebenso die Vorstellung neuester __Trends und Tools__, welche einen direkten Bezug zu Angular haben. Die Themenliste mit meinen heißen Kandidaten beinhaltet unter anderem:
+Der Track soll einen ganzheitlichen Einblick in die Welt von Angular für Einsteiger sowie fortgeschrittene Entwickler bieten. Es werden Vorträge zu Themen gesucht, die bei der __Lösung konkreter Aufgaben__ helfen bzw. die den Herausforderungen von Angular-Anwendungen begegnen. Gern gesehen ist ebenso die Vorstellung neuester __Trends und Tools__, welche einen direkten Bezug zu Angular haben. Die Themenliste mit meinen heißen Kandidaten beinhaltet unter anderem:
 
 * Einführung / Grundlagen
 * PWA (Progressive Web Apps)
