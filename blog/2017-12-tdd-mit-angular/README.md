@@ -10,7 +10,7 @@ keywords:
   - protractor
   - karma
 language: de
-thumbnail: teaser.jpg
+thumbnail: teaser.png
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/KLJ5usDMv08?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
