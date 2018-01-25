@@ -20,15 +20,17 @@ Wir unterscheiden zwischen offenen und geschlossenen Schulungen ("Inhouse").
 
 ![](tagesworkshop.jpg)
 
-Sehr beliebt ist unser Power-Workshop zu Angular, welchen wir in einem Konferenzhotel ausrichten.  
-An drei intensiven Workshop-Tagen erfahren Sie alles, um mit Angular durchzustarten.
+Sehr beliebt ist unsere Intensiv-Schulung zu Angular, welchen wir in einem Konferenzhotel ausrichten.  
+An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
 
 
-| Ort           | Titel                       | Datum               | Partner              | Status                                        |
-|---------------|-----------------------------|---------------------|----------------------|-----------------------------------------------|
-| Heidelberg    | [Angular Power-Workshop](#) | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG  | offen - noch Plätze frei                      |
-| Leipzig       | [Angular Power-Workshop](#) | im Mai 2018         | wird bekannt gegeben | Warteliste, bitte [Anfrage stellen](/angebot) |
-| Heidelberg    | [Angular Power-Workshop](#) | im Juli 2018        | ARTHOTEL HEIDELBERG  | Warteliste, bitte [Anfrage stellen](/angebot) |
+| Ort           | Titel                       | Datum               | Partner              | Status                                       |
+|---------------|-----------------------------|---------------------|----------------------|----------------------------------------------|
+| Heidelberg    | [Angular Intensiv-Schulung][1] | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG  | offen - [noch Plätze frei][1]             |
+| Leipzig       | Angular Intensiv-Schulung] | im Mai 2018         | wird bekannt gegeben | Warteliste, bitte [Anfrage stellen](/angebot) |
+| Heidelberg    | Angular Intensiv-Schulung  | im Juli 2018        | ARTHOTEL HEIDELBERG  | Warteliste, bitte [Anfrage stellen](/angebot) |
+
+[1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
