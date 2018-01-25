@@ -1,5 +1,5 @@
 ---
-title: Unsere Termine im Frühjahr 2018
+title: Unsere Termine 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-01-15
@@ -26,9 +26,9 @@ An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 
 | Ort           | Titel                       | Datum               | Partner              | Status                                       |
 |---------------|-----------------------------|---------------------|----------------------|----------------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][1] | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG  | offen - [noch Plätze frei][1]             |
-| Leipzig       | Angular Intensiv-Schulung  | im Mai 2018         | wird bekannt gegeben | Warteliste, bitte [Anfrage stellen](/angebot) |
-| Heidelberg    | Angular Intensiv-Schulung  | im Juli 2018        | ARTHOTEL HEIDELBERG  | Warteliste, bitte [Anfrage stellen](/angebot) |
+| Heidelberg    | [Angular Intensiv-Schulung][1] | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG  | noch Plätze frei – [jetzt Ticket buchen!][1]             |
+| Leipzig       | Angular Intensiv-Schulung  | im Mai 2018         | wird bekannt gegeben | Warteliste – bitte [Anfrage stellen](/angebot) |
+| Heidelberg    | Angular Intensiv-Schulung  | im Juli 2018        | ARTHOTEL HEIDELBERG  | Warteliste – bitte [Anfrage stellen](/angebot) |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 
