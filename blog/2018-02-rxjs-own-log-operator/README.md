@@ -222,8 +222,8 @@ This looks much cleaner and easier to read and understand. Plus, we can clearly 
 
 ## 3) Wrap existing operator into closure
 
-All the built-in operators already return funcations that can be used in the observable pipeline.
-What we can now do is, us the existing operator "as is" and return is from our function.
+All the built-in operators already return functions that can be used in the observable pipeline.
+What we can now do is, use the existing operator "as is" and return it from our function.
 Thus, our `function log()` returns a specific variant of the original `tap()` operator.
 
 ```typescript
@@ -233,6 +233,7 @@ export function log<T>(message?: string) {
 ```
 
 We converted the complex example from above to a one-liner. Great!
+
 However, please note that we got rid of all the TypeScript types here.
 For our simple `log()` operator, that simply re-emits all the values, there is a problem:
 TypeScript can't infer the type from the source observable and automatically sets it to `{}`.
@@ -266,11 +267,11 @@ Our `log()` operator is a great means to debug reactive streams with less typing
 Just put it into your pipeline and you'll see the output in the browser console.
 
 
-## See it in action
+## Demo: See it in action
 
 You can see the `log()` operator in action in our Stackblitz example:
 
-**[👉 Example on Stackblitz](https://stackblitz.com/edit/rxjs-log-operator?file=app%2Fapp.component.ts)**
+**[👉 Demo on Stackblitz](https://stackblitz.com/edit/rxjs-log-operator?file=app%2Fapp.component.ts)**
 
 
 ## Extra: Unit tests
@@ -285,7 +286,7 @@ import { log } from './log.operator';
 
 import { cold, hot } from 'jasmine-marbles';
 
-fdescribe('log operator', () => {
+describe('log operator', () => {
   let subject$: Subject<string>;
 
   beforeEach(() => {
