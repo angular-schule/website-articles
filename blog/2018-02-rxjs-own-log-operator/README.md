@@ -10,7 +10,7 @@ keywords:
   - Observable
   - Angular
 language: en
-thumbnail: ../angular5.png
+thumbnail: birds-meeting-1309186.jpg
 hidden: true
 ---
 
@@ -178,7 +178,7 @@ export function log<T>(message?: string) {
 ![](observer-wrapper.png)
 
 
-If you take a look into the [RxJS source code](https://github.com/ReactiveX/rxjs/blob/cfbfaac36c847a1d09434a78ac1737c4a3149c5c/src/internal/operators/map.ts#L39-L46) you will see: that's exactly the aproach they go for all the built-in operators.
+If you take a look into the [RxJS source code](https://github.com/ReactiveX/rxjs/blob/cfbfaac36c847a1d09434a78ac1737c4a3149c5c/src/internal/operators/map.ts#L39-L46) you will see: that's exactly the approach they go for all the built-in operators.
 
 However, for beginners this way is anything else than intuitive. For a simple use case like our `log()` operator this approach might also be a bit too heavy. Apart from that, creating an observable with its constructor is quite focused on the actual implementation. This is a bit error-prone: If we miss out anything here, it can lead to errors.
 
@@ -328,7 +328,7 @@ fdescribe('log operator', () => {
 ```
 
 
-
+<small>Header image based on picture by [FreeImages.com/Petr Kovar](https://de.freeimages.com/photo/birds-meeting-1309186)</small>
 
 
 
