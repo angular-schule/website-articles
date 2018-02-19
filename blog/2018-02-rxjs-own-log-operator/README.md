@@ -1,5 +1,5 @@
 ---
-title: How to build your own RxJS logging operator
+title: Build your own RxJS logging operator
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-02-19
@@ -11,7 +11,6 @@ keywords:
   - Angular
 language: en
 thumbnail: birds-meeting-1309186.jpg
-hidden: true
 ---
 
 
@@ -20,9 +19,9 @@ hidden: true
 
 <hr>
 
-When working with Angular we come into touch with [RxJS](http://reactivex.io/rxjs/) almost every day:
+When working with Angular we come into contact with [RxJS](http://reactivex.io/rxjs/) almost every day:
 using reactive forms, doing routing, [taming snakes](https://blog.thoughtram.io/rxjs/2017/08/24/taming-snakes-with-reactive-streams.html) or using [NgRx effects](https://github.com/ngrx/platform/blob/master/docs/effects/README.md).
-Thinking reactively gives your head a turn and its declarative way of writing code is conceptually different from the imperative style we've been doing for years.
+Thinking reactively makes you revisit your common patterns, due to its declarative way of writing code is conceptually different from the imperative style we've been doing for years.
 
 
 > If you are new to RxJS you will find a great introduction here:
@@ -102,7 +101,7 @@ Let's take a closer look at those three ways.
 
 The most straight-forward way to create an Observable is using its constructor method `new Observable()`.
 We need to set a callback function as argument that is automatically invoked every time a new subscriber is being registered.
-The callback function takes a so called *Observer* as argument which is a reference to the subscriber.
+The callback function takes a so-called *Observer* as argument which is a reference to the subscriber.
 The observer gives us three methods which we can use to send data to the subscriber:
 - `next`: for a regular value in the stream
 - `error`: when errors occur
@@ -154,8 +153,18 @@ We want to access the source values and
 - leave them unchanged and pass them through to the observer
 
 To access the values emitted from the `source$` observable we can simply subscribe to it.
-The `subscribe()` method takes – no surprise – an observer as argument, i.e. an object with `next`, `error` and `complete` methods. Instead of just passing in our existing observer object we create a wrapper with an "enhanced" `next()` method. First we do a `console.log()` before emitting the value to our observer.
-For the error and complete case we can just use the methods provided by the original observer.
+The `subscribe()` method takes – no surprise – an observer as an argument, i.e. an object with `next`, `error` and `complete` methods.
+We could actually just take our original observer and pass it into our `subscribe` method like this:
+
+```typescript
+return new Observable<T>(observer => {  
+  return source$.subscribe(observer);
+});
+```
+
+However, this will just forward all the source values to the observer without doing a `console.log()`.
+Instead, we create a wrapper around our observer with an "enhanced" `next()` method. First we add the `console.log()` call before emitting the value to our observer.
+Then, for the error and complete case we can just use the methods provided by the original observer.
 
 ```typescript
 export function log<T>(message?: string) {
@@ -180,7 +189,7 @@ export function log<T>(message?: string) {
 
 If you take a look into the [RxJS source code](https://github.com/ReactiveX/rxjs/blob/cfbfaac36c847a1d09434a78ac1737c4a3149c5c/src/internal/operators/map.ts#L39-L46) you will see: that's exactly the approach they go for all the built-in operators.
 
-However, for beginners this way is anything else than intuitive. For a simple use case like our `log()` operator this approach might also be a bit too heavy. Apart from that, creating an observable with its constructor is quite focused on the actual implementation. This is a bit error-prone: If we miss out anything here, it can lead to errors.
+However, for beginners this way is anything but intuitive. For a simple use case like our `log()` operator this approach might also be a bit too heavy. Apart from that, creating an observable with its constructor is quite focused on the actual implementation. This is a bit error-prone: If we miss out anything here, it can lead to errors.
 
 Hence, we'll take a look at a much simpler approach in the next section.
 
@@ -188,7 +197,7 @@ Hence, we'll take a look at a much simpler approach in the next section.
 
 ## 2) Use existing operators
 
-Let's take back into mind what we wanted to do. Our goal was to hide this line in a custom operator:
+Let's cast our minds back to what we wanted to do. Our goal was to hide this line in a custom operator:
 
 ```typescript
 tap(e => console.log('message', e))
@@ -251,7 +260,7 @@ If you want to do more complex stuff than just using the existing operators, you
 
 ## Conclusion
 
-Building own custom operators for your RxJS pipes is very easy. An operator is just a function that takes and returns observables. As long as you stay with this signature you can do whatever you want at the inside: create your own new observable or use existing operators.
+Building your own custom operators for your RxJS pipes is very easy. An operator is just a function that takes and returns observables. As long as you stay with this signature you can do whatever you want on the inside: create your own new observable or use existing operators.
 
 Our `log()` operator is a great means to debug reactive streams with less typing.
 Just put it into your pipeline and you'll see the output in the browser console.
