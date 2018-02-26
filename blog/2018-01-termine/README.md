@@ -3,7 +3,7 @@ title: Unsere Termine 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-01-15
-last-change: 2018-01-15
+last-change: 2018-02-27
 keywords:
   - Angular
 language: de
@@ -24,13 +24,14 @@ Sehr beliebt ist unsere Intensiv-Schulung zu Angular, welchen wir in einem Konfe
 An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
 
 
-| Ort           | Titel                       | Datum               | Partner              | Status                                       |
-|---------------|-----------------------------|---------------------|----------------------|----------------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][1] | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG  | noch Plätze frei – [jetzt Ticket buchen!][1]             |
-| Leipzig       | Angular Intensiv-Schulung  | im Mai 2018         | wird bekannt gegeben | Warteliste – bitte [Anfrage stellen](/angebot) |
-| Heidelberg    | Angular Intensiv-Schulung  | im Juli 2018        | ARTHOTEL HEIDELBERG  | Warteliste – bitte [Anfrage stellen](/angebot) |
+| Ort           | Titel                           | Datum               | Partner                  | Status                                         |
+|---------------|---------------------------------|---------------------|--------------------------|------------------------------------------------|
+| Heidelberg    | [Angular Intensiv-Schulung][1]  | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | noch Plätze frei – [jetzt Ticket buchen!][1]   |
+| Leipzig       | [Angular Intensiv-Schulung][2]  | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | noch Plätze frei – [jetzt Ticket buchen!][2]   |
+| Heidelberg    | Angular Intensiv-Schulung       | im Juli 2018        | ARTHOTEL HEIDELBERG      | Warteliste – bitte [Anfrage stellen](/angebot) |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
+[2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
@@ -65,8 +66,8 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 | Monat         | Status     |
 |---------------|------------|
 | Januar 2018   | AUSGEBUCHT |
-| Februar 2018  | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| März 2018     | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Februar 2018  | AUSGEBUCHT |
+| März 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
 | April 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 
@@ -76,4 +77,4 @@ Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projekta
 
 --------
 
-*Letztes Update: 15.01.2018*
+*Letztes Update: 27.02.2018*
