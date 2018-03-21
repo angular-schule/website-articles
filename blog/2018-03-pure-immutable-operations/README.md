@@ -338,7 +338,7 @@ let state =  { /* ... */ };
 state = someFancyService.doStuff(state);
 ``` 
 
-Beautiful, isn't it? :smile:
+Beautiful, isn't it? 😊
 
 <hr>
 
