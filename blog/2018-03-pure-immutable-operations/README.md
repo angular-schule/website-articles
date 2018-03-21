@@ -2,7 +2,7 @@
 title: "10 pure immutable operations you should know"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2017-12-08
+published: 2018-03-21
 keywords:
   - Immutable
   - Array
