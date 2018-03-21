@@ -13,13 +13,16 @@ thumbnail: glass-cube-and-sphere-1423317.jpg
 
 ## Without any framework
 
-Let's talk about immutability.
-If you work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state. Immutable objects are also very handy, when you optimise you angular application with `ChangeDetectionStrategy.OnPush`.
+**In this article, we will take a look at some common "immutable" operations. You will see how modern JavaScript enables us to easily work with immutable data structures in a super clean way without the need of an additional library – using the spread operator and `Object.assign()`.**
+
+<hr>
+
+If you work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state. Otherwise your redux-driven application will have strange bugs in the end. Immutable objects are also very handy, when you optimise you angular application with `ChangeDetectionStrategy.OnPush`. In my recent angular applications I tread all my data objects like immutable objects. The great news: it doesn't matter if those objects are really immutable, as long as we don't alter them after creation. 
 
 In general, you can decide between two different approaches:
 
-1. Use an existing framework like [Immutable.js](https://facebook.github.io/immutable-js/) or [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
-2. Use some pure JavaScript patterns that allow us to always create new objects instead of touching existing ones
+1. Use an existing framework like [Immutable.js](https://facebook.github.io/immutable-js/) or [seamless-immutable](https://github.com/rtfeldman/seamless-immutable). Those libraries create objects that can't be changed after creation.
+2. Use some pure JavaScript patterns that allow us to always create new objects instead of touching existing ones. This is not real immutability, but works fine if we follow the rules. We will concentrate on this approach.
   
 In the beginning, an existing framework gives you guidance and makes it pretty much harder to mess up the state.
 However, using pure ECMAScript functions can be fun, too!
@@ -99,13 +102,13 @@ console.log(newState); // {prop1: "test1", prop2: "test2", prop3: "CHANGED!"}
 ```
 
 This is easy to understand and super clean!
-Also the code is not going to break when more properties are added in the future.
+Also the code is not going to break when more properties are added in the future. The ngrx example-app uses this pattern in [various places](https://github.com/ngrx/platform/blob/d1fbd35c667a80ea58b82bc28b1fd68bbdb0e659/example-app/app/books/reducers/books.ts#L78).
 
 
 # 2. Manipulating objects with `Object.assign()`
 
 Sometimes you want to reuse a bunch of properties from various places.
-[Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) can be very useful here: 
+[Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) can be useful here: 
 
 ```ts
 const initialState = {
@@ -287,14 +290,56 @@ describe('ImmutableArray', function() {
 });
 ```
 
-Look closely and you'll realize that the `sort()` method is just a little abstraction of the original `Array.sort()` method.
+Look closely and you'll realise that the `sort()` method is just a little abstraction of the original `Array.sort()` method.
 This is because `Array.sort()` will mutate the given array, which is what we want to avoid.
 In practice, nobody wants to reimplement the original implementation.
 Thus, the simplest way of getting a new sorted array is to make a shallow copy first.
 
-<!--
-## Demo
 
-Of course, there is a demo at:
+# Warning
 
--->
+Please keep in mind, that we just created shallow copies everywhere. This is absolutely fine for most situations and is a very efficient way to do "immutability". But keep in mind, that things get complicated with nested objects. They are copied over and their reference won't change. This can confuse the OnPush Change Detection and then the view does not reflect the model anymore.
+
+In those cases I create deep copies with lodash.
+The installation is pretty easy:
+
+```bash
+npm i lodash
+```
+
+and the usage is convenient, too:
+
+```ts
+import * as cloneDeep from 'lodash.clonedeep';
+
+const nestedObject = {
+  nested: {
+     /* ... */
+  }
+}
+const deepCopy = cloneDeep(nestedObject);
+```
+
+# Conclusion
+
+In my opinion, immutable operations are a very powerful tool to handle data. The code gets easy to understand and test, even if we don't use redux at all.
+
+Ever wondered about code like this?
+
+```ts
+let state =  { /* ... */ };
+someFancyService.doStuff(state);
+``` 
+
+Will it change the state? Usually we don't know. But if we always treat objects as if they would be immutable, then the answer is clear: No, this code should have no side effects, since we never alter existing objects. To alter existing objects, we have to create new ones:
+
+```ts
+let state =  { /* ... */ };
+state = someFancyService.doStuff(state);
+``` 
+
+Beautiful, isn't it? :smile:
+
+<hr>
+
+<small>Header image by [FreeImages.com/ephe drin](https://www.freeimages.com/photo/glass-cube-and-sphere-1423317)</small>

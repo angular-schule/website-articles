@@ -337,6 +337,7 @@ describe('log operator', () => {
 });
 ```
 
+<hr>
 
 <small>Header image based on picture by [FreeImages.com/Petr Kovar](https://de.freeimages.com/photo/birds-meeting-1309186)</small>
 
