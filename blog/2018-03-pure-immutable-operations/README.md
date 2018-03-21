@@ -8,21 +8,21 @@ keywords:
   - Array
   - TypeScript
 language: en
-thumbnail: ../angular5.png
+thumbnail: glass-cube-and-sphere-1423317.jpg
 hidden: true
 ---
 
 ## Without any framework
 
 Let's talk about immutability.
-If you work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) (which is on top of [`Redux`](https://github.com/reactjs/redux)) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state.
+If you work with a framework like [`@angular-redux/store`](https://github.com/angular-redux/store) or [@ngrx](https://github.com/ngrx/platform) then you should try to not alter existing state. Immutable objects are also very handy, when you optimise you angular application with `ChangeDetectionStrategy.OnPush`.
 
 In general, you can decide between two different approaches:
 
 1. Use an existing framework like [Immutable.js](https://facebook.github.io/immutable-js/) or [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
 2. Use some pure JavaScript patterns that allow us to always create new objects instead of touching existing ones
   
-In the beginning, an existing framework gives you guidance makes it pretty much harder to mess up the state.
+In the beginning, an existing framework gives you guidance and makes it pretty much harder to mess up the state.
 However, using pure ECMAScript functions can be fun, too!
 There is no extra layer of abstraction and soon you will like those repeating patterns.
 With a bit of practice your code is very easy to read and to test.
