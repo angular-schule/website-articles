@@ -52,9 +52,9 @@ If you need a snapshot of the development version, then take a look at: [2.4.0-S
 # General usage
 
 The idea is the following:  
-The code generator inspects the OpenAPI specification and writes a perfect API client for you.
+The code generator inspects the OpenAPI specification and writes a perfect API client for you.  
 That's it!
-No more work by a human.  
+__No more work by a human.__  
 In this article we will use the following API:
 
 * __https://api.angular.schule/__
@@ -135,7 +135,7 @@ java -jar swagger-codegen-cli.jar generate \
 
 We should take a look at the generated files:
 
-<img src="https://angular-schule.github.io/website-articles/blog/2018-04-swagger-codegen/generated-code.png" width="120" alt="Screenshot">
+<img src="https://angular-schule.github.io/website-articles/blog/2018-04-swagger-codegen/generated-code.png" width="243" alt="Screenshot">
 
 
 You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
