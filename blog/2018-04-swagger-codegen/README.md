@@ -33,7 +33,7 @@ I'm pretty sure nobody wants to write boring plumping code by hand and manually 
 So, how can we use the API documentation to generate code automatically? 
 
 
-# Hello Swagger Code Generator (swagger-codegen)
+# Hello swagger-codegen
 
 The official tool for code-generation is the [Swagger Code Generator](https://github.com/swagger-api/swagger-codegen).
 It supports a various range of target languages.
@@ -44,19 +44,21 @@ Don't be afraid! Yes, the tool is written in Java.
 But our final Angular code will not include any piece of Java at all. I promise you!
 
 First of all, you need the compiled generator: `swagger-codegen-cli.jar`.
-You can download the latest version from the following location:
-http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar 
-At the time of writing, v2.3.1 was stable.
-If you need a snapshot of the development version, then take a look at:
-https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/
+You can download the latest version from the following location:  
+http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar  
+At the time of writing, v2.3.1 was stable.  
+If you need a snapshot of the development version, then take a look at:  
+https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/  
 
 # General usage
 
 The idea is the following:  
-The code generator inspects the OpenAPI specification and writes a perfect API client for you. That's it! No more work.  
+The code generator inspects the OpenAPI specification and writes a perfect API client for you.
+That's it!
+No more work by a human.  
 In this article we will use the following API:
 
-### https://api.angular.schule/
+* __https://api.angular.schule/__
 
 Please feel free to explore it via [Swagger UI](https://api.angular.schule/swagger-ui/).
 
@@ -71,12 +73,13 @@ java -jar swagger-codegen-cli.jar generate \
    -o /var/tmp/angular_api_client
 ```
 
-_(Note: Windows users will have to write this in one long line.)_
+_(Note: Windows users will have to write this without the backslashes and in one long line.)_
 
 * `-i` or `--input-spec` defines the location of the input swagger spec, as URL or file (required)
 * `-l` or `--lang` defines the client language to generate  (required)
 * `-o` or `--output` defines the output directory, where the generated files should be written to (current dir by default)
-* `-c` or `--config` defines the path to an additional JSON configuration file. Supported options can be different for each language. 
+* `-c` or `--config` defines the path to an additional JSON configuration file.
+  Supported options can be different for each language. 
 
 Please type `java -jar swagger-codegen-cli.jar help generate` for a full explanation.
 
@@ -93,10 +96,12 @@ java -jar swagger-codegen-cli.jar config-help -l typescript-angular
 You will have to adjust the following options:
 
 * `npmName`: The name under which you want to publish generated npm package.  
-  Hint: You __have to__ define a name, or some files will be missed and the generated `README.md` won't make sence! See [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369) (TODO@Johannes: send a PR to fix that!)
+  Hint: You __have to__ define a name here, or some files related to a proper npm package will be skipped and the generated `README.md` won't make that much sence! This is [by design](https://github.com/swagger-api/swagger-codegen/blob/157e6b7fab4c4b3cddee88fb1100271c2365a6da/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/TypeScriptAngularClientCodegen.java#L101), see also [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369).
 * `npmVersion`: The version of the generated npm package. (default 1.0.0)
-* `snapshot`: When setting this to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm. This is very handy if you want to have unique package names to publish.
-* `ngVersion`: The version of angular that will be required by the generated `package.json`. It's a good idea to align this version with the angular version of your main app. The default is `4.3`. 
+* `snapshot`: When setting this to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm.
+  This is very handy if you want to have unique package names to publish.
+* `ngVersion`: The version of angular that will be required by the generated `package.json`.
+  It's a good idea to align this version with the angular version of your main app. The default is `4.3`. 
 
 This is a complete example for our demo api:
 
@@ -108,7 +113,7 @@ java -jar swagger-codegen-cli.jar generate \
    --additional-properties npmName=book-monkey-api,snapshot=true,ngVersion=5.0.0
 ```
 
-Don't ask me why the command line argument was called `additional-properties`! There must be historical reasons... :smile:
+I wonder why the command line argument was called `additional-properties`! There must have been historical reasons... :smile:
 As already pointed out, you can also define the additional properties (=== options) via a config file.
 This cleans up the command a bit:
 
@@ -131,11 +136,11 @@ java -jar swagger-codegen-cli.jar generate \
 
 We should take a look at the generated files:
 
-![Screenshot](generated-code.png)
+<img src="generated-code.png" width="120" alt="Screenshot">
 
 
 You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
-Yes, that right. It's a crazy world and unlike every other angular package we have to compile this again.
+It's a crazy world and unlike every other angular package we have to compile this again.
 
 You can take a look in the generated `README.md` or just follow my instructions for a quick result.
 
@@ -148,11 +153,10 @@ npm publish
 # Don't publish this to npmjs.com! :rotating_light:
 
 I hope you are in alert mode now.
-If you haven''t been logged in to npmjs.com then you should see an error during `npm publish`.
-Otherwise you might have accidently published internals about your secret API to a public package manager. (TODO@Johannes: send a PR to fix that, e.g. by making the packages private by default)
+If you been logged in to npmjs.com then you might have accidently published internals about your secret API to a public repository! 
 
-At the moment I really recommend to use scoped packages here, e.g. `@angular-schule/book-monkey-api`
-A scope can be easily redirected to a private registry. See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry). 
+I really recommend to use scoped packages here, e.g. `@angular-schule/book-monkey-api`
+A scope can be easily redirected to a private registry. See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry).
 
 Our config file should be rewritten like this:
 
