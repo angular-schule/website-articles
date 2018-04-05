@@ -1,5 +1,5 @@
 ---
-title: "Generate Angular API clients with Swagger Codegen"
+title: "Generate Angular API clients with Swagger"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2018-04-05
@@ -143,7 +143,7 @@ You can take a look in the generated `README.md` or just follow my instructions 
 npm install
 npm run build
 npm publish
-````
+```
 
 # Don't publish this to npmjs.com! :rotating_light:
 
