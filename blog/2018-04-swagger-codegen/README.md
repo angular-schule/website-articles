@@ -40,15 +40,14 @@ It supports a various range of target languages.
 The list of supported languages and frameworks is growing constantly: [all available languages](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages)
 We are interested in the `typescript-angular` code generator, of course.
 
-Don't be afraid! Yes, the tool is written in Java.  
+Don't be afraid!   
+Yes, the tool is written in Java.  
 But our final Angular code will not include any piece of Java at all. I promise you!
 
-First of all, you need the compiled generator: `swagger-codegen-cli.jar`.
-You can download the latest version from the following location:  
-http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar  
+First of all, you need the compiled generator: `swagger-codegen-cli.jar`.  
+You can download the latest version from the following location: [swagger-codegen-cli-2.3.1.jar](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar)  
 At the time of writing, v2.3.1 was stable.  
-If you need a snapshot of the development version, then take a look at:  
-https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/  
+If you need a snapshot of the development version, then take a look at: [2.4.0-SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)  
 
 # General usage
 
@@ -98,7 +97,7 @@ You will have to adjust the following options:
 * `npmName`: The name under which you want to publish generated npm package.  
   Hint: You __have to__ define a name here, or some files related to a proper npm package will be skipped and the generated `README.md` won't make that much sence! This is [by design](https://github.com/swagger-api/swagger-codegen/blob/157e6b7fab4c4b3cddee88fb1100271c2365a6da/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/TypeScriptAngularClientCodegen.java#L101), see also [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369).
 * `npmVersion`: The version of the generated npm package. (default 1.0.0)
-* `snapshot`: When setting this to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm.
+* `snapshot`: When setting this to true the version will be suffixed with `-SNAPSHOT.yyyyMMddHHmm`.
   This is very handy if you want to have unique package names to publish.
 * `ngVersion`: The version of angular that will be required by the generated `package.json`.
   It's a good idea to align this version with the angular version of your main app. The default is `4.3`. 
@@ -136,7 +135,7 @@ java -jar swagger-codegen-cli.jar generate \
 
 We should take a look at the generated files:
 
-<img src="generated-code.png" width="120" alt="Screenshot">
+<img src="https://angular-schule.github.io/website-articles/blog/2018-04-swagger-codegen/generated-code.png" width="120" alt="Screenshot">
 
 
 You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
