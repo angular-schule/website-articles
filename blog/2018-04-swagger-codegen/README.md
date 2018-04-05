@@ -1,5 +1,5 @@
 ---
-title: "Generare Angular API clients with Swagger Codegen"
+title: "Generate Angular API clients with Swagger Codegen"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2018-04-05
@@ -36,8 +36,3 @@ Or you just want to save some time. Anyway, `mvn clean package -Dmaven.test.skip
 Maven will create the necessary Java archive at the location `modules/swagger-codegen-cli/target/swagger-codegen-cli.jar`
 It's important to know that you have to use Java 7 or 8. [It won't compile with Java 9](https://github.com/swagger-api/swagger-codegen/issues/7976). 
 
-Beautiful, isn't it? 😊
-
-<hr>
-
-<small>Header image by [FreeImages.com/ephe drin](https://www.freeimages.com/photo/glass-cube-and-sphere-1423317)</small>
