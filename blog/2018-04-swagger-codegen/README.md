@@ -85,7 +85,7 @@ Please type `java -jar swagger-codegen-cli.jar help generate` for a full explana
 
 # Generating code for angular
 
-We should explore the configuration options for the `angular-typescript` codegen.
+We should explore the configuration options for the `angular-typescript` codegen.  
 These options are specific to the generator.
 
 ```bash
@@ -97,10 +97,14 @@ You will have to adjust the following options:
 * `npmName`: The name under which you want to publish generated npm package.  
   Hint: You __have to__ define a name here, or some files related to a proper npm package will be skipped and the generated `README.md` won't make that much sence! This is [by design](https://github.com/swagger-api/swagger-codegen/blob/157e6b7fab4c4b3cddee88fb1100271c2365a6da/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/TypeScriptAngularClientCodegen.java#L101), see also [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369).
 * `npmVersion`: The version of the generated npm package. (default 1.0.0)
+* `npmRepository`: Use this property to set an url your private npm repository in the package.json.
+  I __really recommend__ to set the option, if you want to prevent accidental publish to npmjs.com. (see [publishConfig](https://docs.npmjs.com/files/package.json#publishconfig))
 * `snapshot`: When setting this to true the version will be suffixed with `-SNAPSHOT.yyyyMMddHHmm`.
   This is very handy if you want to have unique package names to publish.
 * `ngVersion`: The version of angular that will be required by the generated `package.json`.
-  It's a good idea to align this version with the angular version of your main app. The default is `4.3`. 
+  It's a good idea to align this version with the angular version of your main app.
+  The default is `4.3`.
+  A version smaller than 4.3 yields to the generation of the obsolete [HttpService (German blogpost)](https://angular-buch.com/blog/2017-11-httpclient).
 
 This is a complete example for our demo api:
 
@@ -109,8 +113,10 @@ java -jar swagger-codegen-cli.jar generate \
    -i https://api.angular.schule/swagger.json \
    -l typescript-angular \
    -o /var/tmp/angular_api_client \
-   --additional-properties npmName=book-monkey-api,snapshot=true,ngVersion=5.0.0
+   --additional-properties npmName=@angular-schule/book-monkey-api,snapshot=true,ngVersion=5.0.0
 ```
+
+
 
 I wonder why the command line argument was called `additional-properties`! There must have been historical reasons... :smile:
 As already pointed out, you can also define the additional properties (=== options) via a config file.
@@ -118,7 +124,7 @@ This cleans up the command a bit:
 
 ```json
 {
-  "npmName": "book-monkey-api",
+  "npmName": "@angular-schule/book-monkey-api",
   "npmVersion": "0.0.1",
   "snapshot": true,
   "ngVersion": "5.0.0"
@@ -133,6 +139,22 @@ java -jar swagger-codegen-cli.jar generate \
    -c options.json
 ```
 
+
+## Don't accidently publish to npmjs.com! :rotating_light:
+
+There is a minimal danger that you accidently published your top-secret API client to the public npmjs.com repository! 
+Please choose between one of the two options to prevent this:
+
+1. Set the `npmRepository` option. This will define a `publishConfig.registry` entry in the `package.json`.
+2. Use a `npmName` with a scope (e.g. `@angular-schule/book-monkey-api`)
+  A scope can be easily redirected to a private registry. 
+  See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry) for more information.
+  On npmjs.com a scope represents a npm user/organization.
+  If the user/org does not exist, then it will stop with a big error, which is fine here.
+
+
+# What's inside the box?
+
 We should take a look at the generated files:
 
 <img src="https://angular-schule.github.io/website-articles/blog/2018-04-swagger-codegen/generated-code.png" width="243" alt="Screenshot">
@@ -146,34 +168,26 @@ You can take a look in the generated `README.md` or just follow my instructions 
 ```bash
 npm install
 npm run build
-npm publish
+npm publish dist
 ```
 
-# Don't publish this to npmjs.com! :rotating_light:
 
-I hope you are in alert mode now.
-If you been logged in to npmjs.com then you might have accidently published internals about your secret API to a public repository! 
 
-I really recommend to use scoped packages here, e.g. `@angular-schule/book-monkey-api`
-A scope can be easily redirected to a private registry. See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry).
-
-Our config file should be rewritten like this:
-
-```json
-{
-  "npmName": "@angular-schule/book-monkey-api",
-  "npmVersion": "0.0.1",
-  "snapshot": true,
-  "ngVersion": "5.0.0"
-}
-```
 
 Now everything is prepared for a build and a publish of the package.
 
-# Building the codegen from the sources
+# Extra: Using own templates
+
+* `-t` or `--template-dir` defines a folder containing own template files.
+  If specified, those templates files will be used instead of the unbuild onces.
+  You can start by modifing the [orginal ones from Github](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources/typescript-angular).
+
+
+# Extra: Building the codegen from the sources
 
 You might want to use the very latest version directly from Github.
-This isn't much complicated, since everything is nicely prepared with Maven.
+Or you might want to contribute to the codegen -- that would be a great idea!
+All in all, a first start isn't that much complicated, since everything is nicely prepared with Maven.
 
 ```
 git clone https://github.com/swagger-api/swagger-codegen.git
@@ -194,3 +208,5 @@ Now you should have created a snapshot version:
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar version
 > 2.4.0-SNAPSHOT
 ```
+
+Have fun while hacking the codegen! :smile:
