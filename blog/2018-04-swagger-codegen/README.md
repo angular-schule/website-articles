@@ -33,7 +33,7 @@ I'm pretty sure nobody wants to write boring plumping code by hand and manually 
 So, how can we use the API documentation to generate code automatically? 
 
 
-# Hello Swagger Code Generator (swagger-codgen)
+# Hello Swagger Code Generator (swagger-codegen)
 
 The official tool for code-generation is the [Swagger Code Generator](https://github.com/swagger-api/swagger-codegen).
 It supports a various range of target languages.
@@ -53,7 +53,7 @@ https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codeg
 # General usage
 
 The idea is the following:  
-The code generator inspects the OpenAPI specification and writes a perfect API client for you.
+The code generator inspects the OpenAPI specification and writes a perfect API client for you. That's it! No more work.  
 In this article we will use the following API:
 
 ### https://api.angular.schule/
@@ -64,7 +64,7 @@ Please feel free to explore it via [Swagger UI](https://api.angular.schule/swagg
 
 Swagger codegen has a plenty of options. The minimal options are:
 
-```
+```bash
 java -jar swagger-codegen-cli.jar generate \
    -i https://api.angular.schule/swagger.json \
    -l typescript-angular \
@@ -76,27 +76,57 @@ _(Note: Windows users will have to write this in one long line.)_
 * `-i` or `--input-spec` defines the location of the input swagger spec, as URL or file (required)
 * `-l` or `--lang` defines the client language to generate  (required)
 * `-o` or `--output` defines the output directory, where the generated files should be written to (current dir by default)
+* `-c` or `--config` defines the path to an additional JSON configuration file. Supported options can be different for each language. 
 
 Please type `java -jar swagger-codegen-cli.jar help generate` for a full explanation.
 
 
 # Generating code for angular
 
-We should explore the extra options for the `angular-typescript` generator.
+We should explore the configuration options for the `angular-typescript` codegen.
+These options are specific to the generator.
 
-```
+```bash
 java -jar swagger-codegen-cli.jar config-help -l typescript-angular
 ```
 
-You will have to adjust the following ones:
+You will have to adjust the following options:
 
-* `--npmName`: The name under which you want to publish generated npm package.
-  You have define one, or some files will be missed and the generated README won't make sence.
-* `--npmVersion`: The version of the generated npm package. (default 1.0.0)
-* `--snapshot`: When setting this to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm. This is very handy if you want to have unique package names to publish.
-* `--ngVersion`:
+* `npmName`: The name under which you want to publish generated npm package.  
+  Hint: You __have to__ define a name, or some files will be missed and the generated `README.md` won't make sence! See [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369) (TODO@Johannes: send a PR to fix that!)
+* `npmVersion`: The version of the generated npm package. (default 1.0.0)
+* `snapshot`: When setting this to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm. This is very handy if you want to have unique package names to publish.
+* `ngVersion`: The version of angular that will be required by the generated `package.json`. It's a good idea to align this version with the angular version of your main app. The default is `4.3`. 
 
-We will look at most important ones:
+This is a complete example for our demo api:
+
+```bash
+java -jar swagger-codegen-cli.jar generate \
+   -i https://api.angular.schule/swagger.json \
+   -l typescript-angular \
+   -o /var/tmp/angular_api_client \
+   --additional-properties npmName=book-monkey-api,ngVersion=5.0.0
+```
+
+Don't ask me why the command line argument was called `additional-properties`! There must be historical reasons... :smile:
+As already pointed out, you can also define the additional properties (=== options) via a config file.
+This cleans up the command a bit:
+
+```json
+{
+  "npmName": "book-monkey-api",
+  "npmVersion": "0.0.1",
+  "snapshot": true,
+  "ngVersion": "5.0.0"
+}
+
+```basg
+java -jar swagger-codegen-cli.jar generate \
+   -i https://api.angular.schule/swagger.json \
+   -l typescript-angular \
+   -o /var/tmp/angular_api_client \
+   -c options.json
+```
 
 
 
