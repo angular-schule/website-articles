@@ -33,11 +33,11 @@ I'm pretty sure nobody wants to write boring plumping code by hand and manually 
 So, how can we use the API documentation to generate code automatically? 
 
 
-# Hello swagger-codegen
+## Hello swagger-codegen
 
 The official tool for code-generation is the [Swagger Code Generator](https://github.com/swagger-api/swagger-codegen).
 It supports a various range of target languages.
-The list of supported languages and frameworks is growing constantly: [all available languages](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages)
+The list of supported languages and frameworks is growing constantly: [all available languages](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages)  
 We are interested in the `typescript-angular` code generator, of course.
 
 Don't be afraid!   
@@ -49,7 +49,7 @@ You can download the latest version from the following location: [swagger-codege
 At the time of writing, v2.3.1 was stable.  
 If you need a snapshot of the development version, then take a look at: [2.4.0-SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)  
 
-# General usage
+## General usage
 
 The idea is the following:  
 The code generator inspects the OpenAPI specification and writes a perfect API client for you.  
@@ -63,7 +63,7 @@ Please feel free to explore it via [Swagger UI](https://api.angular.schule/swagg
 
 [![Screenshot](swagger-ui.png)](https://api.angular.schule/swagger-ui/)
 
-Swagger codegen has a plenty of options. The minimal options are:
+Swagger codegen has a plenty of arguments to adjusts. The minimal command line arguments are:
 
 ```bash
 java -jar swagger-codegen-cli.jar generate \
@@ -78,12 +78,12 @@ _(Note: Windows users will have to write this without the backslashes and in one
 * `-l` or `--lang` defines the client language to generate  (required)
 * `-o` or `--output` defines the output directory, where the generated files should be written to (current dir by default)
 * `-c` or `--config` defines the path to an additional JSON configuration file.
-  Supported options can be different for each language. 
+  Supported options can be different for each language. We will look at this argument in the paragraph. 
 
 Please type `java -jar swagger-codegen-cli.jar help generate` for a full explanation.
 
 
-# Generating code for angular
+## Generating code for angular
 
 We should explore the configuration options for the `angular-typescript` codegen.  
 These options are specific to the generator.
@@ -140,7 +140,7 @@ java -jar swagger-codegen-cli.jar generate \
 ```
 
 
-## Don't accidently publish to npmjs.com! :rotating_light:
+### Don't accidently publish to npmjs.com! :rotating_light:
 
 There is a minimal danger that you accidently published your top-secret API client to the public npmjs.com repository! 
 Please choose between one of the two options to prevent this:
@@ -153,7 +153,7 @@ Please choose between one of the two options to prevent this:
   If the user/org does not exist, then it will stop with a big error, which is fine here.
 
 
-# What's inside the box?
+## What's inside the box?
 
 We should take a look at the generated files:
 
@@ -176,14 +176,14 @@ npm publish dist
 
 Now everything is prepared for a build and a publish of the package.
 
-# Extra: Using own templates
+## Extra: Using own templates
 
 * `-t` or `--template-dir` defines a folder containing own template files.
   If specified, those templates files will be used instead of the unbuild onces.
   You can start by modifing the [orginal ones from Github](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources/typescript-angular).
 
 
-# Extra: Building the codegen from the sources
+## Extra: Building the codegen from the sources
 
 You might want to use the very latest version directly from Github.
 Or you might want to contribute to the codegen -- that would be a great idea!
