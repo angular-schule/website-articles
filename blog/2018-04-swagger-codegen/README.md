@@ -105,7 +105,7 @@ java -jar swagger-codegen-cli.jar generate \
    -i https://api.angular.schule/swagger.json \
    -l typescript-angular \
    -o /var/tmp/angular_api_client \
-   --additional-properties npmName=book-monkey-api,ngVersion=5.0.0
+   --additional-properties npmName=book-monkey-api,snapshot=true,ngVersion=5.0.0
 ```
 
 Don't ask me why the command line argument was called `additional-properties`! There must be historical reasons... :smile:
@@ -119,8 +119,9 @@ This cleans up the command a bit:
   "snapshot": true,
   "ngVersion": "5.0.0"
 }
+```
 
-```basg
+```bash
 java -jar swagger-codegen-cli.jar generate \
    -i https://api.angular.schule/swagger.json \
    -l typescript-angular \
@@ -128,8 +129,43 @@ java -jar swagger-codegen-cli.jar generate \
    -c options.json
 ```
 
+We should take a look at the generated files:
+
+![Screenshot](generated-code.png)
 
 
+You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
+Yes, that right. It's a crazy world and unlike every other angular package we have to compile this again.
+
+You can take a look in the generated `README.md` or just follow my instructions for a quick result.
+
+```bash
+npm install
+npm run build
+npm publish
+````
+
+# Don't publish this to npmjs.com! :rotating_light:
+
+I hope you are in alert mode now.
+If you haven''t been logged in to npmjs.com then you should see an error during `npm publish`.
+Otherwise you might have accidently published internals about your secret API to a public package manager. (TODO@Johannes: send a PR to fix that, e.g. by making the packages private by default)
+
+At the moment I really recommend to use scoped packages here, e.g. `@angular-schule/book-monkey-api`
+A scope can be easily redirected to a private registry. See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry). 
+
+Our config file should be rewritten like this:
+
+```json
+{
+  "npmName": "@angular-schule/book-monkey-api",
+  "npmVersion": "0.0.1",
+  "snapshot": true,
+  "ngVersion": "5.0.0"
+}
+```
+
+Now everything is prepared for a build and a publish of the package.
 
 # Building the codegen from the sources
 
