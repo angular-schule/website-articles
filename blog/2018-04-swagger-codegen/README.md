@@ -168,6 +168,7 @@ To install the required dependencies and to build the typescript sources run:
 
 ```bash
 npm install
+npm run build
 ```
 
 Now everything is prepared to finally publish the package to NPM or a private repository.
