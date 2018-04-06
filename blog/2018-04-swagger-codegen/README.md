@@ -2,7 +2,7 @@
 title: "Generate Angular API clients with Swagger"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2018-04-05
+published: 2018-04-07
 keywords:
   - Swagger
   - Codegen
@@ -63,7 +63,8 @@ Please feel free to explore it via [Swagger UI](https://api.angular.schule/swagg
 
 [![Screenshot](swagger-ui.png)](https://api.angular.schule/swagger-ui/)
 
-Swagger codegen has a plenty of arguments to adjusts. The minimal command line arguments are:
+Swagger codegen has a plenty of arguments to adjust.
+The minimal command line arguments are:
 
 ```bash
 java -jar swagger-codegen-cli.jar generate \
@@ -140,9 +141,9 @@ java -jar swagger-codegen-cli.jar generate \
 ```
 
 
-### Don't accidently publish to npmjs.com! :rotating_light:
+### Don't accidentally publish to npmjs.com! :rotating_light:
 
-There is a minimal danger that you accidently published your top-secret API client to the public npmjs.com repository! 
+There is a minimal danger that you accidentally published your top-secret API client to the public npmjs.com repository! 
 Please choose between one of the two options to prevent this:
 
 1. Set the `npmRepository` option. This will define a `publishConfig.registry` entry in the `package.json`.
@@ -183,7 +184,7 @@ now navigate to the folder of your consuming Angular project and run
 npm install @angular-schule/book-monkey-api --save
 ```
 
-It's generally a good practive to extend the `src/environments/*.ts` files by adding a corresponding base path:
+It's generally a good practice to extend the `src/environments/*.ts` files by adding a corresponding base path:
 
 ```ts
 // src/environments/environments.ts
@@ -209,7 +210,7 @@ import { environment } from '../environments/environment';
 export class AppModule { }
 ```  
 
-The usage of the generated API is streightforward.
+The usage of the generated API is straightforward.
 Every REST operation has its own method.
 For example, if we want to get a list of all books, then we can simply import the `BookService` and call the corresponding method.
 
@@ -248,12 +249,12 @@ Have fun doing cool Angular stuff! :smile:
 
 ## Extra: Using own templates
 
-Sooner or later everybody wants to customize some aspects of the generated code.
-You can change most parts by modifing the mustache-templates.
+Sooner or later everybody wants to customise some aspects of the generated code.
+You can change most parts by modifying the mustache-templates.
 
 * `-t` or `--template-dir` defines a folder containing own template files.
-  If specified, those templates files will be used instead of the inbuild onces.
-  You can start by modifing the [orginal ones from Github](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources/typescript-angular).
+  If specified, those templates files will be used instead of the inbuilt versions.
+  You can start by modifying the [original ones from Github](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources/typescript-angular).
 
 
 ## Extra: Building the codegen from the sources
