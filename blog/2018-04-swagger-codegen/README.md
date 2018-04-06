@@ -147,10 +147,10 @@ Please choose between one of the two options to prevent this:
 
 1. Set the `npmRepository` option. This will define a `publishConfig.registry` entry in the `package.json`.
 2. Use a `npmName` with a scope (e.g. `@angular-schule/book-monkey-api`)
-  A scope can be easily redirected to a private registry. 
-  See [this article](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry) for more information.
-  On npmjs.com a scope represents a npm user/organization.
-  If the user/org does not exist, then it will stop with a big error, which is fine here.
+  By default, scoped packages are private on npmjs.com.
+  You have to explicelty make them public with `--access=public`.
+  A scope can be easily redirected to a private registry, too. 
+  See [this document](https://docs.npmjs.com/misc/scope#associating-a-scope-with-a-registry) for more information.
 
 
 ## What's inside the box?
@@ -163,23 +163,96 @@ We should take a look at the generated files:
 You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
 It's a crazy world and unlike every other angular package we have to compile this again.
 
-You can take a look in the generated `README.md` or just follow my instructions for a quick result.
+To install the required dependencies and to build the typescript sources run:
 
 ```bash
 npm install
-npm run build
-npm publish dist
 ```
 
+Now everything is prepared to finally publish the package to NPM or a private repository.
 
+```bash
+npm publish dist --access=public
+```
 
+## Consuming the API with @angular/cli
 
-Now everything is prepared for a build and a publish of the package.
+now navigate to the folder of your consuming Angular project and run
+
+```bash
+npm install @angular-schule/book-monkey-api --save
+```
+
+It's generally a good practive to extend the `src/environments/*.ts` files by adding a corresponding base path:
+
+```ts
+// src/environments/environments.ts
+export const environment = {
+  production: false,
+  API_BASE_PATH: 'https://api.angular.schule'
+};
+```
+
+The shortest possible setup looks like this:
+
+```ts
+// src/app/app.module.ts
+import { ApiModule, BASE_PATH } from '@angular-schule/book-monkey-api';
+import { environment } from '../environments/environment';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [ApiModule]
+  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```  
+
+The usage of the generated API is streightforward.
+Every REST operation has its own method.
+For example, if we want to get a list of all books, then we can simply import the `BookService` and call the corresponding method.
+
+```ts
+// src/app/app.component.ts
+import { BookService } from '@angular-schule/book-monkey-api';
+
+@Component({
+  // ...
+})
+export class AppComponent {
+  constructor(bookService: BookService) {
+
+    bookService
+      .booksGet()
+      .subscribe(console.log);
+  }
+}
+```
+
+## Summary
+
+:tada: Congratulations!
+We have mastered a journey for automatically generated api code.
+Your project will benefit from less errors and more harmony between team members,
+which can concentrate on real solutions instead of boring boilerplate code.
+
+Now it should be your task to automate the code generation on you CI system.
+On every (relevant) change of the backend you should also generate a new client.
+To upgrade to the latest version in your consuming Angular project, you just need to call `npm install PACKAGE_NAME --save` again.
+
+Have fun doing cool Angular stuff! :smile:
+
+---
+
 
 ## Extra: Using own templates
 
+Sooner or later everybody wants to customize some aspects of the generated code.
+You can change most parts by modifing the mustache-templates.
+
 * `-t` or `--template-dir` defines a folder containing own template files.
-  If specified, those templates files will be used instead of the unbuild onces.
+  If specified, those templates files will be used instead of the inbuild onces.
   You can start by modifing the [orginal ones from Github](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources/typescript-angular).
 
 
@@ -209,4 +282,4 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar version
 > 2.4.0-SNAPSHOT
 ```
 
-Have fun while hacking the codegen! :smile:
+
