@@ -9,7 +9,6 @@ keywords:
   - TypeScript
 language: en
 thumbnail: swagger-banner.png
-hidden: true
 ---
 
 **In this article, we will take a look at swagger codegen. It will save you a ton of work and pain by generating HTTP services automatically from your swagger API description.**
@@ -17,15 +16,10 @@ hidden: true
 <hr>
 
 Swagger is the world’s largest framework of tools for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
-<!--
-The OpenAPI Specification (OAS) defines a standard interface description for REST APIs,
-which allows both humans and computers to discover and understand the capabilities of a service
-without requiring access to source code or hand-written manuals.
--->
 If you haven't added Swagger to your __backend__ until now, you should do it now!
 It's the de-facto standard for re-usable and maintainable APIs.
 The toolset greatly eases the pain of documenting and interacting with APIs.
-It’s literally a swiss army knife for all things APIs.
+It’s literally a Swiss army knife for all things APIs.
 
 But in this article we are not going to talk about your backend.
 Let's assume your API is specified with Swagger and that we can focus on your Angular __frontend__.
@@ -48,6 +42,7 @@ First of all, you need the compiled generator: `swagger-codegen-cli.jar`.
 You can download the latest version from the following location: [swagger-codegen-cli-2.3.1.jar](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar)  
 At the time of writing, v2.3.1 was stable.  
 If you need a snapshot of the development version, then take a look at: [2.4.0-SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)  
+Right now you want to grab the snapshots. I have prepared [PR](https://github.com/swagger-api/swagger-codegen/pull/7984) that adds AOT-compatibility (via [ng-packagr](http://spektrakel.de/ng-packagr/)) to the Angular-Templates. This is huge! :smile: 
 
 ## General usage
 
@@ -96,11 +91,11 @@ java -jar swagger-codegen-cli.jar config-help -l typescript-angular
 You will have to adjust the following options:
 
 * `npmName`: The name under which you want to publish generated npm package.  
-  Hint: You __have to__ define a name here, or some files related to a proper npm package will be skipped and the generated `README.md` won't make that much sence! This is [by design](https://github.com/swagger-api/swagger-codegen/blob/157e6b7fab4c4b3cddee88fb1100271c2365a6da/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/TypeScriptAngularClientCodegen.java#L101), see also [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369).
+  Hint: You __have to__ define a name here, or some files related to a proper npm package will be skipped and the generated `README.md` won't make that much sense! This is [by design](https://github.com/swagger-api/swagger-codegen/blob/157e6b7fab4c4b3cddee88fb1100271c2365a6da/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/TypeScriptAngularClientCodegen.java#L101), see also [#6369](https://github.com/swagger-api/swagger-codegen/issues/6369).
 * `npmVersion`: The version of the generated npm package. (default 1.0.0)
-* `npmRepository`: Use this property to set an url your private npm repository in the package.json.
-  I __really recommend__ to set the option, if you want to prevent accidental publish to npmjs.com. (see [publishConfig](https://docs.npmjs.com/files/package.json#publishconfig))
-* `snapshot`: When setting this to true the version will be suffixed with `-SNAPSHOT.yyyyMMddHHmm`.
+* `npmRepository`: Use this property to set a URL to your private npm repository in the package.json.
+  I __really recommend__ setting the option, if you want to prevent accidental publishing to npmjs.com. (see [publishConfig](https://docs.npmjs.com/files/package.json#publishconfig))
+* `snapshot`: When setting this to `true` the version will be suffixed with `-SNAPSHOT.yyyyMMddHHmm`.
   This is very handy if you want to have unique package names to publish.
 * `ngVersion`: The version of angular that will be required by the generated `package.json`.
   It's a good idea to align this version with the angular version of your main app.
@@ -237,7 +232,7 @@ export class AppComponent {
 :tada: Congratulations!
 We have mastered a journey for automatically generated api code.
 Your project will benefit from less errors and more harmony between team members,
-which can concentrate on real solutions instead of boring boilerplate code.
+who can concentrate on real solutions instead of boring boilerplate code.
 
 Now it should be your task to automate the code generation on you CI system.
 On every (relevant) change of the backend you should also generate a new client.
@@ -262,7 +257,7 @@ You can change most parts by modifying the mustache-templates.
 
 You might want to use the very latest version directly from Github.
 Or you might want to contribute to the codegen -- that would be a great idea!
-All in all, a first start isn't that much complicated, since everything is nicely prepared with Maven.
+All in all, a first start isn't that complicated, since everything is nicely prepared with Maven.
 
 ```
 git clone https://github.com/swagger-api/swagger-codegen.git
