@@ -2,7 +2,7 @@
 title: "Generate Angular API clients with Swagger"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2018-04-07
+published: 2018-04-12
 keywords:
   - Swagger
   - Codegen
