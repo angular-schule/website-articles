@@ -3,7 +3,7 @@ title: Build your own RxJS logging operator
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-02-19
-last-change: 2018-02-19
+last-change: 2018-04-20
 keywords:
   - RxJS
   - Reactive Programming
@@ -136,7 +136,9 @@ export function log(message) {
 Together with some TypeScript types our operator skeleton finally looks like this:
 
 ```typescript
-export function log<T>(message?: string) {
+import { OperatorFunction } from 'rxjs/interfaces';
+
+export function log<T>(message?: string): OperatorFunction<T, T> {
   return function(source$: Observable<T>): Observable<T> {
     return new Observable<T>(observer => {
       // ...
@@ -145,6 +147,9 @@ export function log<T>(message?: string) {
   };
 );
 ```
+
+I recommend using the type `OperatorFunction<T, U>` for our function, where `T` is the input type and `U` is the output type of the operator.
+Since we won't actually alter the data stream we're fine with `OperatorFunction<T, T>` here.
 
 
 What we want to do inside our `log()` operator is basically two things:
@@ -167,7 +172,7 @@ Instead, we create a wrapper around our observer with an "enhanced" `next()` met
 Then, for the error and complete case we can just use the methods provided by the original observer.
 
 ```typescript
-export function log<T>(message?: string) {
+export function log<T>(message?: string): OperatorFunction<T, T> {
   return function(source$: Observable<T>): Observable<T> {
     return new Observable<T>(observer => {  
       const wrapper = {
@@ -208,7 +213,7 @@ So why not just use it? Instead of manually creating an Observable with `new Obs
 
 
 ```typescript
-export function log<T>(message?: string) {
+export function log<T>(message?: string): OperatorFunction<T, T> {
   return function(source$: Observable<T>): Observable<T> {
     return source$.pipe(
       tap(e => console.log(message, e))
@@ -227,27 +232,12 @@ What we can now do is, use the existing operator "as is" and return it from our 
 Thus, our `function log()` returns a specific variant of the original `tap()` operator.
 
 ```typescript
-export function log<T>(message?: string) {
+export function log<T>(message?: string): OperatorFunction<T, T> {
   return tap(e => console.log(message, e));
 }
 ```
 
 We converted the complex example from above to a one-liner. Great!
-
-However, please note that we got rid of all the TypeScript types here.
-For our simple `log()` operator, that simply re-emits all the values, there is a problem:
-TypeScript can't infer the type from the source observable and automatically sets it to `{}`.
-This is why we can't use this operator without explicitly assigning the type in the next step:
-
-```typescript
-myObservable$.pipe(
-  log(),
-  map((thing: Thing) => thing.id)
-)
-```
-
-Please keep that in mind or go for one of the other approaches.
-
 
 
 ## Which way is the best?
@@ -255,13 +245,13 @@ Please keep that in mind or go for one of the other approaches.
 The answer to this question really depends on our use case.
 The general rule is: **as short as necessary, but as readable as possible.**
 
-If you want to create custom combinations of existing operators, it's always a good idea to just use them and return the piped observable from your function (as seen in #2). When this is just about wrapping *one* existing operator, #3 is a bit simpler, but remember that you can't keep the types throughout your pipeline.
+If you want to create custom combinations of existing operators, it's always a good idea to just use them and return the piped observable from your function (as seen in #2). When this is just about wrapping *one* existing operator, #3 is a bit simpler and easier to read.
 If you want to do more complex stuff than just using the existing operators, you should consider going for approach #1.
 
 
 ## Conclusion
 
-Building your own custom operators for your RxJS pipes is very easy. An operator is just a function that takes and returns observables. As long as you stay with this signature you can do whatever you want on the inside: create your own new observable or use existing operators.
+Building your own custom operators for your RxJS pipes is very easy. An operator is just a function that takes and returns observables. The function signature is always of type `OperatorFunction<T, U>`. As long as you stay with this signature you can do whatever you want on the inside: create your own new observable or use existing operators.
 
 Our `log()` operator is a great means to debug reactive streams with less typing.
 Just put it into your pipeline and you'll see the output in the browser console.
