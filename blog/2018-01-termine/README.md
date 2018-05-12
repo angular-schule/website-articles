@@ -35,7 +35,7 @@ An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 [2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
 [3]: https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs
-[5]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-3-1-tage-tickets-46034368034
+[4]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-3-1-tage-tickets-46034368034
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
