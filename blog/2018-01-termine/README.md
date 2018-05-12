@@ -3,7 +3,7 @@ title: Unsere Termine 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-01-15
-last-change: 2018-03-01
+last-change: 2018-05-12
 keywords:
   - Angular
 language: de
@@ -27,14 +27,15 @@ An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                            |
 |---------------|---------------------------------------|---------------------|--------------------------|---------------------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | wenige Plätze frei – [jetzt Ticket buchen!][1]    |
-| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | noch Plätze frei – [jetzt Ticket buchen!][2]      |
-| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | noch Plätze frei – [jetzt Ticket informieren!][3] |
-| Heidelberg    | Angular Intensiv-Schulung             | im September 2018   | ARTHOTEL HEIDELBERG      | Warteliste – bitte [Anfrage stellen](/angebot)    |
+| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                                       |
+| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | 2 Plätze frei – [jetzt Ticket buchen!][2]         |
+| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                                       |
+| Heidelberg    | [Angular Intensiv-Schulung][4]        | 18.09. - 21.09.2018 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][4]           |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 [2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
 [3]: https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs
+[5]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-3-1-tage-tickets-46034368034
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
@@ -71,8 +72,11 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 |---------------|------------|
 | Januar 2018   | AUSGEBUCHT |
 | Februar 2018  | AUSGEBUCHT |
-| März 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| April 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| März 2018     | AUSGEBUCHT  |
+| April 2018    | AUSGEBUCHT  |
+| Mai 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Juni 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Juli 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst.
@@ -81,4 +85,4 @@ Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projekta
 
 --------
 
-*Letztes Update: 01.03.2018*
+*Letztes Update: 12.05.2018*
