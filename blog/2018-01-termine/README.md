@@ -15,7 +15,39 @@ Als Trainer der Angular.Schule veranstalten wir regelmäßig Schulungen zu Angul
 Wir unterscheiden zwischen offenen und geschlossenen Schulungen ("Inhouse").
 
 
-## Offene Schulungen (3 Tage)
+
+## Inhouse-Schulungen (3 bis 5 Tage)
+
+> Wir kommen zu Ihnen, Sie bestimmen die Agenda
+
+![](powerworkshop.jpg)
+
+Wir sind nur zwei Trainer und arbeiten vorwiegend im Projektgeschäft.
+So sind wir stets mit den neuesten Technologien in Kontakt und kennen die Probleme im echten Entwickleralltag.  
+Daher gilt für uns: **Klasse statt Masse.**  
+
+Wir führen jeweils nur einmal im Monat einen Intensiv-Workshop direkt beim Kunden vor Ort durch.
+Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres Teams zugeschnitten ist.
+
+
+| Monat         | Status     |
+|---------------|------------|
+| Januar 2018   | AUSGEBUCHT |
+| Februar 2018  | AUSGEBUCHT |
+| März 2018     | AUSGEBUCHT  |
+| April 2018    | AUSGEBUCHT  |
+| Mai 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Juni 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Juli 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+
+
+Unsere Workshops sind individuell auf das zu schulende Team angepasst.
+Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt.
+Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projektalltag mit Angular gewappnet.
+
+
+
+## Offene Schulungen (3/4 Tage)
 
 > Sie kommen zu uns, Networking mit anderen Teilnehmern
 
@@ -53,35 +85,6 @@ Unser Partner kümmert sich um das leibliche Wohl, an allen Tagen gibt es Verpfl
 Es steht ein begrenztes Zimmer-Kontingent zur Verfügung. Stichwort: "Angular". 
 
 
-
-## Inhouse-Schulungen (3 bis 5 Tage)
-
-> Wir kommen zu Ihnen, Sie bestimmen die Agenda
-
-![](powerworkshop.jpg)
-
-Wir sind nur zwei Trainer und arbeiten vorwiegend im Projektgeschäft.
-So sind wir stets mit den neuesten Technologien in Kontakt und kennen die Probleme im echten Entwickleralltag.  
-Daher gilt für uns: **Klasse statt Masse.**  
-
-Wir führen jeweils nur einmal im Monat einen Intensiv-Workshop direkt beim Kunden vor Ort durch.
-Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres Teams zugeschnitten ist.
-
-
-| Monat         | Status     |
-|---------------|------------|
-| Januar 2018   | AUSGEBUCHT |
-| Februar 2018  | AUSGEBUCHT |
-| März 2018     | AUSGEBUCHT  |
-| April 2018    | AUSGEBUCHT  |
-| Mai 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juni 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juli 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
-
-
-Unsere Workshops sind individuell auf das zu schulende Team angepasst.
-Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt.
-Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projektalltag mit Angular gewappnet.
 
 --------
 
