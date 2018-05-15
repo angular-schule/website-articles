@@ -25,12 +25,12 @@ Sehr beliebt ist unsere Intensiv-Schulung zu Angular, welchen wir in einem Konfe
 An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
 
 
-| Ort           | Titel                                 | Datum               | Partner                  | Status                                            |
-|---------------|---------------------------------------|---------------------|--------------------------|---------------------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                                       |
-| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | 2 Plätze frei – [jetzt Ticket buchen!][2]         |
-| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                                       |
-| Heidelberg    | [Angular Intensiv-Schulung][4]        | 18.09. - 21.09.2018 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][4]           |
+| Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
+|---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
+| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                             |
+| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | ausverkauft                             |
+| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                             |
+| Heidelberg    | [Angular Intensiv-Schulung][4]        | 18.09. - 21.09.2018 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][4] |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 [2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
