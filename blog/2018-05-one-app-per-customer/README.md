@@ -17,7 +17,7 @@ hidden: true
 <hr>
 
 Recently, I was asked during a workshop how to produce customer-specific angular apps.
-My first answer was: "That's easy: `NgModules`!". Isn't it? 🤔
+My first answer was: "That's easy: `NgModules`!". But how exacty? 🤔
 
 ## Explanation
 
@@ -76,7 +76,7 @@ We could also use `*ngIf` directly, but we would need to add some own boilerplat
 * hard/impossible to deliver different versions to different customers (one update for one customer effects all other customers, too)
 * just no
 
-_`*` In this article I will use the word "workspace" to describe one Angular-CLI project in one physical folder. I don't want to confuse this with the word "project" in the context of the new multi application/libary support (see below)._
+_`*` In this article I will use the word "workspace" to describe one angular cli project in one physical folder. I don't want to confuse this with the word "project" in the context of the new multi application/libarry support (see below)._
 
 
 
@@ -84,9 +84,11 @@ _`*` In this article I will use the word "workspace" to describe one Angular-CLI
 
 I'm a big fan of Angular-Modules that are compiled and delivered via NPM.
 NPM packages have versions and can demand dependencies.
-The great thing: the can be hosted privately on [NPM](https://docs.npmjs.com/private-modules/intro), on [myget](https://www.myget.org/), on your on-premise or cloud [TFS](https://docs.microsoft.com/en-us/vsts/package/?view=vsts), on [Nexus](https://www.sonatype.com/nexus-repository-oss) and many more!
+The great thing: the can be hosted privately on [NPM](https://docs.npmjs.com/private-modules/intro), on [myget](https://www.myget.org/), on your on-premise or cloud [TFS](https://docs.microsoft.com/en-us/vsts/package/?view=vsts), on [Nexus](https://www.sonatype.com/nexus-repository-oss), [verdaccio](https://github.com/verdaccio/verdaccio) (a fork of good-old sinopia) and many more!
 
-Before Angular-CLI 6 I was used to [`ng-packagr`](https://github.com/dherges/ng-packagr). It took me some time, to configure an existing product to work as in the demo [`ng-packaged`](https://github.com/dherges/ng-packaged). But it the end, the work has paid off. Now the Angular CLI workspace file (`angular.json`) supports multiple projects in one folder - which is great! A project can be either an  application or a library (see [here](https://github.com/angular/angular-cli/wiki/angular-workspace)). The library support works on top of `ng-packagr `.
+Before angular cli 6 I was used to [`ng-packagr`](https://github.com/dherges/ng-packagr). It took me some time, to configure an existing product to work as in the demo [`ng-packaged`](https://github.com/dherges/ng-packaged). But it the end, the work has paid off (e.g. [here](https://github.com/angular-schule/homepage-tools)). You get a npm package with an angular-library in the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit) which is relatively easy to setup but also extremely configurable.
+
+With version 6 of the Angular CLI we finally "official" support for multiple projects in one folder — which is great! Take a look at the new workspace file (`angular.json`) for that. A project can be either an  application or a library (see [here](https://github.com/angular/angular-cli/wiki/angular-workspace)). The library support works on top of `ng-packagr `, too.
 
 You can create a library in an existing workspace by running the following commands:
 
@@ -96,26 +98,25 @@ ng generate library my-lib
 
 You should now have a library inside `projects/my-lib`. It contains a component and a service inside a NgModule. Read more about library creation [here](https://github.com/angular/angular-cli/wiki/stories-create-library).
 
-We could create one (or more) projects that would contain the ultimate, full-blown app. Every feature would be organised in one NgNodule and would be delivered as one NPM package. Consequently, we would need 100 smaller solutions that compose those NPM packages. We would have one big app and for each customer his own Angular-CLI solution.
+We could create one (or more) projects that would contain the ultimate, full-blown app. Every feature would be organised in one NgNodule and would be delivered as one NPM package. Consequently, we would need 100 smaller workspaces that compose those NPM packages. We would have one big app and for each customer his own angular cli solution.
 
 **PROS:**
 
-* easy to setup, since there is direct support via Angular-CLI now
-* every single solution would be highly customisable 
+* easy to setup, since there is direct support via angular cli now
+* every single workspace would be highly customisable 
 * the dedicated apps would only contain the code they need, this should lead to small bundle sizes
-* **USP:** we could utilise semver versioning to deliver features/patches only to selected applications (and therefore customers)
+* **USP:** we could utilise semver **versioning** to deliver features/patches only to selected applications (and therefore customers)
 
 
 **CONS:**
 
 * multiple workspaces to maintain (in the worst case it would be 100+1 workspaces)
 * multiple builds to maintain
-* historically, Angular-CLI and `npm link` were never real friends (see [here](https://github.com/angular/angular-cli/issues/3854#issuecomment-274344771), or [here](https://github.com/angular/angular-cli/issues/6195))
+* possible version conflicts in complex scenaries
+* historically, angular cli and `npm link` were never real friends (see [here](https://github.com/angular/angular-cli/issues/3854#issuecomment-274344771), or [here](https://github.com/angular/angular-cli/issues/6195))
 
 
-### 3. One fat application with multi application support<br>(No NPM packages involved)
-
-Okay, I need to find a better headline! :wink:
+### 3. Monorepo: One fat application with multi application support<br>(No NPM packages involved)
 
 This idea is pretty similar to #2. But this time we would utilise multiple apps via `angular.json`. Angular CLI now supports multiple individual applications within one workspace, each with separate configurations and defaults. To create another app you can use the following command:
 
@@ -129,27 +130,39 @@ The new application will be generated inside `projects/my-other-app`. Now we can
 ng build my-other-app
 ```
 
-Solution #2 was based on the idea of multiple libraries. Now we have multiple apps which derive from the big-fat application. We reduce complexity, since we don't need to publish a big amount of NPM packages around.
+Approach #2 was based on the idea of multiple libraries. Now we have multiple apps which derive from the big-fat application. We reduce complexity, since we don't need to publish a big amount of NPM packages around. The first application could be the "big fat application" that contains all feature modules and shared modules to have the full picture. All other applications could only use the required NgModules - and not more.
 
 **PROS:**
 
-* easy to setup, since there is direct support via Angular-CLI
-* tree-shaking should still lead to small bundle sizes
+* easy to setup, since there is direct support via angular cli
+* small bundle sizes, too
 * one workspace to maintain
 * one build to maintain (if we build multiple apps in one big build)
+* no versioning (this can be good point, everything is in sync with each other)
 
 
 **CONS:**
 
+* the build will have a very long runtime if we choose to build all apps
+* no versioning: we can not utilise semver versioning to deliver features/patches only to selected applications
 
-* the one big build will have a very long runtime
-* we could not utilise semver versioning to deliver features/patches only to selected applications
-
-
-### 4. Are there more solutions?
-
-These were my ideas that came into my mind. What do you say? Did I overlooked another way? Please write me a mail (team@angular.schule) or send me a DM via Twitter (@JohannesHoppe). Thanks in advance! :+1:
 
 ## Conclusion
 
-TODO!
+I see pretty few disadvantages for the last approach. So I would definitely recommend approach #3. If this doesn't work, we could always extract parts of the monorepo into separate npm packages.
+
+One way to start is [Nx fron Nrwl](https://github.com/nrwl/nx-examples):
+
+```bash
+npm install -g @angular/cli @nrwl/schematics 
+create-nx-workspace myworkspace
+ng generate app big-fat-app --routing
+ng generate app company1 --routing
+ng generate lib shared-lib
+```
+
+All commands are explained [here](https://github.com/nrwl/nx-examples). This gives you the quickest possible out-of the box solution available.
+
+But we have to keep in mind, that `@nrwl/schematics` adds yet another dependency and a layer of abstraction into the solution. We can archive a  
+
+
