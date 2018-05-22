@@ -17,7 +17,7 @@ hidden: true
 <hr>
 
 Recently, I was asked during a workshop how to produce customer-specific angular apps.
-My first answer was: "That's easy: `NgModules`!". But how exacty? 🤔
+My first answer was: "That's easy: `NgModules`!". But how exactly? 🤔
 
 ## Explanation
 
@@ -28,7 +28,7 @@ I asked a little bit more and got the following explanation from the attendee.
 * There is a (technically outdated) web-application to provide the UI. They are doing the hosting. 
 * Everything should be re-implemented with Angular, of course.
 * There are more than, let's say, 100 customers.
-* Every customer expects a slightly different solution.
+* Every customer expects a slightly different application.
 
 One of the current unique selling points are the specific-apps.
 Every customer can purchase a different set of features for different fields of applications. For example, main feature X as well as customer management, debt collection and reports. Bigger customers might also want a full HR solution, and so on. You get the point.
@@ -149,13 +149,14 @@ Approach #2 was based on the idea of multiple libraries. Now we have multiple ap
 
 ## Conclusion
 
-I see pretty few disadvantages for the last approach. So I would definitely recommend approach #3. If this doesn't work, we could always extract parts of the monorepo into separate npm packages.
+I see pretty few disadvantages for the last approach. So I would definitely recommend #3. If this doesn't scale, we could always extract parts of the monorepo into separate npm packages.
 
-One way to start is [Nx fron Nrwl](https://github.com/nrwl/nx-examples):
+One way to start is [Nx from Nrwl](https://github.com/nrwl/nx-examples):
 
 ```bash
 npm install -g @angular/cli @nrwl/schematics 
-create-nx-workspace myworkspace
+create-nx-workspace one-app-per-customer
+cd one-app-per-customer
 ng generate app big-fat-app --routing
 ng generate app company1 --routing
 ng generate lib shared-lib
@@ -163,6 +164,32 @@ ng generate lib shared-lib
 
 All commands are explained [here](https://github.com/nrwl/nx-examples). This gives you the quickest possible out-of the box solution available.
 
-But we have to keep in mind, that `@nrwl/schematics` adds yet another dependency and a layer of abstraction into the solution. We can archive a  
+#### DIY
 
+But we have to keep in mind, that `@nrwl/schematics` adds yet another dependency and a layer of abstraction into the solution. We can archive almost the same with pure angular cli.
 
+```bash
+ng new one-app-per-customer --routing
+cd one-app-per-customer
+ng generate application company1 --routing --prefix=company1
+ng generate application company2 --routing --prefix=company2
+ng generate library shared-lib --prefix=shared-lib
+```
+
+Feel free to tweak the folder structure a bit. Nx creates a folder called `/apps` and another called `libs`. This is for sure cleaner than the default folder structure of the cli.
+We can now start each application with:
+
+```bash
+ng start -o
+ng start company1 -o
+ng start company2 -o
+```
+
+Let's add a new component to the library:
+
+```bash
+cd projects/shared-lib/src/lib
+ng g component awesome-button --flat --export
+```
+
+This will create a new component at the right place and also tweaks the libraries module so that the component can be imported from other places. 
