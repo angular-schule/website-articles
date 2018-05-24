@@ -326,5 +326,13 @@ You can find the full example here:
 
 ## Thanks
 
-Many thanks to [Manfred Steyer](http://www.softwarearchitekt.at/) and [Juri Strumpflohner](https://juristr.com/) for taking a look at this article before publishing.
+Many thanks to __[Manfred Steyer](http://www.softwarearchitekt.at/)__ and __[Juri Strumpflohner](https://juristr.com/)__ for taking a look at this article before publishing.
 I really appreciate your feedback! :+1:
+
+And a big thank-you goes to __Ferdinand__ for reviewing all my texts! :wink:
+
+
+<hr>
+
+<small>Header image based on picture by [FreeImages.com/Zsuzsa N.K.](https://www.freeimages.com/photo/buttons-1414105)</small>
+
