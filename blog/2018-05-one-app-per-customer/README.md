@@ -9,7 +9,6 @@ keywords:
   - Modules
 language: en
 thumbnail: ../angular6.png
-hidden: true
 ---
 
 **In this article, I will discuss some ideas how to produce individual Angular apps.
