@@ -83,7 +83,8 @@ case BooksActionTypes.LoadBooksSuccess: {
 
 <hr>
 
-Now let's go through some use cases where it comes in handy to use some other Observables as source for our effects.
+Now you know the setup.
+Let's go through some use cases where it comes in handy to use some other Observables as source for our effects.
 
 
 ## 1.) Native events
@@ -137,18 +138,49 @@ With the event payload we can decide what to do next, for example dispatching a 
 
 ```ts
 @Effect()
-this.router.events.pipe(
+loadBooks$ = this.router.events.pipe(
   filter(e => e instanceof ActivationStart)),
-  // filter for a specific route
+  filter(e => isRoute('/books/list'))
   map(_ => new LoadBooks())
 );
 
 constructor(private router: Router) {}
+
+// ...
+function isRoute(path: string, event: ActivationStart) {
+  const currentPath: string[] = [];
+  let route = event.snapshot;
+
+  while (route.parent) {
+    if (route.routeConfig && route.routeConfig.path) {
+      currentPath.push(route.routeConfig.path);
+    }
+    route = route.parent;
+  }
+  return path === currentPath.reverse().join('/');
+}
 ```
 
-I don't want to elaborate on the structure of the event payload here since it is a bit too complex.
-However, the idea is pretty much the same like [amcdnl](https://twitter.com/amcdnl) did with his [ngrx-router](https://github.com/amcdnl/ngrx-router) library.
+I don't want to elaborate on the structure of the event payload here since it is quite complex.
+We built the `isRoute` function to traverse through the router tree and bring all our route segments together.
+
+Actually, this idea is pretty much the same like [amcdnl](https://twitter.com/amcdnl) followed with his [ngrx-router](https://github.com/amcdnl/ngrx-router) library.
+Your effects become very simple and clean like this one:
+
+```ts
+import { ofRoute } from 'ngrx-router';
+// ...
+
+@Effect()
+loadBooks$ = this.actions$.pipe(
+  ofRoute('/books/list'),
+  map(_ => new LoadBooks())
+);
+```
+
+Using *ngrx-router* you can also match multiple routes, use route param placeholders or match by regular expressions.
 **If you like the approach above you might want to check this one out!**
+
 
 
 
