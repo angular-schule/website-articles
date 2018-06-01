@@ -2,8 +2,8 @@
 title: "5 useful NgRx effects that don't rely on actions"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
-published: 2018-06-01
-last-change: 2018-06-01
+published: 2018-06-02
+last-change: 2018-06-02
 keywords:
   - Angular
   - NgRx
@@ -139,7 +139,7 @@ With the event payload we can decide what to do next, for example dispatching a 
 @Effect()
 loadBooks$ = this.router.events.pipe(
   filter(e => e instanceof ActivationStart)),
-  filter(e => isRoute('/books/list'))
+  filter(e => isRoute('books/list'))
   map(_ => new LoadBooks())
 );
 
@@ -160,7 +160,7 @@ function isRoute(path: string, event: ActivationStart) {
 }
 ```
 
-I don't want to elaborate on the structure of the event payload here since it is quite complex.
+I don't want to elaborate on the exact structure of the event payload here since it is quite complex.
 We built the `isRoute` function to traverse through the router tree and bring all our route segments together.
 
 Actually, this idea is pretty much the same like [amcdnl](https://twitter.com/amcdnl) followed with his [ngrx-router](https://github.com/amcdnl/ngrx-router) library.
@@ -172,7 +172,7 @@ import { ofRoute } from 'ngrx-router';
 
 @Effect()
 loadBooks$ = this.actions$.pipe(
-  ofRoute('/books/list'),
+  ofRoute('books/list'),
   map(_ => new LoadBooks())
 );
 ```
