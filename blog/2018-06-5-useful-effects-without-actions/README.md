@@ -1,5 +1,5 @@
 ---
-title: "Effects (WIP)"
+title: "5 useful NgRx effects that don't rely on actions"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-06-01
@@ -48,6 +48,43 @@ While we usually take the actions stream as the source for our effects, it is no
 Let's go through some use cases where this comes in handy.
 
 
+## The example data: Books
+
+In the upcoming examples we will use a *book list* as our data.
+The state tree looks like this:
+
+```ts
+interface BooksState {
+  books: Book[];
+}
+```
+
+We have a `LoadBooks` action that triggers an HTTP request through an effect:
+
+```ts
+@Effect()
+loadBooks = this.actions$.pipe(
+  ofType(BooksActionTypes.LoadBooks),
+  mergeMap(() => this.service.getBooks().pipe( // get book list from service
+    map(books => new LoadBooksSuccess(books)) // trigger action that saves new books to the store
+  ))
+);
+```
+
+The `LoadBooksSuccess` action invokes a reducer to add the book list to the state:
+
+```ts
+// ...
+case BooksActionTypes.LoadBooksSuccess: {
+  const books = action.payload;
+  return { ...state, books };
+}
+```
+
+
+<hr>
+
+
 ## 1.) Native events
 
 Imagine you want to trigger an action whenever the user resizes the browser window. We're talking about a native event here that's not bound to a specific DOM node in our view.
@@ -85,8 +122,38 @@ interval$ = interval(2000).pipe(
 )
 ```
 
+## 3.) Route events
 
-## 3.) Fill the store implicitly
+Angular itself uses Observables extensively, e.g. in the router or for reactive forms. Of course, we can also use those streams in our effects.
+Let's say we want to fetch some data from the server when a specific route is being activated.
+
+There are a few approaches for this:
+1. Dispatching the action from the routed component using `this.store.dispatch()`
+2. Using a route guard to intercept the routing process and dispatch the action (as described in an [article by Todd Motto here](https://toddmotto.com/preloading-ngrx-store-route-guards))
+3. Listen to router events in an effect
+
+Number #3 is as simple as our previous examples:
+We can use the `events` Observable from the Angular router and listen to some specific events.
+With the event payload we can decide what to do next, for example dispatching a `LoadBooks` action:
+
+```ts
+@Effect()
+this.router.events.pipe(
+  filter(e => e instanceof ActivationStart)),
+  // filter for a specific route
+  map(_ => new LoadBooks())
+);
+
+constructor(private router: Router) {}
+```
+
+I don't want to elaborate on the structure of the event payload here since it is a bit too complex.
+However, the idea is pretty much the same like [amcdnl](https://twitter.com/amcdnl) did with his [ngrx-router](https://github.com/amcdnl/ngrx-router) library.
+**If you like the approach above you might want to check this one out!**
+
+
+
+## 4.) Fill the store implicitly
 
 Thinking all this a bit further we can do some advanced implicit magic:
 Retrieving data from somewhere whenever they are not present in the store. This is quite convenient when it comes to data we need all the time like configuration objects or generic lists of helping entities.
@@ -98,19 +165,8 @@ The key behind this idea is that store selectors like `store.pipe(select(mySelec
 getBooks$ = this.store$.pipe(
   select(getAllBooks), // get book list from store
   filter(booksFromStore => booksFromStore.length == 0), // only continue if there are no books
-  mergeMap(() => this.service.getBooks().pipe( // get new book list from service
-    map(books => new LoadBooksSuccess(books)) // trigger action that saves new books to the store
-  ))
+  map(_ => new LoadBooks())
 )
-
-
-// Reducer
-// ...
-case BooksActionTypes.LoadBooksSuccess: {
-  const books = action.payload;
-  return { ...state, books };
-}
-// ...
 
 // Selector
 const getAllBooks = createSelector(getBooksState, state => state.books);
@@ -122,8 +178,20 @@ This effect starts working when the book list in our store changes. Using the `f
 * the application starts with an empty initial state
 * or when the books have been deleted by some user action.
 
-We then retrieve the new book list from our service and send it to the store within a `LoadBooksSuccess` action.
-So, whenever the books list happens to be empty, our effect will automatically call the service and push the new books to the store.
+We then dispatch a `LoadBooks` action to load books from the server.
+So, whenever the books list happens to be empty, our store will automatically call the service and push the new books to the store.
+
+## 5.) Loop of Death ☠️
+
+Last but not least will be one of my favorites.
+What looks like a harmless little line of code is one of the most evil effects:
+
+```ts
+@Effect()
+loopOfDeath$ = this.actions$;
+```
+
+It just takes all actions and replicates them into an infinite loop. Yay! Please… don't do this.
 
 
 ## Conclusion
@@ -131,4 +199,4 @@ So, whenever the books list happens to be empty, our effect will automatically c
 You can see that effects can go far beyond reacting to actions. Since effects basically are nothing more than observables that map to actions, we can use *every* observable as the source for our effects.
 However, please be careful not to mix up things and do not overuse this pattern! The majority of your effects should still follow the usual pattern described at the very top.
 
-In some cases this one will come in handy, though. Have you experienced some other cases than described here? **Please write us an e-mail or ping us on Twitter – we're happy to discuss them!**
+In some cases this one will come in handy, though. Have you experienced some other cases than described here? **Please write us an e-mail or ping us on [Twitter](https://twitter.com/angular_schule) – we're happy to discuss them!**
