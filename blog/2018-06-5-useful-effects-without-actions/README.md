@@ -17,7 +17,7 @@ thumbnail: canyonlands.jpg
 hidden: true
 ---
 
-**In this article we will discuss how we can leverage the power of Effects in NgRx. We will use observable streams different from the usual action stream to build some powerful and neat effects.**
+**In this article we will discuss how we can leverage the power of Effects in NgRx. We will use observable streams other than the usual action stream to build some powerful and neat effects.**
 
 <hr>
 
@@ -49,7 +49,7 @@ While we usually take the actions stream as the source for our effects, it is no
 
 ## The example data: Books
 
-In the upcoming examples we will use a *book list* as our data.
+In the following examples we will use a *book list* as our data.
 The state tree looks like this:
 
 ```ts
@@ -83,15 +83,14 @@ case BooksActionTypes.LoadBooksSuccess: {
 
 <hr>
 
-Now you know the setup.
-Let's go through some use cases where it comes in handy to use some other Observables as source for our effects.
+Now that you know the setup, let's go through some use cases where it comes in handy to take some other Observables as source for our effects.
 
 
 ## 1.) Native events
 
 Imagine you want to trigger an action whenever the user resizes the browser window. We're talking about a native event here that's not bound to a specific DOM node in our view.
 Using the `fromEvent` operator from RxJS we can easily build up an observable stream of window resizing events.
-The debounce is just cosmetic and makes the stream only emit once when the users has stopped resizing for a certain time.
+The debounce is just cosmetic and makes the stream only emit once when the user has stopped resizing for a certain amount of time.
 With the final resize event we can then dispatch a new action to our store:
 
 ```ts
@@ -127,8 +126,8 @@ interval$ = interval(2000).pipe(
 Angular itself uses Observables extensively, e.g. in the router or for reactive forms. Of course, we can also use those streams in our effects.
 Let's say we want to fetch some data from the server when a specific route is being activated.
 
-There are a few approaches for this:
-1. Dispatching the action from the routed component using `this.store.dispatch()`
+There are a few approaches to this:
+1. Dispatching the action from the routed component using `this.store.dispatch()`, usually within `ngOnInit()`
 2. Using a route guard to intercept the routing process and dispatch the action (as described in an [article by Todd Motto here](https://toddmotto.com/preloading-ngrx-store-route-guards))
 3. Listen to router events in an effect
 
@@ -183,10 +182,9 @@ Using *ngrx-router* you can also match multiple routes, use route param placehol
 
 
 
-
 ## 4.) Fill the store implicitly
 
-Thinking all this a bit further we can do some advanced implicit magic:
+Getting into this a bit more we can do some advanced implicit magic:
 Retrieving data from somewhere whenever they are not present in the store. This is quite convenient when it comes to data we need all the time like configuration objects or generic lists of helping entities.
 
 The key behind this idea is that store selectors like `store.pipe(select(mySelector))` also return Observables. Thus, we can build an effect like the one following. Just read the code carefully first and then continue with the explanation below:
@@ -212,6 +210,7 @@ This effect starts working when the book list in our store changes. Using the `f
 We then dispatch a `LoadBooks` action to load books from the server.
 So, whenever the books list happens to be empty, our store will automatically call the service and push the new books to the store.
 
+
 ## 5.) Loop of Death ☠️
 
 Last but not least will be one of my favorites.
@@ -230,4 +229,4 @@ It just takes all actions and replicates them into an infinite loop. Yay! Please
 You can see that effects can go far beyond reacting to actions. Since effects basically are nothing more than observables that map to actions, we can use *every* observable as the source for our effects.
 However, please be careful not to mix up things and do not overuse this pattern! The majority of your effects should still follow the usual pattern described at the very top.
 
-In some cases this one will come in handy, though. Have you experienced some other cases than described here? **Please write us an e-mail or ping us on [Twitter](https://twitter.com/angular_schule) – we're happy to discuss them!**
+In some cases this one will come in handy, though. Have you experienced some cases other than the ones described here? **Please write us an e-mail or ping us on [Twitter](https://twitter.com/angular_schule) – we're happy to discuss them!**
