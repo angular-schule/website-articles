@@ -13,6 +13,7 @@ keywords:
   - Observables
   - Redux
 language: en
+thumbnail: canyonlands.jpg
 hidden: true
 ---
 
@@ -44,8 +45,6 @@ constructor(private actions$: Actions) {}
 This effect takes the stream of all our actions and filters it by specific actions of the type `LoadBooks`. For each `LoadBooks` action it then performs some awesome stuff, e.g. retrieving the book list from the server. Finally, it converts the book list into a new action `LoadBooksSuccess`. The `@Effect()` decorator makes sure that the new action is being dispatched automatically.
 
 While we usually take the actions stream as the source for our effects, it is not actually bound to this source. In fact you can take whatever Observable you want and take its values as your effect source.
-
-Let's go through some use cases where this comes in handy.
 
 
 ## The example data: Books
@@ -84,6 +83,8 @@ case BooksActionTypes.LoadBooksSuccess: {
 
 <hr>
 
+Now let's go through some use cases where it comes in handy to use some other Observables as source for our effects.
+
 
 ## 1.) Native events
 
@@ -94,7 +95,6 @@ With the final resize event we can then dispatch a new action to our store:
 
 ```ts
 import { fromEvent } from 'rxjs';
-
 // ...
 
 @Effect()
@@ -109,11 +109,10 @@ This solution is very nice and clean, compared to subscribing to the event and t
 
 ## 2.) Timers/Intervals
 
-We can follow a similar approach when it comes to intervals. A specific use case could be a polling scenario where you want to dispatch an action every `n` seconds. Look at how sllick we can go for this with an effect:
+We can follow a similar approach when it comes to intervals. A specific use case could be a polling scenario where you want to dispatch an action every `n` seconds. Look at how slick we can go for this with an effect:
 
 ```ts
 import { interval } from 'rxjs';
-
 // ...
 
 @Effect()
