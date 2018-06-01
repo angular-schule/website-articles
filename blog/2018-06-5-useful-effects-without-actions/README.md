@@ -230,3 +230,7 @@ You can see that effects can go far beyond reacting to actions. Since effects ba
 However, please be careful not to mix up things and do not overuse this pattern! The majority of your effects should still follow the usual pattern described at the very top.
 
 In some cases this one will come in handy, though. Have you experienced some cases other than the ones described here? **Please write us an e-mail or ping us on [Twitter](https://twitter.com/angular_schule) – we're happy to discuss them!**
+
+<hr>
+
+<small>**Header image:** Island In The Sky, Canyonlands National Park, Utah</small>
