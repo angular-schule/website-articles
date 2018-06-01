@@ -184,7 +184,7 @@ Using *ngrx-router* you can also match multiple routes, use route param placehol
 
 ## 4.) Fill the store implicitly
 
-Getting into this a bit more we can do some advanced implicit magic:
+Exploring this a bit further we can do some advanced implicit magic:
 Retrieving data from somewhere whenever they are not present in the store. This is quite convenient when it comes to data we need all the time like configuration objects or generic lists of helping entities.
 
 The key behind this idea is that store selectors like `store.pipe(select(mySelector))` also return Observables. Thus, we can build an effect like the one following. Just read the code carefully first and then continue with the explanation below:
