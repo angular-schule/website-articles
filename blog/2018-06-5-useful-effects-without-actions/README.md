@@ -14,7 +14,6 @@ keywords:
   - Redux
 language: en
 thumbnail: canyonlands.jpg
-hidden: true
 ---
 
 **In this article we will discuss how we can leverage the power of Effects in NgRx. We will use observable streams other than the usual action stream to build some powerful and neat effects.**
@@ -37,7 +36,7 @@ myEffect$ = this.actions$.pipe(
   ofType(BooksActionTypes.LoadBooks),
   // do awesome things like fetching books from an API
   map(books => LoadBooksSuccess(books))
-)
+);
 
 constructor(private actions$: Actions) {}
 ```
@@ -89,7 +88,7 @@ Now that you know the setup, let's go through some use cases where it comes in h
 ## 1.) Native events
 
 Imagine you want to trigger an action whenever the user resizes the browser window. We're talking about a native event here that's not bound to a specific DOM node in our view.
-Using the `fromEvent` operator from RxJS we can easily build up an observable stream of window resizing events.
+Using the [`fromEvent` function](https://rxjs-dev.firebaseapp.com/api/index/fromEvent) from RxJS we can easily build up an observable stream of window resizing events.
 The debounce is just cosmetic and makes the stream only emit once when the user has stopped resizing for a certain amount of time.
 With the final resize event we can then dispatch a new action to our store:
 
@@ -101,7 +100,7 @@ import { fromEvent } from 'rxjs';
 resize$ = fromEvent(window, 'resize').pipe(
   debounceTime(300),
   map(e => new MyWindowResizeAction(e))
-)
+);
 ```
 
 This solution is very nice and clean, compared to subscribing to the event and then dispatching actions from one of our components.
@@ -109,7 +108,7 @@ This solution is very nice and clean, compared to subscribing to the event and t
 
 ## 2.) Timers/Intervals
 
-We can follow a similar approach when it comes to intervals. A specific use case could be a polling scenario where you want to dispatch an action every `n` seconds. Look at how slick we can go for this with an effect:
+We can follow a similar approach when it comes to intervals using the [`interval` function](https://rxjs-dev.firebaseapp.com/api/index/interval). A specific use case could be a polling scenario where you want to dispatch an action every `n` seconds. Look at how slick we can go for this with an effect:
 
 ```ts
 import { interval } from 'rxjs';
@@ -118,7 +117,7 @@ import { interval } from 'rxjs';
 @Effect()
 interval$ = interval(2000).pipe(
   map(_ => new MyFancyAction())
-)
+);
 ```
 
 ## 3.) Route events
@@ -132,7 +131,7 @@ There are a few approaches to this:
 3. Listen to router events in an effect
 
 Number #3 is as simple as our previous examples:
-We can use the `events` Observable from the Angular router and listen to some specific events.
+We can use the `events` Observable from the Angular [`Router` class](https://angular.io/api/router/Router) and listen to some specific routing events.
 With the event payload we can decide what to do next, for example dispatching a `LoadBooks` action:
 
 ```ts
@@ -160,8 +159,8 @@ function isRoute(path: string, event: ActivationStart) {
 }
 ```
 
-I don't want to elaborate on the exact structure of the event payload here since it is quite complex.
-We built the `isRoute` function to traverse through the router tree and bring all our route segments together.
+The event payload object is quite complex and we don't need to pick it to pieces here.
+What we did is to build the `isRoute` function to traverse through the router tree and bring all our route segments together.
 
 Actually, this idea is pretty much the same like [amcdnl](https://twitter.com/amcdnl) followed with his [ngrx-router](https://github.com/amcdnl/ngrx-router) library.
 Your effects become very simple and clean like this one:
@@ -177,7 +176,7 @@ loadBooks$ = this.actions$.pipe(
 );
 ```
 
-Using *ngrx-router* you can also match multiple routes, use route param placeholders or match by regular expressions.
+Using [ngrx-router](https://github.com/amcdnl/ngrx-router) you can also match multiple routes, use route param placeholders or match by regular expressions.
 **If you like the approach above you might want to check this one out!**
 
 
@@ -195,7 +194,7 @@ getBooks$ = this.store$.pipe(
   select(getAllBooks), // get book list from store
   filter(booksFromStore => booksFromStore.length == 0), // only continue if there are no books
   map(_ => new LoadBooks())
-)
+);
 
 // Selector
 const getAllBooks = createSelector(getBooksState, state => state.books);
@@ -233,4 +232,4 @@ In some cases this one will come in handy, though. Have you experienced some cas
 
 <hr>
 
-<small>**Header image:** Island In The Sky, Canyonlands National Park, Utah</small>
+<small>**Header image:** Island In The Sky, Canyonlands National Park, Utah, 2018</small>
