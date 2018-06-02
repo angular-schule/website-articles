@@ -3,7 +3,7 @@ title: Unsere Termine 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-01-15
-last-change: 2018-05-12
+last-change: 2018-06-02
 keywords:
   - Angular
 language: de
@@ -32,13 +32,12 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 
 | Monat         | Status     |
 |---------------|------------|
-| Januar 2018   | AUSGEBUCHT |
-| Februar 2018  | AUSGEBUCHT |
-| März 2018     | AUSGEBUCHT  |
-| April 2018    | AUSGEBUCHT  |
-| Mai 2018     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juni 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juli 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Mai 2018     | AUSGEBUCHT  |
+| Juni 2018    | AUSGEBUCHT  |
+| Juli 2018    | AUSGEBUCHT  |
+| August 2018    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| September 2018    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Oktober 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst.
@@ -59,10 +58,10 @@ An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
 |---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                             |
-| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | ausverkauft                             |
-| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                             |
 | Heidelberg    | [Angular Intensiv-Schulung][4]        | 18.09. - 21.09.2018 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][4] |
+| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                             |
+| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | ausverkauft                             |
+| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                             |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
 [2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
@@ -88,4 +87,4 @@ Es steht ein begrenztes Zimmer-Kontingent zur Verfügung. Stichwort: "Angular".
 
 --------
 
-*Letztes Update: 12.05.2018*
+*Letztes Update: 02.06.2018*
