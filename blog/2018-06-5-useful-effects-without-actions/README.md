@@ -3,7 +3,7 @@ title: "5 useful NgRx effects that don't rely on actions"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-06-02
-last-change: 2018-06-02
+last-change: 2018-06-03
 keywords:
   - Angular
   - NgRx
@@ -208,6 +208,9 @@ This effect starts working when the book list in our store changes. Using the `f
 
 We then dispatch a `LoadBooks` action to load books from the server.
 So, whenever the books list happens to be empty, our store will automatically call the service and push the new books to the store.
+
+**⚠️ Please be careful when using this as it might introduce an anti-pattern.
+As [Mike Ryan stated in a tweet](https://twitter.com/MikeRyanDev/status/1003236783490990080), using store selectors as effects source "breaks a pattern and should probably be avoided".**
 
 
 ## 5.) Loop of Death ☠️
