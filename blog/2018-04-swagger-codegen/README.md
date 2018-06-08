@@ -280,8 +280,6 @@ Or you just want to save some time...
 Anyway, `mvn clean package -Dmaven.test.skip` will skip the tests. ;-)
 
 Maven will create the necessary Java archive at the location `modules/swagger-codegen-cli/target/swagger-codegen-cli.jar`
-It's important to know that you have to use Java 7 or 8. [It won't compile with Java 9](https://github.com/swagger-api/swagger-codegen/issues/7976). 
-
 Now you should have created a snapshot version:
 
 ```
@@ -289,4 +287,20 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar version
 > 2.4.0-SNAPSHOT
 ```
 
+It's important to know that you have to use Java 7 or 8.
+[It won't compile with Java 9](https://github.com/swagger-api/swagger-codegen/issues/7976). 
+
+Right now it's fine to install Java 8 as instructed in the README of swagger-codegen.
+This should be fixed some day! 😉 
+
+Just for the records, on my Mac I executed the following workaround:
+
+```
+brew cask install caskroom/versions/java8
+
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export PATH=${JAVA_HOME}/bin:$PATH
+
+java -version
+```
 
