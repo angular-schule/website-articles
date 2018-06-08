@@ -238,7 +238,17 @@ Now it should be your task to automate the code generation on you CI system.
 On every (relevant) change of the backend you should also generate a new client.
 To upgrade to the latest version in your consuming Angular project, you just need to call `npm install PACKAGE_NAME --save` again.
 
-Have fun doing cool Angular stuff! :smile:
+You can find the full setup of the swagger codegen here:
+
+* __https://github.com/angular-schule/demo-api-codegen/tree/master/swagger-codegen__
+* which produces this package: https://www.npmjs.com/package/@angular-schule/book-monkey-api
+
+The following Angular demo app is using the package `@angular-schule/book-monkey-api`:
+
+* https://github.com/angular-schule/demo-api-codegen/tree/master/book-rating
+
+Have fun doing awesome Angular stuff! :smile:
+
 
 ---
 
