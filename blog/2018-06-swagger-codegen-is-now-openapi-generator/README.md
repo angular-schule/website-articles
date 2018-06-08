@@ -2,7 +2,7 @@
 title: "Swagger Codegen is now OpenAPI Generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2018-06-21
+published: 2018-06-08
 keywords:
   - Angular
   - NgModule
@@ -66,7 +66,7 @@ Right now everybody is busy making enhancements to the OpenAPI Generator.
 For example some big work has started on the [gradle plugin](https://github.com/OpenAPITools/openapi-generator/pull/201).
 Later a full switch of the build tool from maven to gradle could be possible, as it's building a lot faster than maven.
 
-Of course, we are focused on the sagger-codegen for `angular-typescript`.
+Of course, we are focused on the OpenAPI Generator for `typescript-angular`.
 Another plan of the new team is to consolidate all TypeScript generators into one.
 This would be very helpful, too. Those TypeScript generators share a lot in common and
 it was hard keep them in sync for general enhancements and bug fixes.
