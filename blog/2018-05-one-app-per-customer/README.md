@@ -321,7 +321,7 @@ I personally like the "monorepo" approach.
 We also created a first prototype via the Angular CLI, which was easy to setup – thanks to the new support for multiple applications.
 You can find the full example here:
 
-* __https://github.com/angular-schule/one-app-per-customer__
+* __https://github.com/angular-schule/demo-one-app-per-customer__
 
    
 
