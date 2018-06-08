@@ -45,10 +45,10 @@ Three years ago, in 2015, SmartBear Software [has acquired the Swagger API open 
 Swagger Codegen implements a toolset for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
 The OpenAPI Specification is a community-driven open specification within the [OpenAPI Initiative](https://www.openapis.org/), a Linux Foundation Collaborative Project.
 Swagger or more more precisely the OpenAPI Specification is the de-facto standard for re-usable and maintainable APIs.
-As of July, 2017, Swagger tools are downloaded over 100,000 times per day, according to hosting repositories Sonatype and NPM (source: [Wikipedia](https://en.wikipedia.org/wiki/Swagger_(software))
+As of July, 2017, Swagger tools are downloaded over 100,000 times per day, according to hosting repositories Sonatype and NPM (source: [Wikipedia](https://en.wikipedia.org/wiki/Swagger_(software)).
 
 More than 40 top contributors and template creators of Swagger Codegen have now abandoned the project and have joined OpenAPI Generator as the founding team members.
-The new team already released the [first stable version 3.0.0 of OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/releases/tag/v3.0.0).  
+The new team already released the [first stable version 3.0.0 of OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/releases/tag/v3.0.0).
 Please give it a try and let them know if you have any [feedback](https://github.com/OpenAPITools/openapi-generator/issues).
 
 Also, everybody is invited to join the public chatroom:
@@ -62,7 +62,7 @@ As you see in the [Q&A](https://github.com/OpenAPITools/openapi-generator/blob/m
 there was a lot of frustration.
 The fork will allow all contributors to fix those technical issues and concentrate on new ideas.
 
-Right now everybody is busy making enhancements to opeanpi-generator.
+Right now everybody is busy making enhancements to the OpenAPI Generator.
 For example some big work has started on the [gradle plugin](https://github.com/OpenAPITools/openapi-generator/pull/201).
 Later a full switch of the build tool from maven to gradle could be possible, as it's building a lot faster than maven.
 
