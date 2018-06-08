@@ -34,6 +34,7 @@ Every customer can purchase a different set of features for different fields of 
 This is, for example, the main feature X along with customer management, debt collection and reports.
 Bigger customers might also want a full HR solution, and so on. You get the point.
 
+<!--
 This should be easy to achieve, no matter which technical solution is chosen.
 But it gets a bit more challenging, because some forms are very specific for each customer.
 For example, the "order acceptance form" might have specific controls based on the customer's individual demands for an order.
@@ -43,6 +44,7 @@ but it had some great strengths:
 It is possible to create a specific app just by adjusting a configuration file and throwing the required libraries (DLL) into the right folder.
 If a library is missing, the feature is not shown.
 A more specific screen overrides the standard screen (.NET reflection involved as far as I know) – and it works flawlessly. 
+-->
 
 ## Requirements
 
