@@ -11,8 +11,6 @@ language: en
 thumbnail: logo_header.png
 ---
 
-![blödes github](logo_header.png)
-
 As [William Cheng](https://github.com/wing328) (top contributor to Swagger Codegen)
 recently informed us about a big change for the swagger community.
 
