@@ -42,7 +42,7 @@ But there was no consensus on the next steps and on the direction for Swagger Co
 
 Swagger Codegen is driven by SmartBear Software while OpenAPI Generator is driven by the community.
 Three years ago, in 2015, SmartBear Software [has acquired the Swagger API open source project](https://smartbear.com/news/news-releases/sponsorship-of-swagger/) from Reverb Technologies. 
-More than 40 top contributors and template creators of Swagger Codegen abandoned the project and have now joined OpenAPI Generator as the founding team members.
+More than 40 top contributors and template creators of Swagger Codegen have now abandoned the project and have now joined OpenAPI Generator as the founding team members.
 
 Both projects implement a toolset for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
 The OpenAPI Specification is a community-driven open specification within the [OpenAPI Initiative](https://www.openapis.org/), a Linux Foundation Collaborative Project.
