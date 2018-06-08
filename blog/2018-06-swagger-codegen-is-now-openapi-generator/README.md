@@ -11,14 +11,17 @@ language: en
 thumbnail: logo_header.png
 ---
 
+**
 [William Cheng](https://github.com/wing328), top contributor to Swagger Codegen,
 recently informed us about a big change for the swagger community.
+William and other top contributors (40+) of [Swagger Codegen](https://swagger.io/tools/swagger-codegen/) have decided to fork
+the project to maintain a community-driven version called ["OpenAPI Generator"](https://openapi-generator.tech),
+which supports both OpenAPI spec v2 and v3.**
+
+<hr>
 
 <a href="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png"><img src="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png" width="50%"></a>
 
-William and other top contributors (40+) of [Swagger Codegen](https://swagger.io/tools/swagger-codegen/) have decided to fork
-the project to maintain a community-driven version called ["OpenAPI Generator"](https://openapi-generator.tech),
-which supports both OpenAPI spec v2 and v3.
 
 For the reasons behind the fork, please refer to the official
 [Q&A](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md).
