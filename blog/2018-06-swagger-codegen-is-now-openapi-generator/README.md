@@ -47,7 +47,9 @@ The OpenAPI Specification is a community-driven open specification within the [O
 Swagger or more more precisely the OpenAPI Specification is the de-facto standard for re-usable and maintainable APIs.
 As of July, 2017, Swagger tools are downloaded over 100,000 times per day, according to hosting repositories Sonatype and NPM (source: [Wikipedia](https://en.wikipedia.org/wiki/Swagger_(software)).
 
-More than 40 top contributors and template creators of Swagger Codegen have now abandoned the project and have joined OpenAPI Generator as the founding team members.
+More than 40 top contributors and template creators of Swagger Codegen have joined OpenAPI Generator
+as the founding team members and are now focusing on making enhancements and creating new generators
+to the OpenAPI Generator project.
 The new team already released the [first stable version 3.0.0 of OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/releases/tag/v3.0.0).
 Please give it a try and let them know if you have any [feedback](https://github.com/OpenAPITools/openapi-generator/issues).
 
