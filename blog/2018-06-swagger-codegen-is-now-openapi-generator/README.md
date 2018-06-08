@@ -74,8 +74,8 @@ We are waiting in eager! :smile:
 
 ## What you should do now
 
-If you are new to code generation in general, you might want to read our article "[Generate Angular API clients with Swagger
-](https://angular.schule/blog/2018-04-swagger-codegen)" and start with the new OpenAPI Generator. 
+If you are new to code generation in general, you might want to read our article 
+"[Generate Angular API clients with Swagger](https://angular.schule/blog/2018-04-swagger-codegen)" and start with the new OpenAPI Generator. 
 
 If you already use swagger-codegen then you should migrate from Swagger Codegen to OpenAPI Generator sooner than later.
 Please refer to the [migration guide](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/migration-from-swagger-codegen.md) for this.
