@@ -291,8 +291,7 @@ It's important to know that you have to use Java 7 or 8.
 [It won't compile with Java 9](https://github.com/swagger-api/swagger-codegen/issues/7976). 
 
 Right now it's fine to install Java 8 as instructed in the README of swagger-codegen.
-This should be fixed some day! 😉 
-
+This should be fixed some day! 😉
 Just for the records, on my Mac I executed the following workaround:
 
 ```
