@@ -240,12 +240,12 @@ To upgrade to the latest version in your consuming Angular project, you just nee
 
 You can find the full setup of the swagger codegen here:
 
-* __https://github.com/angular-schule/demo-api-codegen/tree/master/swagger-codegen__
-* which produces this package: https://www.npmjs.com/package/@angular-schule/book-monkey-api
+* __[demo-api-codegen/swagger-codegen](https://github.com/angular-schule/demo-api-codegen/tree/master/swagger-codegen)__
+* which produces this npm package: [@angular-schule/book-monkey-api](https://www.npmjs.com/package/@angular-schule/book-monkey-api)
 
 The following Angular demo app is using the package `@angular-schule/book-monkey-api`:
 
-* https://github.com/angular-schule/demo-api-codegen/tree/master/book-rating
+* [demo-api-codegen/book-rating](https://github.com/angular-schule/demo-api-codegen/tree/master/book-rating)
 
 Have fun doing awesome Angular stuff! :smile:
 
