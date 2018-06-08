@@ -32,16 +32,20 @@ Here are the most important points:
 1. Swagger Codegen 3.0.0 beta was evaluated as unstable. Changes made directly to 3.0.0 branch without reviews or tests, were breaking the builds from time to time.
 1. Reviews of code changes in the 3.0.0 branch highlighted a lot of code block removal without any reason. This might produce regressions for edge cases discovered previously.
 1. Most of the test cases in the generators have been commented out as part of the migration to support OpenAPI 3.0. Test cases are the most valuable assets of the project and should be maintained to ensure a good quality.
-1. According to SmartBear, [Swagger Codegen 2.x and 3.x should be supported in parallel for a while](https://github.com/swagger-api/swagger-codegen/issues/7754#issuecomment-375039048) without the possibility to work with git branches to merge the fixes from one branch to the next. Having to implement everything twice is not a good idea and the best use of the Swagger Codegen community resources.
+1. According to SmartBear Software, [Swagger Codegen 2.x and 3.x should be supported in parallel for a while](https://github.com/swagger-api/swagger-codegen/issues/7754#issuecomment-375039048) without the possibility to work with git branches to merge the fixes from one branch to the next. Having to implement everything twice is not a good idea and the best use of the Swagger Codegen community resources.
 1. Having a community-driven version can bring the project to the next level.
 
-There was several conversations with SmartBear via emails, gitter, Skype call and GitHub issues.
+There was several conversations with SmartBear Software (the company behind Swagger) via emails, gitter, Skype call and GitHub issues.
 But there was no consensus on the next steps and on the direction for Swagger Codegen 3.0.0.
 
 ## About the new fork
 
-Swagger Codegen is driven by SmartBear while OpenAPI Generator is driven by the community.
-More than 40 top contributors and template creators of Swagger Codegen have joined OpenAPI Generator as the founding team members.
+Swagger Codegen is driven by SmartBear Software while OpenAPI Generator is driven by the community.
+Three years ago, in 2015, SmartBear Software [has acquired the Swagger API open source project](https://smartbear.com/news/news-releases/sponsorship-of-swagger/) from Reverb Technologies. 
+More than 40 top contributors and template creators of Swagger Codegen abandoned the project and have now joined OpenAPI Generator as the founding team members.
+
+Both projects implement a toolset for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
+The OpenAPI Specification is a community-driven open specification within the [OpenAPI Initiative](https://www.openapis.org/), a Linux Foundation Collaborative Project.
 
 The new team already released the [first stable version 3.0.0 of OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/releases/tag/v3.0.0).  
 Please give it a try and let them know if you have any [feedback](https://github.com/OpenAPITools/openapi-generator/issues).
