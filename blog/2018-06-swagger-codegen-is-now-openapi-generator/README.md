@@ -1,5 +1,5 @@
 ---
-title: "Breaking: Swagger Codegen is now OpenAPI Generator"
+title: "Swagger Codegen is now OpenAPI Generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2018-06-21
@@ -14,8 +14,8 @@ thumbnail: logo_header.png
 As [William Cheng](https://github.com/wing328) (top contributor to Swagger Codegen)
 recently informed us about a big change for the swagger community.
 
-[![](tweet.png)](https://twitter.com/oas_generator/status/1002742730567512064)
- 
+<a href="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png"><img src="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png"></a>
+
 William and other top contributors (40+) of [Swagger Codegen](https://swagger.io/tools/swagger-codegen/) have decided to fork
 the project to maintain a community-driven version called ["OpenAPI Generator"](https://openapi-generator.tech),
 which supports both OpenAPI spec v2 and v3.
