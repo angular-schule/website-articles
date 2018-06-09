@@ -194,17 +194,23 @@ The shortest possible setup looks like this:
 
 ```ts
 // src/app/app.module.ts
+import { HttpClientModule } from '@angular/common/http';
 import { ApiModule, BASE_PATH } from '@angular-schule/book-monkey-api';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [ApiModule]
+  imports: [
+    HttpClientModule,
+    ApiModule
+  ],
   providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```  
+
+You have to import both: the `HttpClientModule` from Angular as well as our generated `ApiModule`. You might wonder why `HttpClientModule` is included here. One could think that `ApiModule` should do that import for us, but this can lead to a strange but intended behaviour of Angular (see [issue #20575](https://github.com/angular/angular/issues/20575)).
 
 The usage of the generated API is straightforward.
 Every REST operation has its own method.
