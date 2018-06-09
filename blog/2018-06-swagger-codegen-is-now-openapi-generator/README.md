@@ -35,7 +35,7 @@ Here are the most important points:
 1. According to SmartBear Software, [Swagger Codegen 2.x and 3.x should be supported in parallel for a while](https://github.com/swagger-api/swagger-codegen/issues/7754#issuecomment-375039048) without the possibility to work with git branches to merge the fixes from one branch to the next. Having to implement everything twice is not a good idea and the best use of the Swagger Codegen community resources.
 1. Having a community-driven version can bring the project to the next level.
 
-There was several conversations with SmartBear Software (the company behind Swagger) via emails, gitter, Skype call and GitHub issues.
+There were several conversations with SmartBear Software (the company behind Swagger) via emails, gitter, Skype call and GitHub issues.
 But there was no consensus on the next steps and on the direction for Swagger Codegen 3.0.0.
 
 ## About the new fork
@@ -60,28 +60,28 @@ https://gitter.im/OpenAPITools/openapi-generator
 ## What we think about this
 
 This is a great opportunity for the community in general.
-As you see in the [Q&A](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md)
+As you can see in the [Q&A](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md)
 there was a lot of frustration.
 The fork will allow all contributors to fix those technical issues and concentrate on new ideas.
 
 Right now everybody is busy making enhancements to the OpenAPI Generator.
-For example some big work has started on the [gradle plugin](https://github.com/OpenAPITools/openapi-generator/pull/201).
+For example, some big work has started on the [gradle plugin](https://github.com/OpenAPITools/openapi-generator/pull/201).
 Later a full switch of the build tool from maven to gradle could be possible, as it's building a lot faster than maven.
 
 Of course, we are focused on the OpenAPI Generator for `typescript-angular`.
 Another plan of the new team is to consolidate all TypeScript generators into one.
-This would be very helpful, too. Those TypeScript generators share a lot in common and
+This too would be very helpful. Those TypeScript generators have a lot in common and
 it was hard keep them in sync for general enhancements and bug fixes.
-We are waiting in eager! :smile:
+We are waiting in eager anticipation for this consolidation! :smile:
 
 ## What you should do now
 
 If you are new to code generation in general, you might want to read our article 
 "[Generate Angular API clients with Swagger](https://angular.schule/blog/2018-04-swagger-codegen)" and start with the new OpenAPI Generator. 
 
-If you already use swagger-codegen then you will want to migrate from Swagger Codegen to OpenAPI Generator sooner than later.
+If you already use swagger-codegen then you will want to migrate from Swagger Codegen to OpenAPI Generator sooner rather than later.
 Please refer to the [migration guide](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/migration-from-swagger-codegen.md) for this.
 Right now it can be used as drop-in replacement.
 
-As of now, SmartBear Software has not mentioned any plan for swagger-codegen.
+As for now, SmartBear Software has not mentioned any plan for swagger-codegen.
 We will update this article if there will be an official statement regarding the fork.
