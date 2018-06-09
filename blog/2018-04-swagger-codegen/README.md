@@ -258,8 +258,8 @@ Have fun doing awesome Angular stuff! :smile:
 
 ## Related Articles
 
-* 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](../2018-06-swagger-codegen-is-now-openapi-generator)
-* 2018-06-10 - [Generate Angular API clients with Apollo and GraphQL code generator](../2018-06-apollo-graphql-code-generator)
+* 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](/blog/2018-06-swagger-codegen-is-now-openapi-generator)
+* 2018-06-10 - [Generate Angular API clients with Apollo and GraphQL code generator](/blog/2018-06-apollo-graphql-code-generator)
 
 
 ---

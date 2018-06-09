@@ -21,7 +21,7 @@ hidden: true
 
 Last time we talked about my preferred way of doing REST:  
 via the OpenAPI description format (known as Swagger).
-[We generated an REST api client for Angular](../2018-04-swagger-codegen) with the help of swagger-codegen / openapi-generator. But there are drawbacks to REST - and GraphQL can address some of them.
+[We generated an REST api client for Angular](/blog/2018-04-swagger-codegen) with the help of swagger-codegen / openapi-generator. But there are drawbacks to REST - and GraphQL can address some of them.
 
 Depending of the use-case, I favour a different approach to read and change in my Angular application. Let's see what GraphQL is all about and then we should look at my preferred toolset.
 
@@ -29,5 +29,5 @@ Depending of the use-case, I favour a different approach to read and change in m
 
 ## Related Articles
 
-* 2018-04-12 - [Generate Angular API clients with Swagger](../2018-04-swagger-codegen)
-* 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](../2018-06-swagger-codegen-is-now-openapi-generator)
+* 2018-04-12 - [Generate Angular API clients with Swagger](/blog/2018-04-swagger-codegen)
+* 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](/blog/2018-06-swagger-codegen-is-now-openapi-generator)
