@@ -77,7 +77,7 @@ We are waiting in eager anticipation for this consolidation! :smile:
 ## What you should do now
 
 If you are new to code generation in general, you might want to read our article 
-"[Generate Angular API clients with Swagger](https://angular.schule/blog/2018-04-swagger-codegen)" and start with the new OpenAPI Generator. 
+"[Generate Angular API clients with Swagger](../2018-04-swagger-codegen)" and start with the new OpenAPI Generator. 
 
 If you already use swagger-codegen then you will want to migrate from Swagger Codegen to OpenAPI Generator sooner rather than later.
 Please refer to the [migration guide](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/migration-from-swagger-codegen.md) for this.
@@ -85,3 +85,10 @@ Right now it can be used as drop-in replacement.
 
 As for now, SmartBear Software has not mentioned any plan for swagger-codegen.
 We will update this article if there will be an official statement regarding the fork.
+
+---
+
+## Related Articles
+
+* 2018-04-12 - [Generate Angular API clients with Swagger](../2018-04-swagger-codegen)
+* 2018-06-10 - [Generate Angular API clients with Apollo and GraphQL code generator](../2018-06-apollo-graphql-code-generator)
