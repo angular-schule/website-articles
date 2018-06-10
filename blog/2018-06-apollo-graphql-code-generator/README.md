@@ -23,7 +23,7 @@ Last time we talked about my preferred way of doing REST:
 via the OpenAPI description format (known as Swagger).
 [We generated a REST api client for Angular](/blog/2018-04-swagger-codegen) with the help of swagger-codegen / openapi-generator. But there are drawbacks to REST - and GraphQL can address some of them.
 
-Depending of the use-case, I favour a different approach to read and change in my Angular application. Let's see what GraphQL is all about and then we should look at my preferred toolset.
+Depending on the use-case, I favour a different approach to read and change in my Angular application. Let's see what GraphQL is all about and then we should look at my preferred toolset.
 
 ## Hello GraphQL
 
@@ -33,9 +33,9 @@ See this RESTful resource, which is explorable [via swagger-ui](https://api.angu
 
 * __https://api.angular.schule/books__
 
-All right, a lot of books. Let's assume we are not interested in the thumbnail nor the subtitle. But we want to have the authors - but only their names! That's tricky! How to adjust this?
+All right, a lot of books. Let's assume we are not interested in the thumbnail nor the subtitle. But we want to have the authors - but only their names! That's tricky! How to adjust this? Actually, we haven't implemented such a feature in our RESTful API.
 
-Soon we would define which objects and which fields of those objects we want to receive. Books and authors in our case. And this is basically a graphql query in nutshell. Take a look at the following api, which is supposed to return some books:
+Soon we would define which objects and which fields of those objects we want to receive. Books and authors in our case. And this is basically a GraphQL query in nutshell. Take a look at the following api, which is supposed to return some books:
 
 * __https://api.angular.schule/graphql/__
 
@@ -52,10 +52,61 @@ What you see is [GraphiQL](https://github.com/graphql/graphiql). GraphiQL is an 
   }
 }
 ```
+The server will return a result like this:
+
+```json
+{
+  "data": {
+    "books": [
+      {
+        "title": "Angular",
+        "isbn": "9783864903571",
+        "authors": [
+          {
+            "name": "Johannes Hoppe"
+          },
+          {
+            "name": "Ferdinand Malcher"
+          },
+          {
+            "name": "Danny Koppenhagen"
+          },
+          {
+            "name": "Gregor Woiwode"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+For your convenience, just click [this link](https://api.angular.schule/graphql/?query={%0A%20%20books%20{%0A%20%20%20%20title%0A%20%20%20%20isbn%0A%20%20%20%20authors%20{%0A%20%20%20%20%20%20name%0A%20%20%20%20}%0A%20%20}%0A}) to place your first GraphQL query. Go ahead! Play with the API and request also a `description` and a `rating`. That's neat, isn't it?
+
+As you see, the query has exactly the same shape as the result. This is essential to GraphQL, because you always get back what you expect. But how do we deterministically know that the authors return as an array? That is another crucial aspect of GraphQL: schemas. Schemas are determined on the server. He defines the objects that can be queried, as well as their exact types. Of course, we can query all aspects of the schema, too:
+
+```json
+{
+  __type(name: "Book") {
+    kind
+    name
+    fields {
+      name
+      type {
+        kind
+        name
+        description  # TODO: we should add descriptions! ;-)
+      }
+    }
+  }
+}
+```
+[click here](https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A)
 
 
-Just play with the API and request also a `description` and a `rating`. That's neat, isn't it?
+## Querying data with Apollo Angular
 
+TODO
  
 
 ## Related Articles
