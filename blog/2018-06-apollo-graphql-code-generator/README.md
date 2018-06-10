@@ -101,7 +101,7 @@ As you see, the query has exactly the same shape as the result. This is essentia
   }
 }
 ```
-[click here](https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A)
+<a href="https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A">click here</a>
 
 
 ## Querying data with Apollo Angular
