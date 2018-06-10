@@ -28,7 +28,7 @@ Depending on the use-case, I favour a different approach to read and change in m
 
 ## Hello GraphQL
 
-<img src="logo-graphql.svg" width="300px" align="right">
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql.svg?sanitize=true" width="300px" align="right">
 
 One fundamental problem of a classical REST api is the amount of received data.
 Sometimes we are fetching too much data, so there is data in the response we don't use.
@@ -134,7 +134,7 @@ Of course, we can query all aspects of the schema, too:
 
 ## Querying data with Apollo Angular
 
-<img src="logo-apollo.svg" width="300px" align="right">
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-apollo.svg?sanitize=true" width="300px" align="right">
 
 This is all we need to know to start with GraphQL.
 GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
