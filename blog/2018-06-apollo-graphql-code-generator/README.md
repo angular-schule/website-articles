@@ -129,7 +129,7 @@ Of course, we can query all aspects of the schema, too:
   }
 }
 ```
-[click here](https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A)
+<a href="https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A">click here</a>
 
 
 ## Querying data with Apollo Angular
