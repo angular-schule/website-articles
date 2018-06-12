@@ -141,10 +141,11 @@ This is all we need to know to start with GraphQL.
 GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
 In Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
 
+.. TODO ..
 
 ## Generating types with GraphQL code generator
 
-![Logo Apollo](logo-apollo.svg?sanitize=true)
+![Logo Apollo](logo-graphql-code-generator?sanitize=true)
 
 We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
 On the first look it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
@@ -153,6 +154,8 @@ I had two reasons for this decision:
 
 1. the generated interfaces are better organised (grouped via namespaces)
 2. there is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator".  you can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customized result.
+
+.. TODO ..
 
 ## Related Articles
 
