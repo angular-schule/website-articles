@@ -15,7 +15,7 @@ thumbnail: bg-graph.svg
 hidden: true
 ---
 
-**In this article, we will take a look at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
+**In this article, I will give a short introduction to GraphQL. We will then take a look at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
 
 <hr>
 
@@ -188,6 +188,27 @@ class AppModule {
   }
 }
 ```
+
+The simplest way of preparing a query in TypeScript/JavaScript is to define it in a special notation. We are using the `gql` tag that is provided by the `graphql-tag` library.
+
+
+```typescript
+import gql from 'graphql-tag';
+
+const booksQuery = gql`
+{
+  books {
+    title
+    isbn
+    authors {
+      name
+    }
+  }
+}
+`;
+```
+
+
 
 ## Generating types with GraphQL code generator
 
