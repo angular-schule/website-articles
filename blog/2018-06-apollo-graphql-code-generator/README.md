@@ -97,7 +97,7 @@ The server will return a result like this:
 }
 ```
 
-For your convenience, just click <a href="https://api.angular.schule/graphql/?query={%0A%20%20books%20{%0A%20%20%20%20title%0A%20%20%20%20isbn%0A%20%20%20%20authors%20{%0A%20%20%20%20%20%20name%0A%20%20%20%20}%0A%20%20}%0A}">this link</a> to place your first GraphQL query.
+For your convenience, just click [this link](http://bit.ly/2t4dzTw) to place your first GraphQL query.
 Go ahead!
 Play with the API and request also a `description` and a `rating`.
 That's neat, isn't it?
@@ -126,7 +126,7 @@ Of course, we can query all aspects of the schema, too:
   }
 }
 ```
-<a href="https://api.angular.schule/graphql/?query=%7B%0A%20%20__type(name%3A%20%22Book%22)%20%7B%0A%20%20%20%20kind%0A%20%20%20%20name%0A%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20type%20%7B%0A%20%20%20%20%20%20%20%20kind%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%20%20description%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A">click here</a>
+[click here](http://bit.ly/2JGDmZl)
 
 This is all we need to know to start with GraphQL.
 You can learn more about the query language in [the official documentation](https://graphql.org/learn/queries/). 
