@@ -145,7 +145,7 @@ In Angular world, the [Apollo](https://www.apollographql.com/) library is quite 
 
 ## Generating types with GraphQL code generator
 
-![Logo Apollo](logo-graphql-code-generator?sanitize=true)
+![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)
 
 We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
 On the first look it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
