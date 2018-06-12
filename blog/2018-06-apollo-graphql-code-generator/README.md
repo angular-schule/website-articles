@@ -89,9 +89,6 @@ The server will return a result like this:
           },
           {
             "name": "Danny Koppenhagen"
-          },
-          {
-            "name": "Gregor Woiwode"
           }
         ]
       }
@@ -100,7 +97,7 @@ The server will return a result like this:
 }
 ```
 
-For your convenience, just click [this link](https://api.angular.schule/graphql/?query={%0A%20%20books%20{%0A%20%20%20%20title%0A%20%20%20%20isbn%0A%20%20%20%20authors%20{%0A%20%20%20%20%20%20name%0A%20%20%20%20}%0A%20%20}%0A}) to place your first GraphQL query.
+For your convenience, just click <a href="https://api.angular.schule/graphql/?query={%0A%20%20books%20{%0A%20%20%20%20title%0A%20%20%20%20isbn%0A%20%20%20%20authors%20{%0A%20%20%20%20%20%20name%0A%20%20%20%20}%0A%20%20}%0A}">this link</a> to place your first GraphQL query.
 Go ahead!
 Play with the API and request also a `description` and a `rating`.
 That's neat, isn't it?
@@ -136,12 +133,58 @@ Of course, we can query all aspects of the schema, too:
 
 ![Logo Apollo](logo-apollo.svg?sanitize=true)
 
-
 This is all we need to know to start with GraphQL.
 GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
 In Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
 
-.. TODO ..
+The [documentation](https://www.apollographql.com/docs/angular/) is well done, so we can keep the installation instructions short.
+To get started with Apollo Angular, we first want to install the required packages from npm (multiple installs, for better readability).
+
+```bash
+npm install apollo-angular
+npm install apollo-angular-link-http
+npm install apollo-client
+npm install apollo-cache-inmemory
+npm install graphql-tag
+npm install graphql
+```
+
+* `apollo-angular` is the Angular integration for the Apollo Client.
+* `apollo-angular-link-http` provides a network layer (Apollo Link).
+  It can be replaced with other link modules (e.g. GraphQL over WebSocket, read more in [this article](https://www.apollographql.com/docs/angular/basics/network-layer.html)).
+  Here we configure the application-wide HTTP thingies like the URL to the endpoint. 
+* `apollo-client` is the underlying GraphQL client.
+  We are going to use the integration for Angular but there are also different integration layers for React, Vue.js and more.
+* `apollo-cache-inmemory` is the recommended cache implementation for Apollo Client.
+* `graphql-tag` contains a parser to convert human-written GraphQL query strings into the standard GraphQL AST. We will use it for the `gql` tags later on.
+* `graphql` is the JavaScript reference implementation for GraphQL. `graphql-tag` requires this as a peer dependency.
+
+Quite a lot packages, but the usage itself is straightforward.
+It's time to add three Modules to our application.
+We need `HttpClientModule` (as always), `HttpLinkModule` (our API speaks simple HTTP) and the `ApolloModule` itself.
+The necessary configuration can be done at the constructor of the `AppModule`, too.
+
+```typescript
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+@NgModule({
+  imports: [
+    HttpClientModule,
+    HttpLinkModule,
+    ApolloModule
+  ],
+})
+class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
+    apollo.create({
+      link: httpLink.create({uri: 'https://api.angular.schule/graphql'}),
+      cache: new InMemoryCache()
+    });
+  }
+}
+```
 
 ## Generating types with GraphQL code generator
 
