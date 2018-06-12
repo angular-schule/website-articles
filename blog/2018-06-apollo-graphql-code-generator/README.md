@@ -28,7 +28,7 @@ Depending on the use-case, I favour a different approach to read and change in m
 
 ## Hello GraphQL
 
-<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql.svg?sanitize=true" width="300px" align="right">
+![Logo graphql](logo-graphql.svg?sanitize=true)
 
 One fundamental problem of a classical REST api is the amount of received data.
 Sometimes we are fetching too much data, so there is data in the response we don't use.
@@ -134,12 +134,25 @@ Of course, we can query all aspects of the schema, too:
 
 ## Querying data with Apollo Angular
 
-<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-apollo.svg?sanitize=true" width="300px" align="right">
+![Logo Apollo](logo-apollo.svg?sanitize=true)
+
 
 This is all we need to know to start with GraphQL.
 GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
 In Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
- 
+
+
+## Generating types with GraphQL code generator
+
+![Logo Apollo](logo-apollo.svg?sanitize=true)
+
+We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
+On the first look it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
+But after some evaluation I came to the conclusion that another generator ([GraphQL Code Generator](https://github.com/dotansimha/graphql-code-generator)) is more suitable.
+I had two reasons for this decision:
+
+1. the generated interfaces are better organised (grouped via namespaces)
+2. there is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator".  you can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customized result.
 
 ## Related Articles
 
