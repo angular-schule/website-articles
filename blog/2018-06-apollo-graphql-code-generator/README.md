@@ -28,7 +28,8 @@ Depending on the use-case, I favour a different approach to read and change in m
 
 ## Hello GraphQL
 
-![Logo graphql](logo-graphql.svg?sanitize=true)
+<!--![Logo graphql](logo-graphql.svg?sanitize=true)-->
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql.svg?sanitize=true" width="75%">
 
 One fundamental problem of a classical REST api is the amount of received data.
 Sometimes we are fetching too much data, so there is data in the response we don't use.
@@ -133,8 +134,8 @@ You can learn more about the query language in [the official documentation](http
 
 ## Querying data with Apollo Angular
 
-![Logo Apollo](logo-apollo.svg?sanitize=true)
-
+<!--![Logo Apollo](logo-apollo.svg?sanitize=true)-->
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-apollo.svg?sanitize=true" width="75%">
 
 GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
 In Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
@@ -190,7 +191,8 @@ class AppModule {
 
 ## Generating types with GraphQL code generator
 
-![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)
+<!--![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)-->
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql-code-generator.svg?sanitize=true" width="75%">
 
 We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
 On the first look it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
