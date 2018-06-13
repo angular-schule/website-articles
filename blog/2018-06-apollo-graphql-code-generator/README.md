@@ -189,29 +189,33 @@ class AppModule {
 }
 ```
 
-The simplest way of preparing a query in TypeScript/JavaScript is to define it in a special notation. We are using the `gql` tag that is provided by the `graphql-tag` library.
+The simplest way of preparing a query in TypeScript/JavaScript is to define it in a special notation.
+We are using the `gql` tag that is provided by the `graphql-tag` library.
 
 
 ```typescript
 import gql from 'graphql-tag';
 
-const booksQuery = gql`
+export const booksQuery = gql`
 {
   books {
-    title
     isbn
-    authors {
-      name
+    title
+    description,
+    rating
+    thumbnails {
+      url
     }
   }
 }
 `;
 ```
 
-For a quick start I would recommend `Apollo.query`.
+For a quick start I recommend `Apollo.query`.
 It returns an `Observable` that emits a result, just once.
 Knowing this, we do not have to unsubscribe — which makes the code a bit shorter compared to `Apollo.watchQuery `.
-For advanced scenarios we can leverage `Apollo.watchQuery`, this method returns an object of type `QueryRef` that contains many useful methods to manipulate the watched query. Just to make you curious:
+For advanced scenarios we can leverage `Apollo.watchQuery`, this method returns an object of type `QueryRef` that contains many useful methods to manipulate the watched query.
+Just to make you curious:
 
 * `querRef.startPolling`
 * `querRef.stopPolling`
@@ -227,7 +231,7 @@ import { Apollo } from 'apollo-angular';
 
 export class MyComponent implements OnInit  {
 
-  books: any[] = [];  // <-- any! 😵
+  books: any[] = [];  // <-- any❗️
 
   constructor(private apollo: Apollo) { }
 
@@ -239,7 +243,7 @@ export class MyComponent implements OnInit  {
 
   getAllViaGraphQL() {
 
-    return this.apollo.query<any>({  // <-- any! 😵
+    return this.apollo.query<any>({  // <-- any❗️
       query: booksQuery,
     })
     .pipe(
@@ -250,24 +254,83 @@ export class MyComponent implements OnInit  {
 ```
 
 Works like a charm, but you see two times the usage of `any`.
-This is bad.
-We have no TypeScript types out of the box. We would have to define them on our own. This is manual work that where we can make errors and where we can get out of sync with the model on the server! So we should generate the types instead with the help of the already known GraphQL schema.
+This is bad❗️
+Obviously there are no TypeScript types out of the box.
+We would have to define them on our own.
+This is manual work where humans can make errors and where we can get out of sync with the model on the server very easily!
+So we should generate the types by "robots" instead with the help of the already known GraphQL schema.
+Of course, other people have already done the hard work for us. 
 
 
 ## Generating types with GraphQL code generator
 
 <!--![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)-->
-<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql-code-generator.svg?sanitize=true" width="75%">
+<img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql-code-generator.svg?sanitize=true" width="50%">
 
-We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
-On the first look it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
-But after some evaluation I came to the conclusion that another generator ([GraphQL Code Generator](https://github.com/dotansimha/graphql-code-generator)) is more suitable.
+All information we need is already in the GraphQL schema. We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
+On a first glance it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
+But after some evaluation I came to the conclusion that another code-generator ([__GraphQL Code Generator__](https://github.com/dotansimha/graphql-code-generator)) is more suitable.
 I had two reasons for this decision:
 
-1. the generated interfaces are better organised (grouped via namespaces)
-2. there is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator".  you can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customised result.
+1. The generated code (TypeScript interfaces) is better readable and organised (grouped via namespaces).
+1. There is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator". You can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customised result.
 
-.. TODO ..
+If are used to `swagger-codegen`, then you will experience a lot of similarities.
+And this is clearly the case.
+The author wrote the code generator based on his experience with other robust code generators.
+I'm going to repeat myself, but the most important point behind a solid code generator is the ability to change and extend the results.
+I was really wondering that his wasn't implemented for `apollo-codegen`.
+Read more about the story behind [at medium](https://medium.com/@dotansimha/graphql-code-generator-a34e3785e6fb).
+
+First we have to install the generator inside our existing Angular project:
+
+```bash
+npm install --save-dev graphql-code-generator graphql-codegen-typescript-template
+npm install graphql
+```
+
+In our case we can skip the dependency `graphql`, we already installed it together with Apollo.
+I added the installation of `graphql ` in a separate line if code, since it is a "devDependency" if you ask `graphql-code-generator`.
+But it is a full dependency for `graphql-tag` (read above).
+This is just cosmetic.
+Webpack won't care about this detail, but I do! :smile:
+
+No we have a new command line tool with the name `gql-gen`.
+We can either start it with `npx gql-gen [options] [documents ...]` or execute it inside a run-script in the `package.json`.
+For reusability I always prefer the last option.
+
+```bash
+gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts ./src/**/*.ts```
+
+:tada: there comes out `Book` interface:
+
+```typescript
+export interface Book {
+  isbn: string;
+  title?: string | null;
+  subtitle?: string | null;
+  rating?: number | null;
+  description?: string | null;
+  thumbnails?: (Thumbnail | null)[] | null;
+  authors?: (Author | null)[] | null;
+}
+```
+
+__...but wait!__  
+
+This is the full book, as described by the schema!
+We are only interested in some of the properties and this interface is offering to much.
+Properties like `subtitle` are never delivered from the server and will evaluate to `undefined`.
+
+<!--
+The explanation is subtile: we have to give our query a name.
+Up until now, we have been using a shorthand syntax where we omit both the query keyword and the query name.
+There is not enough information for a dedicated type.
+It is also useful to generally make our code less ambiguous.
+
+So let's have a second try:
+-->
+
 
 ## Related Articles
 
