@@ -98,15 +98,38 @@ The server will return a result like this:
 }
 ```
 
+__Heureka!__
+
 For your convenience, just click [this link](http://bit.ly/2t4dzTw) to place your first GraphQL query.
 Go ahead!
 Play with the API and request also a `description` and a `rating`.
 That's neat, isn't it?
 
-As you see, the query has exactly the same shape as the result.
+Up until now, we have been using a shorthand syntax where we omit both the query keyword and the query name.
+We shouldn't do this in a real-live app.
+On the one hand it is generally a bad practice make the code ambiguous.
+On the other hand we will also get in concrete tooling-trouble later on, because without a name it is hard to generate a type for that anonymous query (see [#372](https://github.com/dotansimha/graphql-code-generator/issues/372)).
+
+Let's fix the snipped to the full syntax version:
+
+```
+query BooksAndAuthors {
+  books {
+    title
+    isbn
+    authors {
+      name
+    },
+    description,
+    rating
+  }
+}
+```
+
+As you have seen, the query has exactly the same shape as the result.
 This is essential to GraphQL, because you always get back what you expect.
 But how do we deterministically know that the authors return as an array?
-That is another crucial aspect of GraphQL: schemas.
+That is another crucial aspect of GraphQL: __schemas__.
 Schemas are determined on the server.
 He defines the objects that can be queried, as well as their exact types.
 Of course, we can query all aspects of the schema, too:
@@ -196,18 +219,18 @@ We are using the `gql` tag that is provided by the `graphql-tag` library.
 ```typescript
 import gql from 'graphql-tag';
 
-export const booksQuery = gql`
-{
-  books {
-    isbn
-    title
-    description,
-    rating
-    thumbnails {
-      url
+const booksQuery = gql`
+  query BookList {
+    books {
+      isbn
+      title
+      description,
+      rating
+      thumbnails {
+        url
+      }
     }
   }
-}
 `;
 ```
 
@@ -290,17 +313,18 @@ npm install graphql
 ```
 
 In our case we can skip the dependency `graphql`, we already installed it together with Apollo.
-I added the installation of `graphql ` in a separate line if code, since it is a "devDependency" if you ask `graphql-code-generator`.
-But it is a full dependency for `graphql-tag` (read above).
-This is just cosmetic.
-Webpack won't care about this detail, but I do! :smile:
+I added the installation of `graphql ` in a separate line of code, since it is a "devDependency" like `graphql-code-generator`.
+But it also has to be a dependency for `graphql-tag` (read above).
+Anyway, both options will work. 
 
 No we have a new command line tool with the name `gql-gen`.
 We can either start it with `npx gql-gen [options] [documents ...]` or execute it inside a run-script in the `package.json`.
 For reusability I always prefer the last option.
 
 ```bash
-gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts ./src/**/*.ts```
+    "graphql-codegen": "gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts "./src/**/*.ts"
+
+```
 
 :tada: there comes out `Book` interface:
 
@@ -322,14 +346,7 @@ This is the full book, as described by the schema!
 We are only interested in some of the properties and this interface is offering to much.
 Properties like `subtitle` are never delivered from the server and will evaluate to `undefined`.
 
-<!--
-The explanation is subtile: we have to give our query a name.
-Up until now, we have been using a shorthand syntax where we omit both the query keyword and the query name.
-There is not enough information for a dedicated type.
-It is also useful to generally make our code less ambiguous.
-
-So let's have a second try:
--->
+TODO
 
 
 ## Related Articles
