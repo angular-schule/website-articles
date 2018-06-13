@@ -208,6 +208,50 @@ const booksQuery = gql`
 `;
 ```
 
+For a quick start I would recommend `Apollo.query`.
+It returns an `Observable` that emits a result, just once.
+Knowing this, we do not have to unsubscribe — which makes the code a bit shorter compared to `Apollo.watchQuery `.
+For advanced scenarios we can leverage `Apollo.watchQuery`, this method returns an object of type `QueryRef` that contains many useful methods to manipulate the watched query. Just to make you curious:
+
+* `querRef.startPolling`
+* `querRef.stopPolling`
+* `querRef.refetch`
+
+You get your Observable via `querRef.valueChanges`. But keep in mind that you have to properly unsubscribe here.
+
+This is how we use `Apollo.query`:
+
+```typescript
+import { Apollo } from 'apollo-angular';
+
+
+export class MyComponent implements OnInit  {
+
+  books: any[] = [];  // <-- any! 😵
+
+  constructor(private apollo: Apollo) { }
+
+  ngOnInit() {
+    this.store
+      .getAllViaGraphQL()
+      .subscribe(books => this.books = books);
+  }
+
+  getAllViaGraphQL() {
+
+    return this.apollo.query<any>({  // <-- any! 😵
+      query: booksQuery,
+    })
+    .pipe(
+      map(({ data }) => data.books)
+    );
+  }
+}
+```
+
+Works like a charm, but you see two times the usage of `any`.
+This is bad.
+We have no TypeScript types out of the box. We would have to define them on our own. This is manual work that where we can make errors and where we can get out of sync with the model on the server! So we should generate the types instead with the help of the already known GraphQL schema.
 
 
 ## Generating types with GraphQL code generator
@@ -221,7 +265,7 @@ But after some evaluation I came to the conclusion that another generator ([Grap
 I had two reasons for this decision:
 
 1. the generated interfaces are better organised (grouped via namespaces)
-2. there is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator".  you can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customized result.
+2. there is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator".  you can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customised result.
 
 .. TODO ..
 
