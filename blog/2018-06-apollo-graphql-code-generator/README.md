@@ -318,13 +318,30 @@ But it also has to be a dependency for `graphql-tag` (read above).
 Anyway, both options will work. 
 
 No we have a new command line tool with the name `gql-gen`.
-We can either start it with `npx gql-gen [options] [documents ...]` or execute it inside a run-script in the `package.json`.
-For reusability I always prefer the last option.
+We can either start it with `npx gql-gen [options] [documents ...]`...
 
 ```bash
-    "graphql-codegen": "gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts "./src/**/*.ts"
-
+# command line usage
+npx gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts "./src/**/*.ts"
 ```
+
+... or execute it inside a run-script in the `package.json`:
+
+
+```json
+// via package.json
+{
+  "scripts": {
+    "start": "ng serve",
+    "graphql-codegen": "gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts \"./src/**/*.ts\""
+  }
+}
+```
+
+For reusability I always prefer the last option.
+Please pay an extra amount of attention to the double quotes for the file selector (`"./src/**/*.ts"`).
+If you forget them, you won't notice an error but the codegen won't find your files.
+It happens because the pattern `**` (for recursive lookup) gets resolved before [glob](https://www.npmjs.com/package/glob) receives it. (see more [here](https://github.com/dotansimha/graphql-code-generator/issues/180#issuecomment-397086490))
 
 :tada: there comes out `Book` interface:
 
