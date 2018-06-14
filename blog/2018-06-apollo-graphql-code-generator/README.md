@@ -14,8 +14,6 @@ language: en
 thumbnail: graphql-header.png
 ---
 
-![graphql-header.png](graphql-header.png)
-
 **In this article, I will give a short introduction to GraphQL. We will then take a look at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
 
 <hr>
