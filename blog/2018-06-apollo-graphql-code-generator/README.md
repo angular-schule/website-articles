@@ -2,7 +2,7 @@
 title: "Generating Angular API clients with Apollo and GraphQL code generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2018-06-10
+published: 2018-06-14
 keywords:
   - Graphql
   - Codegen
