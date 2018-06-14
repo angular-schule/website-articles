@@ -233,7 +233,7 @@ export class AppComponent {
 }
 ```
 
-## Summary
+## Conclusion
 
 :tada: Congratulations!
 We have mastered a journey for automatically generated api code.
@@ -251,7 +251,7 @@ You can find the full setup of the swagger codegen here:
 
 The following Angular demo app is using the package `@angular-schule/book-monkey-api`:
 
-* [demo-api-codegen/book-rating](https://github.com/angular-schule/demo-api-codegen/tree/master/book-rating)
+* [demo-api-codegen](https://github.com/angular-schule/demo-api-codegen)
 
 Have fun doing awesome Angular stuff! :smile:
 

@@ -219,7 +219,7 @@ We are using the `gql` tag that is provided by the `graphql-tag` library.
 ```typescript
 import gql from 'graphql-tag';
 
-const booksQuery = gql`
+booksQuery = gql`
   query BookList {
     books {
       isbn
@@ -343,7 +343,7 @@ Please pay an extra amount of attention to the double quotes for the file select
 If you forget them, you won't notice an error but the codegen won't find your files.
 It happens because the pattern `**` (for recursive lookup) gets resolved before [glob](https://www.npmjs.com/package/glob) receives it. (see more [here](https://github.com/dotansimha/graphql-code-generator/issues/180#issuecomment-397086490))
 
-:tada: there comes out `Book` interface:
+And this is the generated `Book` interface:
 
 ```typescript
 export interface Book {
@@ -359,12 +359,106 @@ export interface Book {
 
 __...but wait!__  
 
-This is the full book, as described by the schema!
-We are only interested in some of the properties and this interface is offering to much.
+This is a full book, as described by the schema!
+Looking at the query, we are only interested in some of the properties and this interface is offering to much.
 Properties like `subtitle` are never delivered from the server and will evaluate to `undefined`.
 
-TODO
+If we look at the generated file `graphql-types.ts` we will see that there are not only the types from the schema, but also types for the query `BookList`.
+This is what we really want to use:
 
+```typescripts
+export namespace BookList {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+    books?: (Books | null)[] | null;
+  };
+
+  export type Books = {
+    __typename?: "Book";
+    isbn: string;
+    title?: string | null;
+    description?: string | null;
+    rating?: number | null;
+    thumbnails?: (Thumbnails | null)[] | null;
+  };
+
+  export type Thumbnails = {
+    __typename?: "Thumbnail";
+    url?: string | null;
+  };
+}
+```
+
+The namespace `BookList` contains everything to rewrite the Apollo query with strong types.
+
+```typescript
+import { BookList } from '../graphql-types';
+
+getAllViaGraphQL(): Observable<BookList.Books[]> { 
+
+  return this.apollo.query<BookList.Query>({
+    query: booksQuery,
+  })
+  .pipe(
+    map(({ data }) => data.books)
+  );
+}
+```
+
+The return type `Observable<BookList.Books[]>` is not necessary here, but I wanted to show that the types perfectly fit.
+This is nearly perfect, but I do not like the plural-S which is derived from the name of the query.
+For this purpose we can use an [alias](https://graphql.org/learn/queries/#aliases).
+The GraphQL query should look now like this: 
+
+```typescript
+const booksQuery = gql`
+  query BookList {
+    book: books {
+      isbn
+      title
+      description,
+      rating
+      thumbnails {
+        url
+      }
+    }
+  }
+`;
+```
+
+We finally have the perfect output for our Apollo client!
+
+```typescript
+getAllViaGraphQL(): Observable<BookList.Book[]> {
+
+  return this.apollo.query<BookList.Query>({
+    query: booksQuery,
+  })
+  .pipe(
+    map(({ data }) => data.book)
+  );
+}
+```
+
+## Conclusion
+
+:tada: Congratulations!
+We have mastered another journey for automatically generated api code.
+We first learned the basics of GraphQL, got an introduction the Apollo GraphQL and we finally used GraphQL code generator to plump everything together. 
+Your project will benefit from less errors and more productivity.
+Let robots generate types for you and concentrate on more exciting work.
+
+But the possibilities do not end here.
+__Next time we could generate also the service layer via the codegen.
+Just retweet this article if you are interested in this topic!__
+
+The following Angular demo app showcases the shown setup:
+
+* [demo-api-codegen](https://github.com/angular-schule/demo-api-codegen)
+
+Have fun doing awesome Angular stuff! :smile:
 
 ## Related Articles
 
