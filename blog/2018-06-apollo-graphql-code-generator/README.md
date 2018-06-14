@@ -11,8 +11,7 @@ keywords:
   - Angular
   - TypeScript
 language: en
-thumbnail: bg-graph.svg
-hidden: true
+thumbnail: graphql-header.png
 ---
 
 **In this article, I will give a short introduction to GraphQL. We will then take a look at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
