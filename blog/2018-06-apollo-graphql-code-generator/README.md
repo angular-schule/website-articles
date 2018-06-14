@@ -1,5 +1,5 @@
 ---
-title: "Generate Angular API clients with Apollo and GraphQL code generator"
+title: "Generating Angular API clients with Apollo and GraphQL code generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2018-06-10
@@ -14,7 +14,7 @@ language: en
 thumbnail: graphql-header.png
 ---
 
-**In this article, I will give a short introduction to GraphQL. We will then take a look at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
+**In this article, I will give a short introduction to GraphQL and then we shall look at at Apollo Angular and the GraphQL code generator. We will combine the flexibility of Graphql with the safety of strongly typed TypeScript code that is consistent between server and client.**
 
 <hr>
 
@@ -31,26 +31,26 @@ Depending on the use-case, I favour a different approach to read and change in m
 <img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql.svg?sanitize=true" width="75%">
 
 One fundamental problem of a classical REST api is the amount of received data.
-Sometimes we are fetching too much data, so there is data in the response we don't use.
+Sometimes we fetch too much data, so there is data in the response we don't use.
 Or we have the opposite, we do not have enough data with one call,
 which forces us to call a second resource for more.
 This is called "over-fetching" and "under-fetching".
 In a perfect world, we would have exactly the right resources to serve the right data to our apps.
-In a complex scenario this will lead to a huge and unmaintainable API,
-because we would have to have to offer our data in various shapes via different endpoints.
+In a complex scenario this will lead to a huge and unmaintainable API.
+We would have to offer our data in various shapes via different endpoints.
 
-See this RESTful resource, which is explorable [via swagger-ui](https://api.angular.schule/swagger-ui/):
+Discover more about this RESTful resource [here](https://api.angular.schule/swagger-ui/):
 
 * __https://api.angular.schule/books__
 
 All right, a lot of books.
-Let's assume we are not interested in the thumbnail nor the subtitle.
+Let's assume we are not interested in the thumbnail or the subtitle.
 But we want to have the authors — but only their names!
-That's tricky! How to adjust this?
-Actually, we haven't implemented such a feature in our RESTful API. There is no way 
+That's tricky! How do we adjust this?
+Actually, we haven't implemented such a feature in our RESTful API.
+There isn't a way to do this.
 
-Soon we would define which objects and which fields of those objects we want to receive.
-Books and authors in our case.
+Soon we will define which objects and fields we want to receive - in our case books and authors.
 And this is basically a GraphQL query in nutshell.
 Take a look at the following api, which is supposed to return some books:
 
@@ -97,19 +97,19 @@ The server will return a result like this:
 }
 ```
 
-__Heureka!__
+__Eureka!__
 
 For your convenience, just click [this link](http://bit.ly/2t4dzTw) to place your first GraphQL query.
 Go ahead!
-Play with the API and request also a `description` and a `rating`.
+Play with the API and also request a `description` and a `rating`.
 That's neat, isn't it?
 
 Up until now, we have been using a shorthand syntax where we omit both the query keyword and the query name.
-We shouldn't do this in a real-live app.
-On the one hand it is generally a bad practice make the code ambiguous.
+We shouldn't do this in a real-life app.
+On the one hand it is generally bad practice make the code ambiguous.
 On the other hand we will also get in concrete tooling-trouble later on, because without a name it is hard to generate a type for that anonymous query (see [#372](https://github.com/dotansimha/graphql-code-generator/issues/372)).
 
-Let's fix the snipped to the full syntax version:
+Let's fix this snippet to:
 
 ```
 query BooksAndAuthors {
@@ -127,10 +127,10 @@ query BooksAndAuthors {
 
 As you have seen, the query has exactly the same shape as the result.
 This is essential to GraphQL, because you always get back what you expect.
-But how do we deterministically know that the authors return as an array?
+How do we know for sure that the authors return as an array?
 That is another crucial aspect of GraphQL: __schemas__.
 Schemas are determined on the server.
-He defines the objects that can be queried, as well as their exact types.
+It defines the objects that can be queried, as well as their exact types.
 Of course, we can query all aspects of the schema, too:
 
 ```json
@@ -159,8 +159,8 @@ You can learn more about the query language in [the official documentation](http
 <!--![Logo Apollo](logo-apollo.svg?sanitize=true)-->
 <img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-apollo.svg?sanitize=true" width="75%">
 
-GraphQL became very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
-In Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
+GraphQL has become very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
+In the Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
 
 The [documentation](https://www.apollographql.com/docs/angular/) is well done, so we can keep the installation instructions short.
 To get started with Apollo Angular, we first want to install the required packages from npm (multiple installs, for better readability).
@@ -184,7 +184,7 @@ npm install graphql
 * `graphql-tag` contains a parser to convert human-written GraphQL query strings into the standard GraphQL AST. We will use it for the `gql` tags later on.
 * `graphql` is the JavaScript reference implementation for GraphQL. `graphql-tag` requires this as a peer dependency.
 
-Quite a lot packages, but the usage itself is straightforward.
+Quite a lot of packages, but you see the usage of any twice.
 It's time to add three Modules to our application.
 We need `HttpClientModule` (as always), `HttpLinkModule` (our API speaks simple HTTP) and the `ApolloModule` itself.
 The necessary configuration can be done at the constructor of the `AppModule`, too.
@@ -280,7 +280,7 @@ This is bad❗️
 Obviously there are no TypeScript types out of the box.
 We would have to define them on our own.
 This is manual work where humans can make errors and where we can get out of sync with the model on the server very easily!
-So we should generate the types by "robots" instead with the help of the already known GraphQL schema.
+So we should generate the types by "robots" instead of with the help of the aforementioned GraphQL schema.
 Of course, other people have already done the hard work for us. 
 
 
@@ -289,20 +289,21 @@ Of course, other people have already done the hard work for us.
 <!--![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)-->
 <img src="https://angular-schule.github.io/website-articles/blog/2018-06-apollo-graphql-code-generator/logo-graphql-code-generator.svg?sanitize=true" width="50%">
 
-All information we need is already in the GraphQL schema. We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
-On a first glance it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
+All information we need is already in the GraphQL schema.
+We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
+At first glance it seems to be a perfect fit, since it is hosted under the same umbrella as Apollo Angular.
 But after some evaluation I came to the conclusion that another code-generator ([__GraphQL Code Generator__](https://github.com/dotansimha/graphql-code-generator)) is more suitable.
 I had two reasons for this decision:
 
-1. The generated code (TypeScript interfaces) is better readable and organised (grouped via namespaces).
-1. There is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator". You can simply create you template and then compile it with your GraphQL schema and GraphQL operations and get a more customised result.
+1. The generated code (TypeScript interfaces) is more readable and organised (grouped via namespaces).
+1. There is some flexible support for custom templates (with Handlebars) - This is a killer feature compared to "Apollo GraphQL code generator". You can simply create your template and then compile it with your GraphQL schema and GraphQL operations and get a more customised result.
 
-If are used to `swagger-codegen`, then you will experience a lot of similarities.
+If you are used to `swagger-codegen`, then you will experience a lot of similarities.
 And this is clearly the case.
 The author wrote the code generator based on his experience with other robust code generators.
 I'm going to repeat myself, but the most important point behind a solid code generator is the ability to change and extend the results.
 I was really wondering that his wasn't implemented for `apollo-codegen`.
-Read more about the story behind [at medium](https://medium.com/@dotansimha/graphql-code-generator-a34e3785e6fb).
+Read more about the story behind it [at medium](https://medium.com/@dotansimha/graphql-code-generator-a34e3785e6fb).
 
 First we have to install the generator inside our existing Angular project:
 
@@ -316,7 +317,7 @@ I added the installation of `graphql ` in a separate line of code, since it is a
 But it also has to be a dependency for `graphql-tag` (read above).
 Anyway, both options will work. 
 
-No we have a new command line tool with the name `gql-gen`.
+Now we have a new command line tool with the name `gql-gen`.
 We can either start it with `npx gql-gen [options] [documents ...]`...
 
 ```bash
@@ -324,7 +325,7 @@ We can either start it with `npx gql-gen [options] [documents ...]`...
 npx gql-gen --schema https://api.angular.schule/graphql --template graphql-codegen-typescript-template --out ./src/app/graphql-types.ts "./src/**/*.ts"
 ```
 
-... or execute it inside a run-script in the `package.json`:
+...or execute it inside a run-script in the `package.json`:
 
 
 ```json
@@ -359,7 +360,7 @@ export interface Book {
 __...but wait!__  
 
 This is a full book, as described by the schema!
-Looking at the query, we are only interested in some of the properties and this interface is offering to much.
+Looking at the query, we are only interested in some of the properties and this interface is offering too much.
 Properties like `subtitle` are never delivered from the server and will evaluate to `undefined`.
 
 If we look at the generated file `graphql-types.ts` we will see that there are not only the types from the schema, but also types for the query `BookList`.
@@ -445,7 +446,7 @@ getAllViaGraphQL(): Observable<BookList.Book[]> {
 
 :tada: Congratulations!
 We have mastered another journey for automatically generated api code.
-We first learned the basics of GraphQL, got an introduction the Apollo GraphQL and we finally used GraphQL code generator to plump everything together. 
+We first learned the basics of GraphQL, got an introduction the Apollo GraphQL and we finally used GraphQL code generator to put everything together. 
 Your project will benefit from less errors and more productivity.
 Let robots generate types for you and concentrate on more exciting work.
 
@@ -461,5 +462,5 @@ Have fun doing awesome Angular stuff! :smile:
 
 ## Related Articles
 
-* 2018-04-12 - [Generate Angular API clients with Swagger](/blog/2018-04-swagger-codegen)
+* 2018-04-12 - [Generating Angular API clients with Swagger](/blog/2018-04-swagger-codegen)
 * 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](/blog/2018-06-swagger-codegen-is-now-openapi-generator)
