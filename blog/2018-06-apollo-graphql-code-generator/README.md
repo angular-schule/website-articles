@@ -464,3 +464,7 @@ Have fun doing awesome Angular stuff! :smile:
 
 * 2018-04-12 - [Generating Angular API clients with Swagger](/blog/2018-04-swagger-codegen)
 * 2018-06-08 - [Swagger Codegen is now OpenAPI Generator](/blog/2018-06-swagger-codegen-is-now-openapi-generator)
+
+## Thanks
+
+I would like to thank [Dotan Simha](https://twitter.com/dotansimha) for his support while preparing the demo and the article.
