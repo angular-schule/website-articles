@@ -39,7 +39,7 @@ __Lernziele:__
 * Code-Generatoren einsetzen
 
 __Wo/Wann:__
-* [enterJS, Dienstag, 09:30 Uhr](https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs)
+* [enterJS, Mittwoch, 13:50 Uhr](https://www.enterjs.de/single?id=6764&api-clients-f%C3%BCr-typescript-generieren-mit-swagger-%26-graphql)
 
 __Material:__
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1qbQwF5YyONDmlRhrb_1QZYJviOw--AHch9KcNzHrTso/edit?usp=sharing)
