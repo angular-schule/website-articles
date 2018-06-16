@@ -16,7 +16,7 @@ thumbnail: banner.jpg
 sticky: true
 ---
 
-Im Juni 2018 haben wir eine ganze Reihe von Talks im Programm.
+Im Juni 2018 halten wir eine Reihe von Talks auf den Konferenzen enterJS und DWX.
 Dies ist eine Liste aller Vorträge und des Workshops.
 
 
