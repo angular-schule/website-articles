@@ -16,7 +16,7 @@ thumbnail: banner.jpg
 sticky: true
 ---
 
-Im Juni 2018 halten wir eine Reihe von Talks auf der Konferenzen enterJS.
+Im Juni 2018 halten wir eine Reihe von Talks auf der Konferenz enterJS.
 Dies ist eine Liste aller Vorträge und des Workshops.
 
 
