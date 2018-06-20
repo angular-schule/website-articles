@@ -42,6 +42,9 @@ __Wo/Wann:__
 * [enterJS, Mittwoch, 13:50 Uhr](https://www.enterjs.de/single?id=6764&api-clients-f%C3%BCr-typescript-generieren-mit-swagger-%26-graphql)
 
 __Material:__
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR5ADxU_Nzk_7f4-AeAL74GzzFleMIdlgc1L51U9P4qIwq-n8Eg8vzsUgIqZRH5neY7w30R9kdpf0h1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1JM1RzTbywEDwNcEaib6DqFRlBrlGh-WaPtV8-Wrwtpw/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/demo-api-codegen)
 * weiterführender Artikel: [Generating Angular API clients with Swagger](https://angular.schule/blog/2018-04-swagger-codegen)
