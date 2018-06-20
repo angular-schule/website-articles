@@ -1,5 +1,5 @@
 ---
-title: Unsere Vorträge zur enterJS und DWX
+title: Unsere Vorträge zur enterJS 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-06-16
@@ -16,7 +16,7 @@ thumbnail: banner.jpg
 sticky: true
 ---
 
-Im Juni 2018 halten wir eine Reihe von Talks auf den Konferenzen enterJS und DWX.
+Im Juni 2018 halten wir eine Reihe von Talks auf der Konferenzen enterJS.
 Dies ist eine Liste aller Vorträge und des Workshops.
 
 
@@ -42,7 +42,7 @@ __Wo/Wann:__
 * [enterJS, Mittwoch, 13:50 Uhr](https://www.enterjs.de/single?id=6764&api-clients-f%C3%BCr-typescript-generieren-mit-swagger-%26-graphql)
 
 __Material:__
-* [Slides (Google Docs)](https://docs.google.com/presentation/d/1qbQwF5YyONDmlRhrb_1QZYJviOw--AHch9KcNzHrTso/edit?usp=sharing)
+* [Slides (Google Docs)](https://docs.google.com/presentation/d/1JM1RzTbywEDwNcEaib6DqFRlBrlGh-WaPtV8-Wrwtpw/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/demo-api-codegen)
 * weiterführender Artikel: [Generating Angular API clients with Swagger](https://angular.schule/blog/2018-04-swagger-codegen)
 * weiterführender Artikel: [Swagger Codegen is now OpenAPI Generator](https://angular.schule/blog/2018-06-swagger-codegen-is-now-openapi-generator)
