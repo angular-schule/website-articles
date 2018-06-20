@@ -12,7 +12,7 @@ keywords:
   - GraphQL
   - Chrome Dev Tools
 language: de
-thumbnail: banner.jpg
+thumbnail: https://angular.schule/assets/img/gallery-03.jpg
 sticky: true
 ---
 
