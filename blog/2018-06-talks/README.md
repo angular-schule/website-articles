@@ -43,7 +43,7 @@ __Wo/Wann:__
 
 __Material:__
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR5ADxU_Nzk_7f4-AeAL74GzzFleMIdlgc1L51U9P4qIwq-n8Eg8vzsUgIqZRH5neY7w30R9kdpf0h1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR5ADxU_Nzk_7f4-AeAL74GzzFleMIdlgc1L51U9P4qIwq-n8Eg8vzsUgIqZRH5neY7w30R9kdpf0h1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1JM1RzTbywEDwNcEaib6DqFRlBrlGh-WaPtV8-Wrwtpw/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/demo-api-codegen)
