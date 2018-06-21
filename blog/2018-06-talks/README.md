@@ -71,6 +71,15 @@ Versteckte und unbekannte Funktionen der Chrome DevTools verstehen und anwenden 
 __Wo/Wann:__
 * [enterJS, Donnerstag, 09:55 Uhr](https://www.enterjs.de/single?id=6759&chrome-devtools-deep-dive)
 
+__Material:__
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS_bhsNWPPoc1LByd5W2KoZbCks601b41vK89j_gojTUEK67wKqYIzszMhc6AJ-VX4S2rsXZZfOstOd/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+* [Slides (Google Docs)](https://docs.google.com/presentation/d/1wV5gl_9-9xUlxcFH2J3nP4cztLOunb2EcSwtSYsAiuI/edit?usp=sharing)
+* [Demo code (Github)](https://github.com/angular-schule/demo-buggy-book-rating)
+
+[@KatjaBudnikov](https://twitter.com/KatjaBudnikov) hat diesen Talk mit einer tollen Sketch-Note begleitet:
+!(Sketch Note)[sketch_notes_by_ekaterina budnikov.jpg]
+Vielen Dank! :smile:
 
 ---
 
