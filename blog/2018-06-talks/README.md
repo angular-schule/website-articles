@@ -100,6 +100,11 @@ Strategien für SSR und Pre-Rendering kennenlernen, um SEO und verbesserte UX au
 __Wo/Wann:__
 * [enterJS, Donnerstag, 16:00 Uhr](https://www.enterjs.de/single?id=6760&server-side-rendering-%28ssr%29-und-pre-rendering-mit-angular)
 
+__Material:__
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlxcMBz5pkEtA1oQrrH9aZSIS2zg76j72jdlpOzexsMdUQLNJMC1s57cCCDTD4DYTHxWwYvdZ_DO-6/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+* [Slides (Google Docs)](https://docs.google.com/presentation/d/1w7earjDAC9MR1Z8WnC3H_WArB42VgJVxRCbFB8E5pd0/edit?usp=sharing)
+* [Demo code (Github)](https://github.com/angular-schule/demo-ssr-playground)
 
 ---
 
