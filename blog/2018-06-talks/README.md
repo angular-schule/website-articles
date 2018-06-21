@@ -78,7 +78,7 @@ __Material:__
 * [Demo code (Github)](https://github.com/angular-schule/demo-buggy-book-rating)
 
 [@KatjaBudnikov](https://twitter.com/KatjaBudnikov) hat diesen Talk mit einer tollen Sketch-Note begleitet:
-!(Sketch Note)[sketch_notes_by_ekaterina budnikov.jpg]
+![Sketch Note](sketch_notes_by_ekaterina budnikov.jpg)
 Vielen Dank! :smile:
 
 ---
