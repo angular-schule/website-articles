@@ -128,6 +128,7 @@ __Material:__
 ](https://angular.schule/blog/2018-03-pure-immutable-operations)
 * weiterführender Artikel: [5 useful NgRx effects that don't rely on actions](https://angular.schule/blog/2018-06-5-useful-effects-without-actions)
 
+---
 
 ## Workshop: Reaktive Programmierung mit RxJS<br><small>von Ferdinand Malcher und Johannes Hoppe</small>
 
