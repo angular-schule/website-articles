@@ -124,7 +124,9 @@ __Material:__
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUulNKdL2PPMeM3Sbfd6qx3qBz6oiP86kVnn_NRIb_qb5p1EQMjLovSKhOAFkXkkrNMhjO4RsEX3u7/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1YwJ71ktSUk3W7rDlwFdB9-aonKI0sncbjZwSkq_tF7A/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/book-rating-ngrx)
-
+* weiterführender Artikel: [10 pure immutable operations you should know
+](https://angular.schule/blog/2018-03-pure-immutable-operations)
+* weiterführender Artikel: [5 useful NgRx effects that don't rely on actions](https://angular.schule/blog/2018-06-5-useful-effects-without-actions)
 
 
 ## Workshop: Reaktive Programmierung mit RxJS<br><small>von Ferdinand Malcher und Johannes Hoppe</small>
