@@ -121,9 +121,9 @@ __Wo/Wann:__
 
 __Material:__
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS9hTD8LNgpM_JT9pbjxTU2PSGEQ44uhRRIl7q1YG7nJM3EUfvGZoy7w3S2KwZYwx944B_bT8WhiMs1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-* [Slides (Google Docs)](https://docs.google.com/presentation/d/1R_P0v2iIIu_Koi9sG5iogWm7VUN0kzTWgVeoSfCRo3w/edit?usp=sharing)
-* [Demo code (Github)](https://github.com/angular-schule/book-rating-redux)
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUulNKdL2PPMeM3Sbfd6qx3qBz6oiP86kVnn_NRIb_qb5p1EQMjLovSKhOAFkXkkrNMhjO4RsEX3u7/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+* [Slides (Google Docs)](https://docs.google.com/presentation/d/1YwJ71ktSUk3W7rDlwFdB9-aonKI0sncbjZwSkq_tF7A/edit?usp=sharing)
+* [Demo code (Github)](https://github.com/angular-schule/book-rating-ngrx)
 
 
 
