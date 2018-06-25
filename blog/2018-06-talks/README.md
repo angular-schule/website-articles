@@ -1,5 +1,5 @@
 ---
-title: Unsere Vorträge zur enterJS 2018
+title: Unsere Vorträge zur DWX und enterJS 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-06-16
@@ -16,7 +16,7 @@ thumbnail: banner.jpg
 sticky: true
 ---
 
-Im Juni 2018 halten wir eine Reihe von Talks auf der Konferenz enterJS.
+Im Juni 2018 halten wir eine Reihe von Talks auf mehreren Konferenzen.
 Dies ist eine Liste aller Vorträge und des Workshops.
 
 
@@ -39,7 +39,9 @@ __Lernziele:__
 * Code-Generatoren einsetzen
 
 __Wo/Wann:__
-* [enterJS, Mittwoch, 13:50 Uhr](https://www.enterjs.de/single?id=6764&api-clients-f%C3%BCr-typescript-generieren-mit-swagger-%26-graphql)
+* [enterJS, Mittwoch, 20. Juni 2018, 13:50 Uhr](https://www.enterjs.de/single?id=6764&api-clients-f%C3%BCr-typescript-generieren-mit-swagger-%26-graphql)
+* [DWX, Montag, 25. Juni 2018, 10:30 Uhr](https://www.developer-week.de/programm/#/talk/api-clients-fur-typescript-generieren-swagger-graphql)
+* [DWX, Dienstag, 26. Juni 2018, 14:15 Uhr](https://www.developer-week.de/programm/#/talk/api-clients-fur-typescript-generieren-swagger-graphql-2)
 
 __Material:__
 
@@ -69,7 +71,7 @@ __Lernziele:__
 Versteckte und unbekannte Funktionen der Chrome DevTools verstehen und anwenden können.
 
 __Wo/Wann:__
-* [enterJS, Donnerstag, 09:55 Uhr](https://www.enterjs.de/single?id=6759&chrome-devtools-deep-dive)
+* [enterJS, Donnerstag, 21. Juni 2018, 09:55 Uhr](https://www.enterjs.de/single?id=6759&chrome-devtools-deep-dive)
 
 __Material:__
 
@@ -98,7 +100,7 @@ __Lernziele:__
 Strategien für SSR und Pre-Rendering kennenlernen, um SEO und verbesserte UX auch in Single-Page-Anwendungen zu ermöglichen.
 
 __Wo/Wann:__
-* [enterJS, Donnerstag, 16:00 Uhr](https://www.enterjs.de/single?id=6760&server-side-rendering-%28ssr%29-und-pre-rendering-mit-angular)
+* [enterJS, Donnerstag, 21. Juni 2018, 16:00 Uhr](https://www.enterjs.de/single?id=6760&server-side-rendering-%28ssr%29-und-pre-rendering-mit-angular)
 
 __Material:__
 
@@ -107,6 +109,21 @@ __Material:__
 * [Demo code (Github)](https://github.com/angular-schule/demo-ssr-playground)
 
 ---
+
+## Angular: State im Griff mit RxJS und ngrx<br><small>von Ferdinand Malcher und Johannes Hoppe</small>
+
+Einer der Gründe für den Erfolg von React liegt in der Integration des angesagten Architekturmusters Redux. Mit den "Reactive Extensions for Angular" (ngrx) kommt Redux nun in der Angular-Welt an. Komplexe Anwendungen werden leichter beherrschbar und Komponenten können von der Geschäftslogik strikt getrennt werden. In dieser Session stellen Ihnen die Buch-Autoren Ferdinand Malcher und Johannes Hoppe alle Bausteine der Architekturidee Redux vor.
+
+Am konkreten Beispiel von ngrx zeigen die beiden Angular-Experten Ihnen die Funktionsweise von Redux und RxJS. Anhand anschaulicher Beispiele lernen Sie, wie Sie die wichtigen Bausteine und Patterns einsetzen. Zum Ende der Session können Sie Begriffe wie Observables, Immutablity, Actions und Reducers sowie Effects einordnen. Dank des bereitgestellten Demo-Materials werden Sie in der Lage sein, Ihre Angular-Anwendung selbst mit RxJS und ngrx aufzusetzen.
+
+__Wo/Wann:__
+* [DWX, Dienstag, 26. Juni 2018, 11:45 Uhr](https://www.developer-week.de/programm/#/talk/angular-state-im-griff-mit-rxjs-und-ngrx)
+
+__Material:__
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS9hTD8LNgpM_JT9pbjxTU2PSGEQ44uhRRIl7q1YG7nJM3EUfvGZoy7w3S2KwZYwx944B_bT8WhiMs1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+* [Slides (Google Docs)](https://docs.google.com/presentation/d/1R_P0v2iIIu_Koi9sG5iogWm7VUN0kzTWgVeoSfCRo3w/edit?usp=sharing)
+* [Demo code (Github)](https://github.com/angular-schule/book-rating-redux)
 
 
 
@@ -149,5 +166,5 @@ __Lernziele:__
 * Unit-Tests für RxJS-Code beherrschen
 
 __Wo/Wann:__
-* [enterJS, Dienstag, 09:30 Uhr](https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs)
+* [enterJS, Dienstag, 19. Juni 2018, 09:30 Uhr](https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs)
 
