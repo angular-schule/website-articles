@@ -1,3 +1,5 @@
+![ngHeidelbergv1.jpg](ngHeidelbergv1.jpg)
+
 # Community updates, 2018-07-17
 
 1. New conference in town: NG-DE 2019, summer 2019 in Berlin, by Symetics GmbH, see https://ng-de.org 
