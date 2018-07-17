@@ -1,6 +1,6 @@
 ![ngHeidelbergv1.jpg](ngHeidelbergv1.jpg)
 
-# Community updates, 2018-07-17x
+# Community updates, 2018-07-17
 
 1. New conference in town: NG-DE 2019, summer 2019 in Berlin, by Symetics GmbH, see https://ng-de.org 
 1. Angular Days 2018, 09.-12. October in Berlin, by S&S Media see https://javascript-days.de/angular
