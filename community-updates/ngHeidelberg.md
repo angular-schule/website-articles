@@ -19,7 +19,7 @@
    - not yet supported by Angular right now!
    - Tuples in rest parameters and spread expressions (`declare function foo(...args: [number, string, boolean]): void;`)
    - New `unknown` top type (a type-safe counterpart of `any`)
-   - only a few minor breaking change
+   - only a few minor breaking changes
 1. Have you installed a fresh version of Angular-CLI/Webpack on July 12, 2018? --> __eslint-scope Security Incident__, see https://nodesource.com/blog/a-high-level-post-mortem-of-the-eslint-scope-security-incident/
    You should enable 2FA for your npm accounts!
    
