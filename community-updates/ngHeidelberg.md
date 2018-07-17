@@ -1,6 +1,6 @@
 ![ngHeidelbergv1.jpg](ngHeidelbergv1.jpg)
 
-# Community updates, 2018-07-17
+# Community updates, 2018-07-17x
 
 1. New conference in town: NG-DE 2019, summer 2019 in Berlin, by Symetics GmbH, see https://ng-de.org 
 1. Angular Days 2018, 09.-12. October in Berlin, by S&S Media see https://javascript-days.de/angular
@@ -15,13 +15,13 @@
    - typescript 2.9 support
    - KeyValuePipe
    - new (still experimental) ivy features
-1. TypeScript 3.0 is out
-   - not supported by Angular right now!
+1. TypeScript 3.0 RC is out
+   - not yet supported by Angular right now!
    - Tuples in rest parameters and spread expressions (`declare function foo(...args: [number, string, boolean]): void;`)
    - New `unknown` top type (a type-safe counterpart of `any`)
    - only a few minor breaking change
-1. Did you installed a fresh version of Angular-CLI/Webpack on 12th. of July 2018? --> __eslint-scope Security Incident__, see https://nodesource.com/blog/a-high-level-post-mortem-of-the-eslint-scope-security-incident/
-   (check if you do not have `eslint-scope@3.7.1` and `eslint-config-eslint@5.0.2`) -- 2FA for your npm accounts!
+1. Have you installed a fresh version of Angular-CLI/Webpack on July 12, 2018? --> __eslint-scope Security Incident__, see https://nodesource.com/blog/a-high-level-post-mortem-of-the-eslint-scope-security-incident/
+   You should enable 2FA for your npm accounts!
    
    You can run this, Look for "3.7.2" in the output :skull_and_crossbones:
    ```
