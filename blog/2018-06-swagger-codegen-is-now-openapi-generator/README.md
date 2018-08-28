@@ -45,7 +45,7 @@ Three years ago, in 2015, SmartBear Software [has acquired the Swagger API open 
 Swagger Codegen implements a toolset for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
 The OpenAPI Specification is a community-driven open specification within the [OpenAPI Initiative](https://www.openapis.org/), a Linux Foundation Collaborative Project.
 Swagger or more more precisely the OpenAPI Specification is the de-facto standard for re-usable and maintainable APIs.
-As of July, 2017, Swagger tools are downloaded over 100,000 times per day, according to hosting repositories Sonatype and NPM (source: [Wikipedia](https://en.wikipedia.org/wiki/Swagger_(software)).
+As of July, 2017, Swagger tools are downloaded over 100,000 times per day, according to hosting repositories Sonatype and NPM (source: [Wikipedia](https://en.wikipedia.org/wiki/Swagger_(software))).
 
 More than 40 top contributors and template creators of Swagger Codegen have joined OpenAPI Generator
 as the founding team members and are now focusing on making enhancements and creating new generators
