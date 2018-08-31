@@ -13,7 +13,6 @@ keywords:
   - Chrome Dev Tools
 language: de
 thumbnail: banner.jpg
-sticky: true
 ---
 
 Im Juni 2018 halten wir eine Reihe von Talks auf mehreren Konferenzen.
