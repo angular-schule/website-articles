@@ -1,4 +1,4 @@
-![ngHeidelbergv1.jpg](ngHeidelbergv1.jpg)
+![ngHeidelberg_v1.jpg](ngHeidelberg_v1.jpg)
 
 # Community updates, 2018-07-17
 
