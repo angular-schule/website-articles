@@ -6,8 +6,8 @@
 
 1. Angular Days 2018, 09.-12. October in Berlin, by S&S Media see https://javascript-days.de/angular
 1. Web Developer Conference (WDC), 16.-18. October 2018 in Munich, by Neue Mediengesellschaft Ulm mbH see https://www.web-developer-conference.de/
-1. NG-DE 2019, summer 2019 in Berlin, by Symetics GmbH, see https://ng-de.org 
 1. ⭐️ AngularConnect, 6. &. 7 November 2018 in London, see https://angularconnect.com/
+1. NG-DE 2019, summer 2019 in Berlin, by Symetics GmbH, see https://ng-de.org 
 1. Angular.Schule 4 days advanced workshop, 18.-21. September 2018 in Heidelberg, see https://angular.schule/schulungen/heidelberg 
 
 
