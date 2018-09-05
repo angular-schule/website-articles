@@ -4,6 +4,7 @@
 
 ## Upcoming conferences:
 
+1. Frontend Rhein-Neckar #3 26. September 2018 at UEBERBIT in Mannheim see http://meetu.ps/e/FKTYG/Fs9ND/f
 1. Angular Days 2018, 09.-12. October in Berlin, by S&S Media see https://javascript-days.de/angular
 1. Web Developer Conference (WDC), 16.-18. October 2018 in Munich, by Neue Mediengesellschaft Ulm mbH see https://www.web-developer-conference.de/
 1. ⭐️ AngularConnect, 6. &. 7 November 2018 in London, see https://angularconnect.com/
