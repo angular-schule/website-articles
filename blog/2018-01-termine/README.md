@@ -86,4 +86,4 @@ Es steht ein begrenztes Zimmer-Kontingent zur Verfügung. Stichwort: "Angular".
 
 --------
 
-*Letztes Update: 31.08.2018*
+*Letztes Update: 23.10.2018*
