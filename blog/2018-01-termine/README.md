@@ -32,8 +32,6 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 
 | Monat         | Status     |
 |---------------|------------|
-| August 2018   | AUSGEBUCHT  |
-| September 2018  | AUSGEBUCHT  |
 | Oktober 2018    | AUSGEBUCHT  |
 | November 2018    | AUSGEBUCHT  |
 | Dezember 2018    | AUSGEBUCHT  |
