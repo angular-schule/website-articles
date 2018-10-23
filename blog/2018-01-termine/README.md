@@ -34,9 +34,12 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 |---------------|------------|
 | August 2018   | AUSGEBUCHT  |
 | September 2018  | AUSGEBUCHT  |
-| Oktober 2018    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| November 2018    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Dezember 2018    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Oktober 2018    | AUSGEBUCHT  |
+| November 2018    | AUSGEBUCHT  |
+| Dezember 2018    | AUSGEBUCHT  |
+| Januar 2019    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Februar 2019    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| März 2019    | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst.
 Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt.
