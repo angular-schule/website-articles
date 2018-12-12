@@ -11,7 +11,7 @@
 
 ## News:
 
-1. :rocket: Angular version 7 has been released. The 7.0.0 release of Angular is here! This is a major release spanning the entire platform, including the core framework, Angular Material, and the CLI with synchronized major versions.
+1. :rocket: Angular version 7 has been released. This is a major release spanning the entire platform, including the core framework, Angular Material, and the CLI with synchronized major versions.
    * CLI Prompts
    * Application Performance
    * Improved Angular Material & the CDK
