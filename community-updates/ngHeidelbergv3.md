@@ -5,8 +5,9 @@
 ## Upcoming conferences:
 
 1. :heart: ngGirls __Mannheim__, 19. January 2019, see http://ng-girls.org/mannheim-2019/
-1. :de: NG-DE, 30. & 31. August 2019 in Berlin, see https://ng-de.org 
 1. :star: ng-conf, 1. - 3. May 2019 in Salt Lake City, see https://www.ng-conf.org/
+1. :de: NG-DE, 30. & 31. August 2019 in Berlin, see https://ng-de.org 
+
 
 ## News:
 
