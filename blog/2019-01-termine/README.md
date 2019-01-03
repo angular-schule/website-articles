@@ -1,13 +1,14 @@
 ---
-title: Unsere Termine 2018
+title: Unsere Termine 2019
 author: Angular.Schule Team
 mail: team@angular.schule
-published: 2018-01-15
-last-change: 2018-06-02
+published: 2019-01-01
+last-change: 2019-01-03
 keywords:
   - Angular
 language: de
 thumbnail: banner.jpg
+sticky: true
 ---
 
 Als Trainer der Angular.Schule veranstalten wir regelmäßig Schulungen zu Angular.  
@@ -31,9 +32,12 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 
 | Monat         | Status     |
 |---------------|------------|
-| Oktober 2018    | AUSGEBUCHT  |
-| November 2018    | AUSGEBUCHT  |
-| Dezember 2018    | AUSGEBUCHT  |
+| Januar 2019   | AUSGEBUCHT  |
+| Februar 2019  | AUSGEBUCHT  |
+| März 2019     | AUSGEBUCHT  |
+| April 2019    | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Mai 2019      | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Juni 2019     | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst.
 Erfahrungen mit Angular 1.x (AngularJS) werden nicht vorausgesetzt.
@@ -41,27 +45,21 @@ Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projekta
 
 
 
-## Offene Schulungen (3/4 Tage)
+## Offene Schulungen (4 Tage)
 
 > Sie kommen zu uns, Networking mit anderen Teilnehmern
 
 ![](tagesworkshop.jpg)
 
-Sehr beliebt ist unsere Intensiv-Schulung zu Angular, welchen wir in einem Konferenzhotel ausrichten.  
-An drei intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
+Sehr beliebt ist unsere öffentliche Intensiv-Schulung zu Angular, welchen wir in einem gehobenen Konferenzhotel ausrichten.  
+An vier intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
 
 
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
 |---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
-| Heidelberg    | [Angular Intensiv-Schulung][4]        | 18.09. - 21.09.2018 | ARTHOTEL HEIDELBERG      | ausverkauft
-| Darmstadt     | [Reaktive Programmierung mit RxJS][3] | 19.06.2018          | enterJS                  | ausverkauft                             |
-| Leipzig       | [Angular Intensiv-Schulung][2]        | 15.05. - 17.05.2018 | Hotel Fürstenhof Leipzig | ausverkauft                             |
-| Heidelberg    | [Angular Intensiv-Schulung][1]        | 06.03. - 08.03.2018 | ARTHOTEL HEIDELBERG      | ausverkauft                             |
+| Heidelberg    | [Angular Intensiv-Schulung][1]        | 26.03. - 29.03.2018 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][1] |
 
-[1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-tickets-42514854073
-[2]: https://www.eventbrite.de/e/leipzig-angular-intensiv-schulung-tickets-43254652831
-[3]: https://www.enterjs.de/single?id=6998&reaktive-programmierung-mit-rxjs
-[4]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-3-1-tage-tickets-46034368034
+[1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-marz-2019-4-tage-tickets-54345283205
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
@@ -73,13 +71,14 @@ Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt an
 * Routing
 * Tooling
 * Testing
+* Redux (NgRx)
+* RxJS
 * und vielem mehr!
 
 Unser Partner kümmert sich um das leibliche Wohl, an allen Tagen gibt es Verpflegung auf hohem Niveau.
-Es steht ein begrenztes Zimmer-Kontingent zur Verfügung. Stichwort: "Angular". 
 
 
 
 --------
 
-*Letztes Update: 23.10.2018*
+*Letztes Update: 03.01.2019*
