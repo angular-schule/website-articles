@@ -17,7 +17,7 @@
     -  NG has a new (very) handy form feature `markAllAsTouched()` ! Everybody literally wrote this function in every project and now we don't have to do this anymore.
     - Angular CLI (@schematics/angular 7.3.0-beta.0) comes with conditional polyfills!
 1. NgRx V7 has been released (and [nobody realised this](https://twitter.com/brandontroberts/status/1088081041535979520), because there are no breaking changes)
-1. Introducing 🚀 Launchpad for #RxJS - see https://reactive.how/rxjs/
+1. Introducing 🚀 Launchpad for RxJS - see https://reactive.how/rxjs/
    ![ngHeidelbergv4_rxjs_launchpad.jpg](ngHeidelbergv4_rxjs_launchpad.jpg)
 1. Manfred Steyer (last time speaker) in now in the Google Team (for tooling)
 1. 2nd edition: Angular-Buch (Christoph Höller) was just published, see https://angular-buch.de/
