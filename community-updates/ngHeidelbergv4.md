@@ -15,5 +15,5 @@
 
 1. :rocket: Angular version 8.0.0-beta.3
 1. Manfred Steyer (last time speaker) in now in the Google Team (for tooling)
-1. 2. edition: Angular-Buch (Christoph Höller) was just published - https://angular-buch.de/
-1. 2. edition: Angular-Buch (Malcher, Hoppe, Koppenhagen( is comming in March 2019 - https://angular-buch.com/
+1. 2nd edition: Angular-Buch (Christoph Höller) was just published - https://angular-buch.de/
+1. 2nd edition: Angular-Buch (Malcher, Hoppe, Koppenhagen( is comming in March 2019 - https://angular-buch.com/
