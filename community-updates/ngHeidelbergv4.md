@@ -19,6 +19,6 @@
 1. NgRx V7 has been released (and [nobody realised this](https://twitter.com/brandontroberts/status/1088081041535979520), because there are no breaking changes)
 1. Introducing 🚀 Launchpad for RxJS - see https://reactive.how/rxjs/
    ![ngHeidelbergv4_rxjs_launchpad.jpg](ngHeidelbergv4_rxjs_launchpad.jpg)
-1. Manfred Steyer (last time speaker) in now in the Angular Team (for tooling)
+1. Manfred Steyer (last time speaker) is now in the Angular Team (for tooling)
 1. 2nd edition: Angular-Buch (Christoph Höller) was just published, see https://angular-buch.de/
 1. 2nd edition: Angular-Buch (Malcher, Hoppe, Koppenhagen) is coming in March 2019, see https://angular-buch.com/
