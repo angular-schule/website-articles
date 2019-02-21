@@ -15,7 +15,7 @@ hidden: true
 
 **
 For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.
-In this blog entry we want to have a closer look at this question.
+In this blog post we want to have a closer look at this question.
 We will discuss a few possible strategies and weigh them against each other.**
 
 <hr>
@@ -32,7 +32,7 @@ Usually the following questions should be answered in advance in order to keep t
 - Is jQuery a dependency? (jQuery itself is also quite large, see [jQuery file size](https://mathiasbynens.be/demo/jquery-size))
 
 Table of contents:
-
+* [Integrating a pure ES6 JavaScript Library](#integrating-a-pure-es6-javascript-library)
 
 ## Integrating a pure ES6 JavaScript Library
 
@@ -78,5 +78,52 @@ import cloneDeep from 'lodash.clonedeep';
 
 This doesn't just apply to lodash.
 We should always check how big the bundles will be by our new dependencies.
+In fact, if we work with 3rd party libraries, the bundle sizes will become one of the biggest showstoppers ever.
 
 **[👉 Demo on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Flodash-example%2Flodash-example.component.ts)**
+
+
+# Integrating a JavaScript Widget
+
+Lets take a look at [plotly.js](https://plot.ly/javascript/).
+It's is a high-level, declarative charting library, which is built on top of [d3.js](http://d3js.org/) and [stack.gl](http://stack.gl/),
+The library ships with many preconfigured chart types, including scientific charts, 3D graphs, statistical charts, SVG maps, financial charts, and more.
+
+![plotly.js demo](plotly_2017.png)
+
+We can again start by installing it via npm
+
+```bash
+npm install plotly.js-dist
+```
+
+and import plotly.js as
+
+```
+import Plotly from 'plotly.js-dist'; 
+```
+
+But beware, plotly.js with all it's depedencies (inlcuding D3.js) is huge!
+Again, we can save a lot of bundle size if we choose the right package.
+Please refer to the official [bundle information](https://github.com/plotly/plotly.js/blob/master/dist/README.md#bundle-information) to choose the right partial bundle.
+
+The main plotly.js bundle weights in at:
+
+| plotly.js | plotly.min.js | plotly.min.js + gzip |
+|-----------|---------------|----------------------|
+| 6.1 MB | 2.8 MB | 849.5 kB |
+
+That's a hell of a lot of code to draw a pie chart, for example.
+If we just want to draw a pie chart we can choose the `basic` partial bundle instead.
+It contains trace modules `scatter`, `bar` and `pie`:
+
+| Raw size | Minified size | Minified + gzip size |
+|------|-----------------|------------------------|
+| 2.3 MB | 810.9 kB | 264.8 kB |
+
+At least that's a little better.
+There are also CDN links available, which can be used, too.
+We will use them later on.
+
+
+# Integrating a jQuery Widget
