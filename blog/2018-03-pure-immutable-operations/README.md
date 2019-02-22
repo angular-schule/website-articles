@@ -310,7 +310,7 @@ npm i lodash
 and the usage is convenient, too:
 
 ```ts
-import * as cloneDeep from 'lodash.clonedeep';
+import { cloneDeep } from 'lodash';
 
 const nestedObject = {
   nested: {
