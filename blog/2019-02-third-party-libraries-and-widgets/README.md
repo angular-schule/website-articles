@@ -18,14 +18,16 @@ For an upcoming workshop we were asked how to integrate third-party libraries in
 In this blog post we want to have a closer look at this question.
 We will discuss a few possible strategies and weigh them against each other.**
 
+> Note: The whole article is based on the assumption that you are using the [Angular Cli](https://cli.angular.io/).
+
 <hr>
 
 Table of contents:
 
-* [General Considerations](/blog/2019-02-third-party-libraries-and-widgets/#general-considerations)
-* [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets/#integrating-a-pure-es6-javascript-library) (lodash.clonedeep)
-* [Integrating a JavaScript Widget](/blog/2019-02-third-party-libraries-and-widgets/#integrating-a-javascript-widget) (plotly.js)
-* [Integrating a jQuery Widget](/blog/2019-02-third-party-libraries-and-widgets/#integrating-a-jquery-widget)
+* [General Considerations](/blog/2019-02-third-party-libraries-and-widgets#general-considerations)
+* [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-pure-es6-javascript-library) (lodash.clonedeep)
+* [Integrating a JavaScript Widget](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-javascript-widget) (plotly.js)
+* [Integrating a jQuery Widget](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-jquery-widget)
 
 
 ## General Considerations
@@ -230,4 +232,39 @@ We recommend the following article if you are interested in other ways to get a 
 **[👉 Demo on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fplotlyjs-example%2Fplotlyjs-example.component.ts)**
 
 
-# Integrating a jQuery Widget
+# Integrating old jQuery Widgets
+
+As we have seen, ES2015 modules are an ideal way to use third-party libraries.
+However, not all third-party libraries support this modern way.
+These libraries assume that jQuery is available in the global scope and have no clue about modules.
+
+
+Fortunately, the Angular CLI provides a declarative way to provide these libraries/widgets via the `angular.json` file.
+First we install jQuery and the library with the help of npm.
+It is important to pay attention to the version of jQuery.
+Not all libraries support jQuery v3, which has a some of breaking changes.
+
+```bash
+npm install jquery@3.3.1
+npm install @types/jquery@3.3.29 --save-dev
+```
+
+
+
+
+
+
+Of course this is not great, but you can't do anything about it.
+Your boss still wants this scheduler today and the widget should look "like in Outlook".
+That's why you need to get this pro license for [Kendo UI for jQuery](https://www.telerik.com/kendo-jquery-ui), because you have to deliver! 😎
+
+
+
+Now we will install the full version of Kendo UI for jQuery.
+Please keep in mind that the vendor provides customized versions, too.
+
+```bash
+npm install @progress/kendo-ui
+```
+
+The Angular CLI provides an entry in the `angular.json` file for such global scripts.
