@@ -40,7 +40,7 @@ Usually the following questions should be answered in advance in order to keep t
 
 - Are there alternatives that are already based on Angular and how much would be the effort to use this alternative?
 - Is the library / widget compatible with ES2015 (ES6) Modules or do we have to use the global object (`window`)? 
-- How big is the foreign code? Will it slow down the build process significantly. Can we use a CDN if necessary?
+- How big is the foreign code? Will it slow down the build process significantly? Can we use a CDN if necessary?
 - Is jQuery a dependency? (jQuery itself is also quite large, see [jQuery file size](https://mathiasbynens.be/demo/jquery-size))
 
 
@@ -60,7 +60,7 @@ npm install @types/lodash --save-dev
 ``` 
 
 Now we are able to import the method as usual.
-The command looks like this:
+The required command looks like this:
 
 ```ts
 import { cloneDeep } from 'lodash';
@@ -91,6 +91,21 @@ import cloneDeep from 'lodash.clonedeep';
 This doesn't just apply to lodash.
 We should always check how big the bundles will be by our new dependencies.
 In fact, if we work with 3rd party libraries, the bundle sizes will become one of the biggest showstoppers.
+
+You might get the following error, when using the Angular CLI with `lodash.clonedeep`:
+> lodash-example.component.ts(7,8): error TS1192: Module '"xxx/node_modules/@types/lodash.clonedeep/index"' has no default export.
+
+No worries, there is compiler option to fix the typechecking.
+The option `allowSyntheticDefaultImports` allows default imports from modules with no explicit default export.
+So we want to open the file `tsconfig.json` and add the following value:
+
+```json
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true
+  }
+}
+``` 
 
 **[👉 Demo on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Flodash-example%2Flodash-example.component.ts)**
 
@@ -236,35 +251,54 @@ We recommend the following article if you are interested in other ways to get a 
 
 As we have seen, ES2015 modules are an ideal way to use third-party libraries.
 However, not all third-party libraries support this modern way.
-These libraries assume that jQuery is available in the global scope and have no clue about modules.
+These libraries often assume that jQuery is available in the global scope and very old ones don't utilize modules at all.
 
-
-Fortunately, the Angular CLI provides a declarative way to provide these libraries/widgets via the `angular.json` file.
-First we install jQuery and the library with the help of npm.
-It is important to pay attention to the version of jQuery.
+Here it is important to pay attention to the version of jQuery.
 Not all libraries support jQuery v3, which has a some of breaking changes.
+For this example I have chosen the plugin `jquery-datetimepicker` since it requires "classic" jQuery.
+So let's install jQuery from the outdated v1 branch and the library with the help of npm.
+
+```bash
+npm install jquery@1.12.4
+npm install @types/jquery@1.10.35 --save-dev
+npm install jquery-datetimepicker@2.5.20
+```
+Fortunately, the Angular CLI provides a declarative way to provide these libraries/widgets via the `angular.json` file.
+
+```json
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.js"
+]
+```
+
+First we load jQuery, then the plugins.
+
+To satisfy the type checking we crate an interface with the name `JQuery` in your local typings declaration file `typings.d.ts` and introduce the plugin function.
+
+```ts
+interface JQuery {
+  datetimepicker(options?: any): any;
+}
+```
+
+Now we are ready to do all that dirty jQuery stuff we used to love for so many years:
+
+
+# Integrating modern jQuery Widgets
+
+Of course, also jQuery and modern jQuery plugins support all kind of module formats.
+As an example, we want to start the Scheduler of Kendo UI for jQuery (which hasn't be ported to Kendo UI for Angular until now!)
 
 ```bash
 npm install jquery@3.3.1
 npm install @types/jquery@3.3.29 --save-dev
 ```
 
-
-
-
-
-
-Of course this is not great, but you can't do anything about it.
-Your boss still wants this scheduler today and the widget should look "like in Outlook".
-That's why you need to get this pro license for [Kendo UI for jQuery](https://www.telerik.com/kendo-jquery-ui), because you have to deliver! 😎
-
-
-
-Now we will install the full version of Kendo UI for jQuery.
+Here we will install the full version of Kendo UI for jQuery.
 Please keep in mind that the vendor provides customized versions, too.
 
 ```bash
 npm install @progress/kendo-ui
 ```
 
-The Angular CLI provides an entry in the `angular.json` file for such global scripts.
