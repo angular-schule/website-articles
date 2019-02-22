@@ -25,9 +25,11 @@ We will discuss a few possible strategies and weigh them against each other.**
 Table of contents:
 
 * [General Considerations](/blog/2019-02-third-party-libraries-and-widgets#general-considerations)
-* [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-pure-es6-javascript-library) (lodash.clonedeep)
-* [Integrating a JavaScript Widget](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-javascript-widget) (plotly.js)
-* [Integrating a jQuery Widget](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-jquery-widget)
+* [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-pure-es6-javascript-library) (lodash)
+* [Integrating JavaScript Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-javascript-widgets) (plotly.js)
+* [Integrating old jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-old-jquery-widgets) (jquery-datetimepicker)
+* [Integrating modern jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-modern-jquery-widgets) (Kendo UI)
+
 
 
 ## General Considerations
@@ -107,10 +109,10 @@ So we want to open the file `tsconfig.json` and add the following value:
 }
 ``` 
 
-**[👉 Demo on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Flodash-example%2Flodash-example.component.ts)**
+**[👉 Code on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Flodash-example%2Flodash-example.component.ts)**
 
 
-# Integrating a JavaScript Widget
+# Integrating JavaScript Widgets
 
 Lets take a look at [plotly.js](https://plot.ly/javascript/).
 It's is a high-level, declarative charting library, which is built on top of [d3.js](http://d3js.org/) and [stack.gl](http://stack.gl/),
@@ -244,7 +246,7 @@ export class PlotlyjsExampleComponent implements AfterViewInit {
 There are multiple other ways to get a reference to a DOM element.
 We recommend the following article if you are interested in other ways to get a reference to a DOM element: [Angular in Depth: Exploring Angular DOM manipulation techniques](https://blog.angularindepth.com/exploring-angular-dom-abstractions-80b3ebcfc02)
 
-**[👉 Demo on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fplotlyjs-example%2Fplotlyjs-example.component.ts)**
+**[👉 Code on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fplotlyjs-example%2Fplotlyjs-example.component.ts)**
 
 
 # Integrating old jQuery Widgets
@@ -264,15 +266,29 @@ npm install @types/jquery@1.10.35 --save-dev
 npm install jquery-datetimepicker@2.5.20
 ```
 Fortunately, the Angular CLI provides a declarative way to provide these libraries/widgets via the `angular.json` file.
+Locate the build configuration of your project and search for the `scripts` property.
+It accepts an array of JavaScript script files that are added to the global scope of the project.
 
 ```json
-"scripts": [
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.js"
-]
+{
+  "projects": {
+    "app": {
+      "architect": {
+        "build": {
+          "options": {
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
 ```
 
-First we load jQuery, then the plugins.
+First we have to load jQuery, then the plugins.
 
 To satisfy the type checking we crate an interface with the name `JQuery` in your local typings declaration file `typings.d.ts` and introduce the plugin function.
 
@@ -283,6 +299,25 @@ interface JQuery {
 ```
 
 Now we are ready to do all that dirty jQuery stuff we used to love for so many years:
+
+```ts
+import { Component, AfterViewInit } from '@angular/core';
+
+@Component({
+  selector: 'app-jquery-old-example',
+  templateUrl: './jquery-old-example.component.html',
+  styleUrls: ['./jquery-old-example.component.css']
+})
+export class JqueryOldExampleComponent implements AfterViewInit {
+
+  public ngAfterViewInit()
+  {
+    jQuery('#datetimepicker').datetimepicker();
+  }
+}
+```
+**[👉 Code on Stackblitz](
+https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fjquery-old-example%2Fjquery-old-example.component.ts)**
 
 
 # Integrating modern jQuery Widgets
