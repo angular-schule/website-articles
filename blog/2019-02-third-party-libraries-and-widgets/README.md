@@ -16,7 +16,7 @@ hidden: true
 **
 For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.
 In this blog post we want to have a closer look at this question.
-We will discuss a few possible strategies and weigh them against each other.**
+We will discuss a few possible strategies that depend on which technology to integrate..**
 
 > Note: The whole article is based on the assumption that you are using the [Angular Cli](https://cli.angular.io/).
 
@@ -28,8 +28,9 @@ Table of contents:
 * [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-pure-es6-javascript-library) (lodash)
 * [Integrating JavaScript Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-javascript-widgets) (plotly.js)
 * [Integrating old jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-old-jquery-widgets) (jquery-datetimepicker)
-* [Integrating modern jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-modern-jquery-widgets) (Kendo UI)
-
+* [Integrating modern jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
+* [Improving performance](/blog/2019-02-third-party-libraries-and-widgets#improving-performance) (NgZone)
+* [Conclusion](/blog/2019-02-third-party-libraries-and-widgets#conclusion)
 
 
 ## General Considerations
@@ -112,7 +113,7 @@ So we want to open the file `tsconfig.json` and add the following value:
 **[👉 Code on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Flodash-example%2Flodash-example.component.ts)**
 
 
-# Integrating JavaScript Widgets
+## Integrating JavaScript Widgets
 
 Lets take a look at [plotly.js](https://plot.ly/javascript/).
 It's is a high-level, declarative charting library, which is built on top of [d3.js](http://d3js.org/) and [stack.gl](http://stack.gl/),
@@ -249,7 +250,7 @@ We recommend the following article if you are interested in other ways to get a 
 **[👉 Code on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fplotlyjs-example%2Fplotlyjs-example.component.ts)**
 
 
-# Integrating old jQuery Widgets
+## Integrating old jQuery Widgets
 
 As we have seen, ES2015 modules are an ideal way to use third-party libraries.
 However, not all third-party libraries support this modern way.
@@ -267,7 +268,8 @@ npm install jquery-datetimepicker@2.5.20
 ```
 Fortunately, the Angular CLI provides a declarative way to provide these libraries/widgets via the `angular.json` file.
 Locate the build configuration of your project and search for the `scripts` property.
-It accepts an array of JavaScript script files that are added to the global scope of the project.
+It accepts an array of JavaScript files that are added to the global scope of the project.
+This is especially useful for legacy libraries or analytic snippets.    
 
 ```json
 {
@@ -279,6 +281,10 @@ It accepts an array of JavaScript script files that are added to the global scop
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/jquery-datetimepicker/jquery.datetimepicker.css"
             ]
           }
         }
@@ -289,8 +295,10 @@ It accepts an array of JavaScript script files that are added to the global scop
 ```
 
 First we have to load jQuery, then the plugins.
+Next to the `scripts` property we see the `styles` property. 
+It allows us to add global stylesheets. Angular CLI supports CSS imports and all major CSS preprocessors.
 
-To satisfy the type checking we crate an interface with the name `JQuery` in your local typings declaration file `typings.d.ts` and introduce the plugin function.
+To satisfy the type checking we create an interface with the name `JQuery` in your local typings declaration file `typings.d.ts` and introduce the plugin function.
 
 ```ts
 interface JQuery {
@@ -316,14 +324,19 @@ export class JqueryOldExampleComponent implements AfterViewInit {
   }
 }
 ```
+
+Note that this is not clean code.
+We use an object in the global scope and select directly against an element by ID.
+If we include the component twice and thus have two IDs, the result is not deterministic.
+
 **[👉 Code on Stackblitz](
 https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fjquery-old-example%2Fjquery-old-example.component.ts)**
 
 
-# Integrating modern jQuery Widgets
+## Integrating modern jQuery Widgets
 
-Of course, also jQuery and modern jQuery plugins support all kind of module formats.
-As an example, we want to start the Scheduler of Kendo UI for jQuery (which hasn't be ported to Kendo UI for Angular until now!)
+Of course, also jQuery and modern jQuery plugins support all kind of module formats, including ECMAScript modules.
+As an example, we want to try out the Scheduler of Kendo UI for jQuery (which hasn't be ported to Kendo UI for Angular until now!)
 
 ```bash
 npm install jquery@3.3.1
@@ -337,3 +350,76 @@ Please keep in mind that the vendor provides customized versions, too.
 npm install @progress/kendo-ui
 ```
 
+Since we use modules, we can import the modules with the help of the import statement.
+There is no need to add an entry to `angular.json`:
+
+```ts
+import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import options from './options';
+import jQuery from 'jquery';
+import '@progress/kendo-ui';
+
+@Component({
+  selector: 'app-kendo-ui-jquery-example',
+  templateUrl: './kendo-ui-jquery-example.component.html',
+  styleUrls: ['./kendo-ui-jquery-example.component.css']
+})
+export class KendoUiJqueryExampleComponent implements AfterViewInit {
+
+  @ViewChild('myDiv')
+  myDiv: ElementRef;
+
+  public ngAfterViewInit()
+  {
+    const myDivEl = this.myDiv.nativeElement;
+    jQuery(myDivEl).kendoScheduler(options);
+  }
+}
+```
+
+We also see again the use of `ElementRef`, giving control back to Angular and getting a reference from the framework to a DOM element we can use.
+
+**[👉 Code on Stackblitz](https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fapp%2Fkendo-ui-jquery-example%2Fkendo-ui-jquery-example.component.ts
+)**
+
+
+## Improving performance
+
+We can improve the performance of all shown solutions.
+The default change detection from Angular is triggered on every event that our code is subscribed to.
+This can have a huge impact to the overall performance of our Angular app.
+A lot of old code listens actively to the mouse movements or scroll events.
+As a result, change detection is called multiple times and makes everything slow.
+
+To omit that problem, we can make use of the `NgZone` class.
+By default, Angular works together with [zone.js](https://github.com/angular/zone.js/) that introduces a concept of zones.
+Within a zone, all async APIs are patched and therefore it is possible to run code whenever the asynchronous code finishes.
+As long as we use the default change detection strategy, everything that happens within the zone of Angular triggers a change detection run.
+If we are not interested in triggering CD, because our third party library does not interact at all with Angular, we can move our code execution into our own zone.
+
+```ts
+import { Component, ViewChild, AfterViewInit, ElementRef, NgZone
+} from '@angular/core';
+
+@Component({
+  // [...]
+})
+export class KendoUiJqueryExampleComponent implements AfterViewInit {
+
+  // [...]
+
+  constructor(private ngZone: NgZone) { }
+
+  public ngAfterViewInit()
+  {
+    this.ngZone.runOutsideAngular(() => { 
+      const myDivEl = this.myDiv.nativeElement;
+      jQuery(myDivEl).kendoScheduler(options);
+    });
+  }
+}
+```
+
+## Conclusion
+
+// TODO
