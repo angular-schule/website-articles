@@ -419,6 +419,8 @@ export class KendoUiJqueryExampleComponent implements AfterViewInit {
 }
 ```
 
+ We can return back to the angular zone anytime via `this.ngZone.run(() => { })`.
+
 ## Don't reinvent the wheel
 
 In the hot project everyday life it happens fast, that one reinvents the wheel.
