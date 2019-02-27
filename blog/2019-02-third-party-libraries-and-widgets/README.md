@@ -41,7 +41,7 @@ However, it is often simply necessary to fall back on existing solutions that al
 
 Usually the following questions should be answered in advance in order to keep the effort as low as possible:
 
-- Are there alternatives that are already based on Angular and how much would be the effort to use this alternative?
+- Are there alternatives that are already based on Angular and how much effort would there be to use this alternative?
 - Is the library / widget compatible with ES2015 (ES6) Modules or do we have to use the global object (`window`)? 
 - How big is the foreign code? Will it slow down the build process significantly? Can we use a CDN if necessary?
 - Is jQuery a dependency? (jQuery itself can be quite large, see [jQuery file size](https://mathiasbynens.be/demo/jquery-size))
@@ -80,7 +80,7 @@ nestedObject.nested === deepCopy.nested // false (it's a deep copy)
 ```
 
 Since clean tree shaking [can be tricky](https://medium.com/@martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd), we can also try a separate package.
-So we don't install the whole codebase but only the needed part and its types.
+So we don't install the whole codebase but only the necessary parts and its types.
 
 ```bash
 npm install lodash.clonedeep
@@ -116,7 +116,7 @@ So we want to open the file `tsconfig.json` and add the following value:
 ## Integrating JavaScript Widgets
 
 Lets take a look at [plotly.js](https://plot.ly/javascript/).
-It's is a high-level, declarative charting library, which is built on top of [d3.js](http://d3js.org/) and [stack.gl](http://stack.gl/),
+It is a high-level, declarative charting library, which is built on top of [d3.js](http://d3js.org/) and [stack.gl](http://stack.gl/),
 The library ships with many preconfigured chart types, including scientific charts, 3D graphs, statistical charts, SVG maps, financial charts, and more.
 
 ![plotly.js demo](plotly_2017.png)
@@ -133,11 +133,11 @@ and import plotly.js as
 import Plotly from 'plotly.js-dist'; 
 ```
 
-But beware, plotly.js with all it's depedencies (including D3.js) is huge!
+But beware, plotly.js with all its depedencies (including D3.js) is huge!
 Again, we can save a lot of bundle size if we choose the right package.
 Please refer to the official [bundle information](https://github.com/plotly/plotly.js/blob/master/dist/README.md#bundle-information) to choose the right partial bundle.
 
-The main plotly.js bundle weights in at:
+The main plotly.js bundle weighs in at:
 
 | plotly.js | plotly.min.js | plotly.min.js + gzip |
 |-----------|---------------|----------------------|
@@ -255,7 +255,7 @@ However, not all third-party libraries support this modern way.
 These libraries often assume that jQuery is available in the global scope and very old ones don't utilize modules at all.
 
 Here it is important to pay attention to the version of jQuery.
-Not all libraries support jQuery v3, which has a some of breaking changes.
+Not all libraries support jQuery v3, because it has a some of breaking changes.
 For this example I have chosen the plugin `jquery-datetimepicker` since it requires "classic" jQuery.
 So let's install jQuery from the outdated v1 branch and the library with the help of npm.
 
@@ -334,8 +334,8 @@ https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fa
 
 ## Integrating modern jQuery Widgets
 
-Of course, also jQuery and modern jQuery plugins support all kind of module formats and can be imported via `import` statements.
-As an example, we want to try out the Scheduler of Kendo UI for jQuery (which hasn't be ported to Kendo UI for Angular until now!)
+Of course, also jQuery as well as modern jQuery plugins support all kind of module formats and can be imported via `import` statements.
+As an example, we want to try out the Scheduler of Kendo UI for jQuery (which hasn't been ported to Kendo UI for Angular until now!)
 
 ```bash
 npm install jquery@3.3.1
@@ -423,7 +423,7 @@ export class KendoUiJqueryExampleComponent implements AfterViewInit {
 
 ## Don't reinvent the wheel
 
-In the hot project everyday life it happens fast, that one reinvents the wheel.
+It happens to us developers quite often that we reinvent the wheel.
 In the case of plotly.js, there is already a wrapper that has the same technical foundation as described in our article (see [here](https://github.com/plotly/angular-plotly.js/blob/78b9385da1a9a56fe2c9b3b914fce1e63707ae02/src/app/shared/plot/plot.component.ts#L37)):
 
 ```bash
