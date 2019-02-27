@@ -429,7 +429,7 @@ npm install angular-plotly.js
 npm install plotly.js
 ```
 
-However, a large number of inputs and outputs have already been implemented, so it is better to have a look at this solution twice.
+A large number of inputs and outputs have already been implemented, so it is better to have a look at this solution twice.
 
 So we should add the `PlotlyModule` into the main app module of your project:
 
@@ -481,9 +481,9 @@ https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?file=src%2Fa
 We have seen some ways to use existing (legacy) code in a modern Angular applications.
 Unless there is a true Angular based solution, this is a legitimate approach.
 If there is a wrapper around, it is always a good idea to evaluate it first!
-And if something important is not implemented that wrapper, just make a pull-request! 😉
+And if something important is not implemented for that wrapper, just make a pull-request! 😉
 
 For your reference, this is the full example on Stackblitz:
 
-<iframe src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
+<iframe style="width: 98%; height: 400px;" src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
 
