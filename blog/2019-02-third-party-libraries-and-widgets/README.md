@@ -485,5 +485,5 @@ And if something important is not implemented for that wrapper, just make a pull
 
 For your reference, this is the full example on Stackblitz:
 
-<iframe style="width: 98%; height: 400px;" src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
+<iframe style="width: 98%; height: 800px;" src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
 
