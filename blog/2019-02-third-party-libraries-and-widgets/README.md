@@ -9,7 +9,7 @@ keywords:
   - library
   - libraries
 language: en
-thumbnail: ../angular.png
+thumbnail: pixabay-books-1655783.jpg
 ---
 
 **
