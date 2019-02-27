@@ -15,7 +15,7 @@ thumbnail: ../angular.png
 **
 For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.
 In this blog post we want to have a closer look at this question.
-We will discuss a few possible strategies that depend on which technology to integrate..**
+We will discuss a few possible strategies that depend on which technology to integrate.**
 
 > Note: The whole article is based on the assumption that you are using the [Angular Cli](https://cli.angular.io/).
 
@@ -29,7 +29,7 @@ Table of contents:
 * [Integrating old jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-old-jquery-widgets) (jquery-datetimepicker)
 * [Integrating modern jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
 * [Improving performance](/blog/2019-02-third-party-libraries-and-widgets#improving-performance) (NgZone)
-* [Don't reinvent the wheel](/blog/2019-02-third-party-libraries-and-widgets#dont-reinvent-the-wheel)
+* [Don't reinvent the wheel](/blog/2019-02-third-party-libraries-and-widgets#don-t-reinvent-the-wheel)
 * [Conclusion](/blog/2019-02-third-party-libraries-and-widgets#conclusion)
 
 
@@ -482,3 +482,8 @@ We have seen some ways to use existing (legacy) code in a modern Angular applica
 Unless there is a true Angular based solution, this is a legitimate approach.
 If there is a wrapper around, it is always a good idea to evaluate it first!
 And if something important is not implemented that wrapper, just make a pull-request! 😉
+
+For your reference, this is the full example on Stackblitz:
+
+<iframe src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
+
