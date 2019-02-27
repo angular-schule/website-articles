@@ -2,7 +2,7 @@
 title: "How to integreate third party libraries and widgets into Angular"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2019-02-21
+published: 2019-02-27
 keywords:
   - Angular
   - jQuery
@@ -10,7 +10,6 @@ keywords:
   - libraries
 language: en
 thumbnail: ../angular.png
-hidden: true
 ---
 
 **
