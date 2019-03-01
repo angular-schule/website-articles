@@ -225,13 +225,13 @@ export class PlotlyjsExampleComponent implements AfterViewInit {
 
     const myDivEl = this.myDiv.nativeElement;
 
-    var data = [{
+    const data = [{
       values: [66, 22, 12],
       labels: ['Angular', 'React', 'Vue'],
       type: 'pie'
     }];
 
-    var layout = {
+    const layout = {
       title: 'Top 3 Most Popular SPA Frameworks in 2019*',
       height: 400,
       width: 500
