@@ -11,7 +11,7 @@
 
 🤝 == we are Community Partners!
 
-## Next Meetup (ngHeidelberg v6)
+## Next Meetup (#ngHeidelberg v6)
 
 Save the date:
 * 04.07.2019 – with MVP Christian Liebel at Instaffo GmbH Heidelberg
