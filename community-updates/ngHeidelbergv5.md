@@ -7,8 +7,7 @@
 1. 🇺🇸 ng-conf, 1.-3. May 2019 in Salt Lake City, see https://www.ng-conf.org/
 1. 🇩🇰🤝 ngVikings, 27.-28. May 2019 in Copenhagen, see https://ti.to/ngvikings/2019/discount/angular-heidelberg-dx2e
 1. 🇩🇪🤝 NG-DE, 30.-31. August 2019 in Berlin, see https://ng-de.org 
-1. 🇩🇪 Angular.Schule, 04.-07. June 2019 in Heidelberg, see https://angular.schule/schulungen/heidelberg
-  _(sponsored link)_
+1. 🇩🇪 Angular.Schule, 04.-07. June 2019 in Heidelberg, see https://angular.schule/schulungen/heidelberg<br>_(sponsored link)_
 
 🤝 == we are Community Partners!
 
