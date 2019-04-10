@@ -22,4 +22,4 @@
 1. Bootstrap v5 without JQuery! ([source](https://twitter.com/loiane/status/1095741404922478592?s=09))
 1. Announcing CodeSandbox v3 ([source](https://hackernoon.com/announcing-codesandbox-v3-4febbaba1963))
 1. StackBlitz goes full stack serverless ([source](https://medium.com/stackblitz-blog/google-cloud-meet-stackblitz-da13f4e4fc29?1))
-  ![screenshot](https://cdn-images-1.medium.com/max/1600/1*2I9J5_1wCdOfEE90-LO8EQ.gif)
+  ![screenshot](ngHeidelbergv5_stackblitz.gif)
