@@ -7,7 +7,8 @@
 1. 🇺🇸 ng-conf, 1.-3. May 2019 in Salt Lake City, see https://www.ng-conf.org/
 1. 🇩🇰🤝 ngVikings, 27.-28. May 2019 in Copenhagen, see https://ti.to/ngvikings/2019/discount/angular-heidelberg-dx2e
 1. 🇩🇪🤝 NG-DE, 30.-31. August 2019 in Berlin, see https://ng-de.org 
-1. 🇩🇪 Angular.Schule, 04.-07. June 2019 in Heidelberg, see https://angular.schule/schulungen/heidelberg (sponsored link)
+1. 🇩🇪 Angular.Schule, 04.-07. June 2019 in Heidelberg, see https://angular.schule/schulungen/heidelberg
+  _(sponsored link)_
 
 🤝 == we are Community Partners!
 
@@ -21,3 +22,4 @@
 1. Bootstrap v5 without JQuery! ([source](https://twitter.com/loiane/status/1095741404922478592?s=09))
 1. Announcing CodeSandbox v3 ([source](https://hackernoon.com/announcing-codesandbox-v3-4febbaba1963))
 1. StackBlitz goes full stack serverless ([source](https://medium.com/stackblitz-blog/google-cloud-meet-stackblitz-da13f4e4fc29?1))
+  ![screenshot](https://cdn-images-1.medium.com/max/1600/1*2I9J5_1wCdOfEE90-LO8EQ.gif)
