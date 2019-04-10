@@ -1,4 +1,4 @@
-![ngHeidelbergv5.jpg](ngHeidelbergv4.jpg)
+![ngHeidelbergv5.jpg](ngHeidelbergv5.jpg)
 
 # Community updates, 2019-04-11
 
@@ -13,7 +13,11 @@
 
 ## News:
 
-1. :rocket: Angular version [8.0.0-beta.3](https://github.com/angular/angular/blob/master/CHANGELOG.md#800-beta3-2019-02-06)
-    -  NG has a new (very) handy form feature `markAllAsTouched()` ! Everybody literally wrote this function in every project and now we don't have to do this anymore.
-    - [Angular CLI 7.3.0-beta.0](https://github.com/angular/angular-cli/releases/tag/v7.3.0-beta.0) comes with conditional polyfills!
-
+1. :rocket: Angular version [8.0.0-beta.11 (2019-04-03)](https://github.com/angular/angular/blob/master/CHANGELOG.md#800-beta11-2019-04-03)
+    - more or less everything Bazel
+    - exciting functionality coming in RCs!
+    - since Angular CLI 8.0.0-beta.5+ you can use SVG files as component templates ([see](https://medium.com/@oocx/using-svg-files-as-component-templates-with-angular-cli-ea58fe79b6c1))
+      ![screenshot](https://pbs.twimg.com/media/D1RFog-VYAYIsyg.jpg)
+1. Bootstrap v5 without JQuery! ([source](https://twitter.com/loiane/status/1095741404922478592?s=09))
+1. Announcing CodeSandbox v3 ([source](https://hackernoon.com/announcing-codesandbox-v3-4febbaba1963))
+1. StackBlitz goes full stack serverless ([source](https://medium.com/stackblitz-blog/google-cloud-meet-stackblitz-da13f4e4fc29?1))
