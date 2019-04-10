@@ -11,6 +11,14 @@
 
 🤝 == we are Community Partners!
 
+## Next Meetup (ngHeidelberg v6)
+
+Save the date:
+* 04.07.2019 – with MVP Christian Liebel at Instaffo GmbH Heidelberg
+* Talk: Angular Performance: Your App at the Speed of Light
+
+In this talk, we’ll have a look at common performance pitfalls in Angular applications and how to avoid them. We’ll have a look at different change detection strategies and ChangeDetectorRef, Zone.js and NgZone, lazy loading, server-side rendering and Service Worker support. Let’s make your Angular app blazing fast!
+
 ## News:
 
 1. :rocket: Angular version [8.0.0-beta.11 (2019-04-03)](https://github.com/angular/angular/blob/master/CHANGELOG.md#800-beta11-2019-04-03)
