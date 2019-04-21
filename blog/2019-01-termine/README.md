@@ -62,7 +62,7 @@ An vier intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
 |---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
 | Heidelberg    | [Angular Intensiv-Schulung][1]        | 26.03. - 29.03.2019 | ARTHOTEL HEIDELBERG      | ausgebucht |
-| Heidelberg    | [Angular Intensiv-Schulung][2]        | 04.07. - 07.06.2019 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][1] |
+| Heidelberg    | [Angular Intensiv-Schulung][2]        | 04.06. - 07.06.2019 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][1] |
 | Heidelberg    | Angular Intensiv-Schulung             | 24.09. - 27.09.2019 | ARTHOTEL HEIDELBERG      | demnächst verfügbar |
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-marz-2019-4-tage-tickets-54345283205
