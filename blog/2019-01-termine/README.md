@@ -8,7 +8,7 @@ keywords:
   - Angular
 language: de
 thumbnail: banner.jpg
-sticky: true
+sticky: false
 ---
 
 Als Trainer der Angular.Schule veranstalten wir regelmäßig Schulungen zu Angular.  
