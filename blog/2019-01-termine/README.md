@@ -66,7 +66,7 @@ An vier intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-marz-2019-4-tage-tickets-54345283205
 [2]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-juni-2019-4-tage-tickets-60248488852
-[2]: https://heidelberger-angular-schulung-v5.eventbrite.de
+[3]: https://heidelberger-angular-schulung-v5.eventbrite.de
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
