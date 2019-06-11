@@ -57,8 +57,6 @@ Nach Abschluss des Workshops sind die Teilnehmer voll und ganz für den Projekta
 Sehr beliebt ist unsere öffentliche Intensiv-Schulung zu Angular, welchen wir in einem gehobenen Konferenzhotel ausrichten.  
 An vier intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustarten.
 
-04.-07.06.2019
-24.09-27.09.2019
 
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
 |---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
