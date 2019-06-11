@@ -36,9 +36,10 @@ Wir besprechen eine individuelle Agenda, welche speziell auf die Stärken Ihres 
 | Februar 2019  | AUSGEBUCHT  |
 | März 2019     | AUSGEBUCHT  |
 | April 2019    | AUSGEBUCHT  |
-| Mai 2019      | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juni 2019     | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
-| Juli 2019     | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
+| Mai 2019      | AUSGEBUCHT  |
+| Juni 2019     | AUSGEBUCHT  |
+| Juli 2019     | **noch ein Trainer frei!** – [jetzt anfragen](/angebot)  |
+| August 2019   | **noch zwei Trainer frei!** – [jetzt anfragen](/angebot)  |
 
 
 Unsere Workshops sind individuell auf das zu schulende Team angepasst.
@@ -62,11 +63,12 @@ An vier intensiven Schulungstagen erfahren Sie alles, um mit Angular durchzustar
 | Ort           | Titel                                 | Datum               | Partner                  | Status                                  |
 |---------------|---------------------------------------|---------------------|--------------------------|-----------------------------------------|
 | Heidelberg    | [Angular Intensiv-Schulung][1]        | 26.03. - 29.03.2019 | ARTHOTEL HEIDELBERG      | ausgebucht |
-| Heidelberg    | [Angular Intensiv-Schulung][2]        | 04.06. - 07.06.2019 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][1] |
-| Heidelberg    | Angular Intensiv-Schulung             | 24.09. - 27.09.2019 | ARTHOTEL HEIDELBERG      | demnächst verfügbar |
+| Heidelberg    | [Angular Intensiv-Schulung][2]        | 04.06. - 07.06.2019 | ARTHOTEL HEIDELBERG      | ausgebucht |
+| Heidelberg    | [Angular Intensiv-Schulung][3]        | 24.09. - 27.09.2019 | ARTHOTEL HEIDELBERG      | Plätze frei – [jetzt Ticket buchen!][3] 
 
 [1]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-marz-2019-4-tage-tickets-54345283205
 [2]: https://www.eventbrite.de/e/heidelberg-angular-intensiv-schulung-juni-2019-4-tage-tickets-60248488852
+[2]: https://heidelberger-angular-schulung-v5.eventbrite.de
 
 Anhand von praktischen Beispielen vermitteln wir Ihnen das erforderliche Wissen zur Erstellung einer robusten Single-Page-Anwendung.
 Der Angular-Workshop beginnt mit den Grundlagen von TypeScript und vermittelt anschließend eine Auswahl an Themen rund um das Framework:
@@ -88,4 +90,4 @@ Unser Partner kümmert sich um das leibliche Wohl, an allen Tagen gibt es Verpfl
 
 --------
 
-*Letztes Update: 21.04.2019*
+*Letztes Update: 11.06.2019*
