@@ -1,5 +1,5 @@
 ---
-title: "API von 0 auf 100: Angular und GraphQL – unsere Vortrag zur DWX und enterJS 2019"
+title: "API von 0 auf 100: Angular und GraphQL – unser Vortrag zur DWX und enterJS 2019"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2019-06-25
