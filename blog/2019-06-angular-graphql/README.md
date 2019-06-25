@@ -13,7 +13,8 @@ language: de
 thumbnail: banner.jpg
 ---
 
-Im Juni 2019 halten einen neuen Talk auf den beiden Konferenzen Developer Week und enteJS.
+Im Juni 2019 halten einen neuen Talk auf den beiden Konferenzen Developer Week und enterJS. Wir stellen Ihnen GraphQL und Angular vor.
+
 GraphQL ist eine Abfragesprache für Web-APIs. Aber was dahinter steckt? Was sind die Vorteile (und Nachteile) gegenüber REST? Wie wird ein Schema strukturiert, was sind Querys und Mutationen? Mit diesem Grundwissen im Gepäck werfen Johannes und Ferdinand einen Blick auf eine konkrete Anwendung: Mithilfe von Apollo Angular und RxJS nutzen sie GraphQL auf der Clientseite und holen das Beste aus ihrer API heraus. Nach diesem Talk hast du das nötige Grundwissen, um die Vorteile von GraphQL selbst in Projekten einzusetzen. 
 
 __Vorkenntnisse:__
@@ -35,6 +36,8 @@ __Wo/Wann:__
 __Material:__
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSTLgu0FbZ44PO9tCk1_1_wehq3_Fh5DNReKO7K80n4BHZgHU3YVQvskHj6BzskKxqatlTZIaXJipOt/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+---
 
 * 🅰️ [Slides (Google Docs)](https://docs.google.com/presentation/d/1DYFLRlnyranpYi528z3Jarato7eCR43xqMqLYEpsAvQ/edit?usp=sharing)
 * 💻 [Demo code (Github)](https://github.com/angular-schule/demo-angular-graphql)
