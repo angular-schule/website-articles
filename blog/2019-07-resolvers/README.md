@@ -395,6 +395,10 @@ Since resolvers are used by the router, the route data can only be accessed by r
 And if we take a closer look, we can see: We could also just inject the `ConfigService` into any component and use the `config$` Observable directly.
 Observables are fine!
 
+You can play around with this example in a StackBlitz project:
+
+<iframe src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
+
 
 ## A word on resolvers
 
