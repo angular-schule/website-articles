@@ -397,7 +397,7 @@ Observables are fine!
 
 You can play around with this example in a StackBlitz project:
 
-<iframe src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
+<iframe style="width:100%: height: 25em" src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
 
 
 ## A word on resolvers
