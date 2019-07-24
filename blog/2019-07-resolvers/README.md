@@ -9,7 +9,10 @@ keywords:
   - Router
   - Resolver
   - Data Loading
+  - Data Provider
   - RxJS
+  - Reactive Programming
+  - Observables
 language: en
 thumbnail: XXX.jpg
 hidden: true
@@ -216,75 +219,189 @@ export class MyComponent {
 > Note that we used the `switchMap()` operator intentionally here: When the route changes, we want to cancel the running request. However, please do not use `switchMap()` blindly but also consider its siblings `concatMap()`, `mergeMap()` and `exhaustMap()`.
 
 
-<!-- CONTINUE HERE  -->
+<!-- CONTINUE HERE -->
 ## Child components to the rescue
 
-Even when dealing with Observables in the component, that doesn't mean we cant have data available synchronously.
-The key lies within the component tree and in separating what components are allowed to do.
-Central element is the presentational component.
-Is only concerned with displaying data and capturing events and data from the user through controls like buttons and forms.
-Presentationals are "dumb", in the sense of that they do not have any external dependencies.
-All communication is done via inputs and outputs, but usualy there are no services involved.
+Observables are great, but even when we deal a lot with Obswervables in our components, that doesn't mean we can't have any data available synchronously without a callback.
+This is possible with a closer look at the component tree: When we put a child component into our template and pass data to it via property binding, this data is availiable synchronously after the first `ngOnChanges()` of the child component – which means we can directly work with it in `ngOnInit()`.
+Component communication is the key!
+If we think this even further, we can separate our components by their role and divide them into Containers and Presentational Components.
 
-Presentationals always orchestrated in containers at the topmost level.
-Are also compoennts, but with very little markup.
-Instead, containers are the interface to the rest of the application: they communicate with services and thus perform side-effects.
-They pass data to presentationals and retrieve events from them that they forward to the world.
+The easiest of those two is the Presentational Component.
+It is only concerned with displaying data and capturing things from the user through the UI.
+Presentationals are completely "dumb" in the sense of that they have no external dependencies.
+What is more, they neither bother where the data comes from nor what happens to the events they push to their parent.
+All communication is done via Inputs and Output and usually there are no services involved.
 
+A presentational never comes alone but is always being orchestrated by another component, either another Presentational or a Container.
+Containers are components as well, but with very little own markup.
+Instead, containers make the interface to the rest of the application: They communicate with services, the router or the NgRx store and thus, perform side-effects.
+They pass data to presentationals (via property binding) and receive events from them (via event binding) which they can forward to the application.
+Containers are sometimes referred to as "smart components" (as opposed to "dumb").
 
-Read more about this pattern here:
+This pattern is not very specific for Angular, but has evolved in the React community.
+You can read more about the ideas in a [blog post by Dan Abramov](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 
-Take this pattern as a guideline.
-Some suggest to separate containrs and presentationals in separate folders.
-In my opinion, it's already a step forward if you are aware of the role of a component.
-A component should always be as dumb as possible and as "smart" as necessary.
-Stirve to creating a lot of dumb components, as they are easily testable and interchangable.
+Take the Container and Presentational pattern as a guideline!
+Basically, it is all about being aware of what a component's role is: Does it display data or does it the data handling?
+Some people suggest to separate Containers and Presentational Components in separate folders in the file system.
+In my opinion, it's already a step forward if you are *aware* of what a component does: A component should always be as "dumb" as possible and as "smart" as necessary.
+Thus, you should strive to creating a lot of dumb components, as they are easily testable and interchangable.
 
 ## Why all the theory?
 
-After clearing up the idea of the two component roles, let's get back to the problem point: Resolvers bring us data to the component SYNCHRONOUSLY, while observables always need a subscribe and might also be asynchronous, especially with HTTP.
+After clearing up the idea of the two component roles, let's get back to the problem point: Resolvers bring us data to the component *synchronously*, while Observables always need a subscribe callback and are potentially asynchronous, especially with HTTP.
 
-if we handle containers and presentationals seriously, we can achieve something similar:
-We want the conatiner to retrieve the data.
-As soon as the data is available, it should render a child component and pass the data to it as an input.
-Thus, at runtime of the child component, the data is available...synchronously – even if it originally comes from an async data source.
-The key point is that we do not render the child before the data is available.
+If we keep the Containers and Presentationals pattern in mind, we can build a tree of nested components.
+We want the topmost conatiner to retrieve some data.
+As soon as the data is available, it will render a child component and pass the data to it via property binding.
+That means, at runtime of the child component, the data is available *synchronously* – even if it originally comes from an async data source!
+The key point is to not render the child before the data has been retrieved.
 
-We can update the timeline:
+With this model in mind we can update the timeline from above:
 
 CHILD COMP TIMELINE
 
-You can see that the time between click and routing is almost zero.
-We still need to wait for the HTTP to complete, but in the meantime we can show some meaningful content to the user instead of letting them wait.
+You can clearly see that the time between click and routing is almost zero.
+We still need to wait for the HTTP request to complete, but in the meantime we can show some meaningful content to the user instead of letting them wait without any feedback.
 
-This is relatively easy to implement, as it just makes use of standard Angular concepts.
-First, we use the async pipe to resolve the async data in our container component.
-We then pass it into the child component which we only render when data is availble – using ngIf.
-Thus, at the runtime of the child component, the data will be synchronously available in ngOnInit(). That's cool!
+Though it sounds a bit complicated at first glance, this idea is relatively easy to implement, as it just makes use of standard Angular concepts.
+First, we use the fabulous `AsyncPipe` to resolve the Observable in our container component.
+We then pass it to a presentational component which we don't render before the Observable emitted some data – using `ngIf`!
+At runtime of the child component, the data will be synchronously available in `ngOnInit()`. That's cool!
 
+```html
+<ng-container *ngIf="book$ | async as book">
+  <my-book-details [book]="book">
+</ng-container>
+```
 
-## Why then resolvers?
-
-You are right if you wonder what resolvers might be good for.
-The key characteristic is that the router waits for the data to be resolved, but where would we need this behavior?
-
-We discussed a lot about this – for academic reasons – and came up with a potentially valid use case.
-
-Think about data we need...
-* instantly when a compoennt starts.
-* at many places in our application.
-* to retrieve once only, which could take some time.
-Think of configuration objects!
-
-We can actually use a resolver to bring config values to our components.
+The component `<my-book-details>` is a simple presentational component that just displays one book.
+However, we can extend this idea to whatever complexity we need.
 
 
+## Getting multiple parts of data
+
+In the previous example we resolved exactly one Observable using the `AsyncPipe`.
+But what's up when it comes to multiple data sources?
+If we used multiple resolvers, the router would wait for all of them to finish so that multiple data sets would be available for the component.
+
+A solution without resolvers is a bit more complex but not impossible.
+We can use the exact same syntax, but put together multiple template expressions in an object:
+
+```html
+<ng-container *ngIf="{
+  book: book$ | async,
+  user: user$ | async
+} as data">
+  <my-book-details [book]="data.book" [user]="data.user">
+</ng-container>
+```
+
+However, this solution is not complete... Do you spot the problematic point?
+`ngIf` always evaluates an object as truthy, so the child component will always be displayed.
+We could avoid this with an additional `ngIf` on the child component element like this:
+
+```html
+<ng-container *ngIf="{
+  book: book$ | async,
+  user: user$ | async
+} as data">
+  <my-book-details *ngIf="data.book && data.user" [book]="data.book" [user]="data.user">
+</ng-container>
+```
+
+This is quite verbose, though.
+A better approach therefore would be to combine the different Observable streams to one single stream in the component.
+We then can use the `ngIf` way as usual.
+
+There has been a rigid [discussion on Twitter](https://twitter.com/Michael_Hladky/status/1154022958802919425) lately about how to achieve this properly and how a suitable syntax should be formed.
 
 
+## So far so good... But why resolvers?
+
+This blog post took a little turn!
+You can see that there is always a way to avoid resolvers.
+Leveraging reactive programming in Angular opens the room for a handful of patterns for Observable handling.
+
+But what about resolvers?
+You are right if you wonder what they are actually good for.
+The router waits for the data to be resolved, but where do we need this strange behavior?
+
+It's not easy to find a valid use case that beats the reactive approach.
+However, after discussions we came up with a potentially valid one – for academic purpose only! ;-)
+
+Using a resolver is fine when the data is available instantly.
+So think about data we need at many places in our application, that should be available once the component starts and that don't take much time to load:
+Configuration objects!
+
+We could actually use a resolver to bring config values to our components.
+I want to outline this specific idea with an example.
+
+First, we need a service that retrieves config data from a server via HTTP:
+
+```ts
+@Injectable({ providedIn: 'root' })
+export class ConfigService {
+
+  getConfig(): Observable<AppConfig> {
+    return this.http.get(/* ... */);
+  }
+}
+```
+
+Of course, this HTTP request takes time!
+We don't want to perform the request on every route change, but only once instead, when the application starts.
+To do so, we can use a caching mechanism by RxJS: the `shareReplay()` operator.
+It subscribes to the source (the HTTP request) only once and multicasts the response to all subscribers.
+It also buffers all responses and replays them to future subscribers.
+
+That means, whenever we subscribe to the resulting Observable, we either perform a HTTP request and get a fresh config object from the server – or we get the cached one.
+
+```ts
+@Injectable({ providedIn: 'root' })
+export class ConfigService {
+
+  config$ = this.getConfig().pipe(
+    shareReplay(1)
+  );
+
+  private getConfig(): Observable<AppConfig> {
+    return this.http.get(/* ... */);
+  }
+}
+```
+
+The corresponding resolver is relatively easy since it just returns the `config$` Observable from the service:
+
+```ts
+@Injectable({ providedIn: 'root' })
+export class ConfigResolverService implements Resolve<AppConfig> {
+
+  constructor(private cs: ConfigService) { }
+
+  resolve(): Observable<AppConfig> {
+    return this.cs.config$;
+  }
+}
+```
 
 
-<hr>
+All routes that use this resolver will now have the config objct available in their route data.
+When loading the first route, the HTTP request will be performed, but only once.
 
+Of course, this doesn't come without caveats:
+Since resolvers are used by the router, the route data can only be accessed by routed components and not by the `AppComponent`.
+And if we take a closer look, we can see: We could also just inject the `ConfigService` into any component and use the `config$` Observable directly.
+Observables are fine!
+
+
+## A word on resolvers
+
+Resolvers are cool, but the use cases are very rare.
+If you have resolvers in your code base and it works well – great!
+If you think about introducing resolvers, please also evaluate a reactive approach.
+I havent seen resolvers in real-life projects lately, and I'm sure it will remain as is.
 
 <hr>
 
