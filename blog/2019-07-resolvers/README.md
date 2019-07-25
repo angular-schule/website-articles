@@ -102,7 +102,7 @@ The routing will not be finished before the HTTP response comes back.
 Thus, if the HTTP takes 5 seconds, it will also take 5 seconds for the routing to complete.
 If you are like me, you will have hit the button another 3 times within that time. 😉
 
-This behavior completely strikes the idea of a Single-Page Application:
+This behavior completely breaks the idea of a Single-Page Application:
 An SPA should always react fast and load the necessary data asynchronously at runtime.
 With the behavior described – click, wait, continue – we are back to the UX of a classical server-only rendered page like 15 years ago.
 Not good.
