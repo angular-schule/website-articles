@@ -413,7 +413,7 @@ You can play around with this example in a StackBlitz project:
 Resolvers are cool, but the use cases are very rare.
 Also, the UX suffers when it comes to retrieving async data with resolvers.
 If you have resolvers in your code base and it works well – great!
-If you think about introducing resolvers, please also evaluate a reactive approach – because Rwactive Programming makes a *lot* of fun! 😍
+If you think about introducing resolvers, please also evaluate a reactive approach – because Reactive Programming makes a *lot* of fun! 😍
 
 <hr>
 
