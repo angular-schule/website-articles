@@ -23,9 +23,9 @@ Resolvers are services used by the Angular router to retrieve (asynchronous) dat
 The resolved data is available synchronously when the component starts.
 
 If you never heard about resolvers, you are fine!
-Have you ever used them? This is okay, but you should probably not.
+Have you ever used them? This is okay, but you should probably avoid this.
 
-In this post I want to highlight why resolvers are not the prefect means for resolving async data.
+In this post I want to highlight why resolvers are not the perfect means for resolving async data.
 I want to point out how there is always a way around them and how Reactive Programming in Angular can brighten up your day.
 In fact, this blog post is sort of a speech of praise for Reactive Programming in Angular.
 
@@ -92,7 +92,7 @@ export class MyComponent {
 
 ## The User Experience problem with resolvers
 
-Resolvers are very straight-forward to use, since they are just services that are automatically being called by the router.
+Resolvers are very straightforward to use, since they are just services that are automatically being called by the router.
 However, we need to keep in mind an important detail:
 The router calls the resolver when the route is being requested – and then _waits_ for the data to be resolved before the route is actually being activated.
 
@@ -176,7 +176,7 @@ I want to emphasize the key point once more:
 When using resolvers, the route will be loaded **after** the asynchronous data from the resolver has been retrieved, or in other words: The router will wait for the resolver to finish.
 
 This leads to the more or less lucky situation that we have all the data synchronously available at the runtime of the component.
-And as you might perfectly know: Working with synchronous data is way easier than fiddling around with async stuff.
+And as you well know: Working with synchronous data is way easier than fiddling around with async stuff.
 You don't need to handle Observables and you can just work with the data as intended.
 If you feel this way, please always keep one question in mind: **Why do I need this? Is the UX flaw (as described above) really worth the "easier" code?**
 
@@ -201,7 +201,7 @@ Instead of retrieving a list of books, we now want to get one specific book whos
 
 We use the `ActivatedRoute` service as usual and get a stream of changing route params.
 Instead of subscribing to that observable (we should avoid that anyway and always use the `AsyncPipe`), we transform the data stream even further.
-For every ISBN that changes in the route, we want to retrieve the according book from the API.
+For every ISBN that changes in the route, we want to retrieve the corresponding book from the API.
 We can use the `switchMap()` operator here and transform each ISBN to the retrieved book.
 Thus, we get a stream of single books which we can simply display in the template.
 
@@ -250,18 +250,18 @@ This pattern is very generic and not made specifically for Angular – instead, 
 You can read more about the ideas in a [blog post by Dan Abramov](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 
 My advice: Take the Container and Presentational pattern as a *guideline*!
-Basically, it is all about being aware of what a component's role is: Does it **display data** or does it the **data handling**?
+Basically, it is all about being aware of what a component's role is: Does it **display data** or does it do  the **data handling**?
 Try not to mix those concerns.
 
-Some people suggest to separate Containers and Presentational Components in separate folders in the file system.
+Some people suggest separating Containers and Presentational Components in separate folders in the file system.
 You can do this, but in my opinion, it's already a step forward if you are *aware* of what a component does.
 A component should always be as "dumb" as possible and as "smart" as necessary.
-Thus, you should strive to creating a lot of dumb components, as they are easily testable, interchangable and reusable.
+Thus, you should strive to create a lot of dumb components, as they are easily testable, interchangable and reusable.
 
 
 ## Why all the theory? Child components in action
 
-After clearing up about the idea of component roles, let's get back to the problem point: Resolvers bring data to the component *synchronously*, while Observables always need a subscribe callback and are potentially asynchronous, especially with HTTP.
+After clearing up the idea of component roles, let's get back to the problem point: Resolvers bring data to the component *synchronously*, while Observables always need a subscribe callback and are potentially asynchronous, especially with HTTP.
 
 If we follow the Containers and Presentationals pattern, we always build a tree of nested components.
 The topmost container will retrieve some data through a service.
@@ -296,7 +296,7 @@ However, we can extend this idea to whatever complexity we need.
 ## Resolving multiple streams
 
 In the previous example we resolved exactly one Observable using the `AsyncPipe`.
-But what's when it comes to multiple data sources?
+But what happens when it comes to multiple data sources?
 If we used multiple resolvers, the router would wait for all of them to finish so that multiple data sets would be available for the component.
 
 A solution without resolvers is a bit more complex but not impossible.
@@ -348,7 +348,7 @@ There has been a [discussion on Twitter](https://twitter.com/Michael_Hladky/stat
 
 This blog post took a little turn!
 You can see that there is always a way to avoid resolvers.
-Leveraging reactive programming in Angular opens the room for a handful of patterns for Observable handling.
+Leveraging reactive programming in Angular opens the door to a handful of patterns for Observable handling.
 
 But what about resolvers then?
 You are right if you wonder what they are actually be good for.
@@ -433,9 +433,11 @@ If you still need the data synchronously and without Observables, you can use ch
 
 You can see that there is always a way around resolvers.
 If you have resolvers in your code base and it works well – great!
-If you think about introducing resolvers, please also evaluate a reactive approach – because Reactive Programming makes a *lot* of fun! 😍
+If you think about introducing resolvers, please also evaluate a reactive approach – because Reactive Programming is a *lot* of fun! 😍
 
 <hr>
+
+Special thanks to **Johannes Hoppe** for the technical review and to **Rhianna Masson** for the native language review!
 
 <small>**Header image:** Photo by Yuting Gao from <a href="https://www.pexels.com/photo/silhouette-of-two-person-standing-during-nighttime-1567069/">Pexels</a>, modified
 </small>
