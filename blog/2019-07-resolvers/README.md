@@ -14,7 +14,7 @@ keywords:
   - Reactive Programming
   - Observables
 language: en
-thumbnail: XXX.jpg
+thumbnail: resolvrs-header.jpg
 hidden: true
 ---
 
@@ -437,4 +437,5 @@ If you think about introducing resolvers, please also evaluate a reactive approa
 
 <hr>
 
-<small>**Header image:** XXX, XXX National Park, XXX, 2018</small>
+<small>**Header image:** Photo by Yuting Gao from <a href="https://www.pexels.com/photo/silhouette-of-two-person-standing-during-nighttime-1567069/">Pexels</a>, modified
+</small>
