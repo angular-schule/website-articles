@@ -14,7 +14,7 @@ keywords:
   - Reactive Programming
   - Observables
 language: en
-thumbnail: resolvrs-header.jpg
+thumbnail: resolvers-header.jpg
 hidden: true
 ---
 
