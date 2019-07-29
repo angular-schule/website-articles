@@ -40,7 +40,7 @@ A resolver always follows a specific structure: it's a class with a `resolve()` 
 This is the place where we define all necessary operations and return the result – usually as an Observable.
 
 The `resolve()` method will be called by the router with some arguments, from which we can get information about the route that will be navigated to.
-The following example shows a resolver that loads a book by a specific ISBN that comes from a route parameter.
+The following example shows a resolver that loads a book by a specific key that comes from a route parameter (in our case a unique "International Standard Book Number" (ISBN)).
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -90,7 +90,7 @@ export class MyComponent {
 ```
 
 
-## The UX problem with resolvers
+## The User Experience problem with resolvers
 
 Resolvers are very straight-forward to use, since they are just services that are automatically being called by the router.
 However, we need to keep in mind an important detail:
@@ -104,7 +104,7 @@ If you are like me, you will have hit the button another 3 times within that tim
 
 This behavior completely breaks the idea of a Single-Page Application:
 An SPA should always react fast and load the necessary data asynchronously at runtime.
-With the behavior described – click, wait, continue – we are back to the UX of a classical server-only rendered page like 15 years ago.
+With the behavior described – click, wait, continue – we are back to the user experience of a classical server-only rendered page like 15 years ago.
 Not good.
 And here we are with the problematic UX resolvers bring us.
 Try this out in the demo!
@@ -127,8 +127,8 @@ But maybe we can think of another approach?
 
 The solution I want to point out here is pragmatic, but goes back to the roots: **Don't use resolvers.**
 Instead, you can go the "normal" way without any real friction.
-Asynchronicity feels scary at first sight, but in fact there is nothing wrong with handling Observables within components.
-Quite the opposite: Angular is a reactive framework and highly encourages you to work with reactive streams wherever suitable.
+There is nothing wrong with handling Observables within components.
+Angular is a reactive framework and highly encourages you to work with reactive streams wherever suitable.
 
 Thus, the best way of doing is to make Observables available from your service and subscribe to them in your component:
 
@@ -147,7 +147,7 @@ export class MyComponent {
 }
 ```
 
-... or, even better, use the `AsyncPipe` to resolve the data directly within the template, so you don't need to care about subscription management in the component:
+... or, even better, use the `AsyncPipe` to resolve the data directly within the template, so you don't need to care about subscription management in the component at all:
 
 ```ts
 // ...
@@ -170,7 +170,7 @@ export class MyComponent {
 ```
 
 
-## Don't be scared of Observables!
+## The power of Observables
 
 I want to emphasize the key point once more:
 When using resolvers, the route will be loaded **after** the asynchronous data from the resolver has been retrieved, or in other words: The router will wait for the resolver to finish.
@@ -185,7 +185,6 @@ Observables are the "final enemy" for many people starting with Angular.
 And indeed: to understand reactive programming you need a little change of thinking: Embrace functional and declarative programming, say goodbye to the commonly known imperative way.
 It needs a lot of practice and it is perfectly fine if you still struggle with Observables and all the operators.
 But once you're there you will see that Angular itself is a highly reactive framework.
-Component and view are always synchronized, events happen, we react to them, …
 Everything that happens somewhere can be interpreted as a stream of events or data – or even more abstract: a set of values.
 And thinking of everything as a stream makes it easier to migrate to some sort of reactive state management later, like the popular NgRx.
 
@@ -259,7 +258,8 @@ You can do this, but in my opinion, it's already a step forward if you are *awar
 A component should always be as "dumb" as possible and as "smart" as necessary.
 Thus, you should strive to creating a lot of dumb components, as they are easily testable, interchangable and reusable.
 
-## Why all the theory?
+
+## Why all the theory? Child components in action
 
 After clearing up about the idea of component roles, let's get back to the problem point: Resolvers bring data to the component *synchronously*, while Observables always need a subscribe callback and are potentially asynchronous, especially with HTTP.
 
@@ -274,7 +274,7 @@ The red bracket (that looks like a `H`)shows the time between navigation start a
 
 ![Timeline for routing without resolvers](timeline-normal.png)
 
-You can clearly see that the time between click and routing is almost zero now.
+You can clearly see that the time between click and routing is literally zero now – the routing start and end happen directly after each other, without any delay.
 We still need to wait for the HTTP request to complete, but the routed component is already visible and we can show some meaningful content to the user – instead of letting them wait without any feedback.
 [Ghost elements](https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba) can help here to indicate that something is in progress.
 
@@ -325,8 +325,20 @@ We could avoid this with an additional `ngIf` on the child component element lik
 ```
 
 This is quite verbose, though, and puts too much logic into the template.
-A better approach therefore would be to combine the different Observable streams to one single stream *in the component class*.
-We then can use the `ngIf` way as usual and subscribe to one Observable only.
+A better approach therefore would be to combine the different Observable streams to one single stream *in the component class* using `combineLatest`.
+We then can use the `ngIf` way as usual and subscribe to *one* Observable only.
+
+```ts
+this.viewModel$ = combineLatest([book$, user$]).pipe(
+  map(([book, user]) => ({ book, user }))
+);
+```
+
+```html
+<ng-container *ngIf="viewModel$ | async as data">
+  <my-book-details [book]="data.book" [user]="data.user">
+</ng-container>
+```
 
 This whole topic of how we can resolve multiple Observables in a component is already worth a whole blog post.
 There has been a [discussion on Twitter](https://twitter.com/Michael_Hladky/status/1154022958802919425) recently about how to do this properly and how a suitable syntax should be formed.
@@ -408,10 +420,18 @@ You can play around with this example in a StackBlitz project:
 <iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
 
 
-## A word on resolvers
+## A word on resolvers: Summary
 
 Resolvers are cool, but the use cases are very rare.
-Also, the UX suffers when it comes to retrieving async data with resolvers.
+When it comes to retrieving async data via resolvers, like HTTP requests, the User Experience suffers a lot: Resolvers wait for the async tasks to finish, before the routing continues.
+That means, you should only use resolvers for operations that are predictably fast – so your users don't need to wait.
+However, with the ideas of Reactive Programming, we can apply a variety of reactive patterns to our code that make resolvers superfluous.
+Observables are powerful and you should use that power!
+An Observable can easily be resolved directly within the component using the `AsyncPipe`.
+That's also possible with multiple Observables, by combining them into one single stream of values.
+If you still need the data synchronously and without Observables, you can use child components and pass the values to them via property bindings.
+
+You can see that there is always a way around resolvers.
 If you have resolvers in your code base and it works well – great!
 If you think about introducing resolvers, please also evaluate a reactive approach – because Reactive Programming makes a *lot* of fun! 😍
 
