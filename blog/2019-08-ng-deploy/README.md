@@ -1,5 +1,5 @@
 ---
-title: "All you need to know about `ng deploy`"
+title: "Angular CLI: All you need to know about `ng deploy`"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2019-08-23
@@ -14,7 +14,7 @@ thumbnail: space-shuttle.jpg
 hidden: true
 ---
 
-With version 8.3 of the Angular CLI a new command has been released which has the potential to be a game changer.
+**With version 8.3 of the Angular CLI a new command has been released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, Github pages...) are potentially only one CLI command away. In this article we discuss everything you need to know.** 
 
 <hr>
 
@@ -22,9 +22,36 @@ Table of contents:
 
 TODO
 
-# Command Line Call
+## Introduction
 
-Let's take we look at the semantics. How is a deploy builder called?
+Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/commit/5df50bacbe11f029e7d841395f16c02d804f07db) added a command to the CLI which invokes a so-called __deployment target builder__ for a project.
+The amount of code added is relatively small, because because builders have been around for a longer time and because the CLI itself does not have much to do, but passes the work on to other third-party packages.
+So it's up to the community to breathe life into the command.
+
+## Background
+
+In fact, the CLI already has this ability for a while.
+Angular CLI allows us to extend the set of functionality by implementing builders and invoking them with `ng run [builder-name]`.
+There is a very detailed [article about builders](https://angular.io/guide/cli-builder) provided in the official docs.
+
+
+But until now deploy commands were not made on top of CLI builders.
+Those commands are usually hidden in their own CLI (eg. `firebase deploy`) and have nothing to do with the Angular CLI.
+Our own deploy command ([angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/)) was one of them.
+There was simply no requirement for us to implement a deeper integration into the CLI.
+
+All right, until now builders have not yet achieved the necessary attention they deserve.
+The new command `ng deploy` is designed to change that!
+* it runs in the Angular CLI, so it's clear that an Angular App should be deployed and reasonable defaults can be set accordingly
+* it is called `deploy` instead of `run` which might be confusing otherwise
+* it throws a message in case there is no deployment builder installed (`Cannot find "deploy" target for the specified project. You should add a package that implements deployment capabilities for your favorite platform.`)
+* it has a very short syntax, because by default it will deploy the default project
+
+
+
+## Command Line Call
+
+Let's take a look at the semantics. How is a deploy builder called?
 
 Without any further arguments, the CLI will try to execute the deploy builder for the default project:
 
@@ -50,6 +77,7 @@ So if you have created a project by calling `ng new your-angular-project`, the c
 ng run your-angular-project:deploy
 ```
 
+This is the old syntax to call a builder, which already exists for a while.
 Surprisingly, there are no other standardized options – but we will come back to that in a moment. 
 
 
