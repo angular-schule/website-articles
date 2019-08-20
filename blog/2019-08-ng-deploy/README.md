@@ -28,7 +28,7 @@ hidden: true
 
 ## Introduction
 
-Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/commit/5df50bacbe11f029e7d841395f16c02d804f07db) added a command to the CLI which invokes a so-called __deployment target builder__ for a project.
+Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/pull/15105) added a command to the CLI which invokes a so-called __deployment target builder__ for a project.
 The amount of code added is relatively small, because builders have been around for a longer time and because the CLI itself does not have much to do, but passes the work on to other third-party code.
 So it's up to the community to breathe life into the command.
 
