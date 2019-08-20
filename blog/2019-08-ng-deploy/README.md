@@ -18,14 +18,18 @@ hidden: true
 
 <hr>
 
-Table of contents:
+- [Introduction](/blog/2019-08-ng-deploy#introduction)
+- [Background](/blog/2019-08-ng-deploy#background)
+- [Command Line Call](/blog/2019-08-ng-deploy#command-line-call)
+- [Existing providers](/blog/2019-08-ng-deploy#existing-providers)
+- [Caveats](/blog/2019-08-ng-deploy#caveats)
+- [Summary](/blog/2019-08-ng-deploy#summary)
 
-TODO
 
 ## Introduction
 
 Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/commit/5df50bacbe11f029e7d841395f16c02d804f07db) added a command to the CLI which invokes a so-called __deployment target builder__ for a project.
-The amount of code added is relatively small, because builders have been around for a longer time and because the CLI itself does not have much to do, but passes the work on to other third-party packages.
+The amount of code added is relatively small, because builders have been around for a longer time and because the CLI itself does not have much to do, but passes the work on to other third-party code.
 So it's up to the community to breathe life into the command.
 
 
@@ -67,7 +71,8 @@ Which is the same as:
 ng deploy [options]
 ```
 
-As you might know, you can manage several Angular Apps (projects) in one workspace. The CLI accepts an optional project name, as specified in the `angular.json` configuration file.
+As you might know, you can manage several Angular Apps (projects) in one workspace.
+The CLI accepts an optional project name, as specified in the `angular.json` configuration file.
 
 ```bash
 ng run [PROJECT_NAME]:deploy [options]
@@ -80,9 +85,6 @@ So if you have created a project by calling `ng new your-angular-project`, the c
 ```bash
 ng run your-angular-project:deploy 
 ```
-
-This is the old syntax to call a builder, which already exists for a while.
-<!-- Surprisingly, there are no other standardized options – but we will come back to that in a moment.  -->
 
 
 ## Existing providers
@@ -108,7 +110,7 @@ You can try them out by executing the following commands.
    npm install -g @angular/cli
    ```
 
-2. Run `ng version`, make sure you have installed Angular CLI v8.3.0 or greater.
+2. Run `ng version`, to make sure you have installed Angular CLI v8.3.0 or greater.
 
 3. Update your existing project using the command:
 
@@ -132,7 +134,31 @@ One example:
 
 ![angular-cli-ghpages-deploy](angular-cli-ghpages-deploy.gif)
 
+## Caveats
 
+Right now `ng deploy` only support a single deploy target for a project.
+If we want to deploy a project to more than one provider, it is necessary to rewrite the `angular.json` file.
+
+
+<!-- question to Minko! -->
+
+At least for me, is not yet clear whether a deploy builder should compile the project itself or not.
+In the example project from Minko the deploy builder not only executed the deployment but also always compiled the project in production mode.
+Of course this is very convenient, but on the other hand you might want to build another configuration.
+
+We have opted for `angular-cli-ghpages` as following:  
+By default, it builds in production mode, but you can configure it yourself using the option `--configuration'.
+
+The project `@azure/ng-deploy` has found another solution.
+Here you have to build by yourself with `ng build` and the builder deploys only the existing project from the `dist`-folder.
+
+We will see which way will be broaldy adopted or whether there will be a recommendation from the Angular team. 
+
+## Summary
+
+With the new deployments, it will be even easier to manage an Angular application over the entire lifecycle.
+In addition to code generation, build, testing and much more, we can now also conveniently deploy to any target like Azure, Firebase or Netfly.
+More providers should come soon. 🚀
 
 <hr>
 
