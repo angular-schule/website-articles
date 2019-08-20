@@ -147,7 +147,7 @@ In the example project from Minko the deploy builder not only executed the deplo
 Of course this is very convenient, but on the other hand you might want to build another configuration.
 
 We have opted for `angular-cli-ghpages` as following:  
-By default, it builds in production mode, but you can configure it yourself using the option `--configuration'.
+By default, it builds in production mode, but you can configure it yourself using the option `--configuration`.
 
 The project `@azure/ng-deploy` has found another solution.
 Here you have to build by yourself with `ng build` and the builder deploys only the existing project from the `dist`-folder.
