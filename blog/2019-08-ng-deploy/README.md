@@ -95,9 +95,9 @@ This is because Minko has [provided a sample project](https://github.com/mgechev
 The following providers are currently available:
 
 * `@angular/fire` (Deployment to [Firebase hosting](https://firebase.google.com/docs/hosting))
-* `@azure/ng-deploy` (Deployment to [Azure](https://azure.microsoft.com/en-us/)
-* `@netlify-builder/deploy` (Deployment to [Now](https://zeit.co/now))
-* `@zeit/ng-deploy` (Deployment to [Netlify](https://www.netlify.com/)
+* `@azure/ng-deploy` (Deployment to [Azure](https://azure.microsoft.com/en-us/))
+* `@netlify-builder/deploy` (Deployment to [Netlify](https://www.netlify.com/))
+* `@zeit/ng-deploy` (Deployment to [Now](https://zeit.co/now))
 * `angular-cli-ghpages` (Deployment to [GitHub pages](https://pages.github.com/))
 
 In future you should be able to find more providers via the following search:  
