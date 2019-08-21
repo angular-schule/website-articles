@@ -28,7 +28,7 @@ hidden: true
 
 ## Introduction
 
-Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/pull/15105) added a command to the CLI which invokes a so-called __deployment target builder__ for a project.
+Angular team member Minko Gechev [recently added](https://github.com/angular/angular-cli/pull/15105) added a command to the CLI which invokes a so-called __deployment builder__ for a project.
 The amount of code added is relatively small, because builders have been around for a longer time and because the CLI itself does not have much to do, but passes the work on to other third-party code.
 So it's up to the community to breathe life into the command.
 And that's the reason for this article. 😀
@@ -94,11 +94,11 @@ There is already a good adaptation for `ng deploy`.
 This is because Minko has [provided a sample project](https://github.com/mgechev/ngx-gh) and helped to implement some deploy targets.
 The following providers are currently available:
 
-* `@angular/fire` (deploys to Firebase)
-* `@azure/ng-deploy` (deploys to Azure Static Hosting)
-* `@netlify-builder/deploy` (deploys to Netlify)
-* `@zeit/ng-deploy` (deploys to Now)
-* `angular-cli-ghpages` (deploys to GitHub pages)
+* `@angular/fire` (Deployment to [Firebase hosting](https://firebase.google.com/docs/hosting))
+* `@azure/ng-deploy` (Deployment to [Azure](https://azure.microsoft.com/en-us/)
+* `@netlify-builder/deploy` (Deployment to [Now](https://zeit.co/now))
+* `@zeit/ng-deploy` (Deployment to [Netlify](https://www.netlify.com/)
+* `angular-cli-ghpages` (Deployment to [GitHub pages](https://pages.github.com/))
 
 In future you should be able to find more providers via the following search:  
 https://www.npmjs.com/search?q=ng%20deploy
