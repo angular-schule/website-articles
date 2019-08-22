@@ -11,7 +11,7 @@ keywords:
   - ng-deploy
 language: en
 thumbnail: space-shuttle.jpg
-hidden: true
+hidden: false
 ---
 
 **With version 8.3 of the Angular CLI a new command will be released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.** 
