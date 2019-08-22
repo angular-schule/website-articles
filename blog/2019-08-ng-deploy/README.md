@@ -49,7 +49,7 @@ There was simply no requirement for us to implement a deeper integration into th
 All right, until now builders have not yet achieved the necessary attention they deserve.
 The new command `ng deploy` is designed to change that!
 * it runs in the Angular CLI, so it's clear that an Angular App should be deployed and reasonable defaults can be set accordingly
-* it is called `deploy` instead of `run` which might be confusing otherwise
+* it is called `ng deploy` instead of the usual `ng run [builder-name]` which might be confusing otherwise
 * it throws a meaningfull message in case there is no deployment builder installed (`Cannot find "deploy" target for the specified project. You should add a package that implements deployment capabilities for your favorite platform.`)
 * it has a very short syntax, because by default it will deploy the default project
 * **and the most important point:**
@@ -76,7 +76,7 @@ As you might know, you can manage several Angular Apps (projects) in one workspa
 The CLI accepts an optional project name, as specified in the `angular.json` configuration file.
 
 ```bash
-ng run [PROJECT_NAME]:deploy [options]
+ng deploy --project [PROJECT_NAME] [options]
 ```
 
 The options are optional.
@@ -84,7 +84,7 @@ They will be passed to the deploy target for the selected project.
 So if you have created a project by calling `ng new your-angular-project`, the complete command could be:
 
 ```bash
-ng run your-angular-project:deploy 
+ng deploy --project your-angular-project 
 ```
 
 
