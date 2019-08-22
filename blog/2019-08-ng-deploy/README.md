@@ -88,7 +88,7 @@ ng deploy your-angular-project
 ```
 
 No other options are necessary here for a simple deployment.
-However, all supllied command line options will automatically be passed to the deploy builder for the selected project.
+However, all supplied command line options will automatically be passed to the deploy builder for the selected project.
 Thus, the builder itself can be further configured.
 
 
