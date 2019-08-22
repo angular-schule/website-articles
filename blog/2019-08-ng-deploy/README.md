@@ -2,7 +2,7 @@
 title: "All you need to know about `ng deploy`"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2019-08-23
+published: 2019-08-22
 keywords:
   - Angular
   - Angular CLI
@@ -14,7 +14,7 @@ thumbnail: space-shuttle.jpg
 hidden: true
 ---
 
-**With the upcoming version 8.3 of the Angular CLI a new command will be released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.** 
+**With version 8.3 of the Angular CLI a new command will be released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.** 
 
 <hr>
 
