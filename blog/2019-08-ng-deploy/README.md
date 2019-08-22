@@ -91,7 +91,6 @@ ng deploy --project your-angular-project
 ## Existing providers
 
 There is already a good adaptation for `ng deploy`.
-This is because Minko has [provided a sample project](https://github.com/mgechev/ngx-gh) and helped to implement some deploy targets.
 The following providers are currently available:
 
 * `@angular/fire` (Deployment to [Firebase hosting](https://firebase.google.com/docs/hosting))
@@ -203,6 +202,11 @@ In addition to code generation, build, testing and much more, we can now also co
 More providers should come soon. 🚀
 
 <hr>
+
+## Thank You
+
+- [Minko Gechev](https://twitter.com/mgechev) for guiding me through the new Angular CLI Architect API.
+- [Ferdinand Malcher](https://twitter.com/fmalcher01) for the review of this article.
 
 _Picture: STS-126 Space Shuttle Endeavour Launch. This NASA still image is in the public domain._
 <!-- https://publicdomainclip-art.blogspot.com/2008/11/sts-126-space-shuttle-endeavour-launch.html -->
