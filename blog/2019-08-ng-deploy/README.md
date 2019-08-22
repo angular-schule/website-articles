@@ -1,5 +1,5 @@
 ---
-title: "Angular CLI: All you need to know about `ng deploy`"
+title: "All you need to know about `ng deploy`"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2019-08-23
