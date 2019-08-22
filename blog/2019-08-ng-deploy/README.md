@@ -18,12 +18,16 @@ hidden: true
 
 <hr>
 
+Table of contents:
+
 - [Introduction](/blog/2019-08-ng-deploy#introduction)
 - [Background](/blog/2019-08-ng-deploy#background)
 - [Command Line Call](/blog/2019-08-ng-deploy#command-line-call)
 - [Existing providers](/blog/2019-08-ng-deploy#existing-providers)
-- [Caveats](/blog/2019-08-ng-deploy#caveats)
+- [Deploy to multiple targets](/blog/2019-08-ng-deploy#deploy-to-multiple-targets)
+- [How to make your own deployment builder](/blog/2019-08-ng-deploy#how-to-make-your-own-deployment-builder)
 - [Summary](/blog/2019-08-ng-deploy#summary)
+
 
 
 ## Introduction
