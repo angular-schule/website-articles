@@ -135,10 +135,46 @@ One example:
 
 ![angular-cli-ghpages-deploy](angular-cli-ghpages-deploy.gif)
 
-## Caveats
+
+## Deploy to multiple targets
 
 Right now `ng deploy` only support a single deploy target for a project.
-If we want to deploy a project to more than one provider, it is necessary to rewrite the `angular.json` file.
+If we want to deploy a project to more than one provider, it is necessary to rewrite the `angular.json` file and use the old syntax to execute the builder.
+
+Let's assume you want to use `@angular-schule/ngx-deploy-starter` and `angular-cli-ghpages` together for one project.
+First install them via `ng add @angular-schule/ngx-deploy-starter` and `ng add angular-cli-ghpages`.
+The last one will override the configuration of the first one.
+
+Now open the `angular.json` file and locate the section `projects > you-angular-project > architect > deploy`.
+The trick is to create two sections with different names:
+
+```json
+{
+  "projects": {
+    "your-angular-project": {
+      "architect": {
+        "deploy-ghpages": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
+        },
+        "deploy-starter": {
+          "builder": "@angular-schule/ngx-deploy-starter:deploy",
+          "options": {}
+        }
+      }
+    }
+  },
+  "defaultProject": "your-angular-project"
+}
+```
+
+You can now call up the two builders via the classic approach again:
+
+```bash
+ng run your-angular-project:deploy-ghpages
+ng run your-angular-project:deploy-starter
+```
+
 
 
 <!-- question to Minko! -->
