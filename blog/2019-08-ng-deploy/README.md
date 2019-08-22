@@ -176,20 +176,25 @@ ng run your-angular-project:deploy-starter
 ```
 
 
+## How to make your own deployment builder
 
-<!-- question to Minko! -->
+As a cloud-platform provider (or as a fan of that service), you should consider to implement a dedicated deployment builder.
+Let's think about a deployment via FTP, to AWS, to Heroku, to Rackspace etc. – it's up to YOU to launch the next rocket!! 🚀 
 
-At least for me, is not yet clear whether a deploy builder should compile the project itself or not.
-In the example project from Minko the deploy builder not only executed the deployment but also always compiled the project in production mode.
-Of course this is very convenient, but on the other hand you might want to build another configuration.
+So we started a sample project to help on that way.
+The groundwork of this starter was provided by Minko Gechev's [ngx-gh project](https://github.com/mgechev/ngx-gh).
 
-We have opted for `angular-cli-ghpages` as following:  
-By default, it builds in production mode, but you can configure it yourself using the option `--configuration`.
+This project has the following purposes:
 
-The project `@azure/ng-deploy` has found another solution.
-Here you have to build by yourself with `ng build` and the builder deploys only the existing project from the `dist`-folder.
+1. To promote the adoption of `ng deploy`.
+2. To clarify various questions and to standardise the experience of the various builders.  
 
-We will see which way will be adopted or whether there will be an official recommendation from the Angular team. 
+**Learn more at
+https://github.com/angular-schule/ngx-deploy-starter**
+
+You are free to customise this project according to your needs.
+Please keep the spirit of Open Source alive and use the MIT or a compatible license.
+
 
 ## Summary
 
