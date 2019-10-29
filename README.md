@@ -28,3 +28,4 @@ Pull requests are welcome!
 - [blog/2019-06-angular-graphql](blog/2019-06-angular-graphql/README.html)
 - [blog/2019-07-resolvers](blog/2019-07-resolvers/README.html)
 - [blog/2019-08-ng-deploy](blog/2019-08-ng-deploy/README.html)
+- [blog/2019-10-ngx-semantic-version](blog/2019-10-ngx-semantic-version/README.html)
