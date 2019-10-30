@@ -27,12 +27,13 @@ It will help you to keep your CHANGELOG.md file up to date and release new tagge
 Table of contents:
 
 - [Introduction](/blog/2019-10-ngx-semantic-version#introduction)
-- [What does it do?](/blog/2019-10-ngx-semantic-version#what-does-it-do)
+- [What does it do?](/blog/2019-10-ngx-semantic-version#what-does-it-do-)
   - [commitlint](/blog/2019-10-ngx-semantic-version#commitlint)
   - [husky](/blog/2019-10-ngx-semantic-version#husky)
   - [commitizen](/blog/2019-10-ngx-semantic-version#commitizen)
   - [standard-version](/blog/2019-10-ngx-semantic-version#standard-version)
 - [How to use](/blog/2019-10-ngx-semantic-version#how-to-use)
+- [Conclusion](/blog/2019-10-ngx-semantic-version#conclusion)
 
 ## Introduction
 
@@ -172,14 +173,16 @@ npm run release -- --prerelease       # create a pre-release instead of a regula
 
 _standard-version_ will now do the following:
 
-1. It "bumps" the version in package.json`.
+1. It "bumps" the version in `package.json`.
 2. It updates the `CHANGELOG.md` file
 3. It commits the `package.json` and `CHANGELOG.md` files
 4. It tags a new release in the git history.
 
 Check out the [official documentation](https://www.npmjs.com/package/standard-version#release-as-a-pre-release) for further information.
 
-I hope that `ngx-semantic-version` will make your daily work easier. If you have a problem, please feel free to open an issue. And if you have any improvements, I'm especially happy about a pull-request.
+## Conclusion
+
+I hope that `ngx-semantic-version` will make your daily work easier. If you have a problem, please feel free to open an [issue](https://github.com/d-koppenhagen/ngx-semantic-version/issues). And if you have any improvements, I'm especially happy about a [pull-request](https://github.com/d-koppenhagen/ngx-semantic-version/pulls).
 
 **Happy coding, committing and releasing!**
 
