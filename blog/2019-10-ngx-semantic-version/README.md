@@ -140,7 +140,7 @@ It can be determined what version part will be increased and many more.
 
 If you wanna try you _commitlint_ separately, you can even try it out using `npx`:
 
-![commitlint cli](./commitlint.png)
+![commitlint cli](./commitlint.svg)
 
 _ngx-semantic-version_ will add the configuration fille `commitlint.config.js` which can be adjusted later for your personal needs.
 
@@ -167,7 +167,7 @@ The tool commitizen is there to help beginners and to prevent your own negligenc
 It introduced a lots of restrictions for our commit messages.
 [Commitizen](https://www.npmjs.com/package/commitizen) will help you to build a commit message always in the appropriate format by letting you configure the final message via an interactive cli.
 
-![commitizen cli](./commitizen.png)
+![commitizen cli](./commitizen.svg)
 
 _ngx-semantic-version_ will configure a new script in your `package.json` that can be used for releasing a new version:
 
