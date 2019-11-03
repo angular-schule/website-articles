@@ -169,13 +169,15 @@ It introduced a lots of restrictions for our commit messages.
 
 ![commitizen cli](./commitizen.svg)
 
-_ngx-semantic-version_ will configure a new script in your `package.json` that can be used for releasing a new version:
+_ngx-semantic-version_ will configure _commitizen_ in your `package.json`, so that is will use the _conventional changelog_ as well:
 
 ```json
 ...
-"scripts": {
-  "release": "standard-version",
-},
+"config": {
+  "commitizen": {
+    "path": "./node_modules/cz-conventional-changelog"
+  }
+}
 ```
 
 If you are using Visual Studio Code, you can also use the plugin [Visual Studio Code Commitizen Support](https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-commitizen) which will let you build the commit message directly in the editor:
@@ -189,15 +191,13 @@ It will extract the commit message information like `fix`, `feature` and `BREAKI
 I will also determine the a version for our project.
 Of course, numbers will be increased according to the [rules of semantic versioning](https://semver.org/).
 
-_ngx-semantic-version_ will configure _commitizen_ in your `package.json`, so that is will use the _conventional changelog_ as well:
+_ngx-semantic-version_ will configure a new script in your `package.json` that can be used for releasing a new version:
 
 ```json
 ...
-"config": {
-  "commitizen": {
-    "path": "./node_modules/cz-conventional-changelog"
-  }
-}
+"scripts": {
+  "release": "standard-version",
+},
 ```
 
 Whenever you will release a version, you can use _standard-version_ and it will keep your versioning clean and your `CHANGELOG.md` up-to-date.
