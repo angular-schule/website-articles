@@ -16,7 +16,7 @@ keywords:
   - semver
   - Semantic Version
 language: en
-thumbnail: space-shuttle.jpg
+thumbnail: ngx-semantic-version-header.jpg
 hidden: true
 ---
 
@@ -40,8 +40,8 @@ Table of contents:
 
 ## TL;DR
 
-_ngx-semantic-version_ is an Angular Schematic that will add and configure _commitlint_, _commitizen_, _husky_ and _standard-version_ for creating commit messages in the _conventional commit_ format and automate your release and Changelog generation respecting _semver_.
-To use it you simply need to run:
+_ngx-semantic-version_ is an Angular Schematic that will add and configure _commitlint_, _commitizen_, _husky_ and _standard-version_ to enforce commit messages in the _conventional commit_ format and to automate your release and Changelog generation by respecting _semver_.
+All you have to do for the setup is to execute this command:
 
 ```bash
 ng add ngx-semantic-version
@@ -67,17 +67,15 @@ At the end of all days our git history looks like this:
 * 1e34db6 initial commit
 ```
 
-When checking this history you know almost nothing: neither what features has been integrated nor if there was a bugfix or at least some other meaningfull context.
+When checking such a history, you know almost nothing: neither what features have been integrated nor if there was a bugfix. There is almost no meaningful context.
 
 Wouldn’t it be nice to have a cleaner git history that will follow a de facto standard which is commonly used?
 
 But more than this: having a clean and good formatted git history can help us releasing new software versions respecting semantic versioning and generating a changelog that includes all the changes we made and references to the commits.
 
-No more struggle with forgotten version increasements the in your `package.json`. No more manual changes in the `CHANGELOG.md` and missing references to neccessary git commits. Wouldn‘t it be nice to automate the release process and generate the changelog and the package version by just checking and building it from a clean git history?
+No more struggle with forgotten version increasements the in your `package.json`. No more manual changes in the `CHANGELOG.md` and missing references to necessary git commits. Wouldn‘t it be nice to automate the release process and generate the changelog and the package version by just checking and building it from a clean git history? And wouldn’t it be nice to add all this stuff with one very simple single line command to your Angular project?
 
-And wouldn’t it be nice to add all this stuff with one very simple single line command to your Angular project?
-
-**Using [_ngx-semantic-version_](https://www.npmjs.com/package/ngx-semantic-version) will give you all that.**
+**[_ngx-semantic-version_](https://www.npmjs.com/package/ngx-semantic-version) will give you all that.**
 
 ## What does it do?
 
@@ -91,7 +89,7 @@ We will have a look on each tool in this article.
 
 ### commitlint
 
-[Commitlint](https://commitlint.js.org) will give you the ability to check your commit messages for a common pattern: the [_conventional-commit_](https://www.conventionalcommits.org) pattern requires us follow this simple syntax:
+[Commitlint](https://commitlint.js.org) will give you the ability to check your commit messages for a common pattern. A very prominent project following this pattern is the Angular repository itself. The [_conventional-commit_](https://www.conventionalcommits.org) pattern requires us to follow this simple syntax:
 
 ```text
 <type>[optional scope]: <description>
@@ -138,7 +136,7 @@ It can be determined what version part will be increased and many more.
 
 > You may think now: 'Wow, that style looks complicated and hard to remember.' But don't worry: you will be used to it soon and in some seconds you will see how creating this messages will be simplified using _commitizen_.
 
-If you wanna try you _commitlint_ separately, you can even try it out using `npx`:
+If you want to try you _commitlint_ separately, you can even try it out using `npx`:
 
 ![commitlint cli](./commitlint.svg)
 
@@ -158,11 +156,11 @@ Therefore it will add this part to your `package.json`:
 },
 ```
 
-Husky uses the evnironment variable `HUSKY_GIT_PARAMS` containing the current git message you entered and it will pass this through _commitlint_ so it can be evaluated.
+Husky uses the environment variable `HUSKY_GIT_PARAMS` containing the current git message you entered and it will pass this through _commitlint_ so it can be evaluated.
 
 ### commitizen
 
-Defining the good message text can be be quite hard when you are not used to the _conventional-changelog_ style.
+Defining the good message text can be quite hard when you are not used to the _conventional-changelog_ style.
 The tool commitizen is there to help beginners and to prevent your own negligence.
 It introduced a lots of restrictions for our commit messages.
 [Commitizen](https://www.npmjs.com/package/commitizen) will help you to build a commit message always in the appropriate format by letting you configure the final message via an interactive cli.
@@ -188,7 +186,7 @@ If you are using Visual Studio Code, you can also use the plugin [Visual Studio 
 
 [Standard-version](https://www.npmjs.com/package/standard-version) is the cherry on the cake and takes advantage from a well formed git history.
 It will extract the commit message information like `fix`, `feature` and `BREAKING CHANGES` and use this information for creating a well formatted `CHANGELOG.md` file.
-I will also determine the a version for our project.
+I will also determine the next version for our project.
 Of course, numbers will be increased according to the [rules of semantic versioning](https://semver.org/).
 
 _ngx-semantic-version_ will configure a new script in your `package.json` that can be used for releasing a new version:
@@ -200,7 +198,7 @@ _ngx-semantic-version_ will configure a new script in your `package.json` that c
 },
 ```
 
-Whenever you will release a version, you can use _standard-version_ and it will keep your versioning clean and your `CHANGELOG.md` up-to-date.
+Whenever you want to release a version, you should use _standard-version_ and it will keep your versioning clean and your `CHANGELOG.md` up-to-date.
 Furthermore, it will link all commits in your `CHANGELOG.md` and references to closed issues from your trouble ticket system, so that it's easy to understand what has been done in the release.
 It will also tag version so that they will be available as releases via Github, Gitlab or whatever you are using.
 
@@ -218,8 +216,8 @@ You simply need to run the following command:
 ng add ngx-semantic-version
 ```
 
-After installation, you `package.json` file is updaded.
-You will also find a file named `commitlint.config.js` which includes the basic ruleset for conventional commit.
+After installation, you `package.json` file is updated.
+You will also find a file named `commitlint.config.js` which includes the basic  rule set for conventional commit.
 You can [adjust the configuration](https://commitlint.js.org/#/reference-rules) to satisfy your needs even more.
 
 Try it out to make some changes to your project!
