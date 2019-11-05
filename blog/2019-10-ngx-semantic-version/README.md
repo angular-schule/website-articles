@@ -173,7 +173,7 @@ It introduces a lots of restrictions for our commit messages so that it's easier
 
 ![commitizen cli](./commitizen.svg)
 
-WHen adding _ngx-semantic-version_ it will configure _commitizen_ to use the _conventional changelog_ style as well:
+When adding _ngx-semantic-version_ it will configure _commitizen_ to use the _conventional changelog_ style as well:
 
 ```json
 // package.json
