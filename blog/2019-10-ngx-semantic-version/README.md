@@ -32,12 +32,12 @@ Table of contents:
 
 - [TL;DR](/blog/2019-10-ngx-semantic-version#tl-dr)
 - [Introduction](/blog/2019-10-ngx-semantic-version#introduction)
-- [What does it do?](/blog/2019-10-ngx-semantic-version#what-does-it-do-)
+- [What does it do?](/blog/2019-10-ngx-semantic-version#what)
   - [commitlint](/blog/2019-10-ngx-semantic-version#commitlint)
   - [husky](/blog/2019-10-ngx-semantic-version#husky)
   - [commitizen](/blog/2019-10-ngx-semantic-version#commitizen)
   - [standard-version](/blog/2019-10-ngx-semantic-version#standard-version)
-- [How to use](/blog/2019-10-ngx-semantic-version#how-to-use)
+- [How to use](/blog/2019-10-ngx-semantic-version#how-to)
 - [Conclusion](/blog/2019-10-ngx-semantic-version#conclusion)
 
 ## TL;DR
@@ -79,7 +79,7 @@ No more struggle with forgotten version increasements in your `package.json`. No
 
 **[_ngx-semantic-version_](https://www.npmjs.com/package/ngx-semantic-version) will give you all that.**
 
-## What does it do?
+## What does it do? <a name="what"></a>
 
 _ngx-semantic-version_ will add and configure the following packages for you.
 We will take a look at each tool in this article.
@@ -89,7 +89,7 @@ We will take a look at each tool in this article.
 - **[commitizen](https://www.npmjs.com/package/commitizen):** helper for writing conventional commit messages
 - **[standard-version](https://www.npmjs.com/package/standard-version):** generate conventional changelogs from the git history
 
-### commitlint: Enforcing conventional commit messages
+### commitlint: Enforcing conventional commit messages <a name="commitlint"></a>
 
 [Commitlint](https://commitlint.js.org) will give you the ability to check your commit messages for a common pattern. A very prominent project following this pattern is the Angular repository itself. The [_conventional-commit_](https://www.conventionalcommits.org) pattern requires us to follow this simple syntax:
 
@@ -144,7 +144,7 @@ If you want to try you _commitlint_ separately, you can even try it out using `n
 
 _ngx-semantic-version_ will add the configuration file `commitlint.config.js` which can be adjusted later by your personal needs.
 
-### husky: Hook into the git lifecycle
+### husky: Hook into the git lifecycle <a name="husky"></a>
 
 [Husky](https://www.npmjs.com/package/husky) allows us to hook into the git lifecycle using Node.js.
 We can use husky in combination with _commitlint_ to check a commit message right before actually commiting it.
@@ -164,7 +164,7 @@ Husky uses the environment variable `HUSKY_GIT_PARAMS` containing the current gi
 
 Whenever you commit, _commitlint_ will now automatically check your message. 
 
-### commitizen: Easily write conventional commit messages
+### commitizen: Easily write conventional commit messages <a name="commitizen"></a>
 
 Defining a well-formed message text can be quite hard when you are not used to the _conventional-changelog_ style.
 The tool _commitizen_ is there to help beginners and to prevent your own negligence.
@@ -191,7 +191,7 @@ If you are using Visual Studio Code, you can also use the extension [Visual Stud
 
 
 
-### standard-version: Generate changelogs from the git history
+### standard-version: Generate changelogs from the git history <a name="standard-version"></a>
 
 [Standard-version](https://www.npmjs.com/package/standard-version) is the cherry on the cake and takes advantage of a well-formed git history.
 It will extract the commit message information like `fix`, `feature` and `BREAKING CHANGES` and use this information to automatically create a `CHANGELOG.md` file.
@@ -210,7 +210,7 @@ Whenever you want to release a version, you should use _standard-version_ to kee
 Furthermore, it references both commits and closed issues in your `CHANGELOG.md`, so that it's easier to understand what is part of in the release.
 The tool will also tag the version in the git repo so that all versions will be available as releases via GitHub, Gitlab or whatever you are using.
 
-## How to use _ngx-semantic-version_
+## How to use _ngx-semantic-version_ <a name="how-to"></a>
 
 Are you excited, too? Then let's get started!
 Configuring all mentioned tools manually can be quite tedious.
