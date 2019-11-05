@@ -43,7 +43,7 @@ Table of contents:
 ## TL;DR
 
 _ngx-semantic-version_ is an Angular Schematic that will add and configure _commitlint_, _commitizen_, _husky_ and _standard-version_ to enforce commit messages in the _conventional commit_ format and to automate your release and Changelog generation by respecting _semver_.
-All you have to do for the setup is to execute this command in yout Angular CLI project:
+All you have to do for the setup is to execute this command in your Angular CLI project:
 
 ```bash
 ng add ngx-semantic-version
@@ -73,7 +73,7 @@ When you see such a history you know almost nothing: neither what features have 
 
 Wouldn't it be nice to have a cleaner git history that will follow a de facto standard which is commonly used?
 
-But more than this: having a clean and well formatted git history can help us releasing new software versions respecting semantic versioning and generating a changelog that includes all the changes we made and references to the commits.
+But more than this: having a clean and well-formatted git history can help us releasing new software versions respecting semantic versioning and generating a changelog that includes all the changes we made and references to the commits.
 
 No more struggle with forgotten version increasements in your `package.json`. No more manual changes in the `CHANGELOG.md` and missing references to necessary git commits. Wouldn't it be nice to automate the release process and generate the changelog and the package version by just checking and building it from a clean git history? And wouldn't it be nice to add all this stuff with one very simple single line command to your Angular project?
 
@@ -119,7 +119,7 @@ Let's see what is the meaning of these parameters:
 - The `description` is mandatory and describes the commit in a very short form (also called `subject`)
 - If necessary, a `body` and a `footer` with further information can be added which may contain:
   - The keyword `BREAKING CHANGES` followed by a description of the breaking changes
-  - A reference to a GitHub issue (or any other references, such as JIRA ticket number, etc.)
+  - A reference to a GitHub issue (or any other references, such as JIRA ticket number)
 
 An example message could look like that:
 
@@ -136,7 +136,7 @@ Following this pattern allows us to extract valuable information from the git hi
 We can generate a well-formatted changelog file without any manual effort.
 It can easily be determined what version part will be increased and much more.
 
-> You may think now: "Wow, that style looks complicated and hard to remember." But don't worry: you will be get used to it soon! In a second you will see how creating these messages can be simplified using _commitizen_.
+> You may think now: "Wow, that style looks complicated and hard to remember." But don't worry: you will get used to it soon! In a second you will see how creating these messages can be simplified using _commitizen_.
 
 If you want to try you _commitlint_ separately, you can even try it out using `npx`:
 
