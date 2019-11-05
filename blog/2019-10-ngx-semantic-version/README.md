@@ -217,7 +217,7 @@ ng add ngx-semantic-version
 ```
 
 After installation, you `package.json` file is updated.
-You will also find a file named `commitlint.config.js` which includes the basic  rule set for conventional commit.
+You will also find a file named `commitlint.config.js` which includes the basic rule set for conventional commit.
 You can [adjust the configuration](https://commitlint.js.org/#/reference-rules) to satisfy your needs even more.
 
 Try it out to make some changes to your project!
@@ -253,14 +253,10 @@ I hope that `ngx-semantic-version` will make your daily work easier.
 If you have a problem, please feel free to open an [issue](https://github.com/d-koppenhagen/ngx-semantic-version/issues).
 And if you have any improvements, I'm especially happy about a [pull-request](https://github.com/d-koppenhagen/ngx-semantic-version/pulls).
 
-Happy code, commit and release!
 **Happy coding, committing and releasing!**
 
 <hr>
 
 ## Thank you
 
-Special thanks go to
-
-- [Ferdinand Malcher](https://twitter.com/fmalcher01) for revising this article and discussing things.
-- [Johannes Hoppe](https://twitter.com/fmalcher01) for revising this article and discussing things.
+Special thanks go to [Ferdinand Malcher](https://twitter.com/fmalcher01) and [Johannes Hoppe](https://twitter.com/fmalcher01) for revising this article and discussing things.
