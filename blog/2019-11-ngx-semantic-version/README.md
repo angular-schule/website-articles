@@ -2,7 +2,7 @@
 title: 'ngx-semantic-version: enhance your git and release workflow'
 author: Danny Koppenhagen
 mail: mail@d-koppenhagen.de
-published: 2019-10-24
+published: 2019-11-06
 keywords:
   - Angular
   - Angular CLI
@@ -19,7 +19,6 @@ keywords:
   - Conventional Changelog
 language: en
 thumbnail: ngx-semantic-version-header.jpg
-hidden: false
 ---
 
 **In this article I will introduce the new tool `ngx-semantic-version`.
