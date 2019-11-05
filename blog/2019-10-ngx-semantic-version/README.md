@@ -142,7 +142,7 @@ If you want to try you _commitlint_ separately, you can even try it out using `n
 
 ![commitlint cli](./commitlint.svg)
 
-_ngx-semantic-version_ will add the configuration fille `commitlint.config.js` which can be adjusted later by your personal needs.
+_ngx-semantic-version_ will add the configuration file `commitlint.config.js` which can be adjusted later by your personal needs.
 
 ### husky: Hook into the git lifecycle
 
