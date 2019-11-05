@@ -30,15 +30,15 @@ It will help you to keep your `CHANGELOG.md` file up to date and to release new 
 
 Table of contents:
 
-- [TL;DR](/blog/2019-10-ngx-semantic-version#tl-dr)
-- [Introduction](/blog/2019-10-ngx-semantic-version#introduction)
-- [What does it do?](/blog/2019-10-ngx-semantic-version#what)
-  - [commitlint](/blog/2019-10-ngx-semantic-version#commitlint)
-  - [husky](/blog/2019-10-ngx-semantic-version#husky)
-  - [commitizen](/blog/2019-10-ngx-semantic-version#commitizen)
-  - [standard-version](/blog/2019-10-ngx-semantic-version#standard-version)
-- [How to use](/blog/2019-10-ngx-semantic-version#how-to)
-- [Conclusion](/blog/2019-10-ngx-semantic-version#conclusion)
+- [TL;DR](/blog/2019-11-ngx-semantic-version#tl-dr)
+- [Introduction](/blog/2019-11-ngx-semantic-version#introduction)
+- [What does it do?](/blog/2019-11-ngx-semantic-version#what)
+  - [commitlint](/blog/2019-11-ngx-semantic-version#commitlint)
+  - [husky](/blog/2019-11-ngx-semantic-version#husky)
+  - [commitizen](/blog/2019-11-ngx-semantic-version#commitizen)
+  - [standard-version](/blog/2019-11-ngx-semantic-version#standard-version)
+- [How to use](/blog/2019-11-ngx-semantic-version#how-to)
+- [Conclusion](/blog/2019-11-ngx-semantic-version#conclusion)
 
 ## TL;DR
 
