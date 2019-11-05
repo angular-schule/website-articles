@@ -19,7 +19,7 @@ keywords:
   - Conventional Changelog
 language: en
 thumbnail: ngx-semantic-version-header.jpg
-hidden: true
+hidden: false
 ---
 
 **In this article I will introduce the new tool `ngx-semantic-version`.
