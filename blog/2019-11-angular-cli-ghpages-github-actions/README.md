@@ -1,5 +1,5 @@
 ---
-title: "angular-cli-ghpages: setting up deployment with GitHub Actions"
+title: "setting up deployment with angular-cli-ghpages and GitHub Actions"
 author: Dharmen Shah
 mail: shhdharmen@gmail.com
 published: 2019-11-20
