@@ -22,6 +22,7 @@ hidden: true
 - [Introduction](/blog/2019-11-angular-cli-ghpages-github-actions#introduction)
 - [Prerequisites](/blog/2019-11-angular-cli-ghpages-github-actions#prerequisites)
 - [Getting started](/blog/2019-11-angular-cli-ghpages-github-actions#getting-started)
+  - [First things first](/blog/2019-11-angular-cli-ghpages-github-actions#first-things-first)
   - [Setup Tokens](/blog/2019-11-angular-cli-ghpages-github-actions#setup-tokens)
   - [Setup Github Action Flow](/blog/2019-11-angular-cli-ghpages-github-actions#setup-github-action-flow)
 - [Summary](/blog/2019-11-angular-cli-ghpages-github-actions#summary)
@@ -69,6 +70,12 @@ Take a look at it's [official documentation](https://help.github.com/en/actions/
 ## Getting started
 
 Please ensure that you've read the [prerequisites](/blog/2019-11-angular-cli-ghpages-github-actions#prerequisites) section before continuing with this section. We are assuming that you have a Angular app, which is pushed on Github and has `angular-cli-ghpages` added.
+
+### First things first
+
+We will need to create an Angular app and then add `angular-cli-ghpages` in it.
+
+If you haven't that ready, Angular Schule team has already written nice guide to get started with the same. I would recommend to complete [quick start](https://github.com/angular-schule/angular-cli-ghpages#-quick-start-local-development-) part and then continue to Setup Tokens.
 
 ### Setup Tokens
 
