@@ -36,10 +36,10 @@ We will see what are `angular-cli-ghpages` and Github Actions, and how they work
 
 All it takes is just two commands in terminal to deploy your Angular app on Github Pages:
 
-    ```bash
-    ng add angular-cli-ghpages
-    ng deploy
-    ```
+```bash
+ng add angular-cli-ghpages
+ng deploy
+```
 
 Checkout there [repo](https://github.com/angular-schule/angular-cli-ghpages#angular-cli-ghpages) for more information.
 
