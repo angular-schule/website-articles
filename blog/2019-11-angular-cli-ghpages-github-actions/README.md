@@ -61,7 +61,7 @@ Take a look at it's [official documentation](https://help.github.com/en/actions/
 4. You have a working Angular app. If not, you can [quickly set it up](https://angular.io/guide/setup-local).
 5. Your Angular app is pushed on Github.
 6. You have added **angular-cli-ghpages** in your project. If not:
-   - Please checkout [Quick Start Guide](https://github.com/angular-schule/angular-cli-ghpages#-quick-start-local-development-) 
+   - Please checkout it's [quick start guide](https://github.com/angular-schule/angular-cli-ghpages#-quick-start-local-development-)
    - Or simply run `ng add angular-cli-ghpages` in your project.
 
 ## Getting started
