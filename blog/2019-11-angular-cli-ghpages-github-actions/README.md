@@ -17,7 +17,7 @@ thumbnail: spacex-unsplash.jpg
 hidden: true
 ---
 
-**We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. And `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
+**We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. With that, `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
 
 - [Introduction](/blog/2019-11-angular-cli-ghpages-github-actions#introduction)
 - [Prerequisites](/blog/2019-11-angular-cli-ghpages-github-actions#prerequisites)
