@@ -28,6 +28,8 @@ hidden: true
 
 ## Introduction
 
+We will see what are `angular-cli-ghpages` and Github Actions, and how they work. And then, we will create & setup tokens and Github Action YAML files. So that we can use `angular-cli-ghpages` in Github Actions to deploy our Angular app directly to Github Pages.
+
 ### angular-cli-ghpages
 
     Deploy your Angular app to GitHub pages directly from the Angular CLI! 🚀
