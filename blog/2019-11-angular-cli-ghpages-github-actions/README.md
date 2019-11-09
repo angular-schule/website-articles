@@ -45,7 +45,9 @@ Checkout there [repo](https://github.com/angular-schule/angular-cli-ghpages#angu
 
 ### Github Actions
 
-    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD. Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue triaging work the way you want.
+    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD.
+    Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue 
+    triaging work the way you want.
 
 You will need to create Actions YAML file and Github will take care of the rest.
 
