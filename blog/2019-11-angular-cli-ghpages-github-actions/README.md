@@ -37,7 +37,7 @@ We will see what are `angular-cli-ghpages` and Github Actions, and how they work
 
 All it takes is just two commands in terminal to deploy your Angular app on Github Pages:
 
-```bash
+```sh
 ng add angular-cli-ghpages
 ng deploy
 ```
@@ -61,21 +61,20 @@ Take a look at it's [official documentation](https://help.github.com/en/actions/
    1. [GitHub Actions](https://github.com/features/actions)
    2. [Github Pages](https://pages.github.com/)
 3. Not required, but it would be great if you've written some form of YML code before and have minimal knowledge of the syntax.
-4. You have a working Angular app. If not, you can [quickly set it up](https://angular.io/guide/setup-local).
-5. Your Angular app is pushed on Github.
-6. You have added **angular-cli-ghpages** in your project. If not:
-   - Please checkout it's [quick start guide](https://github.com/angular-schule/angular-cli-ghpages#-quick-start-local-development-)
-   - Or simply run `ng add angular-cli-ghpages` in your project.
 
 ## Getting started
 
-Please ensure that you've read the [prerequisites](/blog/2019-11-angular-cli-ghpages-github-actions#prerequisites) section before continuing with this section. We are assuming that you have a Angular app, which is pushed on Github and has `angular-cli-ghpages` added.
-
 ### First things first
 
-We will need to create an Angular app and then add `angular-cli-ghpages` in it.
+We will need to create an Angular app and then add `angular-cli-ghpages` in it. Think of a nice project name and start your terminal:
 
-If you haven't that ready, Angular Schule team has already written nice guide to get started with the same. I would recommend to complete [quick start](https://github.com/angular-schule/angular-cli-ghpages#-quick-start-local-development-) part and then continue to Setup Tokens.
+```sh
+npm install -g @angular/cli
+ng new nice-project-name --defaults
+cd nice-project-name
+git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_GITHUB_REPOSITORY_NAME>.git
+ng add angular-cli-ghpages
+```
 
 ### Setup Tokens
 
