@@ -1,7 +1,8 @@
 ---
-title: "Handling normalized entities with data views with NgRx"
+title: "NgRx Data Views: How to de-normalize entities for large enterprise applications"
 author: Danilo Hoffmann
 mail: dhhyi@aol.com
+bio: Danilo is working as a Software Developer for the e-commerce company Intershop in Thuringia, located in the green heart of Germany. Just as he started working there, the decision was made to launch the development for a new storefront based on Angular. Even though he never worked with Angular before (his background is mainly Java and some C++), it turned into one of the best love stories of the current decade. Nowadays, whenever he is not working on the project, he likes spending time improving his cooking skills or chilling at local pubs while reading about psychology. 
 published: 2019-12-12
 last-change: 2019-12-12
 keywords:
@@ -30,16 +31,18 @@ If the API giving us access to the data is just a simple REST API exposing all e
 
 ## Data Clustering in Enterprise Applications
 
-Have a look at the [WordPress API Reference](https://developer.wordpress.org/rest-api/reference/) for such an example.
+Too abstract? Have a look at the [WordPress API Reference](https://developer.wordpress.org/rest-api/reference/) for an example.
 Individual Posts can be retrieved quite typically via `/posts/<id>`.
 However, the returned data just contains IDs for the author, tags and categories of the post.
-To display a post properly this additional data has to be retrieved with subsequent calls to other endpoints.
+To display a post properly with all the names and titles of depending entities, this additional data has to be retrieved with subsequent calls to other endpoints.
 
-The most effective way to handle this clustering in this example is to fetch all data for categories and tags with list calls when the application is starting up.
-This data can then be cached and referenced whenever needed.
+If you were to use WordPress as a system for content management, wouldn't you want to improve the display of a single post by pre-fetching all data related to tags and authors first with list calls, whenever the application is starting up?
+This data could then be cached and referenced whenever needed.
 If you have been around the block, you know that `@ngrx/entity` provides a perfect API for handling multiple entities in Angular applications.
 If you haven't heard about it read up [here](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) and [here](https://ngrx.io/guide/entity), believe me, it's the best thing that can happen to you.
 The data can be stored with normalized entity collections exactly the way it is retrieved via the API.
+
+Maybe even this is too theoretical. Let's build our own example the other way around.
 
 ## Clustered data for Books
 
@@ -76,12 +79,12 @@ export interface Book {
 }
 ```
 
-With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`.
+With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`, every one of them keeping track of its specific objects.
 Have a look at the [official documentation](https://ngrx.io/guide/entity) on how to do this.
 
 ## Using parameterized selectors
 
-When implementing the book detail page for your application, you will most likely have multiple selectors for all the data needed to display a single book.
+Now fast-forward to the display layer; when implementing the book detail page for your application, you will most likely have multiple selectors for all the data needed to display a single book.
 When using [parameterized selectors](https://ngrx.io/guide/store/selectors#using-selectors-with-props), the book selector looks like this:
 
 ```ts
@@ -92,7 +95,7 @@ export const getBook = createSelector(
 ```
 
 You can see here that we rely on the `getBookEntities` selectors as an input to this selector.
-`getBookEntities` was created with entity selectors provided by `@ngrx/entity` and it will give us an dictionary object containing all books.
+`getBookEntities` was created with entity selectors provided by `@ngrx/entity` and it will give us a dictionary object containing all books.
 Our projector function then uses these entities and an additional parameter to look up the right book from the state.
 The selector can be used in the component like this:
 
@@ -197,7 +200,7 @@ export interface BookView {
 
 It contains all data that is available on the book entity as well as de-normalized data for authors and tags which we can easily access and iterate over in the template.
 
-To achieve this we can build a new selector that implements this composition by re-using all previous mentioned selectors:
+To achieve this, we can build a new selector that implements this composition by re-using all previous mentioned selectors:
 
 ```ts
 export const getBookView = createSelector(
@@ -229,20 +232,21 @@ book$ = this.store.pipe(select(getBookView, this.bookId));
 </div>
 ```
 
-This way of implementing it provides a good balance of advantages and disadvantages.
+This way of implementing provides a good balance of advantages and disadvantages.
 We push the de-normalization further back so that it doesn't have to be handled in components and templates every time, That way code duplication is prevented.
 Also, the state still effectively mirrors the API and this simplifies managing and updating entities.
-The normalization in the data layer also makes it quite easy to later compose selectors for specific tasks, like:
+This seems to be the perfect spot!
+Normalization in the data layer also makes it quite easy to later compose selectors for specific tasks, like:
 
 - search for books of a specific author
 - find books with a specific tag
 
 The composition of selectors can however affect memoization, because composed selectors fire every time their input changes.
 If those inputs are not correctly memoized, the resulting selector will also not be properly memoized.
-We will dig deeper into this in the next section.
+This is not the easiest topic you have to know about, we will dig deeper into this in the next section.
 
-You can see this behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
-Whenever a Tag, Author or Book is updated, all Books will be subject to a view update.
+You can see the current behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
+Whenever a Tag, Author or Book is updated, all Books will be subject to a view update. Not really something we are looking for...
 
 ## The new problem with Memoization
 
@@ -250,11 +254,11 @@ Whenever a Tag, Author or Book is updated, all Books will be subject to a view u
 [[Wikipedia]](https://en.wikipedia.org/wiki/Memoization)
 
 When using NgRx Store with Angular, selectors provide data with Observable streams.
-Whenever data is changing in the background, the view also has to be updated.
+If data is changing in the background, the view also has to be updated.
 As the state in NgRx is basically kept as one big structured object, every modification in reducers potentially triggers an update.
 That's why memoization is used to prevent pushing an update onto the Observable streams, when effectively nothing has changed.
 Keeping data in selectors properly memoized is the bread and butter of optimization.
-Whenever a selector fires unnecessarily, it would initiate a needless and expensive view update.
+Any selector firing unnecessarily, initiates a needless and expensive view update.
 
 The ideas of the implementation are quite simple.
 Every selector keeps track of its in- and outputs and decides when the current state is good enough to prevent firing.
@@ -283,7 +287,7 @@ export function isEqualCheck(a: any, b: any): boolean {
 When updating a slice of state managed by `@ngrx/entity` the first check for input identity will always detect a change in selectors using that slice of state.
 So the projector function is most often applied and only the result identity check can then prevent the selector from firing.
 
-If we check our example selectors we can see how we are doing:
+Let's check our example selectors and see how we are doing:
 
 - `getBook`:
   
@@ -399,15 +403,15 @@ The reason for NgRx forcing this is that only serializable objects can be pushed
 The new [runtime checks](https://ngrx.io/guide/store/configuration/runtime-checks) will remind you of these practices when you enable them.
 It is not a bad approach per se as it further enforces immutability and this – as we all now – [changes everything](https://img.sauf.ca/pictures/2016-01-22/fd232c4b1ffdc0f0ef66400bf7fa64f8.pdf).
 
-If you are however used to have business objects around (enterprise developer?) and you want to have at least some kind of logic on your objects, data views can be a perfect place to implement it.
-As those objects basically spawn off the selectors, just outside of the store, you can add methods to them or even elevate simple properties to unserializable objects here.
+If you are however used to having business objects around (enterprise developer?!) and you want to have at least some kind of logic on your objects, data views can be a perfect place to implement it.
+As those objects basically spawn off the selectors, just outside of the store, you can add methods to them or even derive or elevate simple properties to unserializable objects here.
 
-Let's consider the following scenario: You want to keep the publishing date on the `Book` objects and you also want to have some accessor there that tells you if the book is new because it was published this year.
+Let's consider the following scenario: You want to keep the publishing date on the `Book` objects and you also want to have some accessor that tells you if the book is new, because it was published this year.
 In the book model in the NgRx store you would have to keep the published date as a `number` because instances of the `Date` class are not serializable.
 Concerning the "new" property, you don't want to put it into the store at all, as it is derived from the publishing date of the book and keeping it in the store would be redundant and therefore contradicting normalization.
-Also, you also cannot add it as a method to the model because functions are not serializable either.
+Also, you cannot add it as a method to the model because functions are not serializable either.
 
-With data views you would just solve all this in the `BookView` interface and the corresponding selector:
+With data views, you would just solve all this in the `BookView` interface and the corresponding selector:
 
 ```ts
 export interface Book {
@@ -513,6 +517,11 @@ Identifying the original problem with normalized data in many enterprise scenari
 We discussed de-normalization and where it actually should happen to make our projects maintainable over a long time.
 We dug into the theory of memoization after identifying further challenges with the way we implemented de-normalization in NgRx selectors.
 After that we topped it all off with additional optimization to elevate our data views to something else, something our colleagues developing the server-side might identify as business objects.
+
+If you want to see all of this in a real project context, have a look at the [Intershop PWA](https://www.intershop.com/de/progressive-web-app) where these ideas were developed.
+Intershop recently [open sourced](https://www.intershop.com/en/press-release/open-source-the-intershop-progressive-web-app-is-free-for-community-development) the product at [GitHub](https://github.com/intershop/intershop-pwa).
+Feel free to have a look at the source code and demo applications.
+A big thank you goes to [Ferdinand Malcher](https://twitter.com/fmalcher01) from this blog for guiding us and our project the last two years, helping us build up our Angular knowledge and keeping us to date with the latest changes of the Angular framework.
 
 I hope you had fun reading this and that I found the right approach in displaying this rather complex topic.
 Always keep an open mind and let me remind you: if it is Open Source you are using, you can typically look behind the curtains and peek into the dirty details.
