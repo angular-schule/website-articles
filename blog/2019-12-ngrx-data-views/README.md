@@ -31,16 +31,18 @@ If the API giving us access to the data is just a simple REST API exposing all e
 
 ## Data Clustering in Enterprise Applications
 
-Have a look at the [WordPress API Reference](https://developer.wordpress.org/rest-api/reference/) for such an example.
+Too abstract? Have a look at the [WordPress API Reference](https://developer.wordpress.org/rest-api/reference/) for an example.
 Individual Posts can be retrieved quite typically via `/posts/<id>`.
 However, the returned data just contains IDs for the author, tags and categories of the post.
-To display a post properly this additional data has to be retrieved with subsequent calls to other endpoints.
+To display a post properly with all the names and titles of depending entities, this additional data has to be retrieved with subsequent calls to other endpoints.
 
-The most effective way to handle this clustering in this example is to fetch all data for categories and tags with list calls when the application is starting up.
-This data can then be cached and referenced whenever needed.
+If you were to use WordPress as a system for content management, wouldn't you want to improve the display of a single post by pre-fetching all data related to tags and authors first with list calls, whenever the application is starting up?
+This data could then be cached and referenced whenever needed.
 If you have been around the block, you know that `@ngrx/entity` provides a perfect API for handling multiple entities in Angular applications.
 If you haven't heard about it read up [here](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) and [here](https://ngrx.io/guide/entity), believe me, it's the best thing that can happen to you.
 The data can be stored with normalized entity collections exactly the way it is retrieved via the API.
+
+Maybe even this is too theoretical. Let's build our own example the other way around.
 
 ## Clustered data for Books
 
@@ -77,12 +79,12 @@ export interface Book {
 }
 ```
 
-With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`.
+With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`, every one of them keeping track of its specific objects.
 Have a look at the [official documentation](https://ngrx.io/guide/entity) on how to do this.
 
 ## Using parameterized selectors
 
-When implementing the book detail page for your application, you will most likely have multiple selectors for all the data needed to display a single book.
+Now fast-forward to the display layer; when implementing the book detail page for your application, you will most likely have multiple selectors for all the data needed to display a single book.
 When using [parameterized selectors](https://ngrx.io/guide/store/selectors#using-selectors-with-props), the book selector looks like this:
 
 ```ts
@@ -93,7 +95,7 @@ export const getBook = createSelector(
 ```
 
 You can see here that we rely on the `getBookEntities` selectors as an input to this selector.
-`getBookEntities` was created with entity selectors provided by `@ngrx/entity` and it will give us an dictionary object containing all books.
+`getBookEntities` was created with entity selectors provided by `@ngrx/entity` and it will give us a dictionary object containing all books.
 Our projector function then uses these entities and an additional parameter to look up the right book from the state.
 The selector can be used in the component like this:
 
@@ -198,7 +200,7 @@ export interface BookView {
 
 It contains all data that is available on the book entity as well as de-normalized data for authors and tags which we can easily access and iterate over in the template.
 
-To achieve this we can build a new selector that implements this composition by re-using all previous mentioned selectors:
+To achieve this, we can build a new selector that implements this composition by re-using all previous mentioned selectors:
 
 ```ts
 export const getBookView = createSelector(
@@ -230,20 +232,21 @@ book$ = this.store.pipe(select(getBookView, this.bookId));
 </div>
 ```
 
-This way of implementing it provides a good balance of advantages and disadvantages.
+This way of implementing provides a good balance of advantages and disadvantages.
 We push the de-normalization further back so that it doesn't have to be handled in components and templates every time, That way code duplication is prevented.
 Also, the state still effectively mirrors the API and this simplifies managing and updating entities.
-The normalization in the data layer also makes it quite easy to later compose selectors for specific tasks, like:
+This seems to be the perfect spot!
+Normalization in the data layer also makes it quite easy to later compose selectors for specific tasks, like:
 
 - search for books of a specific author
 - find books with a specific tag
 
 The composition of selectors can however affect memoization, because composed selectors fire every time their input changes.
 If those inputs are not correctly memoized, the resulting selector will also not be properly memoized.
-We will dig deeper into this in the next section.
+Did I lose you again? We will dig deeper into this in the next section.
 
-You can see this behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
-Whenever a Tag, Author or Book is updated, all Books will be subject to a view update.
+You can see the current behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
+Whenever a Tag, Author or Book is updated, all Books will be subject to a view update. Not really something we are looking for...
 
 ## The new problem with Memoization
 
