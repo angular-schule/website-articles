@@ -1,7 +1,8 @@
 ---
-title: "Handling normalized entities with data views with NgRx"
+title: "NgRx Data Views: How to de-normalize entities for large enterprise applications"
 author: Danilo Hoffmann
 mail: dhhyi@aol.com
+bio: Danilo is working as a Software Developer for the e-commerce company Intershop in Thuringia, located in the green heart of Germany. Just as he started working there, the decision was made to launch the development for a new storefront based on Angular. Even though he never worked with Angular before (his background is mainly Java and some C++), it turned into one of the best love stories of the current decade. Nowadays, whenever he is not working on the project, he likes spending time improving his cooking skills or chilling at local pubs while reading about psychology. 
 published: 2019-12-12
 last-change: 2019-12-12
 keywords:
