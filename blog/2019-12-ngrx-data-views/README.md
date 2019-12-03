@@ -515,6 +515,11 @@ We discussed de-normalization and where it actually should happen to make our pr
 We dug into the theory of memoization after identifying further challenges with the way we implemented de-normalization in NgRx selectors.
 After that we topped it all off with additional optimization to elevate our data views to something else, something our colleagues developing the server-side might identify as business objects.
 
+If you want to see all of this in a real project context, have a look at the [Intershop PWA](https://www.intershop.com/de/progressive-web-app) where these ideas were developed.
+Intershop recently [open sourced](https://www.intershop.com/en/press-release/open-source-the-intershop-progressive-web-app-is-free-for-community-development) the product at [GitHub](https://github.com/intershop/intershop-pwa).
+Feel free to have a look at the source code and demo applications.
+A big thank you goes to [Ferdinand Malcher](https://twitter.com/fmalcher01) from this blog for guiding us and our project the last two years, helping us build up our Angular knowledge and keeping us to date with the latest changes of the Angular framework.
+
 I hope you had fun reading this and that I found the right approach in displaying this rather complex topic.
 Always keep an open mind and let me remind you: if it is Open Source you are using, you can typically look behind the curtains and peek into the dirty details.
 It helps...
