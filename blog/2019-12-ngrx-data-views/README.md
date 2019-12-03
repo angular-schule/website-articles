@@ -243,7 +243,7 @@ Normalization in the data layer also makes it quite easy to later compose select
 
 The composition of selectors can however affect memoization, because composed selectors fire every time their input changes.
 If those inputs are not correctly memoized, the resulting selector will also not be properly memoized.
-Did I lose you again? We will dig deeper into this in the next section.
+This is not the easiest topic you have to know about, we will dig deeper into this in the next section.
 
 You can see the current behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
 Whenever a Tag, Author or Book is updated, all Books will be subject to a view update. Not really something we are looking for...
@@ -254,11 +254,11 @@ Whenever a Tag, Author or Book is updated, all Books will be subject to a view u
 [[Wikipedia]](https://en.wikipedia.org/wiki/Memoization)
 
 When using NgRx Store with Angular, selectors provide data with Observable streams.
-Whenever data is changing in the background, the view also has to be updated.
+If data is changing in the background, the view also has to be updated.
 As the state in NgRx is basically kept as one big structured object, every modification in reducers potentially triggers an update.
 That's why memoization is used to prevent pushing an update onto the Observable streams, when effectively nothing has changed.
 Keeping data in selectors properly memoized is the bread and butter of optimization.
-Whenever a selector fires unnecessarily, it would initiate a needless and expensive view update.
+Any selector firing unnecessarily, initiates a needless and expensive view update.
 
 The ideas of the implementation are quite simple.
 Every selector keeps track of its in- and outputs and decides when the current state is good enough to prevent firing.
@@ -287,7 +287,7 @@ export function isEqualCheck(a: any, b: any): boolean {
 When updating a slice of state managed by `@ngrx/entity` the first check for input identity will always detect a change in selectors using that slice of state.
 So the projector function is most often applied and only the result identity check can then prevent the selector from firing.
 
-If we check our example selectors we can see how we are doing:
+Let's check our example selectors and see how we are doing:
 
 - `getBook`:
   
@@ -403,15 +403,15 @@ The reason for NgRx forcing this is that only serializable objects can be pushed
 The new [runtime checks](https://ngrx.io/guide/store/configuration/runtime-checks) will remind you of these practices when you enable them.
 It is not a bad approach per se as it further enforces immutability and this – as we all now – [changes everything](https://img.sauf.ca/pictures/2016-01-22/fd232c4b1ffdc0f0ef66400bf7fa64f8.pdf).
 
-If you are however used to have business objects around (enterprise developer?) and you want to have at least some kind of logic on your objects, data views can be a perfect place to implement it.
-As those objects basically spawn off the selectors, just outside of the store, you can add methods to them or even elevate simple properties to unserializable objects here.
+If you are however used to having business objects around (enterprise developer?!) and you want to have at least some kind of logic on your objects, data views can be a perfect place to implement it.
+As those objects basically spawn off the selectors, just outside of the store, you can add methods to them or even derive or elevate simple properties to unserializable objects here.
 
-Let's consider the following scenario: You want to keep the publishing date on the `Book` objects and you also want to have some accessor there that tells you if the book is new because it was published this year.
+Let's consider the following scenario: You want to keep the publishing date on the `Book` objects and you also want to have some accessor that tells you if the book is new, because it was published this year.
 In the book model in the NgRx store you would have to keep the published date as a `number` because instances of the `Date` class are not serializable.
 Concerning the "new" property, you don't want to put it into the store at all, as it is derived from the publishing date of the book and keeping it in the store would be redundant and therefore contradicting normalization.
-Also, you also cannot add it as a method to the model because functions are not serializable either.
+Also, you cannot add it as a method to the model because functions are not serializable either.
 
-With data views you would just solve all this in the `BookView` interface and the corresponding selector:
+With data views, you would just solve all this in the `BookView` interface and the corresponding selector:
 
 ```ts
 export interface Book {
