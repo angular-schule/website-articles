@@ -1,8 +1,10 @@
 ---
-title: "setting up deployment with angular-cli-ghpages and GitHub Actions"
+title: "Everything Github: Continues Integration, Deployment and Hosting for your Angular App"
 author: Dharmen Shah
 mail: shhdharmen@gmail.com
-published: 2019-11-20
+author2: Johannes Hoppe
+mail2: johannes.hoppe@haushoppe-its.de
+published: 2019-12-20
 keywords:
   - Angular
   - Angular CLI
@@ -17,19 +19,29 @@ thumbnail: spacex-unsplash.jpg
 hidden: true
 ---
 
-**We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. With that, `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
-
-- [Introduction](/blog/2019-11-angular-cli-ghpages-github-actions#introduction)
-- [Prerequisites](/blog/2019-11-angular-cli-ghpages-github-actions#prerequisites)
-- [Getting started](/blog/2019-11-angular-cli-ghpages-github-actions#getting-started)
-  - [First things first](/blog/2019-11-angular-cli-ghpages-github-actions#first-things-first)
-  - [Setup Tokens](/blog/2019-11-angular-cli-ghpages-github-actions#setup-tokens)
-  - [Setup Github Action Flow](/blog/2019-11-angular-cli-ghpages-github-actions#setup-github-action-flow)
-- [Summary](/blog/2019-11-angular-cli-ghpages-github-actions#summary)
+**In this article we want to use several tools from the Github universe to launch a website with Angular.
+We will establish a professional pipeline, including version management, continuous deployment and web hosting.
+Best of all, for public repositories, this won't cost you a single cent!**
 
 ## Introduction
 
-We will see what are `angular-cli-ghpages` and Github Actions, and how they work. And then, we will create & setup tokens and Github Action YAML files. So that we can use `angular-cli-ghpages` in Github Actions to deploy our Angular app directly to Github Pages.
+All starts are hard, so we will try to explain all steps in detail, so that you can eventually come up with a fully deployed Angular app.
+During our journey will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
+We will create & setup tokens and Github Action YAML files, to deploy our Angular app directly to Github Pages, a free webhosting service from Github.
+
+All Parts explained
+Github Version Control
+Github Actions
+Github Pages
+
+
+
+
+**We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. With that, `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
+
+TODO: TOC again
+
+
 
 ### angular-cli-ghpages
 
