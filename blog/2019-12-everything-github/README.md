@@ -1,9 +1,9 @@
 ---
 title: "Everything Github: Continues Integration, Deployment and Hosting for your Angular App"
-author: Dharmen Shah
-mail: shhdharmen@gmail.com
-author2: Johannes Hoppe
-mail2: johannes.hoppe@haushoppe-its.de
+author: Johannes Hoppe
+mail: johannes.hoppe@haushoppe-its.de
+author2: Dharmen Shah
+mail2: shhdharmen@gmail.com
 published: 2019-12-20
 keywords:
   - Angular
@@ -26,15 +26,46 @@ Best of all, for public repositories, this won't cost you a single cent!**
 ## Introduction
 
 All starts are hard, so we will try to explain all steps in detail, so that you can eventually come up with a fully deployed Angular app.
-During our journey will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
+During our journey we will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
 We will create & setup tokens and Github Action YAML files, to deploy our Angular app directly to Github Pages, a free webhosting service from Github.
 
-All Parts explained
-Github Version Control
-Github Actions
-Github Pages
+## All Parts explained
+
+## Git and Github Version Control
+
+Version Control allows you to keep track of your work and helps you to easily recognize the changes you have made, whether it is program code, text, images or other data. 
+[Git](https://git-scm.com/) is a free software for distributed version management and is currently the most popular solution.
+The leading platform around Git is Github, which belongs to Microsoft since the end of 2018.
+Please register an account on github.com, if you haven't already done so.
+**It is sufficient to use the free account!**
+
+## Github Actions
+
+[Github Actions](https://github.com/features/actions) is a solution for CI/CD pipelines (continuous integration and continuous delivery).
+With actions we can test, build and release our code and while staying in the Github ecosystem.
+Github has just recently launched this product to the market and is now directly competing with Travis CI, CircleCI or AppVeyor.
+In contrast to former CI/CD monsters it is common with all mentioned providers to express the individual steps in the form of a YAML file and to store this file as part of the source code in the repository.
+
+## Github Pages
+
+You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
+This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) oder or you can use Jekyll to convert Markdown files to static content.
+We have no need for Jekyll to enrich an Angular app.
+static content is all we need.
+
+## angular-cli-ghpages
+
+[angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages) is a project by Johannes Hoppe, one of the two authors of this article.
+Since his Angular Book uses a new Github repository in every chapter (so there are quite a lot of repos 😅),
+he has developed a solution that makes it as easy as possible to bring an Angular App to Github Pages.
+The project exists since 2016 and if it was started today, it would certainly have a nicer name.
 
 
+
+-----
+-----
+-----
+-----
 
 
 **We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. With that, `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
