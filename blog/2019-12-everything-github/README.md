@@ -29,36 +29,84 @@ All starts are hard, so we will try to explain all steps in detail, so that you 
 During our journey we will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
 We will create & setup tokens and Github Action YAML files, to deploy our Angular app directly to Github Pages, a free webhosting service from Github.
 
-## All Parts explained
+## 1. All Parts explained
 
-## Git and Github Version Control
+### 1.1. Git and Github Version Control
 
-Version Control allows you to keep track of your work and helps you to easily recognize the changes you have made, whether it is program code, text, images or other data. 
+Version Control allows you to keep track of your work and helps you to easily recognize the changes you have made, whether it is program code, text, images or other data.
+It is also absolutely necessary if you want to work together efficiently in a team.
 [Git](https://git-scm.com/) is a free software for distributed version management and is currently the most popular solution.
 The leading platform around Git is Github, which belongs to Microsoft since the end of 2018.
 Please register an account on github.com, if you haven't already done so.
 **It is sufficient to use the free account!**
 
-## Github Actions
+### 1.2. Github Actions
 
 [Github Actions](https://github.com/features/actions) is a solution for CI/CD pipelines (continuous integration and continuous delivery).
 With actions we can test, build and release our code and while staying in the Github ecosystem.
 Github has just recently launched this product to the market and is now directly competing with Travis CI, CircleCI or AppVeyor.
 In contrast to former CI/CD monsters it is common with all mentioned providers to express the individual steps in the form of a YAML file and to store this file as part of the source code in the repository.
-
-## Github Pages
+    
+### 1.3. Github Pages
 
 You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
 This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) oder or you can use Jekyll to convert Markdown files to static content.
 We have no need for Jekyll to enrich an Angular app.
 static content is all we need.
 
-## angular-cli-ghpages
+### 1.4. angular-cli-ghpages
 
-[angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages) is a project by Johannes Hoppe, one of the two authors of this article.
-Since his Angular Book uses a new Github repository in every chapter (so there are quite a lot of repos 😅),
-he has developed a solution that makes it as easy as possible to bring an Angular App to Github Pages.
+[angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages) is a project made by Johannes Hoppe, one of the two authors of this article.
+His Angular Book uses a new Github repository in every chapter (so there are quite a lot of repos 😅).
+So he developed a solution that makes it as easy as possible to bring an Angular App to Github Pages.
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
+According to Github, 6800 projects already deploy with angular-cli-ghpages.
+
+
+## 2. A simple Angular App
+
+We assume that the majority of our readers have already worked with Angular. But in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
+
+1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.co) with the [Angular-Schule: Extension Pack](https://marketplace.visualstudio.com/items?itemName=angular-schule.angular-schule-extension-pack). Later on we also need [Git](https://git-scm.com/) for the deployment.
+
+2. Install the latest version of the Angular CLI  globally and create a new Angular project.
+
+   ```sh
+   npm install -g @angular/cli
+   ng new everything-github-demo --defaults
+   ```
+
+3. Now we want to make some small changes to the source code.
+
+   ```sh
+   cd everything-github-demo
+   code .
+   ```
+
+   With the command `code .` we open the current directory in the editor.
+
+4. We are changing the content of the `AppComponent` a bit to show that even with remotely loaded data the Google search engine can index our website.
+
+
+    ```ts
+    // src/app/app.module.ts (excerpt)
+
+    import { HttpClientModule } from '@angular/common/http';
+
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        HttpClientModule // NEW
+      ],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+    ```
+
+****
 
 
 
