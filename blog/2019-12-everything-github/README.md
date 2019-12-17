@@ -71,89 +71,137 @@ We assume that the majority of our readers have already worked with Angular. But
 
 2. Install the latest version of the Angular CLI  globally and create a new Angular project.
 
-   ```sh
-   npm install -g @angular/cli
-   ng new everything-github-demo --defaults
-   ```
+  ```sh
+  npm install -g @angular/cli
+  ng new everything-github-demo --defaults
+  ```
 
 3. Now we want to make some small changes to the source code.
 
-   ```sh
-   cd everything-github-demo
-   code .
-   ```
+  ```sh
+  cd everything-github-demo
+  code .
+  ```
 
-   With the command `code .` we open the current directory in the editor.
+  With the command `code .` we open the current directory in the editor.
 
 4. We are changing the content of the `AppModule` and `AppComponent` a bit to prove that the Google search engine can correctly crawl our website – even with remotely loaded data.
 
 
-    ```ts
-    // src/app/app.module.ts (excerpt)
+  ```ts
+  // src/app/app.module.ts (excerpt)
 
-    import { HttpClientModule } from '@angular/common/http';
+  import { HttpClientModule } from '@angular/common/http';
 
-    @NgModule({
-      declarations: [
-        AppComponent
-      ],
-      imports: [
-        BrowserModule,
-        HttpClientModule // NEW: import HttpClientModule!
-      ],
-      bootstrap: [AppComponent]
-    })
-    export class AppModule { }
-    ```
+  @NgModule({
+    declarations: [
+      AppComponent
+    ],
+    imports: [
+      BrowserModule,
+      HttpClientModule // NEW: import HttpClientModule!
+    ],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+  ```
 
-    For example, we could load a book from our backend at https://api.angular.schule.
+  For example, we could load a book from our backend at https://api.angular.schule.
 
-    ```ts
-    // src/app/app.component.ts
+  ```ts
+  // src/app/app.component.ts
 
-    import { Component } from '@angular/core';
-    import { HttpClient } from '@angular/common/http';
+  import { Component } from '@angular/core';
+  import { HttpClient } from '@angular/common/http';
 
-    @Component({
-      selector: 'app-root',
-      templateUrl: './app.component.html',
-      styleUrls: ['./app.component.css']
-    })
-    export class AppComponent {
-      book: any = { };
+  @Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+  })
+  export class AppComponent {
+    book: any = { };
 
-      constructor(http: HttpClient) {
-        http.get('https://api.angular.schule/book/9783864906466')
-          .subscribe(b => this.book = b);
-      }
+    constructor(http: HttpClient) {
+      http.get('https://api.angular.schule/book/9783864906466')
+        .subscribe(b => this.book = b);
     }
-    ```
+  }
+  ```
 
-    ```html
-    <h1>Everything Github Demo</h1>
-    <h4>deployed with ❤️ and angular-cli-ghpages</h4>
+  ```html
+  <!-- src/app/app.component.html -->
 
-    <p>
-    This is some dynamicaly loaded content that we hope to find in the Google index later on:
-    </p>
+  <h1>Everything Github Demo</h1>
+  <h4>deployed with ❤️ and angular-cli-ghpages</h4>
 
-    <hr>
+  <p>
+  This is some dynamicaly loaded content that we hope to find in the Google index later on:
+  </p>
 
-    <h2>{{ book.title }}</h2>
-    <p>
-      <img [src]="book.firstThumbnailUrl" width="100" align="left">
-      {{ book.description }}
-    </p>
-    ```
+  <hr>
 
-    This example loads data from a remote API. Our hope is that later we will be able to find both the regular text and as well the loaded book in the index of our preferred search engine. We have also added Bootstrap to make the result look like this:
+  <h2>{{ book.title }}</h2>
+  <p>
+    <img [src]="book.firstThumbnailUrl" width="100" align="left">
+    {{ book.description }}
+  </p>
+  ```
 
-    ![Screenshot of the Demo page](screenshot_demo.png)
+  This example loads data from a remote API. Our hope is that later we will be able to findboth the regular text and as well the loaded book in the index of our preferred searchengine. We have also added Bootstrap to make the result look like this:
 
-****
+  ![Screenshot of the Demo page](screenshot_2_demo.png)
 
 
 
+## 3. Hosting the source code on Github
+
+Now we take care of version management.
+This is very easy because the Angular CLI has already created a local Git repository for us. 
+
+1. First things first. Let's save the latest changes.
+   
+  ```sh
+  git add .
+  git commit -m "chore: demo content"
+  ```
+
+2. In the upper-right corner of any GitHub page, use the ➕ drop-down menu, and select **New repository**.
+
+  ![Screenshot](screenshot_3_repo-create.png)
+
+3. Choose a short, memorable name for your repository.
+  In our example, we will call it `everything-github-demo`.
+
+4. For now, choose to make the repository **public**.
+  Please note, the source code of public repositories is visible to the public.
+  Since we want to use the free GitHub plan, we have to keep it public or we would lose access to the free hosting service of GitHub Pages.
+  
+  > There's one naughty little trick to work around that limitation, but we'll talk about that later on.
+
+5. Since we already have source code, you should **not** initialize the repository with a a README.
+
+   ![Screenshot](screenshot_3_repo-public.png)
+
+6. After you have pressed "Create Repository" a confirmation page will appear.
+  You can now connect to GitHub using SSH or HTTPS.
+  Both ways will work, but GitHub recommends [HTTPS](https://help.github.com/en/github/using-git/which-remote-url-should-i-use).
+  If you are completely lost in authenticating against GitHub, try cloning another repository with [Github Desktop](https://desktop.github.com/) first.
+  For the remaining article we assume that the communication has been successful established.<br>  
+  To add a new remote for GitHub, use the `git remote add` command:
+
+  ```sh
+  git remote add origin https://github.com/<username>/<repositoryname>.git
+  ```
+
+  Replace `<username>` and `<repositoryname>` with your username from GitHub and the name of your new repository.
+
+6. Finally we can transfer the whole repository to GitHub:
+
+  ```sh
+  git push -u origin master
+  ```
+   
 -----
 -----
 -----
@@ -188,6 +236,12 @@ Checkout there [repo](https://github.com/angular-schule/angular-cli-ghpages#angu
 You will need to create Actions YAML file and Github will take care of the rest.
 
 Take a look at it's [official documentation](https://help.github.com/en/actions/automating-your-workflow-with-github-actions) for more.
+
+
+
+
+
+
 
 ## Prerequisites
 
