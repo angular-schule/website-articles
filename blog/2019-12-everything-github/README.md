@@ -60,7 +60,7 @@ static content is all we need.
 His Angular Book uses a new Github repository in every chapter (so there are quite a lot of repos 😅).
 So he developed a solution that makes it as easy as possible to bring an Angular App to Github Pages.
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
-According to Github, 6800 projects already deploy with angular-cli-ghpages.
+According to Github, 6800 projects already deploing with angular-cli-ghpages.
 
 
 ## 2. A simple Angular App
@@ -85,7 +85,7 @@ We assume that the majority of our readers have already worked with Angular. But
 
    With the command `code .` we open the current directory in the editor.
 
-4. We are changing the content of the `AppComponent` a bit to show that even with remotely loaded data the Google search engine can index our website.
+4. We are changing the content of the `AppModule` and `AppComponent` a bit to prove that the Google search engine can correctly crawl our website – even with remotely loaded data.
 
 
     ```ts
@@ -99,12 +99,56 @@ We assume that the majority of our readers have already worked with Angular. But
       ],
       imports: [
         BrowserModule,
-        HttpClientModule // NEW
+        HttpClientModule // NEW: import HttpClientModule!
       ],
       bootstrap: [AppComponent]
     })
     export class AppModule { }
     ```
+
+    For example, we could load a book from our backend at https://api.angular.schule.
+
+    ```ts
+    // src/app/app.component.ts
+
+    import { Component } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+
+    @Component({
+      selector: 'app-root',
+      templateUrl: './app.component.html',
+      styleUrls: ['./app.component.css']
+    })
+    export class AppComponent {
+      book: any = { };
+
+      constructor(http: HttpClient) {
+        http.get('https://api.angular.schule/book/9783864906466')
+          .subscribe(b => this.book = b);
+      }
+    }
+    ```
+
+    ```html
+    <h1>Everything Github Demo</h1>
+    <h4>deployed with ❤️ and angular-cli-ghpages</h4>
+
+    <p>
+    This is some dynamicaly loaded content that we hope to find in the Google index later on:
+    </p>
+
+    <hr>
+
+    <h2>{{ book.title }}</h2>
+    <p>
+      <img [src]="book.firstThumbnailUrl" width="100" align="left">
+      {{ book.description }}
+    </p>
+    ```
+
+    This example loads data from a remote API. Our hope is that later we will be able to find both the regular text and as well the loaded book in the index of our preferred search engine. We have also added Bootstrap to make the result look like this:
+
+    ![Screenshot of the Demo page](screenshot_demo.png)
 
 ****
 
