@@ -193,7 +193,8 @@ This is very easy because the Angular CLI has already created a local Git reposi
     git remote add origin https://github.com/<username>/<repositoryname>.git
     ```
   
-    Replace `<username>` and `<repositoryname>` with your username from GitHub and the name of your new repository.
+    Replace `<username>` (or organisation name) and `<repositoryname>` with your username from GitHub and the name of your new repository.
+    <small>(In our example, it's `git remote add origin https://github.com/angular-schule/everything-github-demo.git`)</small>
 
 7. Finally we can transfer the whole repository to GitHub:
 
@@ -201,6 +202,51 @@ This is very easy because the Angular CLI has already created a local Git reposi
   git push -u origin master
   ```
    
+## 4. A first deployment to GitHub Pages
+
+We are now ready to host our first app on Pages.
+For this, the project must be compiled first and the compiled asseds should be pushed to a new branch.
+That functionality is provided by `angular-cli-ghpages`.
+GitHub will activate the hosting automatically, if this branch has the name `gh-pages` – which is the default setting for `angular-cli-ghpages`.
+
+1. The following command adds `angular-cli-ghpages` to your project.
+
+    ```sh
+    ng add angular-cli-ghpages
+    ```
+
+2. Now we can deploy our project to GitHub pages with all default settings.
+   The project will be automatically built in production mode:
+
+   ```sh
+   ng deploy
+   ```
+
+3. The app should be available at `https://<username>.github.io/<repositoryname>/` soon.
+   If it is not immediately available, you should first wait a moment.
+
+4. If we now check the results (in our case at https://angular-schule.github.io/everything-github-demo/) we will see a blank page! 😲
+    But no problem, we open the Console panel of the Chrome DevTools by pressing `Control+Shift+I` (Windows, Linux) or `Command+Option+I` (Mac).
+    We immediately see some red 404 errors for all files:
+
+    > Failed to load resource: the server responded with a status of 404 ()
+
+    Well, the reason for that is simple:
+    The application is configured as if it were running on the root path of the domain.
+    But this is not the case here!
+    Our application is located in the `/<repositoryname>/` path.
+    This is of course adjustable.
+    Therefore, we will try the deployment a second time:
+
+   ```sh
+   ng deploy --base-href=/<repositoryname>/
+
+   # so in our case it must be
+   ng deploy --base-href=/everything-github-demo/
+   ```
+
+5. And now you should see our app running on Github Pages! 
+
 -----
 -----
 -----
