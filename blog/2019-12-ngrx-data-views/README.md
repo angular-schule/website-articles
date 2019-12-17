@@ -4,12 +4,13 @@ author: Danilo Hoffmann
 mail: dhhyi@aol.com
 bio: Danilo is working as a Software Developer for the e-commerce company Intershop in Thuringia, located in the green heart of Germany. Just as he started working there, the decision was made to launch the development for a new storefront based on Angular. Even though he never worked with Angular before (his background is mainly Java and some C++), it turned into one of the best love stories of the current decade. Nowadays, whenever he is not working on the project, he likes spending time improving his cooking skills or chilling at local pubs while reading about psychology. 
 published: 2019-12-12
-last-change: 2019-12-12
+last-change: 2019-12-17
 keywords:
   - Angular
   - RxJS
   - Reactive Programming
   - Observables
+  - Redux
   - NgRx
   - NgRx Entities
   - Memoization
@@ -18,7 +19,7 @@ thumbnail: data-views-header.jpg
 hidden: true
 ---
 
-**Let us take data handling with NgRx a bit further than hero examples and TODO applications and consider real life problems. In this article we are going to have a look at inter-connected data and its implications when trying to elevate store output to old fashioned business objects, ready to use in all components. Tackling normalized APIs we will show you some of the most common pitfalls you might encounter along the way.**
+**Let us take data handling with NgRx a bit further than hero examples and TODO applications and consider real life problems. In this article we are going to have a look at inter-connected data and its implications when trying to elevate store output to old fashioned business objects, ready to use in all components. By tackling normalized APIs we will show you some of the most common pitfalls you might encounter along the way.**
 
 <hr>
 
@@ -27,7 +28,7 @@ Most of the time, data for a single entity has to be retrieved with multiple cal
 However, this is not bad since normalization does a good job minimizing the space used up in any database by preventing duplication and with that also inconsistencies.
 Have a look at the [Wikipedia Article on Database Normalization](https://en.wikipedia.org/wiki/Database_normalization) for more information.
 
-If the API giving us access to the data is just a simple REST API exposing all entities via separate endpoints, we have to accumulate the needed data in the front-end ourselves.
+If the API giving us access to the data is just a simple REST API exposing all entities via separate endpoints, we have to accumulate the necessary data in the front-end ourselves.
 
 ## Data Clustering in Enterprise Applications
 
@@ -39,7 +40,8 @@ To display a post properly with all the names and titles of depending entities, 
 If you were to use WordPress as a system for content management, wouldn't you want to improve the display of a single post by pre-fetching all data related to tags and authors first with list calls, whenever the application is starting up?
 This data could then be cached and referenced whenever needed.
 If you have been around the block, you know that `@ngrx/entity` provides a perfect API for handling multiple entities in Angular applications.
-If you haven't heard about it read up [here](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) and [here](https://ngrx.io/guide/entity), believe me, it's the best thing that can happen to you.
+If you haven't heard about it read up [here](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) and [here](https://ngrx.io/guide/entity).
+Believe me, it's the best thing that can happen to you when working with NgRx.
 The data can be stored with normalized entity collections exactly the way it is retrieved via the API.
 
 Maybe even this is too theoretical. Let's build our own example the other way around.
@@ -79,7 +81,7 @@ export interface Book {
 }
 ```
 
-With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`, every one of them keeping track of its specific objects.
+With this we can easily set up `@ngrx/store` with three individual states using `@ngrx/entity`, each of them keeping track of its specific objects.
 Have a look at the [official documentation](https://ngrx.io/guide/entity) on how to do this.
 
 ## Using parameterized selectors
@@ -94,16 +96,17 @@ export const getBook = createSelector(
 )
 ```
 
-You can see here that we rely on the `getBookEntities` selectors as an input to this selector.
+You can see here that we rely on the `getBookEntities` selector as an input to this selector.
 `getBookEntities` was created with entity selectors provided by `@ngrx/entity` and it will give us a dictionary object containing all books.
 Our projector function then uses these entities and an additional parameter to look up the right book from the state.
+
 The selector can be used in the component like this:
 
 ```ts
 book$ = this.store.pipe(select(getBook, this.bookId));
 ```
 
-(The parameter `bookId` can come from the routing, be injected into the component or be a static reference.
+(Note: The parameter `bookId` can come from a route parameter, be injected into the component or be a static reference.
 For this example it doesn't really matter.
 Have a look at the later following StackBlitz examples to see how we did it.)
 
@@ -133,8 +136,7 @@ authors$ = this.store.pipe(select(getAuthorsOfBook, this.bookId));
 ```
 
 Similarly a selector to retrieve the tags of the current book has to be composed.
-
-At the end we will have the following properties in our component file:
+In the end we will have the following properties in our component file:
 
 ```ts
 book$ = this.store.pipe(select(getBook, this.bookId));
@@ -158,7 +160,7 @@ And we will use them in the template like this:
 You can probably see what this will lead to in the long run: Code duplication.
 Every component displaying books will have to select the normalized data from the store and accumulate it in the template.
 Now imagine an API change.
-With this amount of duplication it could mean that every components typescript file as well as all Angular templates would have to be touched.
+With this amount of duplication it could mean that every component's typescript file as well as all Angular templates would have to be touched.
 But how can we solve this?
 
 Abstractly speaking: Currently we retrieve the data normalized via the API (1) and put it normalized into the state (2).
@@ -168,19 +170,19 @@ Then we use selectors (3) to retrieve the data normalized in each component and 
 
 It seems there are three points where we could intervene and do the de-normalization instead:
 
-1. Retrieve the data ready for display:
+1. **Retrieve the data ready for display:**
   
    This can only be done by changing from a simple REST based API to an API that provides access to all data with one call.
    GraphQL would be an answer, but most often this API is not provided.
 
-2. Put the data de-normalized into the store:
+2. **Put the data de-normalized into the store:**
   
    For example, if we have an HTTP service that fetches the data normalized, we use this service to build complex objects from fetched data, e.g. nested books and authors.
    Then we put this nested data into the store after fetching it from the API.
-   This obviously leads to data duplication and problems when updating the data.
+   This obviously leads to data duplication and problems when updating the data since we have the same data at multiple places in our store.
    It's simply not what we want.
 
-3. Select the data ready-for-display from the store:
+3. **Select the data ready-for-display from the store:**
 
    This way the data is still handled in a normalized way within the store and updates can be done in an efficient way as they mirror the API.
    This approach however needs crafting of special selectors that simplify selecting all accumulated data. – Let's build one of those!
@@ -232,7 +234,7 @@ book$ = this.store.pipe(select(getBookView, this.bookId));
 </div>
 ```
 
-This way of implementing provides a good balance of advantages and disadvantages.
+This implementation provides a good balance of advantages and disadvantages.
 We push the de-normalization further back so that it doesn't have to be handled in components and templates every time, That way code duplication is prevented.
 Also, the state still effectively mirrors the API and this simplifies managing and updating entities.
 This seems to be the perfect spot!
@@ -243,7 +245,7 @@ Normalization in the data layer also makes it quite easy to later compose select
 
 The composition of selectors can however affect memoization, because composed selectors fire every time their input changes.
 If those inputs are not correctly memoized, the resulting selector will also not be properly memoized.
-This is not the easiest topic you have to know about, we will dig deeper into this in the next section.
+Since this is not the easiest topic to deal with, we will dig deeper into this in the next section.
 
 You can see the current behavior in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/basic-example?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
 Whenever a Tag, Author or Book is updated, all Books will be subject to a view update. Not really something we are looking for...
@@ -258,14 +260,14 @@ If data is changing in the background, the view also has to be updated.
 As the state in NgRx is basically kept as one big structured object, every modification in reducers potentially triggers an update.
 That's why memoization is used to prevent pushing an update onto the Observable streams, when effectively nothing has changed.
 Keeping data in selectors properly memoized is the bread and butter of optimization.
-Any selector firing unnecessarily, initiates a needless and expensive view update.
+Any selector firing unnecessarily initiates a needless and expensive view update.
 
-The ideas of the implementation are quite simple.
-Every selector keeps track of its in- and outputs and decides when the current state is good enough to prevent firing.
+The ideas of the implementation are rather simple:
+Every selector keeps track of its inputs and outputs and decides when the current state is "good enough" to prevent firing.
 It can however memoize only exactly one data stream.
 So if you potentially use a selector like `getSelectedBook` on a detail page of your application, the memoization will track changes and only trigger view updates if the data of the current book changes.
 Keep in mind that parameterized selectors, which we are currently promoting, also can only keep track of one value stream (one set of parameters) at a time.
-If you are displaying many books on the current page in a listing, you mustn't reuse the same instance of that selector all over again.
+If you are displaying many books on the current page in a listing, you must not reuse the same instance of that selector all over again.
 This will nullify the effects of memoization.
 
 Digging into this, let's have a look in the [official sources](https://github.com/ngrx/platform/blob/master/modules/store/src/selector.ts) of NgRx to find out how memoization works in the `createSelector()` function.
@@ -276,7 +278,7 @@ Every selector is created with `createSelectorFactory()` and the argument for me
 3. If the result didn't change, the memoized result is returned. If not, the new result is memoized and returned.
 
 This all might sound pretty straight forward, but pay attention to the fact, that the check for change is by default an object identity check and not a check for equality.
-With this, a selector might fire more often than you think.:
+With this, a selector might fire more often than you think:
 
 ```ts
 export function isEqualCheck(a: any, b: any): boolean {
@@ -321,8 +323,8 @@ All in all, our resulting data view is not properly memoized and hence quite use
 
 ## Tackling Memoization
 
-What we need to do now to fix this is to assure that `getBookView` returns a correctly memoized result.
-We can do this directly by adding memoization to `getBookView`, but better yet, we can just assure that the inputs of that selector only trigger a change, when they really change.
+What we need to do to fix this is to assure that `getBookView` returns a correctly memoized result.
+We can do this directly by adding memoization to `getBookView`, but better yet: we can just assure that the inputs of that selector only trigger a change, when they really change.
 Our goal must be to fix `getAuthorsOfBook` and `getTagsOfBook`.
 So let's have another look at `defaultMemoize()` first:
 
@@ -336,7 +338,7 @@ export function defaultMemoize(
 
 What we can do is setting up the memoization ourselves.
 We will now use `createSelectorFactory()` for creating the selector directly and reference `defaultMemoize()` applied with some overrides.
-Additionally we do not create a static instance but instead supply a factory method for our parameterized selectors so each instance has its own memoization cache (recall, we will be using the selector multiple times, so we have to assure that each instance has its own cache):
+Additionally we do not create a static instance of the selector but instead supply a factory method for our parameterized selectors so each instance has its own memoization cache (recall, we will be using the selector multiple times, so we have to assure that each instance has its own cache):
 
 ```ts
 import { createSelectorFactory, defaultMemoize } from '@ngrx/store';
@@ -354,7 +356,7 @@ export const getAuthorsOfBook = () =>
 )
 ```
 
-`createSelectorFactory()` wants a `MemoizedProjection` as an argument for which we can re-use `defaultMemoize()`.
+`createSelectorFactory()` expects a `MemoizedProjection` as an argument for which we can re-use `defaultMemoize()`.
 The first argument to it is the projector function of the selector which we just tunnel through.
 The second argument is the function for input equality check which we are not interested in changing, so we supply `undefined` to fall back onto the default value (identity check).
 The third and last argument is the function checking the equality of the projector result.
@@ -368,10 +370,10 @@ export function checkEqual(a, b) {
 }
 ```
 
-Nonetheless we can also fall back to a deep-equality check provided by one of those numerous libraries on the market or use one that is most certainly already available in our projects `node_modules`.
+Nonetheless we can also fall back to a deep-equality check provided by one of those numerous libraries on the market or use one that is most certainly already available in our project's `node_modules`.
 
 Correspondingly we do the same to the `getTagsOfBook` selector and in succession we also fixed the `getBookView` selector.
-All its inputs are now properly memoized and consequently the projector function creating a new view is only applied when the inputs have changed.
+All its inputs are now properly memoized and consequently the projector function creating a new view is only applied when the inputs *really* have changed.
 
 Our `getBookView` now uses the factories of parameterized selectors and looks like this:
 
@@ -521,8 +523,8 @@ After that we topped it all off with additional optimization to elevate our data
 If you want to see all of this in a real project context, have a look at the [Intershop PWA](https://www.intershop.com/de/progressive-web-app) where these ideas were developed.
 Intershop recently [open sourced](https://www.intershop.com/en/press-release/open-source-the-intershop-progressive-web-app-is-free-for-community-development) the product at [GitHub](https://github.com/intershop/intershop-pwa).
 Feel free to have a look at the source code and demo applications.
-A big thank you goes to [Ferdinand Malcher](https://twitter.com/fmalcher01) from this blog for guiding us and our project the last two years, helping us build up our Angular knowledge and keeping us to date with the latest changes of the Angular framework.
+A big thank you goes to [Ferdinand Malcher](https://twitter.com/fmalcher01) from Angular.Schule for guiding us and our project over the last two years, helping us build up our Angular knowledge and keeping us up to date with the latest changes of the Angular framework.
 
 I hope you had fun reading this and that I found the right approach in displaying this rather complex topic.
 Always keep an open mind and let me remind you: if it is Open Source you are using, you can typically look behind the curtains and peek into the dirty details.
-It helps...
+It helps!
