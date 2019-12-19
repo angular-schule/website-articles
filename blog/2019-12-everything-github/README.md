@@ -232,9 +232,9 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     > Failed to load resource: the server responded with a status of 404 ()
 
     Well, the reason for that is simple:
-    The application is configured as if it were running on the root path of the domain.
+    The application is configured as if it is running on the root path of the domain.
     But this is not the case here!
-    Our application is located in the `/<repositoryname>/` path.
+    Our application is located in the `/<repositoryname>/` path, so all links are broken.
     This is of course adjustable.
     Therefore, we will try the deployment a second time:
 
@@ -247,84 +247,49 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
 
 5. And now you should see our app running on Github Pages! 
 
------
------
------
------
+
+## 5. Automating the Deployment with GitHub Actions
+
+But we don't want to stop here and trigger the deployment manually all the time.
+We want to make changes to the app and the deployment should be handled automatically for us.
+For this we want to use GitHub Actions.
+GitHub Actions is now available for all reopsitories.
+So there is no need to register anymore, we can start right now! 🚀
+
+As with all CI systems, you first have to master a few difficulties.
+Until now, it was easy to deploy manually because we had both rights to the repository and authentication was already done.
+But if a machine is supposed to take over the tasks for us, then we have to grant these possibilities in the first place.
+The easiest way to realize this is with tokens.
+
+> **Warning:** Treat tokens like passwords and keep them secret. Always use tokens as environment variables instead of hardcoding them into your code!
+
+### 5.1 Setup up a token
+
+We should create a **personal access token** and use it in place of a password when performing Git operations. In theory you can also work with username and password, but we will never show you how to do that. 😉
+
+Please do not be mistaken, there is also an environment variable called `GITHUB_TOKEN`.
+This one does not work for our purposes ([see issue #73](https://github.com/angular-schule/angular-cli-ghpages/issues/73#issuecomment-527405699)).
 
 
-**We all know that `angular-cli-ghpages` made it real smooth to deploy our Angular app on `Github Pages`. With that, `Github Actions` beta is already out and will be generally available soon. In this article, we will see, how to utilize `angular-cli-ghpages` with Github Actions.**
+1. Create a [Personal Access Token **with repo access**](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and copy the token to you clipboard.
+If you want to remember the token later on, save it in a secure place (i.e. a password manager).
+    Please make sure that it has this access:
+   ![repo access](./repo-access.png)
 
-TODO: TOC again
+1. Open up your Angular app's Github repo.
 
-
-
-### angular-cli-ghpages
-
-    Deploy your Angular app to GitHub pages directly from the Angular CLI! 🚀
-
-All it takes is just two commands in terminal to deploy your Angular app on Github Pages:
-
-```sh
-ng add angular-cli-ghpages
-ng deploy
-```
-
-Checkout there [repo](https://github.com/angular-schule/angular-cli-ghpages#angular-cli-ghpages) for more information.
-
-### Github Actions
-
-    GitHub Actions makes it easy to automate all your software workflows, now with world-class CI/CD.
-    Build, test, and deploy your code right from GitHub. Make code reviews, branch management, and issue 
-    triaging work the way you want.
-
-You will need to create Actions YAML file and Github will take care of the rest.
-
-Take a look at it's [official documentation](https://help.github.com/en/actions/automating-your-workflow-with-github-actions) for more.
-
-
-
-
-
-
-
-## Prerequisites
-
-1. You've signed up for GitHub Actions. [Learn more](https://github.com/features/actions).
-2. Take a look at the documentation for:
-   1. [GitHub Actions](https://github.com/features/actions)
-   2. [Github Pages](https://pages.github.com/)
-3. Not required, but it would be great if you've written some form of YML code before and have minimal knowledge of the syntax.
-
-## Getting started
-
-### First things first
-
-We will need to create an Angular app and then add `angular-cli-ghpages` in it. Think of a nice project name and start your terminal:
-
-```sh
-npm install -g @angular/cli
-ng new nice-project-name --defaults
-cd nice-project-name
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_GITHUB_REPOSITORY_NAME>.git
-ng add angular-cli-ghpages
-```
-
-### Setup Tokens
-
-1. Create a [Personal Access Token with repo access](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) (POA) and copy the token and store it some where safe.
-   - Make sure it has this access:
-  
-        ![repo access](./repo-access.png)
-2. Open up your Angular app's Github repo.
-3. Go to **Settings** > **Secrets** and click on **Add a new secret**.
+2. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
     ![add new secret](./add-new-secret.png)
-4. Create a secret with name `GH_TOKEN` and paste your POA (which you copied / stored in step 1) in value. Make sure to click on green **Add secret** button to save it.
+3. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
+    Finish this part by clicking the green **Add secret** button. 
 
     ![secret name and value](./secret-token-value.png)
 
-### Setup Github Action Flow
+    It is perfectly fine not to store the token anywhere else.
+    You can always create new tokens and just throw the old ones away.
+
+### 5.2 Setup the Github Action Flow
 
 1. Now, in your repo, go to **Actions** and click on **Set up workflow yourself**.
 
