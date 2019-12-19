@@ -245,7 +245,17 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
    ng deploy --base-href=/everything-github-demo/
    ```
 
-5. And now you should see our app running on Github Pages! 
+5. And now you should see our app running on Github Pages!
+    You can make sure that everything went well when you go into the **Settings** of the repo.
+    Scroll down there to the GitHub Pages section.
+    The following should appear here:
+
+    ![Screenshot](screenshot_4_settings.png)
+
+    **Hint:** You can also see the setting for a custom domain here.
+    Please do not try to set a value.
+    This will work for the first time, but the setting is not permanent, because `angular-cli-ghpages` will overwrite it again.
+
 
 
 ## 5. Automating the Deployment with GitHub Actions
@@ -271,8 +281,9 @@ Please do not be mistaken, there is also an environment variable called `GITHUB_
 This one does not work for our purposes ([see issue #73](https://github.com/angular-schule/angular-cli-ghpages/issues/73#issuecomment-527405699)).
 
 
-1. Create a [Personal Access Token **with repo access**](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and copy the token to you clipboard.
-If you want to remember the token later on, save it in a secure place (i.e. a password manager).
+1. Create a [Personal Access Token **with repo access**](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and make sure to copy your new token to the clipboard.
+   You won’t be able to see it again! 
+If you want to remember the token later on, save it in a secure place only (i.e. a password manager).
     Please make sure that it has this access:
    ![repo access](./repo-access.png)
 
@@ -281,91 +292,115 @@ If you want to remember the token later on, save it in a secure place (i.e. a pa
 2. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
     ![add new secret](./add-new-secret.png)
+
+    Secrets are encrypted environment variables and only exposed to selected Github Actions.
+    GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
+
 3. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
-    Finish this part by clicking the green **Add secret** button. 
+    Finish this chapter by clicking the green **Add secret** button. 
 
     ![secret name and value](./secret-token-value.png)
 
     It is perfectly fine not to store the token anywhere else.
     You can always create new tokens and just throw the old ones away.
 
+> **Extra tip:** For our organisation Angular.Schule we have created an extra account which is only dedicated for deploying applications. We only give that account access to the repositories where there is something to deploy. This increases security again, because unfortunately you cannot limit personal access tokens to specific repositories. 
+
 ### 5.2 Setup the Github Action Flow
 
-1. Now, in your repo, go to **Actions** and click on **Set up workflow yourself**.
+Now we have everything ready.
+We can create an automated workflow that will do the work for us in the future.
+
+1. Again in our repo, we go to **Actions** and click on **Set up workflow yourself**.
 
     ![setup workflow](./setup-workflow.png)
 
-2. A New File editor will open, keep the file name (e.g. *main.yml*) as it is, simply replace all content to below:
+2. A New File editor will open, keep the file name (e.g. *main.yml*) as it is,
+3. simply replace the entire content with the following example:
 
-    ```yml
-    name: Node CI
+```yml
+name: Deploy to GitHub Pages via angular-cli-ghpages
 
-    on: [push]
+on: [push]
 
-    jobs:
-    build:
-        runs-on: ubuntu-latest
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-        - uses: actions/checkout@v1
-        - name: Use Node.js 10.x
-            uses: actions/setup-node@v1
-            with:
-            node-version: 10.x
-        - name: npm install, lint, test, build and deploy
-            run: |
-            npm install
-            npm run lint
-            ###
-            # You can un-comment below 2 test scripts, if you have made respective changes mentioned at https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome
-            ###
-            # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-            # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
-            npm run deploy -- --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
-            env:
-            CI: true
-            GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    ```
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
 
-3. Now, if you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app. And then you can un-comment the `npm test ...` and `npm run e2e ...` commands in above Actions YAML file.
-4. Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with correct values in above snippet.
-5. You can also control when your workflows are triggered:
-   - It can be helpful to not have your workflows run on every push to every branch in the repo.
-     - For example, you can have your workflow run on push events to master and release branches:
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: Prepare and deploy
+      env:
+        CI: true
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        npm install
+        npm run lint
+        ###
+        # You can un-comment below 2 test scripts, if you have made respective changes mentioned at https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome
+        ####
+        # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+        ####
+        npm run ng -- deploy --base-href=/everything-github-demo/
+```
+
+<!--
+--name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+
+-->
+
+4. If you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
+    After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
+
+5. Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with correct values in above example.
+   
+6. We can also control when our workflows are triggered:
+    It can be helpful to not have our workflow run on every push to every branch in the repo.
+     - For example, this workflow only runs on push events to `master` and `release` branches:
 
         ```yml
         on:
-        push:
+          push:
             branches:
             - master
-            - release/*
+            - release/*  # branches matching refs/heads/release/*
         ```
-
-     - or only run on pull_request events that target the master branch:
-
-        ```yml
-        on:
-          pull_request:
-            branches:
-            - master
-        ```
+      
+        Here we see the very common convention of grouping branches with a slash (e.g. `relase/42`).
+        Many git clients will display those groups like folders.
 
      - or, run every day of the week from Monday - Friday at 02:00:
 
         ```yml
         on:
           schedule:
-          - cron: 0 2 * * 1-5
+            - cron: 0 2 * * 1-5
         ```
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+7. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
     ![start commit](./start-commit.png)
-7. Done ✅.
 
-Now next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
+8. Done 🚀.
+   The action will run by itself the first time.
+
+Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
+
+
+1. Extra: Custom Domain
+
+TODO
+
 
 ## Summary
 
