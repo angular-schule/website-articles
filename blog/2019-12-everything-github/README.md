@@ -23,13 +23,34 @@ hidden: true
 We will establish a professional pipeline, including version management, continuous deployment and web hosting.
 Best of all, for public repositories, this won't cost you a single cent!**
 
+<hr>
+
+Table of contents:
+
+- [Introduction](#introduction)
+- [1. All parts explained](#1-all-parts-explained)
+  - [1.1. Git and Github Version Control](#11-git-and-github-version-control)
+  - [1.2. Github Actions](#12-github-actions)
+  - [1.3. Github Pages](#13-github-pages)
+  - [1.4. angular-cli-ghpages](#14-angular-cli-ghpages)
+- [2. A simple Angular app](#2-a-simple-angular-app)
+- [3. Hosting the source code on Github](#3-hosting-the-source-code-on-github)
+- [4. A first deployment to GitHub Pages](#4-a-first-deployment-to-github-pages)
+- [5. Automating the Deployment with GitHub Actions](#5-automating-the-deployment-with-github-actions)
+  - [5.1 Setup a token](#51-setup-a-token)
+  - [5.2 Setup the Github Action Flow](#52-setup-the-github-action-flow)
+- [6. Extra: Custom Domain](#6-extra-custom-domain)
+- [Summary](#summary)
+- [Thank you by Dharmen](#thank-you-by-dharmen)
+- [Thank you by Dharmen](#thank-you-by-dharmen-1)
+
 ## Introduction
 
 All starts are hard, so we will try to explain all steps in detail, so that you can eventually come up with a fully deployed Angular app.
 During our journey we will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
 We will create & setup tokens and Github Action YAML files, to deploy our Angular app directly to Github Pages, a free webhosting service from Github.
 
-## 1. All Parts explained
+## 1. All parts explained
 
 ### 1.1. Git and Github Version Control
 
@@ -63,7 +84,7 @@ The project exists since 2016 and if it was started today, it would certainly ha
 According to Github, 6800 projects already deploing with angular-cli-ghpages.
 
 
-## 2. A simple Angular App
+## 2. A simple Angular app
 
 We assume that the majority of our readers have already worked with Angular. But in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
 
@@ -273,7 +294,7 @@ The easiest way to realize this is with tokens.
 
 > **Warning:** Treat tokens like passwords and keep them secret. Always use tokens as environment variables instead of hardcoding them into your code!
 
-### 5.1 Setup up a token
+### 5.1 Setup a token
 
 We should create a **personal access token** and use it in place of a password when performing Git operations. In theory you can also work with username and password, but we will never show you how to do that. 😉
 
@@ -287,16 +308,16 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     Please make sure that it has this access:
    ![repo access](./repo-access.png)
 
-1. Open up your Angular app's Github repo.
+2. Open up your Angular app's Github repo.
 
-2. Go to **Settings** > **Secrets** and click on **Add a new secret**.
+3. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
     ![add new secret](./add-new-secret.png)
 
     Secrets are encrypted environment variables and only exposed to selected Github Actions.
     GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
 
-3. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
+4. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
     Finish this chapter by clicking the green **Add secret** button. 
 
     ![secret name and value](./secret-token-value.png)
@@ -315,54 +336,46 @@ We can create an automated workflow that will do the work for us in the future.
 
     ![setup workflow](./setup-workflow.png)
 
-2. A New File editor will open, keep the file name (e.g. *main.yml*) as it is,
-3. simply replace the entire content with the following example:
+2. A editor will open, keep the file name (e.g. `main.yml`) as it is, simply replace the entire content with the following example:
 
-```yml
-name: Deploy to GitHub Pages via angular-cli-ghpages
+    ```yml
+    name: Deploy to GitHub Pages via angular-cli-ghpages
+    
+    on: [push]
+    
+    jobs:
+      build-and-deploy:
+        runs-on: ubuntu-latest
+    
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v1
+    
+        - name: Use Node.js 10.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 10.x
+    
+        - name: Prepare and deploy
+          env:
+            CI: true
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          run: |
+            npm install
+            npm run lint
+            ###
+            # You can un-comment below 2 test scripts, if you have made     respective changes mentioned at https://angular.io/guide/    testing#configure-cli-for-ci-testing-in-chrome
+            ####
+            # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+            # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+            ####
+            npm run ng -- deploy --base-href=/everything-github-demo/
+    ```
 
-on: [push]
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
-
-    - name: Prepare and deploy
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
-        npm install
-        npm run lint
-        ###
-        # You can un-comment below 2 test scripts, if you have made respective changes mentioned at https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome
-        ####
-        # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-        # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
-        ####
-        npm run ng -- deploy --base-href=/everything-github-demo/
-```
-
-<!--
---name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
-
--->
-
-4. If you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
+3. If you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
     After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
 
-5. Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with correct values in above example.
-   
-6. We can also control when our workflows are triggered:
+4. We can also control when our workflows are triggered:
     It can be helpful to not have our workflow run on every push to every branch in the repo.
      - For example, this workflow only runs on push events to `master` and `release` branches:
 
@@ -377,7 +390,7 @@ jobs:
         Here we see the very common convention of grouping branches with a slash (e.g. `relase/42`).
         Many git clients will display those groups like folders.
 
-     - or, run every day of the week from Monday - Friday at 02:00:
+     - As another example, we can run the scrupt every day of the week from Monday - Friday at 02:00:
 
         ```yml
         on:
@@ -387,29 +400,37 @@ jobs:
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-7. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+5. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
     ![start commit](./start-commit.png)
 
-8. Done 🚀.
+6. **Done!** 🚀.  
    The action will run by itself the first time.
 
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
 
 
-1. Extra: Custom Domain
+## 6. Extra: Custom Domain
 
 TODO
 
 
 ## Summary
 
-I hope that now you know how to setup `angular-cli-ghpages` with Github Actions. Please checkout [angular-cli-ghpages options](https://github.com/angular-schule/angular-cli-ghpages/#options) for more options to deploy, like: `--repo <URL>` to deploy your app to different repo's Github Pages. And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions). Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows.
+I hope that now you know how to setup `angular-cli-ghpages` with Github Actions.
+Please checkout [angular-cli-ghpages options](https://github.com/angular-schule/angular-cli-ghpages/#options) for more options to deploy, like: `--repo <URL>` to deploy your app to different repo's Github Pages.
+And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions). Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows.
 
-## Thank you
+## Thank you by Dharmen
 
-Special thanks go to [Johannes Hoppe](https://twitter.com/fmalcher01) for giving me an opprtunity to write this article.
+Special thanks go to [Johannes Hoppe](https://twitter.com/johanneshoppe) for giving me an opportunity to write this article.
 
+## Thank you by Dharmen
+
+Thanks to Dharmen for contributing to `angular-cli-ghpages` and for starting this article.
+
+<!--
 <small>**Header image:** Photo by [SpaceX](https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/launch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>
+-->
 
 ....
