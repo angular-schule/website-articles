@@ -369,13 +369,16 @@ We can create an automated workflow that will do the work for us in the future.
             # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
             # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
             ####
-            npm run ng -- deploy --base-href=/everything-github-demo/
+            npm run ng -- deploy --base-href=/everything-github-demo/ --repo=https://github.com/angular-schule/everything-github-demo.git --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
     ```
+3. Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with correct values in above example.
+    It is also necessary to specify the repository again by parameter.
+    This is due to the internal functionality of angular-cli-ghpages, which adds the token to the URL at runtime.
 
-3. If you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
+4. If you want Github Actions CI/CD to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
     After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
 
-4. We can also control when our workflows are triggered:
+5. We can also control when our workflows are triggered:
     It can be helpful to not have our workflow run on every push to every branch in the repo.
      - For example, this workflow only runs on push events to `master` and `release` branches:
 
@@ -400,11 +403,11 @@ We can create an automated workflow that will do the work for us in the future.
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-5. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
     ![start commit](./start-commit.png)
 
-6. **Done!** 🚀.  
+7. **Done!** 🚀.  
    The action will run by itself the first time.
 
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
@@ -412,14 +415,15 @@ Next time when you push your changes to Github, Github Actions will run the work
 
 ## 6. Extra: Custom Domain
 
-TODO
+**TODO**: document `--cname` and show a setup with cloudflare for awesome SSL support.
 
 
 ## Summary
 
 I hope that now you know how to setup `angular-cli-ghpages` with Github Actions.
 Please checkout [angular-cli-ghpages options](https://github.com/angular-schule/angular-cli-ghpages/#options) for more options to deploy, like: `--repo <URL>` to deploy your app to different repo's Github Pages.
-And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions). Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows.
+And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions).
+Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows.
 
 ## Thank you by Dharmen
 
