@@ -264,4 +264,4 @@ And if you have any improvements, I'm particularly happy about a [pull request](
 
 ## Thank you
 
-Special thanks go to [Ferdinand Malcher](https://twitter.com/fmalcher01) and [Johannes Hoppe](https://twitter.com/fmalcher01) for revising this article and discussing things.
+Special thanks go to [Ferdinand Malcher](https://twitter.com/fmalcher01) and [Johannes Hoppe](https://twitter.com/johanneshoppe) for revising this article and discussing things.
