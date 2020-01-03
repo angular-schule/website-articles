@@ -40,7 +40,7 @@ To display a post properly with all the names and titles of depending entities, 
 If you were to use WordPress as a system for content management, wouldn't you want to improve the display of a single post by pre-fetching all data related to tags and authors first with list calls, whenever the application is starting up?
 This data could then be cached and referenced whenever needed.
 If you have been around the block, you know that `@ngrx/entity` provides a perfect API for handling multiple entities in Angular applications.
-If you haven't heard about it read up [here](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) and [here](https://ngrx.io/guide/entity).
+If you haven't heard about it you should [read this blog post by the NgRx team](https://medium.com/ngrx/introducing-ngrx-entity-598176456e15) or consult the [official documentation](https://ngrx.io/guide/entity).
 Believe me, it's the best thing that can happen to you when working with NgRx.
 The data can be stored with normalized entity collections exactly the way it is retrieved via the API.
 
