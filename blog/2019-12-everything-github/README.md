@@ -37,12 +37,10 @@ Table of contents:
 - [3. Hosting the source code on Github](#3-hosting-the-source-code-on-github)
 - [4. A first deployment to GitHub Pages](#4-a-first-deployment-to-github-pages)
 - [5. Automating the Deployment with GitHub Actions](#5-automating-the-deployment-with-github-actions)
-  - [5.1 Setup a token](#51-setup-a-token)
-  - [5.2 Setup the Github Action Flow](#52-setup-the-github-action-flow)
-- [6. Extra: Custom Domain](#6-extra-custom-domain)
+  - [5.1 About a token](#51-about-a-token)
+  - [5.2 Setup a GH_TOKEN token](#52-setup-a-ghtoken-token)
+  - [5.3 Setup the Github Action Flow](#53-setup-the-github-action-flow)
 - [Summary](#summary)
-- [Thank you by Dharmen](#thank-you-by-dharmen)
-- [Thank you by Dharmen](#thank-you-by-dharmen-1)
 
 ## Introduction
 
@@ -58,8 +56,6 @@ Version Control allows you to keep track of your work and helps you to easily re
 It is also absolutely necessary if you want to work together efficiently in a team.
 [Git](https://git-scm.com/) is a free software for distributed version management and is currently the most popular solution.
 The leading platform around Git is Github, which belongs to Microsoft since the end of 2018.
-Please register an account on github.com, if you haven't already done so.
-**It is sufficient to use the free account!**
 
 ### 1.2. Github Actions
 
@@ -83,6 +79,42 @@ So he developed a solution that makes it as easy as possible to bring an Angular
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
 According to Github, 6800 projects already deploing with angular-cli-ghpages.
 
+### 1.5. GitHub plans
+
+The following information are based on the details from [the pricing page](https://github.com/pricing). 
+
+The **free plan** gives you:
+* unlimited public repositories
+* unlimited private repositories
+* only 3 collaborators for private repositories
+* 2000 total action minutes/month
+
+The **pro plan** gives you:
+
+* everything that is included in the free plan
+* unlimited collaborators
+* 3000 total action minutes/month 
+
+Back in 2016, GitHub migrated from a pricing based on the number of repositories to a new shema that considers the number of users. **Legacy plans** do not have access to GitHub Actions.
+
+This article will distinguish several times between private and public repos.
+The reason behind this is due to the following point, which we must take into account:
+
+**GitHub Pages** is available... 
+* in public repositories with GitHub Free.
+* in public and **private** repositories with GitHub Pro and all the other paid plans.
+
+| Plan              | Private repos | Actions | Pages for public repos | Pages for private repos | 
+|-------------------|:-------------:|:-------:|:----------------------:|:-----------------------:| 
+| Free              | ✅️            | ✅️      | ✅️                    | ❌️                      |
+| Pro and Higher    | ✅️            | ✅️      | ✅️                    | ✅️                      |
+| Legacy paid plans | ✅️            | ❌️      | ✅️                    | ?                       |
+
+
+
+
+Please register an account on github.com, if you haven't already done so.  
+**For this article, it is sufficient to use the free plan!**
 
 ## 2. A simple Angular app
 
@@ -343,13 +375,13 @@ This table gives you an overview:
 If you are using a private repository, the decision should be clear. 
 For free / public repositories you can use the personal access token and ideally consider the following tip.
 
-> **Extra tip:** If you want to use **public** repos and therefore personal access tokens (known as `GH_TOKEN` or `PERSONAL_TOKEN`), we recommend that you create an additional user account that is only dedicated to be used for deployments.
+> **Extra tip:** If you want to use **public repos** and therefore personal access tokens (known as `GH_TOKEN` or `PERSONAL_TOKEN`), we recommend that you create an additional user account that is only dedicated to be used for deployments.
 > 
 >  Then you should give that account only access to the repositories where there is something to deploy.
 > This increases security again and we have a sufficiently good solution for public repositories.
 
 
- ### 5.2 Setup a `GH_TOKEN` token
+ ### 5.2 Setup a Personal Access Token
  
 If we are using a public repository (as described in the previous instructions),
 then we want to use a personal access token. The procedure is as following.
@@ -381,6 +413,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
 
 Now we have everything ready.
 We can create an automated workflow that will do the work for us in the future.
+GitHub Actions usage is free for public repositories.
 
 1. Again in our repo, we go to **Actions** and click on **Set up workflow yourself**.
 
