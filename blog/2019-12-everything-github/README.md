@@ -370,7 +370,7 @@ This table gives you an overview:
 |-------------------|:-------------:|:------------:|----------|--------------|:--------:| 
 | `GITHUB_TOKEN`    | ✅️            | ❌️           | HTTPS    | Unnecessary  |    🤩   |
 | `GH_TOKEN`        | ✅️            | ✅️           | HTTPS    | Necessary    |    😐   |
-| (Private SSH Key) | ✅️            | ✅️           | SSH      | Necessary    |    😓   |‚
+| (Private SSH Key) | ✅️            | ✅️           | SSH      | Necessary    |    😓   |
 
 If you are using a private repository, the decision should be clear. 
 For free / public repositories you can use the personal access token and ideally consider the following tip.
@@ -432,7 +432,7 @@ GitHub Actions usage is free for public repositories.
     
         steps:
         - name: Checkout
-          uses: actions/checkout@v1
+          uses: actions/checkout@v2
     
         - name: Use Node.js 10.x
           uses: actions/setup-node@v1
@@ -447,10 +447,11 @@ GitHub Actions usage is free for public repositories.
             npm install
             npm run lint
             ###
-            # You can un-comment below 2 test scripts, if you have made     respective changes mentioned at https://angular.io/guide/    testing#configure-cli-for-ci-testing-in-chrome
+            # Configure Angular first!
             ####
-            # npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-            # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+            # npm test -- --watch=false --progress=false --browsers=ChromeHeadlessCI
+            # npm run webdriver-update-ci
+            # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js --webdriver-update=false
             ####
             npm run ng -- deploy --base-href=/everything-github-demo/ --repo=https://github.com/angular-schule/everything-github-demo.git --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
     ```
@@ -458,7 +459,15 @@ GitHub Actions usage is free for public repositories.
     It is also necessary to specify the repository again by parameter.
     This is due to the internal functionality of angular-cli-ghpages, which adds the token to the URL only at runtime.
 
-4. If you want Github Actions to perform tests, you will need to [make some configurations](https://angular.io/guide/testing#configure-cli-for-ci-testing-in-chrome) in your Angular app.
+4. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
+    The necessary changes are described in the [Angular CLI wiki](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#continuous-integration).
+    To be specific:
+
+    1. You need to [update the test configurations for Karma and Protractor](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#update-test-configuration)
+    2. You have to setup a specific [chrome driver version](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#chromedriver).
+       Otherwise, the e2e tests will fail with an error message like this:
+      `... E/launcher - session not created: This version of ChromeDriver only supports Chrome version 79`
+
     After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
 
 5. We can also control when our workflows are triggered:
@@ -494,6 +503,9 @@ GitHub Actions usage is free for public repositories.
    The action will run by itself the first time.
 
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
+
+8. Extra:
+
 
 
 <!-- ## 6. Extra: Custom Domain
