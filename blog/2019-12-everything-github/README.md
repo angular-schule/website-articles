@@ -389,7 +389,9 @@ For free / public repositories you can use the personal access token and ideally
 > This increases security again and we have a sufficiently good solution for public repositories.
 
 
-### 5.2 Setup a Personal Access Token (`GH_TOKEN` or `PERSONAL_TOKEN`)
+### 5.2 Automate a public repo (via `GH_TOKEN`)
+
+#### 5.2.1 Setup a Personal Access Token 
  
 If we are using a public repository (as described in the previous instructions),
 then we want to use a personal access token. The procedure is as following.
@@ -410,6 +412,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
 
 4. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
+    If you prefer, you can also choose the name `PERSONAL_TOKEN` for all further steps.
     Finish this chapter by clicking the green **Add secret** button. 
 
     ![secret name and value](./secret-token-value.png)
@@ -417,7 +420,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     It is perfectly fine not to store the token anywhere else.
     You can always create new tokens and just throw the old ones away.
 
-### 5.3 Setup the Github Action Flow
+### 5.2.2 Setup the Github Action Workflow
 
 Now we have everything ready.
 We can create an automated workflow that will do the work for us in the future.
@@ -468,18 +471,18 @@ GitHub Actions usage is free for public repositories.
     Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with meaningful values in the above example.
     At this place you do not have to specify any real name and mail, but the provided values later will be part of the git history.
 
-1. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
+4. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
     The necessary changes are described in the [Angular CLI wiki](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#continuous-integration).
-    To be specific:
+    To be precise:
 
     1. You need to [update the test configurations for Karma and Protractor](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#update-test-configuration)
     2. You have to setup a specific [chrome driver version](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#chromedriver).
        Otherwise, the e2e tests will fail with an error message like this:
       `... E/launcher - session not created: This version of ChromeDriver only supports Chrome version 79`
 
-    After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
+    After those changes have been done, you can un-comment sections for the tests in above example.
 
-2. We can also control when our workflows are triggered:
+5. We can also control when our workflows are triggered:
     It can be helpful to not have our workflow run on every push to every branch in the repo.
      - For example, this workflow only runs on push events to `master` and `release` branches:
 
@@ -504,7 +507,7 @@ GitHub Actions usage is free for public repositories.
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-3. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
     ![start commit](./start-commit.png)
 
@@ -514,15 +517,59 @@ GitHub Actions usage is free for public repositories.
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
 
 
-### 5.3 Setup a Installation Access Token (`GITHUB_TOKEN`)
+### 5.2 Automate a private repo (via `GITHUB_TOKEN`)
 
-Github features so-called GitHub apps, which are [different from normal OAuth apps](https://developer.github.com/apps/differences-between-apps/).
-For GitHub Actions, GitHub automatically installs a GitHub App on the repository and makes this "installation access token" with the name `GITHUB_TOKEN` available as a secret. 
+The following example is additional,
+because we have promised for this article that you do not have to pay a cent.
+But the the usage of a private repos with Github Actions and Github Pages is only possible from the pro plan and higher.
+But the big advantage is that we do not have to set up a token in a tiresome way.
+The `GITHUB_TOKEN` token is already there and we do not have to do at all.
+
+Behind the scenes, Github reuses an existing feature, that is known as GitHub apps.
+In contrast to programms that authenticate with a "personal access token",
+apps do not run on behalf of a specific user - which is great.
+To make this happen, GitHub automatically installs a GitHub App on the repository and makes a corresponding "installation access token" with the name `GITHUB_TOKEN` available as a secret. 
 GitHub fetches a new token for each job, before the job begins.
+Awesome!
 
-If we use this token for a deplyoment, we get this error message:
-> fatal: could not read Password for 'https://***@github.com': No such device or address
+> **ℹ️ Note**
+> 
+> As already mentioned above, the `GITHUB_TOKEN` (installation access token) will only trigger a release of a new website if the action runs in a **private repository**. In a public repo, a commit is generated, but the site does not change. See this [GitHub Community post](https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/m-p/26869) for more info. If your repo is public, you must still use the `GH_TOKEN` (personal access token).
 
+If you have not already done so, please read the text on general workflow usage.
+The workflow looks very similar, but now we must use the other token.
+Here is a shorter example, without the tests:
+following example:
+
+    ```yml
+    name: Deploy to GitHub Pages via angular-cli-ghpages
+    
+    on: [push]
+    
+    jobs:
+      build-and-deploy:
+        runs-on: ubuntu-latest
+    
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+    
+        - name: Use Node.js 10.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 10.x
+    
+        - name: Prepare and deploy
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            npm install
+            npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+    ```
+
+**Et voila!!** 🚀
+
+This is all it takes to deploy the latest version of the Angular App to GitHub Pages with each push.
 
 
 <!-- ## 6. Extra: Custom Domain
