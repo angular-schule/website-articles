@@ -1,5 +1,5 @@
 ---
-title: "Everything Github: Continues Integration, Deployment and Hosting for your Angular App"
+title: "[Everything Github 1/2] Continues Integration, Deployment and Hosting for your Angular App"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 author2: Dharmen Shah
@@ -541,60 +541,73 @@ The workflow looks very similar, but now we must use the other token.
 Here is a shorter example, without the tests:
 following example:
 
-    ```yml
-    name: Deploy to GitHub Pages via angular-cli-ghpages
-    
-    on: [push]
-    
-    jobs:
-      build-and-deploy:
-        runs-on: ubuntu-latest
-    
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-    
-        - name: Use Node.js 10.x
-          uses: actions/setup-node@v1
-          with:
-            node-version: 10.x
-    
-        - name: Prepare and deploy
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            npm install
-            npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
-    ```
+```yml
+name: Deploy to GitHub Pages via angular-cli-ghpages
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: Prepare and deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        npm install
+        npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+```
 
 **Et voila!!** 🚀
 
 This is all it takes to deploy the latest version of the Angular App to GitHub Pages with each push.
 
 
-<!-- ## 6. Extra: Custom Domain
+## 6. Extra: Custom Domain
 
+Zum Schluss möchten wir noch kurz beschreiben, wie  
 **TODO**: document `--cname` and show a setup with cloudflare for awesome SSL support.
- -->
 
-## Summary
 
-I hope that now you know how to setup `angular-cli-ghpages` with Github Actions.
-Please checkout [angular-cli-ghpages options](https://github.com/angular-schule/angular-cli-ghpages/#options) for more options to deploy, like: `--repo <URL>` to deploy your app to different repo's Github Pages.
-And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions).
-Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows.
+## Summary / What's next?
+
+We hope you had fun with this tutorial and that your Angular App now runs successfully on Github Pages. If you have any questions, please contact us via twitter. We are also very happy to receive your suggestion for improvement as a PR.
+
+<!-- And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions).
+Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows. -->
+
+
+**⚠️ Stop!   
+Before you start browsing the web any further:  
+Or journey is not over yet!
+Please checkout this [follow-up article from Danny about the static site generator Scully](https://d-koppenhagen.de/blog/2020-01-angular-scully), which is a perfect fit for Angular on Github Pages.**
+
+<!-- TODO: custom article with changes for readers of this article -->
+
+<hr>
 
 ## Thank you by Dharmen
 
-Special thanks go to [Johannes Hoppe](https://twitter.com/johanneshoppe) for giving me an opportunity to write this article.
+Special thanks go to **[Johannes Hoppe](https://twitter.com/johanneshoppe)** for giving me an opportunity to write this article.
 
 ## Thank you by Johannes Hoppe
 
-Thanks to Dharmen for contributing to `angular-cli-ghpages` and for starting this article.
-I would also like to thank [Edric Chan](https://edricchan03.github.io/), who has been very involved in both `angular-cli-ghpages` and in providing help on questions concerning this article.
+Thanks to **[Dharmen Shah](https://twitter.com/shhdharmen)** for contributing to `angular-cli-ghpages` and for starting this article. I would also like to thank **[Edric Chan](https://edricchan03.github.io/)**, who has been very involved in both `angular-cli-ghpages` and in providing help for this article. 👍
+
+Only with the help from Dharmen and Edric it was possible for me to finally achieve full support for GitHub Actions in [v0.6.2 of angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/releases/tag/v0.6.2).
+
+
 
 <!--
 <small>**Header image:** Photo by [SpaceX](https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/launch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>
 -->
 
-....
