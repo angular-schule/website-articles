@@ -269,11 +269,19 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     ```
 
 2. Now we can deploy our project to GitHub pages with all default settings.
-   The project will be automatically built in production mode:
+    The project will be automatically built in production mode:
 
-   ```sh
+    ```sh
    ng deploy
-   ```
+    ```
+
+    The deployment will create a temporary git repository and will commit/push all files 
+    from `dist/everything-github-demo` to a branch with the name `gh-pages`.
+    
+    But in this example we haven't provided a target repository.
+    In this case the deployment assumes that the current working directory is already a Git repository,
+    and that we want to push changes to the same repository with the name `origin`.
+    We have prepared this before with the command `git remote add`.  
 
 3. The app should be available at `https://<username>.github.io/<repositoryname>/` soon.
    If it is not immediately available, you should first wait a moment.
@@ -381,7 +389,7 @@ For free / public repositories you can use the personal access token and ideally
 > This increases security again and we have a sufficiently good solution for public repositories.
 
 
- ### 5.2 Setup a Personal Access Token
+### 5.2 Setup a Personal Access Token (`GH_TOKEN` or `PERSONAL_TOKEN`)
  
 If we are using a public repository (as described in the previous instructions),
 then we want to use a personal access token. The procedure is as following.
@@ -441,7 +449,6 @@ GitHub Actions usage is free for public repositories.
     
         - name: Prepare and deploy
           env:
-            CI: true
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
           run: |
             npm install
@@ -453,13 +460,15 @@ GitHub Actions usage is free for public repositories.
             # npm run webdriver-update-ci
             # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js --webdriver-update=false
             ####
-            npm run ng -- deploy --base-href=/everything-github-demo/ --repo=https://github.com/angular-schule/everything-github-demo.git --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+            npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
     ```
-3. Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with meaningful values in above example. You can see this details later on in the git history.
-    It is also necessary to specify the repository again by parameter.
-    This is due to the internal functionality of angular-cli-ghpages, which adds the token to the URL only at runtime.
+3. Fortunately, the step `actions/checkout@v2` checks-out a nice git repository, where the remote `origin` is already adjusted.
+    But username and email are not set.
+    Therefore we have to include these two values via parameters.
+    Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with meaningful values in the above example.
+    At this place you do not have to specify any real name and mail, but the provided values later will be part of the git history.
 
-4. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
+1. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
     The necessary changes are described in the [Angular CLI wiki](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#continuous-integration).
     To be specific:
 
@@ -470,7 +479,7 @@ GitHub Actions usage is free for public repositories.
 
     After those changes have been done, you can un-comment the `npm test ...` and `npm run e2e ...` commands in above example.
 
-5. We can also control when our workflows are triggered:
+2. We can also control when our workflows are triggered:
     It can be helpful to not have our workflow run on every push to every branch in the repo.
      - For example, this workflow only runs on push events to `master` and `release` branches:
 
@@ -495,16 +504,24 @@ GitHub Actions usage is free for public repositories.
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+3. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
     ![start commit](./start-commit.png)
 
-7. **Done!** 🚀.  
+4.  **Done!** 🚀.  
    The action will run by itself the first time.
 
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
 
-8. Extra:
+
+### 5.3 Setup a Installation Access Token (`GITHUB_TOKEN`)
+
+Github features so-called GitHub apps, which are [different from normal OAuth apps](https://developer.github.com/apps/differences-between-apps/).
+For GitHub Actions, GitHub automatically installs a GitHub App on the repository and makes this "installation access token" with the name `GITHUB_TOKEN` available as a secret. 
+GitHub fetches a new token for each job, before the job begins.
+
+If we use this token for a deplyoment, we get this error message:
+> fatal: could not read Password for 'https://***@github.com': No such device or address
 
 
 
