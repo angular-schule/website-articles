@@ -48,6 +48,7 @@ All starts are hard, so we will try to explain all steps in detail, so that you 
 During our journey we will get comfortable with `angular-cli-ghpages` and Github Actions, and see how they work togehter.
 We will create & setup tokens and Github Action YAML files, to deploy our Angular app directly to Github Pages, a free webhosting service from Github.
 
+
 ## 1. All parts explained
 
 ### 1.1. Git and Github Version Control
@@ -400,13 +401,13 @@ then we want to use a personal access token. The procedure is as following.
    You won’t be able to see it again! 
 If you want to remember the token later on, save it in a secure place only (i.e. a password manager).
     Please make sure that it has this access:
-   ![repo access](./repo-access.png)
+   ![repo access](./screenshot_5_repo-access.png)
 
 2. Open up your Angular app's Github repo.
 
 3. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
-    ![add new secret](./add-new-secret.png)
+    ![add new secret](./screenshot_5_add-new-secret.png)
 
     Secrets are encrypted environment variables and only exposed to selected Github Actions.
     GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
@@ -415,7 +416,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     If you prefer, you can also choose the name `PERSONAL_TOKEN` for all further steps.
     Finish this chapter by clicking the green **Add secret** button. 
 
-    ![secret name and value](./secret-token-value.png)
+    ![secret name and value](./screenshot_5_secret-token-value.png)
 
     It is perfectly fine not to store the token anywhere else.
     You can always create new tokens and just throw the old ones away.
@@ -428,7 +429,7 @@ GitHub Actions usage is free for public repositories.
 
 1. Again in our repo, we go to **Actions** and click on **Set up workflow yourself**.
 
-    ![setup workflow](./setup-workflow.png)
+    ![setup workflow](./screenshot_5_setup-workflow.png)
 
 2. A editor will open, keep the file name (e.g. `main.yml`) as it is, simply replace the entire content with the following example:
 
@@ -463,13 +464,14 @@ GitHub Actions usage is free for public repositories.
             # npm run webdriver-update-ci
             # npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js --webdriver-update=false
             ####
-            npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+            npm run ng -- deploy --base-href=/everything-github-demo/ --name="Displayed Username" --email=your.mail@example.org
     ```
 3. Fortunately, the step `actions/checkout@v2` checks-out a nice git repository, where the remote `origin` is already adjusted.
     But username and email are not set.
     Therefore we have to include these two values via parameters.
-    Make sure to replace **<YOUR_GITHUB_USERNAME>** and **<YOUR_GITHUB_USER_EMAIL_ADDRESS>** with meaningful values in the above example.
-    At this place you do not have to specify any real name and mail, but the provided values later will be part of the git history.
+    Make sure to replace **"Displayed Username"** (e.g. "I am a bot") and **your.mail@example.org** with meaningful values in the above example.
+    At this place you do not have to specify any real name and mail.
+    But you don't want to overdo it, because the provided values later will be shown in the git history.
 
 4. If you want Github Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
     The necessary changes are described in the [Angular CLI wiki](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#continuous-integration).
@@ -509,7 +511,7 @@ GitHub Actions usage is free for public repositories.
 
 6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
 
-    ![start commit](./start-commit.png)
+    ![start commit](./screenshot_5_start-commit.png)
 
 4.  **Done!** 🚀.  
    The action will run by itself the first time.
@@ -564,7 +566,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm install
-        npm run ng -- deploy --base-href=/everything-github-demo/ --name="<YOUR_GITHUB_USERNAME>" --email=<YOUR_GITHUB_USER_EMAIL_ADDRESS>
+        npm run ng -- deploy --base-href=/everything-github-demo/ --name="<Your Git Username>" --email=your.mail@example.org
 ```
 
 **Et voila!!** 🚀
@@ -574,7 +576,54 @@ This is all it takes to deploy the latest version of the Angular App to GitHub P
 
 ## 6. Extra: Custom Domain
 
-Zum Schluss möchten wir noch kurz beschreiben, wie  
+Finally, we would like to shortly describe how you use your own domain.
+GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch. GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
+
+### 6.1 Configuring a subdomain
+
+Setting up a subdomain is the easiest, eg. `everything-github-demo.angular.schule`.
+
+1. First we have to change the DNS for the domain by setting up a so-called CNAME record.
+    That record should point to the default domain of the following format: `<username>.github.io`
+
+    The `<username>` (or organisation name) is in our case `angular-schule`.
+    The following screenshot shows the required setting for the popular DNS and CDN provider Cloudflare.com:
+      
+    ![Screenshot Cloudflare](./screenshot_6_cname-cloudflare.png)
+
+2. Now we have to adjust the `ng deploy` command a little bit!
+    By using our own domain, we no longer have to use a subdirectory.
+    Instead we now specify the parameter `--cname` and place the application at the root of the subdomain!
+
+   ```sh
+   # OLD
+   ng deploy --base-href=/<repositoryname>/
+
+   # NEW
+   ng deploy --cname=everything-github-demo.angular.schule
+   ```
+
+3. You should definitely get an SSL certificate.
+    You can do this directly in the settings of the repo. In this case, you will get a certificate from letsencrypt.org.
+
+
+
+ Du kannst anschließend 
+   
+   
+    Beim nächsten Deployment ist die Website unter der Adresse https://everything-github-demo.angular.schule bekannt.
+
+that points your subdomain to the default domain for your site. For example, if you want to use the subdomain www.example.com for your user site, create a CNAME record that points www.example.com to <user>.github.io. For more information about how to create the correct record, see your DNS provider's documentation. For more information about the default domain for your site, see "About GitHub Pages."
+
+
+
+
+
+
+<!-- In principle, this is possible with many DNS providers.
+But we want to use Cloudflare, because here we get the additional benefit of a free SSL certificate.
+Moreover, the traffic is delivered optimally via the CDN of Cloudflare. -->
+
 **TODO**: document `--cname` and show a setup with cloudflare for awesome SSL support.
 
 
