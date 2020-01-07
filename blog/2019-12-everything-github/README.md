@@ -577,23 +577,25 @@ This is all it takes to deploy the latest version of the Angular App to GitHub P
 ## 6. Extra: Custom Domain
 
 Finally, we would like to shortly describe how you use your own domain.
-GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch. GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
+GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you.
+<!-- GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages). -->
 
 ### 6.1 Configuring a subdomain
 
-Setting up a subdomain is the easiest, eg. `everything-github-demo.angular.schule`.
+Setting up a subdomain isn't very hard and if you already own a main domain, then you don't need to make a new investment.
+In our example our app should be accessible under the domain `everything-github-demo.angular.schule`.
 
 1. First we have to change the DNS for the domain by setting up a so-called CNAME record.
-    That record should point to the default domain of the following format: `<username>.github.io`
+    That CNAME record should point to a domain that looks like this: `<username>.github.io`
 
     The `<username>` (or organisation name) is in our case `angular-schule`.
-    The following screenshot shows the required setting for the popular DNS and CDN provider Cloudflare.com:
+    As an example, the following screenshot shows the required setting for the DNS provider cloudflare.com:
       
     ![Screenshot Cloudflare](./screenshot_6_cname-cloudflare.png)
 
 2. Now we have to adjust the `ng deploy` command a little bit!
     By using our own domain, we no longer have to use a subdirectory.
-    Instead we now specify the parameter `--cname` and place the application at the root of the subdomain!
+    Instead we now specify the parameter `--cname` and place the application at the root directory!
 
    ```sh
    # OLD
@@ -603,44 +605,80 @@ Setting up a subdomain is the easiest, eg. `everything-github-demo.angular.schul
    ng deploy --cname=everything-github-demo.angular.schule
    ```
 
-3. You should definitely get an SSL certificate.
-    You can do this directly in the settings of the repo. In this case, you will get a certificate from letsencrypt.org.
+    At the next deployment the website will be known under the new address.
 
+3. It is important that you have an SSL certificate, because otherwise Chrome will tell your visitors that your website is not secure:
 
+    ![Screenshot Not Secure](./screenshot_6_not-secure.png)
 
- Du kannst anschließend 
+    **Pretty ugly, isn't it?**  
+    The good news: nowadays you don't have to spend money for a SSL certificate anymore!
+    GitHub provides you with a free SSL certificate.
+    To make this possible, they are partnering with letsencrypt.org.
+    You can make the necessary changes in the repository settings.
+    Go to **Settings** > GitHub Pages and select **Enforce HTTPS**, to enable HTTPS encryption for your site:
+
+    ![Screenshot HTTPS Github](./screenshot_6_https-github.png)
+
+    It can take up to 24 hours before this option is available.
+    As soon as the change is applied, you can now surf the website via HTTPS:  
+    [**https**://everything-github-demo.angular.schule](https://everything-github-demo.angular.schule) – please feel free to try it out!
+
+    **Hint:** You should not change the custom domain through GitHub's web interface.
+    The next time you deploy the app, this setting will be overwritten.
+    Always use the `--cname' parameter for this.
+
+    > **💡 Just for your Information**
+    > 
+    >If you inspect the certificate, you will see that we actually have not used a certificate from LetsEncrypt.
+    Instead, we decided for the proxy mode of Cloudflare and used the free certificate provided by them.
+    The proxy optimizes our website over Cloudflare's Content Delivery Network (CDN) and provides a lot of additional features - but that's another story.
+
    
-   
-    Beim nächsten Deployment ist die Website unter der Adresse https://everything-github-demo.angular.schule bekannt.
+### 6.2 Configuring an apex domain
 
-that points your subdomain to the default domain for your site. For example, if you want to use the subdomain www.example.com for your user site, create a CNAME record that points www.example.com to <user>.github.io. For more information about how to create the correct record, see your DNS provider's documentation. For more information about the default domain for your site, see "About GitHub Pages."
+Setting up an apex domain, such as `everything-github-demo.com` *(this domain does not exist, feel free to be the first 😉)*,
+is very similar to the procedure for a subdomain.
+We need to use the same `--cname` parameter as described before, but we have to make some different settings in the DNS.
+
+1. Navigate to your DNS provider and create either an `ALIAS`  an `A` record.
+    
+    If your provider already uses the new standard, you should consider using an `ALIAS` record.
+    The `ALIAS` record type (also known as `ANAME` or `flattened CNAME`) provides a way to specify a hostname in the DNS records which is then resolved at request time.
+
+    * To create an `ALIAS` record, point your apex domain to a domain that looks like this: `<username>.github.io`
+
+      The `<username>` (or organisation name) is in our case `angular-schule`.
+      As an example, the following screenshot shows the required setting for the DNS provider cloudflare.com:
+
+      ![Screenshot CNAME flatteing 1](./screenshot_6_cname-flattening-cloudflare1.png)
+
+      We should also set a `CNAME` entry for `www`, as many people always type in this subdomain.
+      The final settings should look like this:
+
+      ![Screenshot CNAME flatteing 2](./screenshot_6_cname-flattening-cloudflare2.png)
+    
+    * To create an `A` record, point your apex domain to the following IP addresses from GitHub:
+      ```
+      185.199.108.153
+      185.199.109.153
+      185.199.110.153
+      185.199.111.153
+      ```
 
 
+<!-- ## Summary / What's next? -->
+## Summary
 
+We hope you had fun with this tutorial and that your **Angular App** now builds automatically via **GitHub Actions** and that it runs successfully on **Github Pages**. If you have any questions, please contact us via twitter. We are also very happy to receive your suggestion for improvement as a PR.
 
+You can check out the complete demo code here:  
+**☞ https://github.com/angular-schule/everything-github-demo/**
 
-
-<!-- In principle, this is possible with many DNS providers.
-But we want to use Cloudflare, because here we get the additional benefit of a free SSL certificate.
-Moreover, the traffic is delivered optimally via the CDN of Cloudflare. -->
-
-**TODO**: document `--cname` and show a setup with cloudflare for awesome SSL support.
-
-
-## Summary / What's next?
-
-We hope you had fun with this tutorial and that your Angular App now runs successfully on Github Pages. If you have any questions, please contact us via twitter. We are also very happy to receive your suggestion for improvement as a PR.
-
-<!-- And it's not just CI/CD setup, there are lot many things we can do in [Github Actions](https://github.com/features/actions).
-Also checkout [Github Marketplace for Actions](https://github.com/marketplace?type=actions) to see more workflows. -->
-
-
-**⚠️ Stop!   
+<!-- **⚠️ Stop!   
 Before you start browsing the web any further:  
 Or journey is not over yet!
-Please checkout this [follow-up article from Danny about the static site generator Scully](https://d-koppenhagen.de/blog/2020-01-angular-scully), which is a perfect fit for Angular on Github Pages.**
-
-<!-- TODO: custom article with changes for readers of this article -->
+Please checkout this [follow-up article from Danny about the static site generator Scully](https://d-koppenhagen.de/blog/2020-01-angular-scully), which is a perfect fit for Angular on Github Pages.** -->
 
 <hr>
 
