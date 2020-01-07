@@ -1,10 +1,10 @@
 ---
-title: "[Everything Github 1/2] Continues Integration, Deployment and Hosting for your Angular App"
+title: "Everything Github: Continues Integration, Deployment and Hosting for your Angular App"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 author2: Dharmen Shah
 mail2: shhdharmen@gmail.com
-published: 2019-12-20
+published: 2020-01-09
 keywords:
   - Angular
   - Angular CLI
