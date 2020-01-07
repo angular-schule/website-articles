@@ -74,7 +74,7 @@ In contrast to former CI/CD monsters it is common with all mentioned providers t
 ### 1.3. Github Pages
 
 You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
-This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) oder or you can use Jekyll to convert Markdown files to static content.
+This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) or you can use Jekyll to convert Markdown files to static content.
 We have no need for Jekyll to enrich an Angular app.
 static content is all we need.
 
@@ -102,7 +102,7 @@ The **pro plan** gives you:
 * unlimited collaborators
 * 3000 total action minutes/month 
 
-Back in 2016, GitHub migrated from a pricing based on the number of repositories to a new shema that considers the number of users. **Legacy plans** do not have access to GitHub Actions.
+Back in 2016, GitHub migrated from a pricing based on the number of repositories to a new schema that considers the number of users. **Legacy plans** do not have access to GitHub Actions.
 
 This article will distinguish several times between private and public repos.
 The reason behind this is due to the following point, which we must take into account:
@@ -127,7 +127,7 @@ Please register an account on github.com, if you haven't already done so.
 
 We assume that the majority of our readers have already worked with Angular. But in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
 
-1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.co) with the [Angular-Schule: Extension Pack](https://marketplace.visualstudio.com/items?itemName=angular-schule.angular-schule-extension-pack). Later on we also need [Git](https://git-scm.com/) for the deployment.
+1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.com) with the [Angular-Schule: Extension Pack](https://marketplace.visualstudio.com/items?itemName=angular-schule.angular-schule-extension-pack). Later on we also need [Git](https://git-scm.com/) for the deployment.
 
 2. Install the latest version of the Angular CLI  globally and create a new Angular project.
 
@@ -206,7 +206,7 @@ We assume that the majority of our readers have already worked with Angular. But
     </p>
     ```
 
-    This example loads data from a remote API. Our hope is that later we will be able to findboth the regular text and as well the loaded book in the index of our preferred searchengine. We have also added Bootstrap to make the result look like this:
+    This example loads data from a remote API. Our hope is that later we will be able to find both the regular text and as well the loaded book in the index of our preferred search engine. We have also added Bootstrap to make the result look like this:
 
     ![Screenshot of the Demo page](screenshot_2_demo.png)
 
@@ -264,8 +264,8 @@ This is very easy because the Angular CLI has already created a local Git reposi
    
 ## 4. A first deployment to GitHub Pages
 
-We are now ready to host our first app on Pages.
-For this, the project must be compiled first and the compiled asseds should be pushed to a new branch.
+We are now ready to host our first app on GitHub Pages.
+For this, the project must be compiled first and the compiled assets should be pushed to a new branch.
 That functionality is provided by `angular-cli-ghpages`.
 GitHub will activate the hosting automatically, if this branch has the name `gh-pages` – which is the default setting for `angular-cli-ghpages`.
 
@@ -306,12 +306,15 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     This is of course adjustable.
     Therefore, we will try the deployment a second time:
 
-   ```sh
-   ng deploy --base-href=/<repositoryname>/
+    ```sh
+    ng deploy --base-href=/<repositoryname>/
 
-   # so in our case it must be
-   ng deploy --base-href=/everything-github-demo/
-   ```
+    # so in our case it must be
+    ng deploy --base-href=/everything-github-demo/
+    ```
+
+    **Hint:** Please make sure that you are really adding the trailing the slash.
+    If you forget it, it won't work!
 
 5. And now you should see our app running on Github Pages!
     You can make sure that everything went well when you go into the **Settings** of the repo.
@@ -340,7 +343,7 @@ As with all CI/CD systems, we have to think about how to grant the necessary wri
 
 
 The easiest way to grant access to the repository is to implement this with tokens.
-Tokens can be used instead of a password for Git over HTTPS (*this is want we want to do*),
+Tokens can be used instead of a password for Git over HTTPS (*this is what we want to do*),
 or can be used to authenticate to the Github API (*angular-cli-ghpages is right now not using the Github API at all*).
 
 > **⚠️ Warning:** Treat tokens like passwords and keep them secret. Always use tokens as environment variables instead of hardcoding them into your code!
@@ -350,7 +353,7 @@ At Github there are several types of tokens, which we have to carefully distingu
 The following two are relevant for us:
 
 * **`GH_TOKEN` / Personal access token** – As the name suggests, personal access tokens grant rights that a particular user has.
-    In order to prevent the release of too many rights, the range of features can be limited with so-called scopes.
+    In order to prevent the release of too many rights, the range of features can be limited with so-called "scopes".
     Furthermore, scopes can not grant any additional permission beyond that which the user already has.
     Read more about the [available scopes here](https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/#available-scopes).
     We will need the `repo` access scope, which grants **access to all** private and public repositories.
@@ -529,9 +532,9 @@ Next time when you push your changes to Github, Github Actions will run the work
 
 The following example is additional,
 because we have promised for this article that you do not have to pay a cent.
-But the the usage of a private repos with Github Actions and Github Pages is only possible from the pro plan and higher.
-But the big advantage is that we do not have to set up a token in a tiresome way.
-The `GITHUB_TOKEN` token is already there and we do not have to do at all.
+As already said, the usage of a private repos with Github Actions and Github Pages is only possible from the pro plan and higher.
+However, the big advantage is that we do not have to spend some time and effort to set up a token.
+The `GITHUB_TOKEN` is already there and we do not need to bother with it at all.
 
 Behind the scenes, Github reuses an existing feature, that is known as GitHub apps.
 In contrast to programms that authenticate with a "personal access token",
@@ -591,8 +594,8 @@ GitHub Pages supports custom domains, by placing a specific file in the root dir
 Setting up a subdomain isn't very hard and if you already own a main domain, then you don't need to make a new investment.
 In our example our app should be accessible under the domain `everything-github-demo.angular.schule`.
 
-1. First we have to change the DNS for the domain by setting up a so-called CNAME record.
-    That CNAME record should point to a domain that looks like this: `<username>.github.io`
+1. First we have to change the DNS for the domain by setting up a so-called `CNAME` record.
+    That `CNAME` record should point to a domain that looks like this: `<username>.github.io`
 
     The `<username>` (or organisation name) is in our case `angular-schule`.
     As an example, the following screenshot shows the required setting for the DNS provider cloudflare.com:
@@ -698,7 +701,11 @@ Thanks to **[Dharmen Shah](https://twitter.com/shhdharmen)** for contributing to
 
 Only with the help from Dharmen and Edric it was possible for me to finally achieve full support for GitHub Actions in [v0.6.2 of angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/releases/tag/v0.6.2).
 
+---
 
+**Additional remarks:**
+
+Many thanks to [Danny Koppenhagen](https://twitter.com/d_koppenhagen/), for proofreading this article.
 
 <!--
 <small>**Header image:** Photo by [SpaceX](https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/launch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>
