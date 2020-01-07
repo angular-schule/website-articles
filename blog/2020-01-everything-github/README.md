@@ -75,8 +75,8 @@ In contrast to former CI/CD monsters it is common with all mentioned providers t
 
 You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
 This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) or you can use Jekyll to convert Markdown files to static content.
-We have no need for Jekyll to enrich an Angular app.
-static content is all we need.
+Since we work with Angular, we do not need the static site generator Jekyll.
+A good companion is the static site generator [Scully](https://github.com/scullyio/scully), which we will definitely cover in an upcoming article. 
 
 ### 1.4. angular-cli-ghpages
 
