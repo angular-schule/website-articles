@@ -33,13 +33,19 @@ Table of contents:
   - [1.2. Github Actions](#12-github-actions)
   - [1.3. Github Pages](#13-github-pages)
   - [1.4. angular-cli-ghpages](#14-angular-cli-ghpages)
+  - [1.5. GitHub plans](#15-github-plans)
 - [2. A simple Angular app](#2-a-simple-angular-app)
 - [3. Hosting the source code on Github](#3-hosting-the-source-code-on-github)
 - [4. A first deployment to GitHub Pages](#4-a-first-deployment-to-github-pages)
 - [5. Automating the Deployment with GitHub Actions](#5-automating-the-deployment-with-github-actions)
-  - [5.1 About a token](#51-about-a-token)
-  - [5.2 Setup a GH_TOKEN token](#52-setup-a-ghtoken-token)
-  - [5.3 Setup the Github Action Flow](#53-setup-the-github-action-flow)
+  - [5.1 About all tokens](#51-about-all-tokens)
+  - [5.2 Automate a public repo (via GH_TOKEN)](#52-automate-a-public-repo-via-ghtoken)
+    - [5.2.1 Setup a Personal Access Token](#521-setup-a-personal-access-token)
+    - [5.2.2 Setup the Github Action Workflow](#522-setup-the-github-action-workflow)
+  - [5.3 Automate a private repo (via GITHUB_TOKEN)](#53-automate-a-private-repo-via-githubtoken)
+- [6. Extra: Custom Domains](#6-extra-custom-domains)
+  - [6.1 Configuring a subdomain](#61-configuring-a-subdomain)
+  - [6.2 Configuring an apex domain](#62-configuring-an-apex-domain)
 - [Summary](#summary)
 
 ## Introduction
@@ -330,7 +336,7 @@ So there is no need to register anymore, we can start right now! 🚀
 
 As with all CI/CD systems, we have to think about how to grant the necessary write permissions to our repo.
 
-### 5.1 About a token
+### 5.1 About all tokens
 
 
 The easiest way to grant access to the repository is to implement this with tokens.
@@ -421,7 +427,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     It is perfectly fine not to store the token anywhere else.
     You can always create new tokens and just throw the old ones away.
 
-### 5.2.2 Setup the Github Action Workflow
+#### 5.2.2 Setup the Github Action Workflow
 
 Now we have everything ready.
 We can create an automated workflow that will do the work for us in the future.
@@ -519,7 +525,7 @@ GitHub Actions usage is free for public repositories.
 Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
 
 
-### 5.2 Automate a private repo (via `GITHUB_TOKEN`)
+### 5.3 Automate a private repo (via `GITHUB_TOKEN`)
 
 The following example is additional,
 because we have promised for this article that you do not have to pay a cent.
@@ -574,7 +580,7 @@ jobs:
 This is all it takes to deploy the latest version of the Angular App to GitHub Pages with each push.
 
 
-## 6. Extra: Custom Domain
+## 6. Extra: Custom Domains
 
 Finally, we would like to shortly describe how you use your own domain.
 GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you.
