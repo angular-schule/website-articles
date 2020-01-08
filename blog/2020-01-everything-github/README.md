@@ -2,8 +2,11 @@
 title: "Everything Github: Continues Integration, Deployment and Hosting for your Angular App"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
+bio: "Johannes is one of the two founders of the Angular.Schule and the main developer of angular-cli-ghpages. Recently he has been recognized as a Google Developer Expert (GDE)."
 author2: Dharmen Shah
 mail2: shhdharmen@gmail.com
+twitter2: shhdharmen
+bio2: "Dharmen is a Husband, Techie, Full Stack JavaScript Developer, Foodie, Hindi Pop Music from Ahmedabad in India. In his free-time he participates on the development of angular-cli-ghpages."
 published: 2020-01-09
 keywords:
   - Angular
