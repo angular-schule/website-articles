@@ -29,3 +29,4 @@ Pull requests are welcome!
 - [blog/2019-07-resolvers](blog/2019-07-resolvers/README.html)
 - [blog/2019-08-ng-deploy](blog/2019-08-ng-deploy/README.html)
 - [blog/2019-11-ngx-semantic-version](blog/2019-11-ngx-semantic-version/README.html)
+- [blog/2020-01-ngrx-data-views](blog/2020-01-ngrx-data-views/README.html)
