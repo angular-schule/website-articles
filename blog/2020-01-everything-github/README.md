@@ -87,7 +87,7 @@ A good companion is the static site generator [Scully](https://github.com/scully
 His Angular Book uses a new Github repository in every chapter (so there are quite a lot of repos 😅).
 So he developed a solution that makes it as easy as possible to bring an Angular App to Github Pages.
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
-According to Github, 7000 projects already deploing with angular-cli-ghpages.
+According to Github, 7000 projects already deploying with angular-cli-ghpages.
 
 ### 1.5. GitHub plans
 
@@ -165,6 +165,7 @@ We assume that the majority of our readers have already worked with Angular. But
       bootstrap: [AppComponent]
     })
     export class AppModule { }
+    
     ```
   
     For example, we could load a book from our backend at https://api.angular.schule.
@@ -188,6 +189,7 @@ We assume that the majority of our readers have already worked with Angular. But
           .subscribe(b => this.book = b);
       }
     }
+    
     ```
   
     ```html
@@ -330,7 +332,12 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     Please do not try to set a value.
     This will work for the first time, but the setting is not permanent, because `angular-cli-ghpages` will overwrite it again.
 
-
+6. Now, add, commit and push the changes:
+    ```sh
+    git add .
+    git commit -m "build: add angular-cli-gh-pages"
+    git push origin master
+    ```
 
 ## 5. Automating the Deployment with GitHub Actions
 
@@ -526,9 +533,8 @@ GitHub Actions usage is free for public repositories.
     ![start commit](./screenshot_5_start-commit.png)
 
 4.  **Done!** 🚀.  
-   The action will run by itself the first time.
 
-Next time when you push your changes to Github, Github Actions will run the workflow we created and it will deploy your updated app on Github Pages.
+This action will run by itself the first time and each time when you push your changes to Github.
 
 
 ### 5.3 Automate a private repo (via `GITHUB_TOKEN`)
@@ -712,4 +718,3 @@ Many thanks to [Danny Koppenhagen](https://twitter.com/d_koppenhagen/), for proo
 <!--
 <small>**Header image:** Photo by [SpaceX](https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/launch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>
 -->
-
