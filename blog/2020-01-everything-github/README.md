@@ -296,7 +296,7 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
 3. The app should be available at `https://<username>.github.io/<repositoryname>/` soon.
    If it is not immediately available, you should first wait a moment.
 
-4. If we now check the results (in our case at https://angular-schule.github.io/everything-github-demo/) we will see a blank page! 😲
+4. If we now check the results (in our case at [https://angular-schule.github.io/everything-github-demo/](https://angular-schule.github.io/everything-github-demo/)) we will see a blank page! 😲
     But no problem, we open the Console panel of the Chrome DevTools by pressing `Control+Shift+I` (Windows, Linux) or `Command+Option+I` (Mac).
     We immediately see some red 404 errors for all files:
 
@@ -589,8 +589,7 @@ This is all it takes to deploy the latest version of the Angular App to GitHub P
 ## 6. Extra: Custom Domains
 
 Finally, we would like to shortly describe how you use your own domain.
-GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you.
-<!-- GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages). -->
+GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you. GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
 
 ### 6.1 Configuring a subdomain
 
@@ -601,7 +600,7 @@ In our example our app should be accessible under the domain `everything-github-
     That `CNAME` record should point to a domain that looks like this: `<username>.github.io`
 
     The `<username>` (or organisation name) is in our case `angular-schule`.
-    As an example, the following screenshot shows the required setting for the DNS provider cloudflare.com:
+    As an example, the following screenshot shows the required setting for the DNS provider [cloudflare.com](https://cloudflare.com):
       
     ![Screenshot Cloudflare](./screenshot_6_cname-cloudflare.png)
 
@@ -661,7 +660,7 @@ We need to use the same `--cname` parameter as described before, but we have to 
     * To create an `ALIAS` record, point your apex domain to a domain that looks like this: `<username>.github.io`
 
       The `<username>` (or organisation name) is in our case `angular-schule`.
-      As an example, the following screenshot shows the required setting for the DNS provider cloudflare.com:
+      As an example, the following screenshot shows the required setting for the DNS provider [cloudflare.com](https://cloudflare.com):
 
       ![Screenshot CNAME flatteing 1](./screenshot_6_cname-flattening-cloudflare1.png)
 
