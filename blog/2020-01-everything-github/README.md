@@ -18,7 +18,7 @@ keywords:
   - Github
   - Github Actions
 language: en
-thumbnail: spacex-unsplash.jpg
+thumbnail: everything-github.png
 hidden: true
 ---
 
@@ -716,5 +716,5 @@ Only with the help from Dharmen and Edric it was possible for me to finally achi
 Many thanks to [Danny Koppenhagen](https://twitter.com/d_koppenhagen/), for proofreading this article.
 
 <!--
-<small>**Header image:** Photo by [SpaceX](https://unsplash.com/@spacex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/launch?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>
+Header picture from 123RF, file no. 79671895. no credits required
 -->
