@@ -7,7 +7,7 @@ author2: Dharmen Shah
 mail2: shhdharmen@gmail.com
 twitter2: shhdharmen
 bio2: "Dharmen is a Husband, Techie, Full Stack JavaScript Developer, Foodie, Hindi Pop Music from Ahmedabad in India. In his free-time he participates on the development of angular-cli-ghpages."
-published: 2020-01-09
+published: 2020-01-13
 keywords:
   - Angular
   - Angular CLI
@@ -30,26 +30,26 @@ Best of all, for public repositories, this won't cost you a single cent!**
 
 Table of contents:
 
-- [Introduction](#introduction)
-- [1. All parts explained](#1-all-parts-explained)
-  - [1.1. Git and GitHub Version Control](#11-git-and-github-version-control)
-  - [1.2. GitHub Actions](#12-github-actions)
-  - [1.3. GitHub Pages](#13-github-pages)
-  - [1.4. angular-cli-ghpages](#14-angular-cli-ghpages)
-  - [1.5. GitHub plans](#15-github-plans)
-- [2. A simple Angular app](#2-a-simple-angular-app)
-- [3. Hosting the source code on GitHub](#3-hosting-the-source-code-on-github)
-- [4. A first deployment to GitHub Pages](#4-a-first-deployment-to-github-pages)
-- [5. Automating the Deployment with GitHub Actions](#5-automating-the-deployment-with-github-actions)
-  - [5.1 About all tokens](#51-about-all-tokens)
-  - [5.2 Automate a public repo (via GH_TOKEN)](#52-automate-a-public-repo-via-ghtoken)
-    - [5.2.1 Setup a Personal Access Token](#521-setup-a-personal-access-token)
-    - [5.2.2 Setup the GitHub Action Workflow](#522-setup-the-github-action-workflow)
-  - [5.3 Automate a private repo (via GITHUB_TOKEN)](#53-automate-a-private-repo-via-githubtoken)
-- [6. Extra: Custom Domains](#6-extra-custom-domains)
-  - [6.1 Configuring a subdomain](#61-configuring-a-subdomain)
-  - [6.2 Configuring an apex domain](#62-configuring-an-apex-domain)
-- [Summary](#summary)
+- [Introduction](/blog/2020-01-everything-github#introduction)
+- [1. All parts explained](/blog/2020-01-everything-github#1-all-parts-explained)
+  - [1.1. Git and GitHub Version Control](/blog/2020-01-everything-github#11-git-and-github-version-control)
+  - [1.2. GitHub Actions](/blog/2020-01-everything-github#12-github-actions)
+  - [1.3. GitHub Pages](/blog/2020-01-everything-github#13-github-pages)
+  - [1.4. angular-cli-ghpages](/blog/2020-01-everything-github#14-angular-cli-ghpages)
+  - [1.5. GitHub plans](/blog/2020-01-everything-github#15-github-plans)
+- [2. A simple Angular app](/blog/2020-01-everything-github#2-a-simple-angular-app)
+- [3. Hosting the source code on GitHub](/blog/2020-01-everything-github#3-hosting-the-source-code-on-github)
+- [4. A first deployment to GitHub Pages](/blog/2020-01-everything-github#4-a-first-deployment-to-github-pages)
+- [5. Automating the Deployment with GitHub Actions](/blog/2020-01-everything-github#5-automating-the-deployment-with-github-actions)
+  - [5.1 About all tokens](/blog/2020-01-everything-github#51-about-all-tokens)
+  - [5.2 Automate a public repo (via GH_TOKEN)](/blog/2020-01-everything-github#52-automate-a-public-repo-via-ghtoken)
+    - [5.2.1 Setup a Personal Access Token](/blog/2020-01-everything-github#521-setup-a-personal-access-token)
+    - [5.2.2 Setup the GitHub Action Workflow](/blog/2020-01-everything-github#522-setup-the-github-action-workflow)
+  - [5.3 Automate a private repo (via GITHUB_TOKEN)](/blog/2020-01-everything-github#53-automate-a-private-repo-via-githubtoken)
+- [6. Extra: Custom Domains](/blog/2020-01-everything-github#6-extra-custom-domains)
+  - [6.1 Configuring a subdomain](/blog/2020-01-everything-github#61-configuring-a-subdomain)
+  - [6.2 Configuring an apex domain](/blog/2020-01-everything-github#62-configuring-an-apex-domain)
+- [Summary](/blog/2020-01-everything-github#summary)
 
 ## Introduction
 
