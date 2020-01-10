@@ -55,7 +55,7 @@ Table of contents:
 
 All starts are hard, so we will try to explain all steps in detail, so that you can eventually come up with a fully deployed Angular app.
 During our journey we will get comfortable with `angular-cli-ghpages` and GitHub Actions, and see how they work together.
-We will create & setup tokens and GitHub Action YAML files, to deploy our Angular app directly to GitHub Pages, a free webhosting service from GitHub.
+We will create and setup tokens and GitHub Action YAML files, to deploy our Angular app directly to GitHub Pages, a free webhosting service from GitHub.
 
 
 ## 1. All parts explained
@@ -63,7 +63,7 @@ We will create & setup tokens and GitHub Action YAML files, to deploy our Angula
 ### 1.1. Git and GitHub Version Control
 
 Version Control allows you to keep track of your work and helps you to easily recognize the changes you have made, whether it is program code, text, images or other data.
-It is also absolutely necessary if you want to work together efficiently in a team.
+This is also absolutely necessary if you want to work together in a team efficiently.
 [Git](https://git-scm.com/) is a free software for distributed version management and is currently the most popular solution.
 The leading platform around Git is GitHub, which belongs to Microsoft since the end of 2018.
 
@@ -78,8 +78,8 @@ In contrast to former CI/CD monsters it is common with all mentioned providers t
 
 You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
 This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) or you can use Jekyll to convert Markdown files to static content.
-Since we work with Angular, we do not need the static site generator Jekyll.
-A good companion is the static site generator [Scully](https://github.com/scullyio/scully), which we will definitely cover in an upcoming article. 
+Since we work with Angular, we do not need Jekyll as a static site generator .
+A good companion for Angular is the static site generator [Scully](https://github.com/scullyio/scully), which we will definitely cover in an upcoming article. 
 
 ### 1.4. angular-cli-ghpages
 
@@ -87,17 +87,17 @@ A good companion is the static site generator [Scully](https://github.com/scully
 His Angular Book uses a new GitHub repository in every chapter (so there are quite a lot of repos 😅).
 So he developed a solution that makes it as easy as possible to bring an Angular App to GitHub Pages.
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
-According to GitHub, 7000 projects already deploying with angular-cli-ghpages.
+According to GitHub, 7000 projects already deploy their apps with angular-cli-ghpages.
 
 ### 1.5. GitHub plans
 
-The following information are based on the details from [the pricing page](https://github.com/pricing). 
+The following information is based on the details from [the pricing page](https://github.com/pricing). 
 
 The **free plan** gives you:
 * unlimited public repositories
 * unlimited private repositories
 * only 3 collaborators for private repositories
-* 2000 total action minutes/month
+* 2000 total GitHub action minutes/month
 
 The **pro plan** gives you:
 
@@ -128,7 +128,7 @@ Please register an account on github.com, if you haven't already done so.
 
 ## 2. A simple Angular app
 
-We assume that the majority of our readers have already worked with Angular. But in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
+We assume that the majority of our readers have already worked with Angular. However, in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
 
 1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.com) with the [Angular-Schule: Extension Pack](https://marketplace.visualstudio.com/items?itemName=angular-schule.angular-schule-extension-pack). Later on we also need [Git](https://git-scm.com/) for the deployment.
 
@@ -140,14 +140,14 @@ We assume that the majority of our readers have already worked with Angular. But
     ```
 
 3. Now we want to make some small changes to the source code.
-    With the command `code .` we open the current directory in the editor.
+    With the command `code .` we open the current directory in the *Visual Studio Code* editor. Of course you can also open the folder through the menus of VS Code.
 
     ```sh
     cd everything-github-demo
     code .
     ```
 
-4. We are changing the content of the `AppModule` and `AppComponent` a bit to prove that the Google search engine can correctly crawl our website – even with remotely loaded data.
+4. We change the content of the `AppModule` and `AppComponent` a bit and call a HTTP API. By this, we want to prove that the Google search engine can correctly crawl our website – even with data loaded from remote.
 
     ```ts
     // src/app/app.module.ts (excerpt)
@@ -199,7 +199,7 @@ We assume that the majority of our readers have already worked with Angular. But
     <h4>deployed with ❤️ and angular-cli-ghpages</h4>
   
     <p>
-    This is some dynamically loaded content that we hope to find in the Google index later on:
+      This is some dynamically loaded content that we hope to find in the Google index later on:
     </p>
   
     <hr>
@@ -211,7 +211,7 @@ We assume that the majority of our readers have already worked with Angular. But
     </p>
     ```
 
-    This example loads data from a remote API. Our hope is that later we will be able to find both the regular text and as well the loaded book in the index of our preferred search engine. We have also added Bootstrap to make the result look like this:
+    This example loads data from a remote API. Our hope is that later we will be able to find both the regular text as well as the loaded book in the index of our preferred search engine. We have also added [Bootstrap CSS](https://getbootstrap.com) to make the result look like this:
 
     ![Screenshot of the Demo page](screenshot_2_demo.png)
 
@@ -222,14 +222,14 @@ We assume that the majority of our readers have already worked with Angular. But
 Now we take care of version management.
 This is very easy because the Angular CLI has already created a local Git repository for us. 
 
-1. First things first. Let's save the latest changes.
+1. First things first: Let's save the latest changes.
    
   ```sh
   git add .
   git commit -m "chore: demo content"
   ```
 
-2. In the upper-right corner of any GitHub page, use the ➕ drop-down menu, and select **New repository**.
+2. Let's crete a GitHub repository. In the upper-right corner of any GitHub page, use the ➕ drop-down menu, and select **New repository**.
 
     ![Screenshot](screenshot_3_repo-create.png)
 
@@ -248,11 +248,11 @@ This is very easy because the Angular CLI has already created a local Git reposi
 
 6. After you have pressed "Create Repository" a confirmation page will appear.
     You can now connect to GitHub using SSH or HTTPS.
-    Both ways will work, but GitHub recommends [HTTPS](https://help.github.com/en/github/using-git/which-remote-url-should-i-use).
+    Both ways will work, but [GitHub recommends HTTPS](https://help.github.com/en/github/using-git/which-remote-url-should-i-use).
     If you are completely lost in authenticating against GitHub, try cloning another repository with [GitHub Desktop](https://desktop.github.com/) first.
-    For the remaining article we assume that the communication has been successful established.
+    For the remaining article we assume that the communication has been successfully established.
 
-    To add a new remote for GitHub, use the `git remote add` command:
+    To add GitHub as a new remote for our local repository, use the `git remote add` command:
 
     ```sh
     git remote add origin https://github.com/<username>/<repositoryname>.git
@@ -290,10 +290,10 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     The deployment will create a temporary git repository and will commit/push all files 
     from `dist/everything-github-demo` to a branch with the name `gh-pages`.
     
-    But in this example we haven't provided a target repository.
+    However, in this example we haven't provided a target repository.
     In this case the deployment assumes that the current working directory is already a Git repository,
     and that we want to push changes to the same repository with the name `origin`.
-    We have prepared this before with the command `git remote add`.  
+    We have prepared this before with the command `git remote add`, so there is nothing to do here for us.  
 
 3. The app should be available at `https://<username>.github.io/<repositoryname>/` soon.
    If it is not immediately available, you should first wait a moment.
@@ -304,12 +304,11 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
 
     > Failed to load resource: the server responded with a status of 404 ()
 
-    Well, the reason for that is simple:
-    The application is configured as if it is running on the root path of the domain.
-    But this is not the case here!
+    The reason for this:
+    The application is configured as if it is running in the root path of the domain.
+    However, this is not the case here!
     Our application is located in the `/<repositoryname>/` path, so all links are broken.
-    This is of course adjustable.
-    Therefore, we will try the deployment a second time:
+    Of course, this is adjustable – let's try the deployment a second time with the `--base-href` option:
 
     ```sh
     ng deploy --base-href=/<repositoryname>/
@@ -318,21 +317,20 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
     ng deploy --base-href=/everything-github-demo/
     ```
 
-    **Hint:** Please make sure that you are really adding the trailing the slash.
-    If you forget it, it won't work!
+    **Hint:** Please make sure to really add the trailing slash. It won't work without!
 
-5. And now you should see our app running on GitHub Pages!
-    You can make sure that everything went well when you go into the **Settings** of the repo.
-    Scroll down there to the GitHub Pages section.
+5. Now you should see our app running on GitHub Pages!
+    You can make sure that everything went well by going into the **Settings** of the repo.
+    Scroll down there to the *GitHub Pages* section.
     The following should appear here:
 
     ![Screenshot](screenshot_4_settings.png)
 
     **Hint:** You can also see the setting for a custom domain here.
     Please do not try to set a value.
-    This will work for the first time, but the setting is not permanent, because `angular-cli-ghpages` will overwrite it again.
+    This will work at first, but the setting is not permanent, because `angular-cli-ghpages` will overwrite it again.
 
-6. Now, add, commit and push the changes:
+6. Now add, commit and push the changes:
     ```sh
     git add .
     git commit -m "build: add angular-cli-gh-pages"
@@ -341,10 +339,9 @@ GitHub will activate the hosting automatically, if this branch has the name `gh-
 
 ## 5. Automating the Deployment with GitHub Actions
 
-But we don't want to stop here and trigger the deployment manually all the time.
-We want to make changes to the app and the deployment should be handled automatically for us.
-For this we want to use GitHub Actions.
-GitHub Actions is now available for all repositories.
+We don't want to stop here and trigger the deployment manually all the time.
+An ideally workflow would be to make changes to the app and the deployment will then be handled automatically for us.
+For this we want to use GitHub Actions which is now available for all repositories.
 So there is no need to register anymore, we can start right now! 🚀
 
 As with all CI/CD systems, we have to think about how to grant the necessary write permissions to our repo.
@@ -354,41 +351,41 @@ As with all CI/CD systems, we have to think about how to grant the necessary wri
 
 The easiest way to grant access to the repository is to implement this with tokens.
 Tokens can be used instead of a password for Git over HTTPS (*this is what we want to do*),
-or can be used to authenticate to the GitHub API (*angular-cli-ghpages is right now not using the GitHub API at all*).
+or can be used to authenticate to the GitHub API (*angular-cli-ghpages right now does not use the GitHub API at all*).
 
 > **⚠️ Warning:** Treat tokens like passwords and keep them secret. Always use tokens as environment variables instead of hardcoding them into your code!
 
 
-At GitHub there are several types of tokens, which we have to carefully distinguish.
+At GitHub there are several types of tokens, which we have to distinguish carefully.
 The following two are relevant for us:
 
-* **`GH_TOKEN` / Personal access token** – As the name suggests, personal access tokens grant rights that a particular user has.
+* **`GH_TOKEN` / Personal access token:** As the name suggests, personal access tokens grant rights that a particular user has.
     In order to prevent the release of too many rights, the range of features can be limited with so-called "scopes".
-    Furthermore, scopes can not grant any additional permission beyond that which the user already has.
+    Furthermore, scopes can not grant any additional permission beyond those the user already has.
     Read more about the [available scopes here](https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/#available-scopes).
     We will need the `repo` access scope, which grants **access to all** private and public repositories.
     The use of such a token is dangerous, because it's always possible that potentially someone with bad intentions could gain access to the token. In this case, the evil person would gain more rights than we should actually release  – because for the deployment we only need write access to one repo and not all of them.
     In many projects this token is stored in an environment variable called `GH_TOKEN` or sometimess `PERSONAL_TOKEN`.
 
-* **`GITHUB_TOKEN` / Installation access token** – GitHub provides this kind of token to authenticate on behalf of GitHub Actions.
+* **`GITHUB_TOKEN` / Installation access token:** GitHub provides this kind of token to authenticate on behalf of GitHub Actions.
   When you enable GitHub Actions, GitHub automatically installs a GitHub App on your repository,
   and makes this "installation access token" available as a secret. 
   This is great because there is no need to set up anything extra.
   Furthermore, the token's permissions are **limited to the repository** that contains the workflow.
   The installation access token expires after 60 minutes.
   GitHub fetches a token for each job, before the job begins.
-  This is pretty awesome, because the possibilities are very limited, which a malicious person could take advantage of. For more information, see "[Authenticating with the GITHUB_TOKEN](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token)".
+  This is pretty awesome, because there are very limited possibilities of what a malicious person could take advantage of. For more information, see "[Authenticating with the GITHUB_TOKEN](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token)".
 
-* **Git via SSH** – As already mentioned, GitHub recommends [HTTPS](https://help.github.com/en/github/using-git/which-remote-url-should-i-use).
+* **Git via SSH:** As already mentioned, GitHub recommends [HTTPS](https://help.github.com/en/github/using-git/which-remote-url-should-i-use).
     Of course, we could ignore this advice and save a private key as a secret and use this to authenticate via SSH.
-    But this key would still be bound to one user and would grant write access to all repositories of the user, too.
+    However, this key would still be bound to one user and would grant write access to all repositories of the user, too.
     We do not recommend this option at all, because it's really not very common to maintain public keys on GitHub like one does this with tokens that were at least designed for the purpose of rights management... 
 
-In a perfect world the GITHUB_TOKEN would do all the work for us.
-But for **public** repositories it doesn't have authorization to create any successive events,
+In a perfect world the `GITHUB_TOKEN` would do all the work for us.
+However, for **public** repositories it doesn't have authorization to create any successive events,
 such as GitHub Pages builds.
 This means, we can actually push to our `gh-pages` branch using the `GITHUB_TOKEN` and all the changes would be visible in version control.
-But this would NOT spawn a GitHub Pages build so that the website would not change at all ([see issue #73](https://github.com/angular-schule/angular-cli-ghpages/issues/73#issuecomment-527405699) and [this comment](https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/m-p/27454/highlight/true#M302)).
+But this would NOT trigger a GitHub Pages build so that the website would not change at all ([see issue #73](https://github.com/angular-schule/angular-cli-ghpages/issues/73#issuecomment-527405699) and [this comment](https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/m-p/27454/highlight/true#M302)).
 To further confuse the situation, however, for **private repositories** the token works as desired...
 
 **TL;DR**  
@@ -403,9 +400,9 @@ This table gives you an overview:
 If you are using a private repository, the decision should be clear. 
 For free / public repositories you can use the personal access token and ideally consider the following tip.
 
-> **Extra tip:** If you want to use **public repos** and therefore personal access tokens (known as `GH_TOKEN` or `PERSONAL_TOKEN`), we recommend that you create an additional user account that is only dedicated to be used for deployments.
+> **Extra tip:** If you want to use **public repos** and therefore use personal access tokens (known as `GH_TOKEN` or `PERSONAL_TOKEN`), we recommend to create an additional user account that is only dedicated to be used for deployments.
 > 
->  Then you should give that account only access to the repositories where there is something to deploy.
+>  Then this account should only get access to the repositories where there is something to deploy.
 > This increases security again and we have a sufficiently good solution for public repositories.
 
 
@@ -414,15 +411,15 @@ For free / public repositories you can use the personal access token and ideally
 #### 5.2.1 Setup a Personal Access Token 
  
 If we are using a public repository (as described in the previous instructions),
-then we want to use a personal access token. The procedure is as following.
+then we want to use a personal access token. The procedure is as following:
 
 1. Create a [Personal Access Token **with repo access**](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and make sure to copy your new token to the clipboard.
-   You won’t be able to see it again! 
-If you want to remember the token later on, save it in a secure place only (i.e. a password manager).
-    Please make sure that it has this access:
+   You won’t be able to see it again later! 
+If you want to remember the token later, save it in a secure place only (e.g. a password manager).
+    Please make sure that the token has the following permissions:
    ![repo access](./screenshot_5_repo-access.png)
 
-2. Open up your Angular app's GitHub repo.
+2. Open your Angular app's GitHub repo.
 
 3. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
@@ -431,7 +428,7 @@ If you want to remember the token later on, save it in a secure place only (i.e.
     Secrets are encrypted environment variables and only exposed to selected GitHub Actions.
     GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
 
-4. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) in value.
+4. Create a secret with name `GH_TOKEN` and paste your token (which you copied in step 1) into the *value* field.
     If you prefer, you can also choose the name `PERSONAL_TOKEN` for all further steps.
     Finish this chapter by clicking the green **Add secret** button. 
 
@@ -442,15 +439,14 @@ If you want to remember the token later on, save it in a secure place only (i.e.
 
 #### 5.2.2 Setup the GitHub Action Workflow
 
-Now we have everything ready.
-We can create an automated workflow that will do the work for us in the future.
-GitHub Actions usage is free for public repositories.
+Now we have everything ready to create an automated workflow that will do the work for us in the future.
+GitHub Actions usage is free for public repositories, as mentioned before.
 
 1. Again in our repo, we go to **Actions** and click on **Set up workflow yourself**.
 
     ![setup workflow](./screenshot_5_setup-workflow.png)
 
-2. A editor will open, keep the file name (e.g. `main.yml`) as it is, simply replace the entire content with the following example:
+2. An editor will open. Keep the file name (e.g. `main.yml`) as it is and simply replace the entire content with the following example:
 
     ```yml
     name: Deploy to GitHub Pages via angular-cli-ghpages
@@ -485,15 +481,15 @@ GitHub Actions usage is free for public repositories.
             ####
             npm run ng -- deploy --base-href=/everything-github-demo/ --name="Displayed Username" --email=your.mail@example.org
     ```
-3. Fortunately, the step `actions/checkout@v2` checks-out a nice git repository, where the remote `origin` is already adjusted.
-    But username and email are not set.
+3. Fortunately, the step `actions/checkout@v2` checks-out a nice Git repository, where the remote `origin` is already adjusted.
+    However, username and email are not set.
     Therefore, we have to include these two values via parameters.
     Make sure to replace **"Displayed Username"** (e.g. "I am a bot") and **your.mail@example.org** with meaningful values in the above example.
     At this place you do not have to specify any real name and mail.
-    But you don't want to overdo it, because the provided values later will be shown in the git history.
+    However, you don't want to overdo it, because the provided values will be shown in the Git history later.
 
 4. If you want GitHub Actions to perform unit tests and end-to-end tests, you will need to make some small additional configurations in your Angular app.
-    The necessary changes are described in the [Angular CLI wiki](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#continuous-integration).
+    The necessary changes are described in the [Angular CLI Documentation](https://angular.io/guide/testing#set-up-continuous-integration).
     To be precise:
 
     1. You need to [update the test configurations for Karma and Protractor](https://github.com/angular/angular-cli/wiki/stories-continuous-integration#update-test-configuration)
@@ -516,9 +512,9 @@ GitHub Actions usage is free for public repositories.
         ```
       
         Here we see the very common convention of grouping branches with a slash (e.g. `relase/42`).
-        Many git clients will display those groups like folders.
+        Many Git clients will display those groups like folders.
 
-     - As another example, we can run the script every day of the week from Monday - Friday at 02:00:
+     - As another example, we can setup a cronjob to run the script every day of the week from Monday – Friday at 02:00 AM:
 
         ```yml
         on:
@@ -528,7 +524,7 @@ GitHub Actions usage is free for public repositories.
 
    - For more information see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows) and [Workflow syntax for GitHub Actions](https://help.github.com/articles/workflow-syntax-for-github-actions#on).
 
-6. Then, click on **Start commit**, add message and description if you like and click on **Commit new file**.
+6. Click on **Start commit**, add message and description if you like and click on **Commit new file**. This will add the config file to the repo.
 
     ![start commit](./screenshot_5_start-commit.png)
 
@@ -542,14 +538,14 @@ This action will run by itself the first time and each time when you push your c
 The following example is additional,
 because we have promised for this article that you do not have to pay a cent.
 As already said, the usage of a private repos with GitHub Actions and GitHub Pages is only possible from the pro plan and higher.
-However, the big advantage is that we do not have to spend some time and effort to set up a token.
+However, the big advantage is that we do not have to spend any time and effort to set up a token.
 The `GITHUB_TOKEN` is already there and we do not need to bother with it at all.
 
-Behind the scenes, GitHub reuses an existing feature, that is known as GitHub apps.
+Behind the scenes, GitHub reuses an existing feature known as GitHub apps.
 In contrast to programs that authenticate with a "personal access token",
-apps do not run on behalf of a specific user - which is great.
-To make this happen, GitHub automatically installs a GitHub App on the repository and makes a corresponding "installation access token" with the name `GITHUB_TOKEN` available as a secret. 
-GitHub fetches a new token for each job, before the job begins.
+apps do not run on behalf of a specific user – which is great.
+To make this happen, GitHub automatically installs a GitHub App on the repository and creates a corresponding "installation access token" with the name `GITHUB_TOKEN` available as a secret. 
+GitHub fetches a new token for each job before the job begins.
 Awesome!
 
 > **ℹ️ Note**
@@ -559,7 +555,6 @@ Awesome!
 If you have not already done so, please read the text on general workflow usage.
 The workflow looks very similar, but now we must use the other token.
 Here is a shorter example, without the tests:
-following example:
 
 ```yml
 name: Deploy to GitHub Pages via angular-cli-ghpages
@@ -587,23 +582,23 @@ jobs:
         npm run ng -- deploy --base-href=/everything-github-demo/ --name="<Your Git Username>" --email=your.mail@example.org
 ```
 
-**Et voila!!** 🚀
+**Et voila!** 🚀
 
 This is all it takes to deploy the latest version of the Angular App to GitHub Pages with each push.
 
 
 ## 6. Extra: Custom Domains
 
-Finally, we would like to shortly describe how you use your own domain.
-GitHub Pages supports custom domains, by placing a specific file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you. GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
+Finally, we would like to shortly describe how you can use your own domain.
+GitHub Pages supports custom domains by placing a specific `CNAME` file in the root directory of the `gh-pages` branch – and `angular-cli-ghpages` will create that file for you automatically. GitHub also provides [detailed instructions for this](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
 
 ### 6.1 Configuring a subdomain
 
-Setting up a subdomain isn't very hard and if you already own a main domain, then you don't need to make a new investment.
-In our example our app should be accessible under the domain `everything-github-demo.angular.schule`.
+Setting up a subdomain isn't very hard and if you already own a main domain you don't need to make any new investment.
+In our example the app should be accessible through the domain `everything-github-demo.angular.schule`.
 
 1. First we have to change the DNS for the domain by setting up a so-called `CNAME` record.
-    That `CNAME` record should point to a domain that looks like this: `<username>.github.io`
+    That `CNAME` record must point to a domain that looks like this: `<username>.github.io`
 
     The `<username>` (or organisation name) is in our case `angular-schule`.
     As an example, the following screenshot shows the required setting for the DNS provider [cloudflare.com](https://cloudflare.com):
@@ -643,13 +638,13 @@ In our example our app should be accessible under the domain `everything-github-
 
     **Hint:** You should not change the custom domain through GitHub's web interface.
     The next time you deploy the app, this setting will be overwritten.
-    Always use the `--cname' parameter for this.
+    Always use the `--cname` parameter for this.
 
     > **💡 Just for your Information**
     > 
     >If you inspect the certificate, you will see that we actually have not used a certificate from LetsEncrypt.
     Instead, we decided for the proxy mode of Cloudflare and used the free certificate provided by them.
-    The proxy optimizes our website over Cloudflare's Content Delivery Network (CDN) and provides a lot of additional features - but that's another story.
+    The proxy optimizes our website over Cloudflare's Content Delivery Network (CDN) and provides a lot of additional features – but that's another story.
 
    
 ### 6.2 Configuring an apex domain
@@ -687,7 +682,7 @@ We need to use the same `--cname` parameter as described before, but we have to 
 <!-- ## Summary / What's next? -->
 ## Summary
 
-We hope you had fun with this tutorial and that your **Angular App** now builds automatically via **GitHub Actions** and that it runs successfully on **GitHub Pages**. If you have any questions, please contact us via twitter. We are also very happy to receive your suggestion for improvement as a PR.
+We hope you had fun with this tutorial and that your **Angular App** now builds automatically via **GitHub Actions** – and runs successfully on **GitHub Pages**. If you have any questions, please contact us via Twitter. We are also very happy to receive your suggestion for improvement as a PR.
 
 You can check out the complete demo code here:  
 **☞ https://github.com/angular-schule/everything-github-demo/**
@@ -713,7 +708,7 @@ Only with the help from Dharmen and Edric it was possible for me to finally achi
 
 **Additional remarks:**
 
-Many thanks to [Danny Koppenhagen](https://twitter.com/d_koppenhagen/), for proofreading this article.
+Many thanks to [Ferdinand Malcher](https://twitter.com/fmalcher01/) and [Danny Koppenhagen](https://twitter.com/d_koppenhagen/) for proofreading this article.
 
 <!--
 Header picture from 123RF, file no. 79671895. no credits required
