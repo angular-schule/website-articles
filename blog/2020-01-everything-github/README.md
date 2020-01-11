@@ -74,9 +74,9 @@ The leading platform around Git is GitHub, which belongs to Microsoft since the 
 ### 1.2. GitHub Actions
 
 [GitHub Actions](https://github.com/features/actions) is a solution for CI/CD pipelines (continuous integration and continuous delivery).
-With actions we can test, build and release our code and while staying in the GitHub ecosystem.
+With actions we can test, build and release our code while staying in the GitHub ecosystem.
 GitHub has just recently launched this product to the market and is now directly competing with Travis CI, CircleCI or AppVeyor.
-In contrast to former CI/CD monsters it is common with all mentioned providers to express the individual steps in the form of a YAML file and to store this file as part of the source code in the repository.
+Similar to other state-of-the-art CI/CD tools, the individual steps are all saved to a file in YAML format.
     
 ### 1.3. GitHub Pages
 
@@ -124,11 +124,12 @@ The reason behind this is due to the following point, which we must take into ac
 | Pro and Higher    | ✅️            | ✅️      | ✅️                    | ✅️                      |
 | Legacy paid plans | ✅️            | ❌️      | ✅️                    | ?                       |
 
-
-
-
 Please register an account on github.com, if you haven't already done so.  
 **For this article, it is sufficient to use the free plan!**
+
+By the way, this sounds a bit like advertising.
+But we're not affiliated with GitHub in any way.
+We're just passionate GitHub users and recommend their service based on our experience.
 
 ## 2. A simple Angular app
 
@@ -598,7 +599,8 @@ GitHub Pages supports custom domains by placing a specific `CNAME` file in the r
 
 ### 6.1 Configuring a subdomain
 
-Setting up a subdomain isn't very hard and if you already own a main domain you don't need to make any new investment.
+Setting up a subdomain isn't very hard.
+And if you already own a domain, you do not need to make any new investments.
 In our example the app should be accessible through the domain `everything-github-demo.angular.schule`.
 
 1. First we have to change the DNS for the domain by setting up a so-called `CNAME` record.
@@ -644,12 +646,6 @@ In our example the app should be accessible through the domain `everything-githu
     The next time you deploy the app, this setting will be overwritten.
     Always use the `--cname` parameter for this.
 
-    > **💡 Just for your Information**
-    > 
-    >If you inspect the certificate, you will see that we actually have not used a certificate from LetsEncrypt.
-    Instead, we decided for the proxy mode of Cloudflare and used the free certificate provided by them.
-    The proxy optimizes our website over Cloudflare's Content Delivery Network (CDN) and provides a lot of additional features – but that's another story.
-
    
 ### 6.2 Configuring an apex domain
 
@@ -681,6 +677,7 @@ We need to use the same `--cname` parameter as described before, but we have to 
       185.199.110.153
       185.199.111.153
       ```
+     These IP addresses have been the same for years, but you should still compare them against [the list in the GitHub documentation](https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain).
 
 
 <!-- ## Summary / What's next? -->
@@ -698,21 +695,19 @@ Please checkout this [follow-up article from Danny about the static site generat
 
 <hr>
 
-## Thank you by Dharmen
+### Thank you by Dharmen
 
 Special thanks go to **[Johannes Hoppe](https://twitter.com/johanneshoppe)** for giving me an opportunity to write this article.
 
-## Thank you by Johannes Hoppe
+### Thank you by Johannes Hoppe
 
 Thanks to **[Dharmen Shah](https://twitter.com/shhdharmen)** for contributing to `angular-cli-ghpages` and for starting this article. I would also like to thank **[Edric Chan](https://edricchan03.github.io/)**, who has been very involved in both `angular-cli-ghpages` and in providing help for this article. 👍
 
 Only with the help from Dharmen and Edric it was possible for me to finally achieve full support for GitHub Actions in [v0.6.2 of angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/releases/tag/v0.6.2).
 
----
+### Thank you by both
 
-**Additional remarks:**
-
-Many thanks to [Ferdinand Malcher](https://twitter.com/fmalcher01/) and [Danny Koppenhagen](https://twitter.com/d_koppenhagen/) for proofreading this article.
+We would like to thank [Ferdinand Malcher](https://twitter.com/fmalcher01/) for reviewing the article and providing critical feedback, and [Danny Koppenhagen](https://twitter.com/d_koppenhagen/) for kindly proofreading this article.
 
 <!--
 Header picture from 123RF, file no. 79671895. no credits required
