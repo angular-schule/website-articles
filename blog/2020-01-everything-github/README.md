@@ -28,7 +28,7 @@ hidden: true
 
 **In this article we want to use several tools from the GitHub universe to launch a website with Angular.
 We will establish a professional pipeline, including version management, continuous deployment and web hosting.
-Best of all, for public repositories, this won't cost you a single cent!**
+Best of all, for public repositories, this will not cost you a single cent!**
 
 <hr>
 
