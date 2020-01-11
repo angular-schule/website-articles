@@ -6,7 +6,7 @@ bio: "Johannes is one of the two founders of the Angular.Schule and the main dev
 author2: Dharmen Shah
 mail2: shhdharmen@gmail.com
 twitter2: shhdharmen
-bio2: "Dharmen is a full stack JavaScript developer from Ahmedabad, India with core skills in JavaScript and CSS. He enjoys working with both Angular and React. Dharmen contributes to some open source projects and has also contributed to the documentation of angular-cli-ghpages documents. By the way, he is a foodie and loves listening to music, especially Hindi Pop music."
+bio2: "Dharmen is a full stack JavaScript developer from Ahmedabad, India with core skills in JavaScript and CSS. He enjoys working with both Angular and React. Dharmen contributes to some open source projects and has also contributed to the documentation of angular-cli-ghpages. By the way, he is a foodie and loves listening to music, especially Hindi Pop music."
 published: 2020-01-13
 keywords:
   - Angular
