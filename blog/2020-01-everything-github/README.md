@@ -91,7 +91,7 @@ A good companion for Angular is the static site generator [Scully](https://githu
 His Angular Book uses a new GitHub repository in every chapter (so there are quite a lot of repos 😅).
 So he developed a solution that makes it as easy as possible to bring an Angular App to GitHub Pages.
 The project exists since 2016 and if it was started today, it would certainly have a nicer name.
-According to GitHub, 7000 projects already deploy their apps with angular-cli-ghpages.
+According to GitHub, 7100 projects already deploy their apps with angular-cli-ghpages.
 
 ### 1.5. GitHub plans
 
@@ -134,7 +134,7 @@ Please register an account on github.com, if you haven't already done so.
 
 We assume that the majority of our readers have already worked with Angular. However, in order for this article to be as complete as possible, we will very shortly set up a simple website based on Angular.
 
-1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.com) with the [Angular-Schule: Extension Pack](https://marketplace.visualstudio.com/items?itemName=angular-schule.angular-schule-extension-pack). Later on we also need [Git](https://git-scm.com/) for the deployment.
+1. If you have not already done so, please install [Node.js](https://nodejs.org), [Google Chrome](https://www.google.com/chrome/) and optionally [Visual Studio Code](https://code.visualstudio.com). Later on we also need [Git](https://git-scm.com/) for the deployment.
 
 2. Install the latest version of the Angular CLI  globally and create a new Angular project.
 
