@@ -26,9 +26,7 @@ thumbnail: everything-github.png
 hidden: true
 ---
 
-**Terms like Jamstack and pre-rendering are hot topics in Angular world.
-But how and where can we then deploy our finished app at low cost?
-In this article we want to use several tools from the GitHub universe to launch a full website with Angular.
+**In this article we want to use several tools from the GitHub universe to launch a website with Angular.
 We will establish a professional pipeline, including version management, continuous deployment and web hosting.
 Best of all, for public repositories, this will not cost you a single cent!**
 
@@ -85,7 +83,7 @@ Similar to other state-of-the-art CI/CD tools, the individual steps are all save
 You can use [GitHub Pages](https://pages.github.com/) to host a website directly from a GitHub repository.
 This website can either contain completely static content (i.e. pure HTML files and assets, but no scripts running on the server) or you can use Jekyll to convert Markdown files to static content.
 Since we work with Angular, we do not need Jekyll as a static site generator .
-**A good companion for Angular is the static site generator [Scully](https://github.com/scullyio/scully), which we will definitely cover in a follow-up article.**
+A good companion for Angular is the static site generator [Scully](https://github.com/scullyio/scully), which we will definitely cover in an upcoming article. 
 
 ### 1.4. angular-cli-ghpages
 
@@ -685,14 +683,10 @@ We need to use the same `--cname` parameter as described before, but we have to 
 <!-- ## Summary / What's next? -->
 ## Summary
 
-We hope you had fun with this tutorial and that your **Angular App** now builds automatically via **GitHub Actions** – and runs successfully on **GitHub Pages**. If you have any questions, please contact us via Twitter (see below). We are also very happy to receive your suggestion for improvement as a [PR](https://github.com/angular-schule/website-articles/blob/gh-pages/blog/2020-01-everything-github/README.md).
+We hope you had fun with this tutorial and that your **Angular App** now builds automatically via **GitHub Actions** – and runs successfully on **GitHub Pages**. If you have any questions, please contact us via Twitter. We are also very happy to receive your suggestion for improvement as a PR.
 
 You can check out the complete demo code here:  
 **☞ https://github.com/angular-schule/everything-github-demo/**
-
-**⚠️ But our journey is not over yet!**
-
-We are currently working on a second part of this article, in which we will use the static page generator [Scully](https://github.com/scullyio/scully) to pre-calculate our Angular app. This gives us better performance, even higher security and easier scaling. **So please visit this blog again soon and be curious about the follow-up topic!**
 
 <!-- **⚠️ Stop!   
 Before you start browsing the web any further:  
