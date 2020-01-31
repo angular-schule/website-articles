@@ -134,8 +134,7 @@ const result$ = source$.pipe(
 
 We need to provide an empty array as seed here so that the array operation `.slice()` does not fail for an undefined value.
 
-The train window analogy is nothing you probably need in software very often.
-However, when it comes to implementing a log viewer, the example from this post can be useful.
+So what can we achieve with this pattern? There are many possible practical cases: displaying the latest logging entries, the latest stock prices or just the latest tweets about a topic like `#Angular`.
 Think of a stream of events that you want to display in realtime, but truncated: then this example is for you.
 
 
