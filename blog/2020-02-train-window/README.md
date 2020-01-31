@@ -21,6 +21,7 @@ All the things that rush by are items of a huge stream, and you subscribe to tha
 However, here's an important detail: Whenever a new object appears outside, the window moves forward and opens the view to not just the recent *one* – but to the *last few emitted items*.
 
 ![GIF of someone sitting in a train](train.gif)
+<br><small>(GIF source: giphy.com)</small>
 
 Luckily there's more behind this than my peculiar interest for watching through train windows, so let's bring this example to the world of software.
 Imagine an event stream – this could be log messages, button clicks, or whatever observable stream you like.
