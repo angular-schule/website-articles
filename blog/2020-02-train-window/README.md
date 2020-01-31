@@ -9,6 +9,7 @@ keywords:
   - Reactive Programming
   - Observable
 language: en
+thumbnail: rxjs-train.jpg
 hidden: true
 
 ---
@@ -64,8 +65,8 @@ In a way, `scan` is a bit similar to `map` here:
 The argument `item` is the emitted item from the source stream. Whatever we return from the function will be the next item in the stream that flows *out* of the operator.
 
 Of course, you should never use `scan` as an alternative to `map`!
-The key diference is that the reducer also gets the result from the last emission as an argument (also called *accumulator*, hence the argument name `acc`).
-So whenever the source fires, we get the following as arguments to the reducer:
+The key difference is that the reducer also gets the result from the last emission as an argument (also called *accumulator*, hence the argument name `acc`).
+So whenever the source fires, we get the following arguments to the reducer:
 
 - new source item (`item`)
 - the previously calculated result (`acc`)
@@ -132,6 +133,10 @@ const result$ = source$.pipe(
 
 We need to provide an empty array as seed here so that the array operation `.slice()` does not fail for an undefined value.
 
+The train window analogy is nothing you probably need in software very often.
+However, when it comes to implementing a log viewer, the example from this post can be useful.
+Think of a stream of events that you want to display in realtime, but truncated: then this example is for you.
+
 
 ## Extra: Build a custom operator
 
@@ -151,20 +156,18 @@ const result$ = source$.pipe(
 ```
 
 
+
 ## Demo
 
 You can find a working demo on Stackblitz:
 
 <iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/angular-train-window?ctl=1&embed=1&file=src/app/app.component.ts"></iframe>
 
-## Trivia
 
-By the way, I had this song stuck in my head all the time while writing this post...
+-------
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/h9rf5wFq3zk?start=29" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+Special thanks to [Jan-Niklas Wortmann](https://twitter.com/niklas_wortmann) and [Johannes Hoppe](https://twitter.com/JohannesHoppe) for review and feedback.
 
 
-## Thanks
-
-TBD
+<small>**Header image:** Photo by "Free-Photos" on <a href="https://pixabay.com/de/photos/zug-wagen-fenster-eisenbahn-569323/">Pixabay</a>, modified. The RxJS logo is under Apache License 2.0.
+</small>
