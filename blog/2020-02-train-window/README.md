@@ -24,11 +24,11 @@ However, here's an important detail: Whenever a new object appears outside, the 
 <br><small>(GIF source: giphy.com)</small>
 
 Luckily there's more behind this than my peculiar interest for watching through train windows, so let's bring this example to the world of software.
-Imagine an event stream – this could be log messages, button clicks, or whatever observable stream you like.
+Imagine an event stream – this could be log messages, button clicks, or whatever Observable stream you like.
 We want to build a UI around this that displays a chronological log of those events.
 Just like the train window delimits the number of trees we can see at a time, we only want to display a certain range of the event history – the last few.
 
-And when you look into the direction of travel, new items always appear at the front and disappear behind you. We want to adopt this analogy and display the newest element at the top of the list before it runs to the bottom and eventually disappears.
+When you look into the direction of travel, new items always appear at the front and disappear behind you. We want to adopt this analogy and display the newest element at the top of the list before it runs to the bottom and eventually disappears.
 
 ![Animated GIF of a demo application with a log history](loghistory.gif)
 
@@ -37,14 +37,17 @@ And when you look into the direction of travel, new items always appear at the f
 
 My first approach to tackling reactive problems is a quick look into the [RxJS API documentation](https://rxjs.dev/api).
 It's very likely that an operator exists for solving the problem.
-However, it's important to not let yourself be confuse by the number of operators, especially those who sound suitable at first glance.
-For a few minutes, I was obsessed with the thought that one of the `buffer` or `window` operators might be the solution – until I cleared my mind and started all over again.
+However, it's important to not let yourself confuse by the number of operators, especially those who sound suitable at first glance.
+For a few minutes, I was obsessed with the thought that one of the `buffer` or `window` operators might be the solution.
+They are not! Both `buffer` and `window` (and their relatives) collect values from the source and emit them all at once – after a time or when a signal appears.
+This sound good but is still not the right thing for us when we want to move a window forward.
 
-If there is no suitable operator for you, it's the best to think in fundamentals and begin from the bottom up using low-level operators like `map`, `filter`, `reduce` and `scan`.
+Finally, I cleared my mind and started all over again.
+If there is no suitable operator for you, it's the best to think in fundamentals and begin from the ground up using low-level operators like `map`, `filter`, `reduce` and `scan`.
 
 ## About the scan operator
 
-You probably know the [`scan` operator](https://rxjs.dev/api/operators/scan) from numerous examples that add up values, like this one:
+When you read about the [`scan` operator](https://rxjs.dev/api/operators/scan) you often stumble upon examples that add up values, like this one:
 
 ```ts
 import { scan } from 'rxjs/operators';
@@ -58,24 +61,25 @@ const result$ = source$.pipe(
 // Result: 1, 3, 6, 10, 15
 ```
 
-This operator is also the functional basis for Redux-style state management where we reduce a stream of actions to state objects.
-But let's get back to the basics and take a closer look at the `scan` operator.
+It transforms the stream of numbers to a stream of intermediate results from the addition performed as `acc + item`.
+The `scan` operator is also the functional basis for Redux-style state management where we reduce a stream of actions to state objects.
+But let's take a closer look at the `scan` operator.
 
 The first argument to `scan` is a *reducer function* with two arguments itself: `acc` and `item`.
-In a way, `scan` is a bit similar to `map` here:
-The argument `item` is the emitted item from the source stream. Whatever we return from the function will be the next item in the stream that flows *out* of the operator.
+The argument `item` is the emitted item from the source stream.
+Whatever we return from the function will be the next item in the stream that flows *out* of the operator.
+In a way, `scan` is similar to `map` here.
+The key difference however is that the reducer also gets the result from its last emission as an argument (also called *accumulator*, hence the argument name `acc`).
 
-Of course, you should never use `scan` as an alternative to `map`!
-The key difference is that the reducer also gets the result from the last emission as an argument (also called *accumulator*, hence the argument name `acc`).
 So whenever the source fires, we get the following arguments to the reducer:
 
-- new source item (`item`)
+- the new source item (`item`)
 - the previously calculated result (`acc`)
 
 On first execution, `acc` will be undefined since there is no previous calculation.
 This is why we can provide a *seed* value as the secound argument to `scan` which will be used as first value to `acc` then.
 
-The following code listing show the general structur of how we use `scan`:
+The following code listing shows the general structure of how we use `scan`:
 
 ```ts
 function reducer(acc, item) {
@@ -90,7 +94,7 @@ How does all this help us with the train window now?
 
 ## Scanning train windows
 
-Back to our train window problem we want to produce a stream of arrays that each contain the last `n` items from the source.
+Back to our train window problem: We want to produce a stream of arrays where each contains the last `n` items from the source.
 This array is the list we render in the UI to display the items.
 
 When the source stream looks like this (one item per line)...
@@ -103,18 +107,20 @@ When the source stream looks like this (one item per line)...
 🍕
 🐙
 ⚽️
+🐳
 ```
 
-...and `n` is 3, the result should look like this:
+...and `n` is 4, the result should look like this:
 
 ```
 [😍]
 [🦊, 😍]
 [🍓, 🦊, 😍]
-[🐈, 🍓, 🦊]
-[🍕, 🐈, 🍓]
-[🐙, 🍕, 🐈]
-[⚽️, 🐙, 🍕]
+[🐈, 🍓, 🦊, 😍]
+[🍕, 🐈, 🍓, 🦊]
+[🐙, 🍕, 🐈, 🍓]
+[⚽️, 🐙, 🍕, 🐈]
+[🐳, ⚽️, 🐙, 🍕]
 ```
 
 
