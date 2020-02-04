@@ -39,7 +39,7 @@ It's very likely that an operator exists for solving the problem.
 However, it's important to not let yourself confuse by the number of operators, especially those who sound suitable at first glance.
 For a few minutes, I was obsessed with the thought that one of the `buffer` or `window` operators might be the solution.
 They are not! Both `buffer` and `window` (and their relatives) collect values from the source and emit them all at once – after a time or when a signal appears.
-This sound good but is still not the right thing for us when we want to move a window forward.
+This sounds good but is still not the right thing for us when we want to move a window forward.
 
 Finally, I cleared my mind and started all over again.
 If there is no suitable operator for you, it's the best to think in fundamentals and begin from the ground up using low-level operators like `map`, `filter`, `reduce` and `scan`.
