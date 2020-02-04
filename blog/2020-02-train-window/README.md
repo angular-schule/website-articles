@@ -131,7 +131,7 @@ This means, as an output we want to create an array that contains
 
 
 ```ts
-const n = 3;
+const n = 4;
 
 const result$ = source$.pipe(
   scan((acc, item) => [item, ...acc.slice(0, n - 1)], [])
@@ -150,14 +150,14 @@ To hide the complexity we can wrap this thing into a custom operator.
 I wrote a dedicated blog post about this topic here: [Build your own RxJS logging operator](https://angular.schule/blog/2018-02-rxjs-own-log-operator).
 
 ```ts
-export function shiftWindow(n: number = 3) {
+export function shiftWindow(n: number = 4) {
   return scan((acc, item) => [item, ...acc.slice(0, n - 1)], []);
 }
 ```
 
 ```ts
 const result$ = source$.pipe(
-  shiftWindow(3)
+  shiftWindow(4)
 );
 ```
 
