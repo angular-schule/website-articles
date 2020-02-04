@@ -2,15 +2,14 @@
 title: "Watching through a window: Building a moving window with RxJS"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
-published: 2020-02-01
-last-change: 2020-02-01
+published: 2020-02-04
+last-change: 2020-02-04
 keywords:
   - RxJS
   - Reactive Programming
   - Observable
 language: en
 thumbnail: rxjs-train.jpg
-hidden: true
 
 ---
 
