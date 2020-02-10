@@ -1,0 +1,19 @@
+name: Purge Cloudflare Cash
+
+on: [page_build]
+
+jobs:
+  checkout-and-purge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Purge Everything
+      env:
+        PURGE_API_TOKEN: ${{ secrets.PURGE_API_TOKEN }}
+        PURGE_ZONE: ${{ secrets.PURGE_ZONE }}
+      run: |
+        sh .github/workflows/purge-cash.sh
+
