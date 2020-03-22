@@ -2,7 +2,7 @@
 title: "Wie wir mit dem Coronavirus (COVID-19) umgehen"
 author: Angular.Schule Team
 mail: team@angular.schule
-published: 2020-03-21
+published: 2020-03-22
 keywords:
   - Corona
   - COVID-19
@@ -36,7 +36,7 @@ Bis auf weiteres finden daher keine öffentlichen und nichtöffentlichen Veranst
 Wir berücksichtigen damit die [Auflagen der Stadt Heidelberg](https://www.heidelberg.de/site/Heidelberg_ROOT/get/params_E-919918168/1451116/2020_03_19_Allgemeinverfuegung_der_Stadt_Heidelberg.pdf) und der [Landesregierung Baden-Württemberg](https://www.baden-wuerttemberg.de/de/service/presse/pressemitteilung/pid/landesregierung-beschliesst-massnahmen-gegen-die-ausbreitung-des-coronavirus/).
 Ähnliche Auflagen gelten für unseren Standort in Leipzig.
 
-Das bedeutet, dass wir **vorraussichtlich** unsere geplante Präsenzveranstaltung **vom 12.-15. Mai 2020 auf den nächstmöglichen Termin verschieben müssen**. Weitere Informationen folgen!
+Das bedeutet, dass wir **voraussichtlich** unsere geplante Präsenzveranstaltung **vom 12.-15. Mai 2020 auf den nächstmöglichen Termin verschieben müssen**. Weitere Informationen folgen!
 
 ## 3. NEU: Online-Schulungen
 
