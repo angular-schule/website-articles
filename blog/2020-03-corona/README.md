@@ -32,11 +32,11 @@ Da alle internationalen Konferenzen verschoben bzw. abgesagt wurden, haben wir w
 ## 2. Präsenzschulungen
 
 Es ist unsere oberste Priorität, die Gesundheit und das Wohlergehen unserer TeilnehmerInnen und unseres Teams zu gewährleisten.
-Bis zum 15. Juni 2020 finden daher keine öffentlichen und nichtöffentlichen Veranstaltungen von und mit uns statt.
+Bis auf weiteres finden daher keine öffentlichen und nichtöffentlichen Veranstaltungen von und mit uns statt.
 Wir berücksichtigen damit die [Auflagen der Stadt Heidelberg](https://www.heidelberg.de/site/Heidelberg_ROOT/get/params_E-919918168/1451116/2020_03_19_Allgemeinverfuegung_der_Stadt_Heidelberg.pdf) und der [Landesregierung Baden-Württemberg](https://www.baden-wuerttemberg.de/de/service/presse/pressemitteilung/pid/landesregierung-beschliesst-massnahmen-gegen-die-ausbreitung-des-coronavirus/).
 Ähnliche Auflagen gelten für unseren Standort in Leipzig.
 
-Das bedeutet, dass wir leider unsere geplante Präsenzveranstaltung **vom 12.-15. Mai 2020 auf den nächstmöglichen Termin verschieben müssen**. Weitere Informationen folgen!
+Das bedeutet, dass wir **vorraussichtlich** unsere geplante Präsenzveranstaltung **vom 12.-15. Mai 2020 auf den nächstmöglichen Termin verschieben müssen**. Weitere Informationen folgen!
 
 ## 3. NEU: Online-Schulungen
 
