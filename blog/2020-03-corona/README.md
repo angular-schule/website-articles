@@ -2,14 +2,14 @@
 title: "Wie wir mit dem Coronavirus (COVID-19) umgehen"
 author: Angular.Schule Team
 mail: team@angular.schule
-published: 2020-03-22
+published: 2020-03-23
 keywords:
   - Corona
   - COVID-19
   - Remote
   - Online
 language: de
-thumbnail: xxx.jpg
+thumbnail: homeoffice_angular.jpg
 ---
 
 In diesen Tagen überschlagen sich die Ereignisse in Europa und der Welt rund um das Thema Coronavirus.
