@@ -12,7 +12,7 @@ language: de
 thumbnail: homeoffice_angular.jpg
 ---
 
-In diesen Tagen überschlagen sich die Ereignisse in Europa und der Welt rund um das Thema Coronavirus (COVID-19) .
+In diesen Tagen überschlagen sich die Ereignisse in Europa und der Welt rund um das Thema Coronavirus (COVID-19).  
 Wir möchten Sie informieren, wie wir bei der Angular.Schule mit dieser Situation umgehen.
 
 ## 1. Beratung
