@@ -41,7 +41,7 @@ enden.
 Wir beobachten täglich die Situation und informieren Sie auf dieser Seite über Änderungen.
 Bis Ende April finden daher keine öffentlichen und nichtöffentlichen Veranstaltungen von und mit uns statt.
 
-**Nach aktuellem Planungsstand kann unsere [nächste öffentliche Schulung](https://angular.schule/schulungen/heidelberg) stattfinden.
+**Nach aktuellem Planungsstand kann unsere [nächste öffentliche Schulung](https://angular.schule/schulungen/heidelberg) stattfinden.  
 (geplanter Termin: 12.-15. Mai in Heidelberg)**
 
 Sichern Sie sich jetzt ein Ticket für die Schulung.
