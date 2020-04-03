@@ -31,22 +31,17 @@ Da alle internationalen Konferenzen verschoben bzw. abgesagt wurden, haben wir w
 
 ## 2. Präsenzschulungen
 
-Es ist unsere oberste Priorität, die Gesundheit und das Wohlergehen unserer TeilnehmerInnen und unseres Teams zu gewährleisten.
-
-Aktuell gelten Auflagen, die am
-[19. April 2020](https://www.heidelberg.de/site/Heidelberg_ROOT/get/params_E575561654/1454524/200328_Land_BW_CoronaVO_Konsolidierte_Fassung.pdf)
-bzw. am
-[30. April 2020](https://www.heidelberg.de/site/Heidelberg_ROOT/get/params_E730656128/1453538/2020_03_19_Allgemeinverfuegung_der_Stadt_Heidelberg.pdf)
-enden.
-Wir beobachten täglich die Situation und informieren Sie auf dieser Seite über Änderungen.
-Bis Ende April finden daher keine öffentlichen und nichtöffentlichen Veranstaltungen von und mit uns statt.
+Es ist unsere oberste Priorität, die Gesundheit und das Wohlergehen unserer TeilnehmerInnen und unseres Teams zu gewährleisten. Daher berücksichtigen wir selbstverständlich alle Auflagen von den zuständigen staatlichen Stellen. Aktuell gelten Auflagen, die bis zum 30. April 2020 befristet sind.
 
 **Nach aktuellem Planungsstand kann unsere [nächste öffentliche Schulung](https://angular.schule/schulungen/heidelberg) stattfinden.  
 (geplanter Termin: 12.-15. Mai in Heidelberg)**
 
 Sichern Sie sich jetzt ein Ticket für die Schulung.
-Sollten wir den Termin verschieben müssen, so haben Sie das Recht, von der Teilnehme zurückzutreten
-oder Sie können unseren angebotenen Ersatztermin wahrnehmen.
+Sollten wir den Termin verschieben müssen, so findet die Veranstaltung am **16.-19. Juni 2020** oder **spätestens am 15.-18. September 2020** statt. 
+
+<!-- Sollten wir den Termin verschieben müssen, so haben Sie das Recht, von der Teilnehme zurückzutreten oder Sie können unseren angebotenen Ersatztermin wahrnehmen. -->
+
+Wir beobachten täglich die Situation und informieren Sie auf dieser Seite über Änderungen.
 
 
 ## 3. NEU: Online-Schulungen
