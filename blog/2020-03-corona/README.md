@@ -74,4 +74,5 @@ Wir sind fest davon überzeugt, dass wir die aktuelle Situation mit Solidarität
 
 **Passen Sie gut auf sich auf!**
 
-Johannes, Ferdinand und Lisa
+hre Trainer der Angular.Schule
+Johannes und Ferdinand
