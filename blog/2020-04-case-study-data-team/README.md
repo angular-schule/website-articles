@@ -4,7 +4,7 @@ author: Angular.Schule Team
 mail: team@angular.schule
 published: 2020-04-30
 language: de
-thumbnail: datateam.jpg
+thumbnail: datateam.png
 hidden: true
 ---
 
@@ -45,3 +45,5 @@ Dazu kommt, dass wir einige Entwickler im Haus haben, die sich bereits privat in
 Die Schulung ist somit auch eine Motivation für uns, an Projekten mit Angular zu arbeiten. Durch die Schulung konnte einigen Kollegen die Berührungsangst vor dem Framework genommen werden. Es kommt jetzt auch vermehrt zum internen Austausch und Überlegungen, die es so sonst nicht gegeben hätte – ebenso ein wichtiger Punkt, den wir aus der Schulung nehmen.
 
 **🅰️ Ferdinand:**<br>**Vielen Dank für das interessante Gespräch und die Einblicke, Marcel! Wir wünschen euch viel Spaß mit Angular und viel Erfolg in euren Projekten!**
+
+![Das DATA-team nach erfolgreich abgeschlossener Angular-Schulung](./teamfoto.jpg)
