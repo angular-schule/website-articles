@@ -1,8 +1,8 @@
 ---
-title: "Case Study: DATA-team"
+title: "DATA-team im Interview: Software made in Leipzig"
 author: Angular.Schule Team
 mail: team@angular.schule
-published: 2020-04-30
+published: 2020-05-08
 language: de
 thumbnail: datateam.png
 hidden: true
