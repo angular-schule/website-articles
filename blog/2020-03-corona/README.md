@@ -37,7 +37,7 @@ Es ist unsere oberste Priorität, die Gesundheit und das Wohlergehen unserer Tei
 (geplanter Termin: 12.-15. Mai in Heidelberg)**
 
 Sichern Sie sich jetzt ein Ticket für die Schulung.
-Sollten wir den Termin verschieben müssen, so findet die Veranstaltung am **16.-19. Juni 2020** oder **spätestens am 15.-18. September 2020** statt. 
+Sollten wir den Termin verschieben müssen, so findet die Veranstaltung am **16.-19. Juni 2020** statt. 
 
 <!-- Sollten wir den Termin verschieben müssen, so haben Sie das Recht, von der Teilnehme zurückzutreten oder Sie können unseren angebotenen Ersatztermin wahrnehmen. -->
 
@@ -54,11 +54,13 @@ Es bietet sich zum Beispiel an, dass wir Ihre "**virtuelle Inhouse-Schulung**" �
 
 Alternativ können Sie auch unsere Angebote für unseren [neuen offenen **Online-Workshops**](https://angular.schule/schulungen/online) nutzen.
 Hier bieten wir jeweils ein Thema im Block an, so dass Sie genau aus den Technologien auswählen können, die Sie benötigen.
-Wir werden in naher Zukunft folgende Themen anbieten:
-- **Angular und RxJS (7.-8. April und 22.-23. April)** | [Mehr Infos](https://angular.schule/schulungen/online)
-- Angular und Redux/NgRx _(demnächst)_
+Wir bieten unter anderem folgende Themen und Termine an:
+- **Angular Advanced: RxJS und Angular (26.–27. Mai 2020)** | [Mehr Infos](https://angular.schule/schulungen/online)
+- **Angular Advanced: RxJS und Angular (10.–11. Juni 2020)** | [Mehr Infos](https://angular.schule/schulungen/online)
+
+<!-- - Angular und Redux/NgRx _(demnächst)_
 - Angular und Internationalisierung/i18n _(demnächst)_
-- Angular und GraphQL _(demnächst)_
+- Angular und GraphQL _(demnächst)_ -->
 
 Jeder Online-Kurs findet live in einem virtuellen Trainingsraum statt. Der direkte Kontakt zwischen TeilnehmerInnen und Trainer ist uns wichtig:
 Als Teilnehmer können Sie jederzeit Fragen stellen und individuelle Themen besprechen.
