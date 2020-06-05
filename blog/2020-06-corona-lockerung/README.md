@@ -29,10 +29,10 @@ Weiter Informationen [zu unserer Schulung in Heidelberg finden Sie hier](https:/
 
 <div class="row mb-4">
   <div class="col-6">
-    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_maske.jpg">
+    ![Beispiel Behelfsmaske](img_maske.jpg)
   </div>
   <div class="col-6">
-    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_abstand.jpg">
+    ![Beispiel Abstandsregel](img_abstand.jpg)
   </div>
 </div>
 
@@ -46,7 +46,8 @@ Lesen Sie hierzu auch alle Details im [Reinigungs- und Sicherheitskonzept](https
 
 Zusätzlich zum Konzept des Tagungshotels erhält jeder Teilnehmer weiterhin eine komfortale Behelfsmaske und einen eigenen Desinfektionsspender am Platz.
 
-![Teamfoto Mai 2020](https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/teamfoto-heidelberg_2020-05.jpg)]
+![Teamfoto Mai 2020](teamfoto-heidelberg_2020-05.jpg)
+
 **Wir freuen uns auf Sie!**
 
 Ihre Trainer der Angular.Schule  
