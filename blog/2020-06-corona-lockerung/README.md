@@ -9,7 +9,7 @@ keywords:
   - Remote
   - Online
 language: de
-thumbnail: img_abstand.jpg
+thumbnail: img_maske.jpg
 hidden: true
 ---
 
@@ -28,12 +28,12 @@ Ebenso können unsere Teilnehmer eine Übernachtung direkt vor Ort zu einem erm�
 Weiter Informationen [zu unserer Schulung in Heidelberg finden Sie hier](https://angular.schule/schulungen/heidelberg).
 
 
-<div class="row">
+<div class="row mb-4">
   <div class="col-6">
-    ![Beispiel Behelfsmaske](img_maske.jpg)
+    [![Beispiel Behelfsmaske](img_maske.jpg)](img_maske.jpg)
   </div>
   <div class="col-6">
-    ![Beispiel Abstandsregel](img_abstand.jpg)
+    [![Beispiel Abstandsregel](img_abstand.jpg)](img_abstand.jpg)
   </div>
 </div>
 
@@ -47,7 +47,7 @@ Lesen Sie hierzu auch alle Details im [Reinigungs- und Sicherheitskonzept](https
 
 Zusätzlich zum Konzept des Tagungshotels erhält jeder Teilnehmer weiterhin eine komfortale Behelfsmaske und einen eigenen Desinfektionsspender am Platz.
 
-![Teamfoto Mai 2020](teamfoto-heidelberg_2020-05.jpg)
+[![Teamfoto Mai 2020](teamfoto-heidelberg_2020-05.jpg)](teamfoto-heidelberg_2020-05.jpg)
 
 **Wir freuen uns auf Sie!**
 
