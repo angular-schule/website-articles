@@ -29,10 +29,10 @@ Weiter Informationen [zu unserer Schulung in Heidelberg finden Sie hier](https:/
 
 
 <div class="row">
-  <div class="col-4">
+  <div class="col-6">
     ![Beispiel Behelfsmaske](img_maske.jpg)
   </div>
-  <div class="col-4">
+  <div class="col-6">
     ![Beispiel Abstandsregel](img_abstand.jpg)
   </div>
 </div>
