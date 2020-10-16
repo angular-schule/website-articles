@@ -12,6 +12,11 @@ language: de
 thumbnail: img_maske.jpg
 ---
 
+** Update Oktober 2020: **  
+Als Konsequenz auf die aktuelle Entwicklung der Fallzahlen von Corona-Infektionen haben wir uns entschlossen, bis zum Ende des Jahres 2020 keinen öffentlichen Schulungen mehr zu veranstalten. Wir stehen Innen weiterhin mit Remote-Schulungen und Schulungen bei Ihnen vor Ort (unter Berücksichtigung hoher Hygienestandards) zur Verfügung.
+
+---
+
 Die aktuelle Situation stellt uns alle vor Herausforderungen.
 Es ist unsere oberste Priorität, die Gesundheit und das Wohlergehen unserer TeilnehmerInnen und unseres Teams zu gewährleisten. 
 Daher freuen wir uns, dass wir im Einklang mit den aktuellen Bestimmungen unsere öffentlichen Schulungen wieder anbieten können.
