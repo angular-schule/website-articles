@@ -12,6 +12,10 @@ language: de
 thumbnail: img_maske.jpg
 ---
 
+** Update Januar 2021: **  
+Bis auf weiteres führen wir alle Schulungen, Workshops und Beratungen **ausschließlich online** durch.
+Sobald eine öffentliche Vor-Ort-Schulung wieder möglich und vertratbar ist, geben wir dies hier bekannt. Gerne nehmen wir Sie in die Liste der Interessen:innen auf!
+
 ** Update Oktober 2020: **  
 Als Konsequenz auf die aktuelle Entwicklung der Fallzahlen von Corona-Infektionen haben wir uns entschlossen, bis zum Ende des Jahres 2020 keinen öffentlichen Schulungen mehr zu veranstalten. Wir stehen Ihnen weiterhin mit Remote-Schulungen und Schulungen bei Ihnen vor Ort (unter Berücksichtigung hoher Hygienestandards) zur Verfügung.
 
