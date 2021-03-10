@@ -1,5 +1,5 @@
 ---
-title: "Neues Video: Rekursive Zaubershow – Schwarze Magie mit RxJS  (rxjs-expand)"
+title: "Video: Rekursive Zaubershow – Schwarze Magie mit RxJS"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2021-03-10
@@ -10,7 +10,7 @@ keywords:
   - rekursiv
   - Rekursion
 language: de
-thumbnail: teaser.png
+thumbnail: marbles.png
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/78bfWXlNI7s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
