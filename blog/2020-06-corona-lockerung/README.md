@@ -2,7 +2,7 @@
 title: "Unsere öffentlichen Schulungen starten wieder"
 author: Angular.Schule Team
 mail: team@angular.schule
-published: 2020-06-4
+published: 2020-06-04
 keywords:
   - Corona
   - COVID-19
