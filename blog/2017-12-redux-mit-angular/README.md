@@ -14,7 +14,7 @@ language: de
 thumbnail: teaser.png
 ---
 
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/w6Wy3JgLt_E?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/w6Wy3JgLt_E?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
 
 In dieser Session stellen Ihnen die Buch-Autoren Ferdinand Malcher und Johannes Hoppe alle Bausteine der Architekturidee Redux vor. Die beiden Angular-Experten entwickeln zusammen mit Ihnen Reducers und Actions in TypeScript, kombinieren diese mit dem Redux-Store und hauchen damit einer Angular-App Leben ein.
 

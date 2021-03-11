@@ -13,7 +13,7 @@ language: de
 thumbnail: teaser.png
 ---
 
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/KLJ5usDMv08?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/KLJ5usDMv08?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
 
 In diesem Vortrag dreht sich alles um qualitativ hochwertige Angular-Apps. Lernen Sie die verschiedenen Teststrategien hierfür kennen. Wir betrachten Unit-Tests und Integrationstests, aber auch E2E-Tests (Oberflächentests) für Angular. Es erwartet Sie eine kurze Einführung zu TDD und BDD. Anschließend wird Ihnen Johannes Hoppe das Tooling vorstellen, um Tests mit Karma und Protractor auszuführen. 
 

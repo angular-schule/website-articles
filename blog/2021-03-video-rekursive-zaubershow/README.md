@@ -13,7 +13,7 @@ language: de
 thumbnail: marbles.png
 ---
 
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/78bfWXlNI7s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/78bfWXlNI7s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 Als wäre RxJS nicht schon verhext genug – lasst es uns mit einem der gefürchtetsten Patterns der Softwareentwicklung kombinieren: REKURSION! Aber keine Angst: Dazu müssen wir keinen Pakt mit teuflisch verschachtelten Schleifen eingehen, denn der "**expand**"-Operator kommt zu Hilfe!
 
