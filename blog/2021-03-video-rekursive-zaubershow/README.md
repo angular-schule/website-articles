@@ -19,6 +19,6 @@ Als wäre RxJS nicht schon verhext genug – lasst es uns mit einem der gefürch
 
 In diesem Talk tauchen wir tief ab in die Magie von "expand". Wir sprechen über Higher-Order Observables, zauberhafte Flattening-Operatoren und ein rekursives "mergeMap" – was auch immer das bedeuten mag. Bühne frei für rekursiven Code, schlechte Witze und eine mysteriöse Paging-Web-API!
 
-* Slides: [Google Slides](https://docs.google.com/presentation/d/1pqPajqDdl1jYVq6JmgEgzMW4zaVOXXHVhJAJBbZcUZ0/)
+* Slides: [Google Slides](https://docs.google.com/presentation/d/1pqPajqDdl1jYVq6JmgEgzMW4zaVOXXHVhJAJBbZcUZ0/edit?usp=sharing)
 
 * Demo: siehe [app.component.ts](https://github.com/angular-schule/recursion-playground/blob/master/src/app/app.component.ts)
