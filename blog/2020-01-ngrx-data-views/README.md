@@ -408,6 +408,11 @@ export const getBookView = () =>
 
 And it now works as expected as you can see in the [StackBlitz Example](https://stackblitz.com/github/dhhyi/ngrx-data-views/tree/memoized-data-views?file=src%2Fapp%2Fstore%2Fbook-view%2Findex.ts).
 
+> Update 2021:
+>
+> I found out later, that NgRx also supports overriding just the result memoization if you use [´resultMemoize()´](https://ngrx.io/api/store/resultMemoize) instead of `defaultMemoize()`.
+
+
 ## Enriched Data Views
 
 All the time you might have been asking: Why are we even doing this?
