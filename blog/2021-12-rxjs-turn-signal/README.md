@@ -258,12 +258,7 @@ press$.pipe(
 )
 ```
 
-Now, each trigger press is converted to an alternating signal.
-While a signal cycle is running, all other presses will be ignored.
-The signal ends after the trigger is released and at least 3 cycles have been finished.
-Regardless of how the interrupted signal ended, it will always switch off the light when it leaves the room.
-
-And that's how we can build a car turn indicator with RxJS!
+Try it out: Press the trigger button for a longer time. Then release it while the light is on. It will immediately be switched off.
 
 ## Bonus: Making it mobile-friendly
 
@@ -286,9 +281,17 @@ const release$ = race(
 ```
 
 
-## Demo
 
-You can find a full working demo on Stackblitz:
+## Wrap up
+
+With relatively fe lines of code we have created a car turn indicator with RxJS!
+Each trigger press is converted to an alternating signal.
+While a signal cycle is running, all other presses will be ignored.
+The signal ends after the trigger is released and at least 3 cycles have been finished.
+Regardless of how the interrupted signal ended, it will always switch off the light when it leaves the room.
+
+
+**You can find a full working demo on Stackblitz:**
 
 <iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/rxjs-turn-signal?embed=1&file=index.ts"></iframe>
 
