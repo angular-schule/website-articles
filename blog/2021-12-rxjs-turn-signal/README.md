@@ -70,14 +70,14 @@ With pure JavaScript and RxJS, events can be captured with the `fromEvent()` cre
 We create two streams here: one for the button press (pushing the trigger) and another one when the button is released (pulling the trigger back).
 
 ```html
-<button id="signal">Turn signal</button>
+<button id="trigger">Trigger</button>
 ```
 
 ```ts
-const signalEl = document.querySelector('#signal');
+const triggerBtn = document.querySelector('#signal');
 
-const press$ = fromEvent(signalEl, 'mousedown');
-const release$ = fromEvent(document, 'mouseup');
+const press$ = fromEvent(triggerBtn, 'mousedown');
+const release$ = fromEvent(triggerBtn, 'mouseup');
 ```
 
 As you can see, the release is not captured on the button but on the whole document instead.
@@ -122,16 +122,22 @@ press$.pipe(
 ## Displaying the signal
 
 Before we continue with our RxJS implementation, let's first display what we've achieved until here.
-To visualize the turn signal we want to highlight the button in orange when active.
+To visualize the turn signal we want to highlight an element in orange when active.
 We subscribe to our Observable to process the signal state and add/remove a CSS class accordingly.
 
+```html
+<div id="signal"></div>
+```
+
 ```css
-#signal.on {
+.on {
   background: orange;
 }
 ```
 
 ```ts
+const signalEl = document.querySelector('#signal');
+
 press$.pipe(
   exhaustMap(() => rawSignal$)
 ).subscribe(lightOn => {
