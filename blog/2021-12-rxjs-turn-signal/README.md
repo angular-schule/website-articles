@@ -232,8 +232,8 @@ const closingNotifier$ = forkJoin([
 
 ### Putting things together
 
-Now that we have created the notifier that tells us when the signalling period ends, we can put things together.
-What we want to terminate is the individual signal stream that is the press event is mapped to.
+Now that we have created the notifier that tells us when the signalling period has to be over, we can put things together.
+What we want to terminate is the individual signal stream that the press event is mapped to.
 Right now, we convert each trigger press event to to an endlessly emitting signal event stream.
 This is the part we have to change: We want the signalling to eventually come to an end.
 It is therefore important to apply the `takeUntil()` operator to the inner mapped Observable, not to the outer stream that is derived from `press$`.
@@ -250,7 +250,7 @@ press$.pipe(
 ## Switching off the light
 
 We can now see that the signal comes to an end after at least 3 cycles and when we release the button.
-However, there's an tiny little edge case:
+However, there's an tiny edge case:
 When we press the button for longer than 3 cycles and then release it while the signal is active, the light stays on!
 We have interrupted the signal stream somewhere in the middle and no subsequent emission made the light go off.
 
@@ -294,11 +294,11 @@ const release$ = race(
 
 ## Wrap up
 
-With relatively fe lines of code we have created a car turn indicator with RxJS!
+With relatively few lines of code we have created a car turn indicator with RxJS!
 Each trigger press is converted to an alternating signal.
 While a signal cycle is running, all other presses will be ignored.
 The signal ends after the trigger is released and at least 3 cycles have been finished.
-Regardless of how the interrupted signal ended, it will always switch off the light when it leaves the room.
+Regardless of how the interrupted signal ends, it will always switch off the light when it leaves the room.
 
 
 **You can find a full working demo on Stackblitz:**
@@ -308,6 +308,6 @@ Regardless of how the interrupted signal ended, it will always switch off the li
 
 -------
 
-Special thanks to [Lisa Möller](https://moeller.media) who created the CSS car in the demo and the header image.
+Special thanks to [Lisa Möller](https://moeller.media) who created the CSS car in the demo and took the header photo.
 
 <small>**Header image:** Traffic in Moscow, 2018, by Lisa Möller</small>
