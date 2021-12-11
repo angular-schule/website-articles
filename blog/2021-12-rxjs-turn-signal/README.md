@@ -2,12 +2,13 @@
 title: "Building a car turn indicator with RxJS"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
-published: 2021-12-10
-last-change: 2021-12-10
+published: 2021-12-11
+last-change: 2021-12-11
 keywords:
   - RxJS
   - Reactive Programming
   - Observable
+  - Car
 language: en
 thumbnail: rxjs-turnsignal.jpg
 
@@ -16,6 +17,8 @@ thumbnail: rxjs-turnsignal.jpg
 I recently had a longer car ride. And since car rides can be relatively boring if you don't steer the car by yourself, I started to develop a certain interest for the turn indicator.
 As a big fan of Reactive Programming with RxJS I couldn't help but thinking about how we could implement this with RxJS!
 
+<img src="car.gif" alt="Animation of a car with turn indicator" style="max-width: 30%">
+
 ## How the car works
 
 First things first, let's take a look at the original car behavior.
@@ -23,7 +26,7 @@ It was an older car, so the handle next to the steering wheel is nothing more th
 This trigger behaves as follows:
 
 - If you lightly touch the handle it instantly flips back to the resting position. The switch output is *ON* directly followed by *OFF*.
-- If you push the handle to the end it will be locked in this position (*ON*). It only comes back to the resting position (*OFF*) if you pull the handle again. (It also flips back when we turn the steering wheel in the opposite direction, but this out of scope here.)
+- If you push the handle to the end it will be locked in this position (*ON*). It only comes back to the resting position (*OFF*) if you pull the handle back again. (It also flips back when we turn the steering wheel in the opposite direction, but this out of scope here.)
 
 The electronic part of the car does the following now:
 
@@ -47,7 +50,7 @@ To create such a periodically emitting Observable, we can use the `timer()` and 
 
 Calling `interval(500)` will create an endless stream of emissions. However, the first element will be emitted after 500 ms.
 However, we want the signal to start immediately upon subscription.
-This is why we choose `timer()` here: `timer(0, 1000)` creates an interval as well, but the first emission will come up 0 ms after subscription.
+This is why we choose `timer(0, 500)` here: It creates an interval as well, but the first emission will come up 0 ms after subscription.
 
 Both `timer()` and `interval()` emit a sequence of numbers starting at `0`. You can interpret those as the index of the emitted element.
 What we actually want, though, is a sequence of `true` and `false`.
@@ -64,7 +67,7 @@ Next up, we need to build the trigger handle to control the turn signal.
 The switch behavior described above can be adapted with mouse clicks – except for the locking position which we ignore in this example.
 If you simply press down the mouse button, it instantly goes back up. If you keep it pressed it will flip back up when you release it.
 
-In order to keep this simple and framework-agnostic we use a clickable DOM element here and access it through `querySelector()`. Of course, those events can also be captured in other ways, e.g. with an Event Binding in Angular.
+In order to keep this simple and framework-agnostic we use an HTML button here and access it through `querySelector()`. Of course, those events can also be captured in other ways, e.g. with an Event Binding in Angular.
 
 With pure JavaScript and RxJS, events can be captured with the `fromEvent()` creation function from RxJS.
 We create two streams here: one for the button press (pushing the trigger) and another one when the button is released (pulling the trigger back).
@@ -74,7 +77,7 @@ We create two streams here: one for the button press (pushing the trigger) and a
 ```
 
 ```ts
-const triggerBtn = document.querySelector('#signal');
+const triggerBtn = document.querySelector('#trigger');
 
 const press$ = fromEvent(triggerBtn, 'mousedown');
 const release$ = fromEvent(triggerBtn, 'mouseup');
@@ -124,6 +127,7 @@ press$.pipe(
 Before we continue with our RxJS implementation, let's first display what we've achieved until here.
 To visualize the turn signal we want to highlight an element in orange when active.
 We subscribe to our Observable to process the signal state and add/remove a CSS class accordingly.
+In the full example below we created a car with CSS. However, you can also use a simple div element:
 
 ```html
 <div id="signal"></div>
@@ -228,7 +232,7 @@ const closingNotifier$ = forkJoin([
 
 ### Putting things together
 
-We're close to our goal. Now that we have created the notifier that tells us when the signalling period ends, we can put things together.
+Now that we have created the notifier that tells us when the signalling period ends, we can put things together.
 What we want to terminate is the individual signal stream that is the press event is mapped to.
 Right now, we convert each trigger press event to to an endlessly emitting signal event stream.
 This is the part we have to change: We want the signalling to eventually come to an end.
@@ -304,7 +308,6 @@ Regardless of how the interrupted signal ended, it will always switch off the li
 
 -------
 
+Special thanks to [Lisa Möller](https://moeller.media) who created the CSS car in the demo and the header image.
 
-
-<small>**Header image:** Photo by "Free-Photos" on <a href="https://pixabay.com/de/photos/zug-wagen-fenster-eisenbahn-569323/">Pixabay</a>, modified. The RxJS logo is under Apache License 2.0.
-</small>
+<small>**Header image:** Traffic in Moscow, 2018, by Lisa Möller</small>
