@@ -164,7 +164,7 @@ Let's change this! To terminate a stream we can use the `takeUntil()` operator.
 It takes a *notifier* Observable as an argument. When this notifier emits once, the result stream will be completed.
 
 Let's explain this with a simpler example: We have a long-running interval which we combine with `takeUntil()`.
-As a the notifier we use an Observable that emits after 5100 ms.
+As a the notifier we use an Observable that emits after 5100 ms (using `timer()` with just 1 argument creates an Observable that fires once and then completes).
 The resulting Observable will emit the interval events, and will then complete after 5100 ms when the notifier fires.
 
 ```ts
@@ -172,7 +172,7 @@ const notifier$ = timer(5100);
 
 timer(0, 1000).pipe(
   takeUntil(notifier$)
-)
+).subscribe(e => console.log(e))
 ```
 
 ```
@@ -186,24 +186,24 @@ COMPLETE
 ```
 
 Back to our turn signal, things become a bit more sophisticated.
-The signalling period should be ended when at least 3 cycles have passed *and* the trigger is released.
-The order of events can be different, though:
+The signalling period must be terminated when at least 3 cycles have passed *and* the trigger has been released.
+The order of these events can be different, though:
 
 - **Case 1:** We release the trigger *before* 3 cycles have finished: wait for 3 cycles to finish.
-- **Case 2:** The trigger is still pressed after 3 cycles are finished: we have to wait for the trigger to be released.
+- **Case 2:** The trigger is still pressed after 3 cycles are finished: wait for the trigger to be released.
 
 ### Counting cycles
 
-The first part of our closing notifier is the cycle count. We want to emit once after 3 cycles have passed.
-Since we know the step interval time and the number of cycles, we can construct this using a `timer()`.
-The step time we used before to create the interval has to be multiplied by 2 because a full cycle consists of two steps (on and off).
+The first part of our closing notifier is the cycle count. We want the notifier to emit once after 3 cycles have passed.
+Since we know the step interval time (we've used this before to create the interval) and the number of cycles, we can construct this using a `timer()`.
 
 ```ts
 const cycles = 3;
 const cyclesFinished$ = timer(stepTimeMs * cycles * 2);
 ```
 
-For the trigger release, we have have already created the necessary event stream `release$`.
+The step time has to be multiplied by 2 because a full cycle consists of two steps (on and off).
+For the trigger release, we have have already created the necessary event stream `release$`, so we have the two parts ready to be combined.
 
 ### Creating the notifier
 
@@ -212,16 +212,16 @@ As described before, to create our closing notifier we have to wait for
 - a trigger release *and*
 - 3 cycles finished
 
-The `forkJoin()` creation functions comes to rescue us:
+The `forkJoin()` creation functions comes to rescue:
 This function combines Observables. It subscribes to all of the sources at once. Then, after all the sources have completed, it emits one single event with the final results of all sources.
 
 To make this possible, it is necessary that all sources eventually complete.
 Our cycle counter is a deterministic timer which will emit once and then complete, so everything's fine here.
 However, the `release$` stream captures all `mouseup` events from everywhere and will never complete.
-What we are actually interested in is the *next* emission only. This is why we need to combine it with `take(1)`.
-That way, we wait for the first emission and then complete immediately.
+What we are actually interested in is the *next* emission only, so we combine it with `take(1)`.
+That way, we wait for the first emission only and then complete immediately.
 
-Our notifier can then be defined as follows:
+Our notifier can be defined as follows:
 
 ```ts
 const closingNotifier$ = forkJoin([
