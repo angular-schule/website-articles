@@ -164,7 +164,7 @@ Let's change this! To terminate a stream we can use the `takeUntil()` operator.
 It takes a *notifier* Observable as an argument. When this notifier emits once, the result stream will be completed.
 
 Let's explain this with a simpler example: We have a long-running interval which we combine with `takeUntil()`.
-As a the notifier we use an Observable that emits after 5100 ms (using `timer()` with just 1 argument creates an Observable that fires once and then completes).
+As the notifier we use an Observable that emits after 5100 ms (using `timer()` with just one argument creates an Observable that fires once and then completes).
 The resulting Observable will emit the interval events, and will then complete after 5100 ms when the notifier fires.
 
 ```ts
