@@ -80,12 +80,11 @@ We create two streams here: one for the button press (pushing the trigger) and a
 const triggerBtn = document.querySelector('#trigger');
 
 const press$ = fromEvent(triggerBtn, 'mousedown');
-const release$ = fromEvent(triggerBtn, 'mouseup');
+const release$ = fromEvent(document, 'mouseup');
 ```
 
-As you can see, the release is not captured on the button but on the whole document instead.
-This is important because you can move the mouse away from the button while it is pressed.
-The release event is then not emitted on the button but wherever the mouse is at that moment.
+As you can see, the release is not captured on the button but on `document` instead.
+This is an important detail: You can move the mouse away from the button while it is pressed, and the event will be fired somewhere else.
 
 ## First wiring
 
@@ -203,7 +202,7 @@ const cyclesFinished$ = timer(stepTimeMs * cycles * 2);
 ```
 
 The step time has to be multiplied by 2 because a full cycle consists of two steps (on and off).
-For the trigger release, we have have already created the necessary event stream `release$`, so we have the two parts ready to be combined.
+For the trigger release, we have already created the necessary event stream `release$`, so we have the two parts ready to be combined.
 
 ### Creating the notifier
 
