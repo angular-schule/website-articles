@@ -36,8 +36,8 @@ The electronic part of the car does the following now:
   - but not before at least 3 on/off cycles have been finished.
 
 That means, if you just softly push the trigger, the turn signal outputs 3 on/off cycles.
-If I lock the trigger, the signal cycles until I pull the trigger back.
-When I lock the trigger and instantly pull it back, the signal performs 3 cycles as well.
+If you lock the trigger, the signal is repeated until you pull the trigger back.
+When you lock the trigger and pull it back immediately, the signal performs 3 cycles as well.
 
 ## Implementation with RxJS
 
