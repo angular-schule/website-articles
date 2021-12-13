@@ -110,7 +110,7 @@ So what happens if the signal is already running and we press the button again?
 - **`concatMap`** builds a queue. When the first signal is finished, it will proceed with the next one. So if we click the button multiple times in a row, each of those signal "requests" will become a signal, finally. Honestly, this is not what we want!
 - **`mergeMap`** concurrently subscribes to all of the inner Observables. When we press the button multiple times, multiple signals will be running simultaneously and act against each other. Not good!
 - **`switchMap`** will cancel the running subscription when another one appears. So when we press the button while a signal is running, it will be cancelled and the new one will be started. Sounds much better!
-- **`exhaustMap`** is one of the less commonly used operators: As long as an inner subscription is running, all other incoming requests will be ignored. That means, if we press the button while a signal is running, nothing will happen. There is no queue like with `concatMap` but all incoming things will be ignored.
+- **`exhaustMap`** is one of the less commonly used operators: As long as an inner subscription is running, all other incoming requests will be ignored. That means, if we press the button while a signal is running, nothing will happen. There is also no queue like with `concatMap`.
 
 From this evaluation, we can see that either `exhaustMap` or `switchMap` would be a good fit for our use-case.
 `exhaustMap`, however, is a bit more resilient: When the signal is active, is has the highest priority and will be finished before another signal can be started at all.
