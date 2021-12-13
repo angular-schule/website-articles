@@ -20,8 +20,9 @@ It can feel super abstract sometimes. However, we can even apply the principles 
 Whenever I sit in a car, I'm impressed by how the electronics work. Wouldn't it be cool to build all of this stuff with RxJS?
 I want to take you on a car ride into how we can implement a turn indicator with RxJS!
 
-
-<img src="car.gif" alt="Animation of a car with turn indicator" style="max-width: 30%">
+<div style="max-width: 300px">
+![Animation of the blinking car](./car.gif)
+</div>
 
 ## How the car circuit works
 
