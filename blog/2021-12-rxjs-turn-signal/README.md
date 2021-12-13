@@ -1,9 +1,9 @@
 ---
-title: "Building a car turn indicator with RxJS"
+title: "RxJS in the real world: Building a car turn indicator"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
-published: 2021-12-11
-last-change: 2021-12-11
+published: 2021-12-13
+last-change: 2021-12-13
 keywords:
   - RxJS
   - Reactive Programming
