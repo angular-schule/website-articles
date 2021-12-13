@@ -35,7 +35,7 @@ The electronic part of the car does the following now:
   - when the trigger is turned back to *OFF*
   - but not before at least 3 on/off cycles have been finished.
 
-That means, if I just softly push the trigger, the turn signal outputs 3 on/off cycles.
+That means, if you just softly push the trigger, the turn signal outputs 3 on/off cycles.
 If I lock the trigger, the signal cycles until I pull the trigger back.
 When I lock the trigger and instantly pull it back, the signal performs 3 cycles as well.
 
