@@ -14,12 +14,16 @@ thumbnail: rxjs-turnsignal.jpg
 
 ---
 
-I recently had a longer car ride. And since car rides can be relatively boring if you don't steer the car by yourself, I started to develop a certain interest for the turn indicator.
-As a big fan of Reactive Programming with RxJS I couldn't help but thinking about how we could implement this with RxJS!
+
+Reactive Programming with RxJS is a great way to model event-based systems.
+It can feel super abstract sometimes. However, we can even apply the principles of Reactive Programming to our everyday world!
+Whenever I sit in a car, I'm impressed by how the electronics work. Wouldn't it be cool to build all of this stuff with RxJS?
+I want to take you on a car ride into how we can implement a turn indicator with RxJS!
+
 
 <img src="car.gif" alt="Animation of a car with turn indicator" style="max-width: 30%">
 
-## How the car works
+## How the car circuit works
 
 First things first, let's take a look at the original behaviour of the circuit in the car.
 Modern cars have an incredible amount of buttons, but setting a turn signal is still basically the same. The handle next to the steering wheel is nothing more than an on/off switch which can be locked in the end position.
@@ -60,6 +64,8 @@ So how do we convert increasing numbers to alternating booleans? Using the modul
 const stepTimeMs = 500;
 const rawSignal$ = timer(0, stepTimeMs).pipe(map(e => e % 2 === 0));
 ```
+
+![Marble Diagram](./marble-map.svg)
 
 ## The trigger
 
@@ -121,6 +127,8 @@ press$.pipe(
 )
 ```
 
+![Marble Diagram](./marble-exhaustmap.svg)
+
 ## Displaying the signal
 
 Before we continue with our RxJS implementation, let's first display what we've achieved until here.
@@ -163,26 +171,18 @@ Let's change this! To terminate a stream we can use the `takeUntil()` operator.
 It takes a *notifier* Observable as an argument. When this notifier emits once, the result stream will be completed.
 
 Let's explain this with a simpler example: We have a long-running interval which we combine with `takeUntil()`.
-As the notifier we use an Observable that emits after 5100 ms (using `timer()` with just one argument creates an Observable that fires once and then completes).
-The resulting Observable will emit the interval events, and will then complete after 5100 ms when the notifier fires.
+As the notifier we use an Observable that emits after 5200 ms (using `timer()` with just one argument creates an Observable that fires once and then completes).
+The resulting Observable will emit the interval events, and will then complete after 5200 ms when the notifier fires.
 
 ```ts
-const notifier$ = timer(5100);
+const notifier$ = timer(5200);
 
 timer(0, 1000).pipe(
   takeUntil(notifier$)
 ).subscribe(e => console.log(e))
 ```
 
-```
-// Result:
-0
-1
-2
-3
-4
-COMPLETE
-```
+![Marble Diagram](./marble-takeuntilsimple.svg)
 
 Back to our turn signal, things become a little more challenging.
 The signalling period must be terminated when at least 3 cycles have passed *and* the trigger has been released.
@@ -246,6 +246,8 @@ press$.pipe(
 )
 ```
 
+![Marble Diagram](./marble-takeuntil.svg)
+
 ## Switching off the light
 
 We can now see that the signal comes to an end after at least 3 cycles and when we release the button.
@@ -290,7 +292,6 @@ const release$ = race(
 ```
 
 
-
 ## Wrap up
 
 With relatively few lines of code we have created a car turn indicator with RxJS!
@@ -299,14 +300,74 @@ While a signal cycle is running, all other presses will be ignored.
 The signal ends after the trigger is released and at least 3 cycles have been finished.
 Regardless of how the interrupted signal ends, it will always switch off the light when it leaves the room.
 
+![Marble Diagram](./marble-final.svg)
+
+Here is the full code:
+
+```ts
+import { timer, race, forkJoin, fromEvent, map, take, exhaustMap, takeUntil, endWith } from 'rxjs';
+
+const stepTimeMs = 400;
+const cycles = 3;
+
+// the raw and endless signal, alternating true/false
+const rawSignal$ = timer(0, stepTimeMs).pipe(map((e) => e % 2 === 0));
+
+const triggerBtn = document.querySelector('#trigger');
+const signalEl = document.querySelector('#signal');
+
+// trigger interactions
+const press$ = race(
+  fromEvent(triggerBtn, 'mousedown'),
+  fromEvent(triggerBtn, 'touchstart')
+);
+const release$ = race(
+  // we're listening on document here in case the user moves away from the trigger and releases somewhere else
+  fromEvent(document, 'mouseup'),
+  fromEvent(document, 'touchend')
+);
+
+// determines when to stop the signalling period
+const closingNotifier$ = forkJoin([
+  release$.pipe(take(1)),
+  timer(stepTimeMs * cycles * 2),
+]);
+
+// it all starts with a trigger press
+press$.pipe(
+  // convert each press into a signal
+  // while the signal runs, ignore all trigger presses
+  exhaustMap(() =>
+    rawSignal$.pipe(
+      // stop the signal when the notifier emits
+      takeUntil(closingNotifier$),
+      // if the signal stops while being ON, switch off the light
+      endWith(false)
+    )
+  )
+).subscribe((lightOn) => {
+  // highlight the DOM element
+  if (lightOn) {
+    signalEl.classList.add('on');
+  } else {
+    signalEl.classList.remove('on');
+  }
+});
+```
+
 
 **You can find a full working demo on Stackblitz:**
 
 <iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/rxjs-turn-signal?embed=1&file=index.ts"></iframe>
 
-Did you enjoy this article? Then please share it in your network! Do you know another interesting circuit? Drop us an email and maybe we will also implement this case with RxJS! 
--------
+---
 
-Special thanks to [Lisa Möller](https://moeller.media) who created the CSS car in the demo and took the header photo.
+Did you enjoy this article? Then please share it in your network! Do you know another interesting circuit? Drop us an email and maybe we will also implement this case with RxJS! 
+
+---
+
+Special thanks to
+- [Lisa Möller](https://moeller.media) who created the CSS car in the demo and took the header photo.
+- Johannes Hoppe and Danny Koppenhagen for review and feedback.
 
 <small>**Header image:** Traffic in Moscow, 2018, by Lisa Möller</small>

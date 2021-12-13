@@ -1,0 +1,35 @@
+https://rx-marbles-online.herokuapp.com
+
+
+
+marble map
+{
+    source a:     +0--1--2--3--4--5>
+    operator "map(e => e % 2 === 0)": +(true)--(false)--(true)--(false)--(true)--(false)>
+}
+
+
+marble exhaustmap
+{
+    source a: +---E-E-----E-->
+    operator "exhaustMap(() => rawSignal$)": +---(true)-(false)-(true)-(false)-(true)-(...)>
+}
+
+marble takeuntilsimple
+{
+    source a: +0-1-2-3-4-5-6-7>
+    operator "takeUntil(timer(5200))": +0-1-2-3-4|
+}
+
+marble takeuntil
+{
+    source a: +(true)-(false)-(true)-(false)-(true)-(false)-(true)-(...)>
+    source notifier: +-------(o)|
+    operator "takeUntil(closingNotifier$)": +(true)-(false)-(true)-(false)|
+}
+
+marble final
+{
+    source a: +---E-E-----E-->
+    operator "exhaustMap(() => rawSignal$.pipe(...))": +---(true)(false)(true)(false)(true)(false)--(true)(false)(true)(false)(true)(false)>
+}
