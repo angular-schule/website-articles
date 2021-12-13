@@ -21,7 +21,7 @@ As a big fan of Reactive Programming with RxJS I couldn't help but thinking abou
 
 ## How the car works
 
-First things first, let's take a look at the original car behavior.
+First things first, let's take a look at the original behaviour of the circuit in the car.
 It was an older car, so the handle next to the steering wheel is nothing more than an on/off switch which can be locked in the end position.
 This trigger behaves as follows:
 
