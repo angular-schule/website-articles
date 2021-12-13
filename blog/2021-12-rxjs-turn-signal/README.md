@@ -304,7 +304,7 @@ Regardless of how the interrupted signal ends, it will always switch off the lig
 
 <iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/rxjs-turn-signal?embed=1&file=index.ts"></iframe>
 
-
+Did you enjoy this article? Then please share it in your network! Do you know another interesting circuit? Drop us an email and maybe we will also implement this case with RxJS! 
 -------
 
 Special thanks to [Lisa Möller](https://moeller.media) who created the CSS car in the demo and took the header photo.
