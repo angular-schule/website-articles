@@ -184,7 +184,7 @@ timer(0, 1000).pipe(
 COMPLETE
 ```
 
-Back to our turn signal, things become a bit more sophisticated.
+Back to our turn signal, things become a little more challenging.
 The signalling period must be terminated when at least 3 cycles have passed *and* the trigger has been released.
 The order of these events can be different, though:
 
