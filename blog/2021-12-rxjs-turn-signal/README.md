@@ -84,7 +84,7 @@ const release$ = fromEvent(document, 'mouseup');
 ```
 
 As you can see, the release is not captured on the button but on `document` instead.
-This is an important detail: You can move the mouse away from the button while it is pressed, and the event will be fired somewhere else.
+This is an important detail: You can move the mouse away while the button is still pressed. We still don't want to miss the release event which might be fired somewhere else.
 
 ## First wiring
 
