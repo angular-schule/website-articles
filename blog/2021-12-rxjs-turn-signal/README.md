@@ -2,8 +2,8 @@
 title: "RxJS in the real world: Building a car turn indicator"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
-published: 2021-12-13
-last-change: 2021-12-13
+published: 2021-12-14
+last-change: 2021-12-14
 keywords:
   - RxJS
   - Reactive Programming
@@ -11,7 +11,6 @@ keywords:
   - Car
 language: en
 thumbnail: rxjs-turnsignal.jpg
-hidden: true
 ---
 
 
@@ -20,13 +19,13 @@ It can feel super abstract sometimes. However, we can even apply the principles 
 Whenever I sit in a car, I'm impressed by how the electronics work. Wouldn't it be cool to build all of this stuff with RxJS?
 I want to take you on a car ride into how we can implement a turn indicator with RxJS!
 
-<div style="max-width: 300px">
-![Animation of the blinking car](./car.gif)
+<div style="max-width: 300px; text-align: center">
+![Animation of a blinking car](./car.gif)
 </div>
 
 ## How the car circuit works
 
-First things first, let's take a look at the original behaviour of the circuit in the car.
+First things first, let's take a look at the original behavior of the circuit in the car.
 Modern cars have an incredible amount of buttons, but setting a turn signal is still basically the same. The handle next to the steering wheel is nothing more than an on/off switch which can be locked in the end position.
 This trigger behaves as follows:
 
@@ -54,12 +53,11 @@ At first, we need to construct the raw turn signal as an alternating sequence of
 To create such a periodically emitting Observable, we can use the `timer()` and `interval()` creation functions from RxJS.
 
 Calling `interval(500)` will create an endless stream of emissions. However, the first element will be emitted after 500 ms.
-However, we want the signal to start immediately upon subscription.
+What we want is to start the signal immediately upon subscription.
 This is why we choose `timer(0, 500)` here: It creates an interval as well, but the first emission will come up 0 ms after subscription.
 
 Both `timer()` and `interval()` emit a sequence of numbers starting at `0`. You can interpret those as the index of the emitted element.
-What we actually want, though, is a sequence of `true` and `false`.
-So how do we convert increasing numbers to alternating booleans? Using the modulo operator and `map()`!
+How do we convert those increasing numbers to alternating booleans? Using the modulo operator and `map()`!
 
 ```ts
 const stepTimeMs = 500;
@@ -90,8 +88,8 @@ const press$ = fromEvent(triggerBtn, 'mousedown');
 const release$ = fromEvent(document, 'mouseup');
 ```
 
-As you can see, we have decided to capture the release event not on the button but on `document`.
-This is an important detail: You can move the mouse away while the button is still pressed. We still don't want to miss the release event which might be fired somewhere else.
+We decided to capture the release event not on the button but on `document`.
+This is an important detail: You can move the mouse away while the button is pressed and the release event might be fired somewhere else – we don't want to miss this.
 
 ## First wiring
 
@@ -120,7 +118,7 @@ So what happens if the signal is already running and we press the button again?
 - **`exhaustMap`** is one of the less commonly used operators: As long as an inner subscription is running, all other incoming requests will be ignored. That means, if we press the button while a signal is running, nothing will happen. There is also no queue like with `concatMap`.
 
 From this evaluation, we can see that either `exhaustMap` or `switchMap` would be a good fit for our use-case.
-`exhaustMap`, however, is a bit more resilient: When the signal is active, is has the highest priority and will be finished before another signal can be started at all.
+`exhaustMap` is a bit more resilient, though: When the signal is active, is has the highest priority and will be finished before any other signal can be started at all.
 
 ```ts
 press$.pipe(
@@ -128,12 +126,14 @@ press$.pipe(
 )
 ```
 
+In the following marble diagram you can see that emissions from the source are being ignored as long as the signal is running.
+
 ![Marble Diagram](./marble-exhaustmap.svg)
 
 ## Displaying the signal
 
-Before we continue with our RxJS implementation, let's first display what we've achieved until here.
-To visualize the turn signal we want to highlight an element in orange when active.
+Before we continue with our RxJS implementation, let's display what we've achieved until here.
+To visualize the turn signal we can highlight an element in orange when active.
 We subscribe to our Observable to process the signal state and add/remove a CSS class accordingly.
 In the full example below we created a car with CSS. However, you can also use a simple div element:
 
@@ -180,7 +180,7 @@ const notifier$ = timer(5200);
 
 timer(0, 1000).pipe(
   takeUntil(notifier$)
-).subscribe(e => console.log(e))
+).subscribe(e => console.log(e));
 ```
 
 ![Marble Diagram](./marble-takeuntilsimple.svg)
@@ -241,9 +241,8 @@ It is therefore important to apply the `takeUntil()` operator to the inner mappe
 ```ts
 press$.pipe(
   exhaustMap(() => rawSignal$.pipe(
-      takeUntil(closingNotifier$)
-    )
-  )
+    takeUntil(closingNotifier$)
+  ))
 )
 ```
 
@@ -279,7 +278,7 @@ This works fine in a desktop browser. However, on mobile touch devices we rather
 
 Since the browser only emits one or the other event, we can combine them and use the first one that is available.
 This can be achieved with the `race()` creation function: It listens to multiple Observables at once. When one of them emits, it wins the race and all of the others are unsubscribed.
-In our case, whoever comes first – `mousedown` oder `touchstart` – will be used.
+In our case, whoever comes first – `mousedown` or `touchstart` – will be used.
 
 ```ts
 const press$ = race(
@@ -308,7 +307,7 @@ Here is the full code:
 ```ts
 import { timer, race, forkJoin, fromEvent, map, take, exhaustMap, takeUntil, endWith } from 'rxjs';
 
-const stepTimeMs = 400;
+const stepTimeMs = 500;
 const cycles = 3;
 
 // the raw and endless signal, alternating true/false
@@ -359,11 +358,11 @@ press$.pipe(
 
 **You can find a full working demo on Stackblitz:**
 
-<iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/rxjs-turn-signal?embed=1&file=index.ts"></iframe>
+<iframe style="width:100%; height: 30em" src="https://stackblitz.com/edit/rxjs-turn-signal?embed=1&file=index.ts"></iframe>
 
 ---
 
-Did you enjoy this article? Then please share it in your network! Do you know another interesting circuit? Drop us an email and maybe we will also implement this case with RxJS! 
+**Did you enjoy this article? Then please share it in your network! Do you know another interesting circuit? Drop us an email and maybe we will also implement this case with RxJS!**
 
 ---
 
