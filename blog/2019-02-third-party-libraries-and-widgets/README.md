@@ -12,8 +12,7 @@ language: en
 thumbnail: pixabay-books-1655783.jpg
 ---
 
-**
-For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.
+**For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.
 In this blog post we want to have a closer look at this question.
 We will discuss a few possible strategies that depend on which technology to integrate.**
 
@@ -487,5 +486,5 @@ And if something important is not implemented for that wrapper, just make a pull
 
 For your reference, this is the full example on Stackblitz:
 
-<iframe style="width: 98%; height: 800px;" src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview"></iframe>
+<iframe style="width: 98%; height: 800px;" src="https://stackblitz.com/edit/angular-3rd-party-libraries-and-widgets?embed=1&view=preview&ctl=1"></iframe>
 

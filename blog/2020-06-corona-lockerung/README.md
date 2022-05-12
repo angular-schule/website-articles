@@ -12,11 +12,11 @@ language: de
 thumbnail: img_maske.jpg
 ---
 
-** Update Januar 2021: **  
+**Update Januar 2021:**  
 Bis auf weiteres führen wir alle Schulungen, Workshops und Beratungen **ausschließlich online** durch.
 Sobald eine öffentliche Vor-Ort-Schulung wieder möglich und vertretbar ist, geben wir dies hier bekannt. Gerne nehmen wir Sie in die Liste der Interessen:innen auf und informieren Sie über geplante Termine.
 
-** Update Oktober 2020: **  
+**Update Oktober 2020:**  
 Als Konsequenz auf die aktuelle Entwicklung der Fallzahlen von Corona-Infektionen haben wir uns entschlossen, bis zum Ende des Jahres 2020 keinen öffentlichen Schulungen mehr zu veranstalten. Wir stehen Ihnen weiterhin mit Remote-Schulungen und Schulungen bei Ihnen vor Ort (unter Berücksichtigung hoher Hygienestandards) zur Verfügung.
 
 ---
@@ -38,10 +38,10 @@ Weiter Informationen [zu unserer Schulung in Heidelberg finden Sie hier](https:/
 
 <div class="row mb-4">
   <div class="col-6">
-    ![Beispiel Behelfsmaske](img_maske.jpg)
+    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_maske.jpg" alt="Beispiel Behelfsmaske">
   </div>
   <div class="col-6">
-    ![Beispiel Abstandsregel](img_abstand.jpg)
+    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_abstand.jpg" alt="Beispiel Abstandsregel">
   </div>
 </div>
 
