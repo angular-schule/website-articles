@@ -20,7 +20,7 @@ Whenever I sit in a car, I'm impressed by how the electronics work. Wouldn't it 
 I want to take you on a car ride into how we can implement a turn indicator with RxJS!
 
 <div style="max-width: 300px; margin: auto">
-![Animation of a blinking car](./car.gif)
+  <img src="./car.gif" alt="Animation of a blinking car">
 </div>
 
 ## How the car circuit works
