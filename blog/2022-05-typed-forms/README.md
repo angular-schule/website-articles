@@ -229,7 +229,7 @@ Bei der Typisierung des Values kommt TypeScript allerdings wieder an seine Grenz
 }
 ```
 
-Da aber ohnehin alle Felder denselben Typ besitzen, ist diese Einschränkung verkraftbar.
+Rufen wir also z. B. mit `get()` ein Control ab, kann der eingegebene Key nicht von TypeScript geprüft werden.
 
 
 ## Migration
