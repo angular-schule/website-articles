@@ -214,7 +214,7 @@ In diesem Fall müssen wir auf die untypisierte Variante `UntypedFormControl` (s
 
 ## Der neue Baustein `FormRecord`
 
-Um das Problem mit `addControl()` in einer `FormGroup` zu lösen, wurde ein neuer Baustein `FormRecord` eingeführt.
+Um das Laufzeitproblem mit `addControl()` in einer `FormGroup` zu lösen, wurde ein neuer Baustein eingeführt: `FormRecord`.
 Prinzipiell funktioniert dieses Objekt wie eine `FormGroup`, alle darüber eingebundenen Controls müssen aber denselben Typ besitzen.
 Das ist besonders dann sinnvoll, wenn Controls zur Laufzeit hinzugefügt oder entfernt werden sollen:
 
