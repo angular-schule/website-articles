@@ -13,7 +13,7 @@ language: de
 thumbnail: ./typedforms.jpg
 ---
 
-Mit Version 14 kommt ein lang erwartetes Feature in Angular an: typisierte Formulare!
+Mit Version 14 erscheint ein lang erwartetes Feature in Angular: *typisierte Formulare!*
 Bisher waren die Modelle für Reactive Forms stets lose mit `any` typisiert -- das ändert sich nun.
 In diesem Blogartikel stellen wir kurz die wichtigsten Eckpunkte vor.
 
@@ -269,6 +269,5 @@ Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, un
 
 
 
-
-
-<small>**Titelbild:** XXX</small>
+<small>**Titelbild:** Photo by <a href="https://unsplash.com/@unstable_affliction">Ivan Bandura</a> on <a href="https://unsplash.com/s/photos/rice-field">Unsplash</a> (edited)
+  </small>
