@@ -262,6 +262,7 @@ ng update @angular/core --migrate-only=migration-v14-typed-forms
 Das Angular-Team hat einige lang ersehnte Wünsche der Community berücksichtigt und hat viel Zeit und Energie in neue Features investiert.
 Die neuen typisierten Bausteine für Reactive Forms bringen ein neues Level an Typsicherheit in die Anwendung.
 Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, und der Komfort bei der Entwicklung steigt.
+Wir freuen uns schon auf den baldigen Einsatz von Angular 14, bei dem die stark typisierten Formulare endlich bereitstehen!
 
 <hr>
 
