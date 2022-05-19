@@ -1,5 +1,5 @@
 ---
-title: 'Neu in Angular: Typisierte Reactive Forms'
+title: 'Typisierte Reactive Forms – neu ab Angular 14'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-19
