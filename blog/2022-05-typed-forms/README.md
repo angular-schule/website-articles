@@ -13,8 +13,8 @@ language: de
 thumbnail: ./typedforms.jpg
 ---
 
-Mit Version 14 erscheint ein lang erwartetes Feature in Angular: *typisierte Formulare!*
-Bisher waren die Modelle für Reactive Forms stets lose mit `any` typisiert -- das ändert sich nun.
+Mit Version 14 von Angular erscheint ein lang erwartetes Feature: *stark typisierte Formulare!*
+Bisher waren die Datenmodelle für Reactive Forms stets lose mit `any` typisiert -- das ändert sich nun.
 In diesem Blogartikel stellen wir kurz die wichtigsten Eckpunkte vor.
 
 ## Untypisierte Formulare
@@ -42,7 +42,7 @@ this.bookForm.getRawValue() // any
 ```
 
 Dadurch kann es schnell passieren, dass Fehler in den erfassten Daten erst zur Laufzeit auffallen.
-Das Angular-Team hat sich dieses Problems nun angenommen: Ab Angular 14 kann das Formularmodell korrekt typisiert werden.
+Das Angular-Team hat sich dieses Problems nun angenommen: Ab Angular 14 kann das Formularmodell mit konkreten Typen behandelt werden.
 
 ## Typed Forms
 
@@ -57,10 +57,10 @@ new FormControl(5) // FormControl<number | null>
 Dabei ist immer auch der Typ `null` inkludiert.
 Der Hintergrund: Controls können mit der Methode `reset()` zurückgesetzt werden.
 Gibt man dabei keinen neuen Startwert an, wird der Wert standardmäßig auf `null` gesetzt.
-Um dieses aktuelle Verhalten nicht zu brechen, ist `null` im Typ immer enthalten.
+Damit für dieses bestehende Verhalten kein Breaking Change entsteht, ist `null` standardmäßig im Typ enthalten.
 
-Wir können diese Eigenschaft umgehen: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault`.
-Das ändert das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
+In vielen Fällen wird dies nicht mit dem benötigten Datenmodell übereinstimmen. Daher können das Standardverhalten ändern: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault`.
+Diese Einstellung ändert das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
 Damit entfällt der Typ `null` und das `FormControl` besitzt nur noch den Typ `string`:
 
 
@@ -89,10 +89,10 @@ new FormControl<string | null>(null) // FormControl<string | null>
 ```
 
 Es ist zu erwarten, dass die Option `initialValueIsDefault` in einer späteren Version von Angular per Default auf `true` gesetzt wird, sodass für alle Controls standardmäßig der Startwert zum Reset verwendet wird (und nicht `null`).
-Da es sich dabei allerdings um einen Breaking Change handelt, muss diese Änderung mit Vorsicht durchgeführt werden.
+Da es sich dabei allerdings um einen Breaking Change handelt, wird das Angular-Team eine solche Änderung mit großer Vorsicht und einer Übergangsfrist durchführen müssen.
 
 Entwickeln Sie ein Formular "auf der grünen Wiese", empfehlen wir Ihnen, die Option `initialValueIsDefault` für jedes Control auf `true` zu setzen.
-Das vereinfacht die Arbeit mit den erzeugten Daten, weil die Typen den tatsächlichen Eingabewert widerspiegeln.
+Das vereinfacht die Arbeit mit den erzeugten Daten, weil die Typen den tatsächlichen Eingabewert widerspiegeln. Ein normales Input-Feld erzeugt zum Beispiel stets einen leeren String bzw. einen String mit Werten. Der Wert `null` beschäftigt uns hier tatsächlich nur beim Zurücksetzen des Formulars.
 
 ## FormGroup und FormArray
 
@@ -116,8 +116,8 @@ bookForm = new FormGroup({
 }
 ```
 
-Hier ist eine Einschränkung zu beachten: Das Property `value` und das Observable `valueChanges` geben nur die Werte der *aktivierten* Controls aus.
-Da das Typsystem nicht bestimmen kann, ob ein Feld aktiviert ist oder nicht, ist der Typ hier stets mit `Partial` definiert.
+Hier ist eine Einschränkung zu beachten: Das Property `value` und das Observable `valueChanges` geben nur die Werte der *aktivierten* Controls aus. Wurde ein Control über `disable()` deaktiviert, so wird es komplett ignoriert -- sogar die Validatoren werden nicht mehr berücksichtigt.
+Da das Typsystem nicht bestimmen kann, ob ein Control aktiviert ist oder nicht, ist der Typ hier stets mit `Partial` definiert.
 Das bedeutet, dass alle Felder optional sind, also auch `undefined` beinhalten können:
 
 ```ts
@@ -195,7 +195,7 @@ constructor(private fb: NonNullableFormBuilder) {}
 
 ## Grenzen der Typisierung
 
-Grundsätzlich gilt: In TypeScript können nur die Dinge typisiert werden, die zur Entwicklungszeit sicher bekannt sind.
+Grundsätzlich gilt: In TypeScript können nur die Dinge typisiert werden, die zur Kompilierungszeit sicher bekannt sind.
 Wenn wir ein dynamisches Formular entwickeln, dessen Struktur zur Laufzeit geändert wird, können wir uns nicht auf die Typisierung verlassen.
 
 Die `FormGroup` ist daher in der neuen Variante strikt typisiert.
@@ -215,7 +215,7 @@ In diesem Fall müssen wir auf die untypisierte Variante `UntypedFormControl` (s
 ## Der neue Baustein `FormRecord`
 
 Um das Problem mit `addControl()` in einer `FormGroup` zu lösen, wurde ein neuer Baustein `FormRecord` eingeführt.
-Prinzipiell funktioniert dieses Objekt wie eine `FormGroup`, es besitzen jedoch alle Felder denselben Typ.
+Prinzipiell funktioniert dieses Objekt wie eine `FormGroup`, alle darüber eingebundenen Controls müssen aber denselben Typ besitzen.
 Das ist besonders dann sinnvoll, wenn Controls zur Laufzeit hinzugefügt oder entfernt werden sollen:
 
 ```ts
@@ -259,7 +259,7 @@ ng update @angular/core --migrate-only=migration-v14-typed-forms
 
 ## Fazit
 
-Das Angular-Team hat einige lang ersehnte Wünsche der Community berücksichtigt und hat viel Zeit und Energie in neue Features gesteckt.
+Das Angular-Team hat einige lang ersehnte Wünsche der Community berücksichtigt und hat viel Zeit und Energie in neue Features investiert.
 Die neuen typisierten Bausteine für Reactive Forms bringen ein neues Level an Typsicherheit in die Anwendung.
 Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, und der Komfort bei der Entwicklung steigt.
 
