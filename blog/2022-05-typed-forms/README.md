@@ -242,7 +242,7 @@ Rufen wir also z. B. mit `get()` ein Control ab, kann der eingegebene Key nicht 
 Der Umstieg mit einem existierenden Formular auf die neue typisierte Variante ist unter Umständen nicht ganz trivial.
 Deshalb werden alle Bausteine von Reactive Forms auch weiterhin mit ihrer alten, untypisierten Schnittstelle angeboten.
 
-Wenn wir die Anwendung mithilfe von `ng update` auf Angular 14 migrieren, werden die Klassennamen automatich ersetzt:
+Wenn wir die Anwendung mithilfe von `ng update` auf Angular 14 migrieren, werden die Klassennamen automatisch ersetzt:
 
 * `FormControl` => `UntypedFormControl`
 * `FormGroup` => `UntypedFormGroup`
@@ -251,7 +251,7 @@ Wenn wir die Anwendung mithilfe von `ng update` auf Angular 14 migrieren, werden
 So kann die Migration auf typisierte Formulare schrittweise durchgeführt werden.
 Komplexe Formulare mit dynamischen Strukturen können ggf. sogar gar nicht von der Typisierung profitieren und müssen mit den `Untyped`-Varianten bestehen bleiben.
 
-Möchten Sie die einzelne Migration der Controls manuell anstoßen, ist der folgende Befehl hilfreich:
+Möchten Sie die einzelne Migration der Controls manuell anstoßen, können Sie den folgenden Befehl nutzen:
 
 ```bash
 ng update @angular/core --migrate-only=migration-v14-typed-forms
@@ -262,7 +262,7 @@ ng update @angular/core --migrate-only=migration-v14-typed-forms
 
 Das Angular-Team hat einige lang ersehnte Wünsche der Community berücksichtigt und hat viel Zeit und Energie in neue Features gesteckt.
 Die neuen typisierten Bausteine für Reactive Forms bringen ein neues Level an Typsicherheit in die Anwendung.
-Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, und der Komfort für die Entwickelnden steigt.
+Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, und der Komfort bei der Entwicklung steigt.
 
 <hr>
 
