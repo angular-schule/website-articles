@@ -27,9 +27,9 @@ Ein Formularmodell kann zum Beispiel so definiert werden:
 
 ```ts
 bookForm = new FormGroup({
-    isbn: new FormControl(''),
-    title: new FormControl(''),
-    author: new FormControl('')
+  isbn: new FormControl(''),
+  title: new FormControl(''),
+  author: new FormControl('')
 });
 ```
 
@@ -74,11 +74,11 @@ Möchte man die neue Option *und* Validatoren setzen, müssen diese mit in das O
 
 ```ts
 new FormControl('', {
-    validators: [
-        Validators.required,
-        Validators.maxLength(15)
-    ],
-    initialValueIsDefault: true
+  validators: [
+    Validators.required,
+    Validators.maxLength(15)
+  ],
+  initialValueIsDefault: true
 })
 ```
 
@@ -101,18 +101,18 @@ Die Methode `getRawValue()` liefert also ein Objekt mit dem erwarteten Typ:
 
 ```ts
 bookForm = new FormGroup({
-    isbn: new FormControl('', {
-        initialValueIsDefault: true
-    }),
-    title: new FormControl(''),
-    author: new FormControl('')
+  isbn: new FormControl('', {
+    initialValueIsDefault: true
+  }),
+  title: new FormControl(''),
+  author: new FormControl('')
 });
 
 // Typ von bookForm.getRawValue()
 {
-    isbn: string;
-    title: string | null;
-    author: string | null;
+  isbn: string;
+  title: string | null;
+  author: string | null;
 }
 ```
 
@@ -123,16 +123,16 @@ Das bedeutet, dass alle Felder optional sind, also auch `undefined` inkludieren:
 ```ts
 // Typ von bookForm.value
 Partial<{
-    isbn: string;
-    title: string | null;
-    author: string | null;
+  isbn: string;
+  title: string | null;
+  author: string | null;
 }>
 
 // das entspricht:
 {
-    isbn?: string;
-    titl?: string | null;
-    author?: string | null;
+  isbn?: string;
+  titl?: string | null;
+  author?: string | null;
 }
 ```
 
@@ -146,13 +146,13 @@ Das funktioniert selbst mit zusammengesetzten Pfaden hervorragend -- *it's magic
 
 ```ts
 const form = new FormGroup({
-    title: new FormControl('', { initialValueIsDefault: true }),
-    authors: new FormArray([
-        new FormGroup({
-            firstname: new FormControl(''),
-            lastname: new FormControl(''),
-        })
-    ])
+  title: new FormControl('', { initialValueIsDefault: true }),
+  authors: new FormArray([
+    new FormGroup({
+      firstname: new FormControl(''),
+      lastname: new FormControl(''),
+    })
+  ])
 });
 ```
 
@@ -180,12 +180,12 @@ Selbstverständlich können wir den `FormBuilder` und die selbst erzeugten Klass
 import { NonNullableFormBuilder } from '@angular/forms';
 
 bookForm = new FormGroup({
-    isbn: new this.fb.control('', [
-        Validators.required,
-        Validators.maxLength(15)
-    ]),
-    title: this.fb.control(''),
-    author: this.fb.control('')
+  isbn: new this.fb.control('', [
+    Validators.required,
+    Validators.maxLength(15)
+  ]),
+  title: this.fb.control(''),
+  author: this.fb.control('')
 });
 
 constructor(private fb: NonNullableFormBuilder) {}
@@ -203,7 +203,7 @@ Wir können zur Laufzeit keine weiteren Controls hinzufügen oder durch andere C
 
 ```ts
 bookForm = new FormGroup({
-    isbn: new FormControl('')
+  isbn: new FormControl('')
 });
 
 bookForm.addControl('title', new FormControl('')) // FEHLER!
@@ -220,9 +220,9 @@ Das ist besonders dann sinnvoll, wenn Controls zur Laufzeit hinzugefügt oder en
 
 ```ts
 const checkboxGroup = new FormRecord({
-    acceptAGB: new FormControl(false),
-    acceptDSGVO: new FormControl(false),
-    subscribeNewsletter: new FormControl(true)
+  acceptAGB: new FormControl(false),
+  acceptDSGVO: new FormControl(false),
+  subscribeNewsletter: new FormControl(true)
 });
 
 checkboxGroup.addControl('acceptCOC', new FormControl(false)); // ✅
@@ -231,9 +231,7 @@ checkboxGroup.addControl('acceptCOC', new FormControl(false)); // ✅
 Bei der Typisierung des Values kommt TypeScript allerdings wieder an seine Grenzen: Die Namen/Keys der Felder können nicht statisch ermittelt werden und sind deshalb generisch mit `string` definiert:
 
 ```ts
-{
-    [key: string]: boolean | null;
-}
+{ [key: string]: boolean | null; }
 ```
 
 Rufen wir also z. B. mit `get()` ein Control ab, kann der eingegebene Key nicht von TypeScript geprüft werden.
@@ -266,7 +264,7 @@ Das Angular-Team hat einige lang ersehnte Wünsche der Community berücksichtigt
 Die neuen typisierten Bausteine für Reactive Forms bringen ein neues Level an Typsicherheit in die Anwendung.
 Aufwendige Prüfungen der Formularwerte zur Laufzeit können damit entfallen, und der Komfort für die Entwickelnden steigt.
 
-
+<hr>
 
 
 <small>**Titelbild:** Photo by <a href="https://unsplash.com/@unstable_affliction">Ivan Bandura</a> on <a href="https://unsplash.com/s/photos/rice-field">Unsplash</a> (edited)
