@@ -1,9 +1,9 @@
 ---
-title: Typed Reactive Forms
+title: 'Neu in Angular: Typisierte Reactive Forms'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-19
-last-change: 2022-05-18
+last-change: 2022-05-19
 keywords:
   - Angular
   - Angular 14
@@ -34,7 +34,7 @@ bookForm = new FormGroup({
 ```
 
 Über das Property `value` bzw. die Methode `getRawValue()` können wir den Wert des Formulars auslesen, um damit weiterzuarbeiten.
-Das Problem: Dieser Wert ist mit `any` typisiert!
+Das Problem: Bis Angular 13 ist dieser Wert ist mit `any` typisiert!
 
 ```ts
 this.bookForm.value // any
