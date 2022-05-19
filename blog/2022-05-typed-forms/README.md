@@ -41,8 +41,7 @@ this.bookForm.value // any
 this.bookForm.getRawValue() // any
 ```
 
-Dadurch kann es schnell passieren, dass Fehler in den erfassten Daten auftreten, die erst zur Laufzeit der Anwendung überhaupt auffallen.
-
+Dadurch kann es schnell passieren, dass Fehler in den erfassten Daten erst zur Laufzeit auffallen.
 Das Angular-Team hat sich dieses Problems nun angenommen: Ab Angular 14 kann das Formularmodell korrekt typisiert werden.
 
 ## Typed Forms
@@ -55,13 +54,13 @@ new FormControl('') // FormControl<string | null>
 new FormControl(5) // FormControl<number | null>
 ```
 
-Hier ist immer auch der Typ `null` inkludiert.
+Dabei ist immer auch der Typ `null` inkludiert.
 Der Hintergrund: Controls können mit der Methode `reset()` zurückgesetzt werden.
 Gibt man dabei keinen neuen Startwert an, wird der Wert standardmäßig auf `null` gesetzt.
 Um dieses aktuelle Verhalten nicht zu brechen, ist `null` im Typ immer enthalten.
 
-Wir können diese Eigenschaft umgehen: Bei der Initialisierung des FormControls setzen wir dazu die neue Option `initialValueIsDefault`.
-Das ändert das Reset-Verhalten des FormControls: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
+Wir können diese Eigenschaft umgehen: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault`.
+Das ändert das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
 Damit entfällt der Typ `null` und das `FormControl` besitzt nur noch den Typ `string`:
 
 
@@ -70,7 +69,7 @@ new FormControl('', { initialValueIsDefault: true }) // FormControl<string>
 ```
 
 Üblicherweise werden im zweiten Argument von `FormControl` die Validatoren notiert.
-Möchte man die neue Option *und* Validatoren setzen, müssen diese mit in das Optionsobjekt aufgenommen werden:
+Möchte man die neue Option *und* Validatoren setzen, müssen diese mit in das Optionsobjekt aufgenommen werden. Das gilt auch für asynchrone Validatoren:
 
 ```ts
 new FormControl('', {
@@ -78,6 +77,7 @@ new FormControl('', {
     Validators.required,
     Validators.maxLength(15)
   ],
+  asyncValidators: [checkISBNValidator]
   initialValueIsDefault: true
 })
 ```
@@ -96,7 +96,7 @@ Das vereinfacht die Arbeit mit den erzeugten Daten, weil die Typen den tatsächl
 
 ## FormGroup und FormArray
 
-Kombinieren wir mehrere Controls in einer `FormGroup` oder in einem `FormArray` wird der zusammengesetzte Typ automatisch inferiert.
+Kombinieren wir mehrere Controls in einer `FormGroup` oder in einem `FormArray`, wird der zusammengesetzte Typ automatisch inferiert.
 Die Methode `getRawValue()` liefert also ein Objekt mit dem erwarteten Typ:
 
 ```ts
@@ -118,7 +118,7 @@ bookForm = new FormGroup({
 
 Hier ist eine Einschränkung zu beachten: Das Property `value` und das Observable `valueChanges` geben nur die Werte der *aktivierten* Controls aus.
 Da das Typsystem nicht bestimmen kann, ob ein Feld aktiviert ist oder nicht, ist der Typ hier stets mit `Partial` definiert.
-Das bedeutet, dass alle Felder optional sind, also auch `undefined` inkludieren:
+Das bedeutet, dass alle Felder optional sind, also auch `undefined` beinhalten können:
 
 ```ts
 // Typ von bookForm.value
