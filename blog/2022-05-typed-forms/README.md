@@ -14,7 +14,7 @@ thumbnail: ./typedforms.jpg
 ---
 
 Mit Version 14 von Angular erscheint ein lang erwartetes Feature: *stark typisierte Formulare!*
-Bisher waren die Datenmodelle für Reactive Forms stets lose mit `any` typisiert -- das ändert sich nun.
+Bisher waren die Datenmodelle für Reactive Forms stets lose mit `any` typisiert – das ändert sich nun.
 In diesem Blogartikel stellen wir kurz die wichtigsten Eckpunkte vor.
 
 ## Untypisierte Formulare
@@ -59,8 +59,7 @@ Der Hintergrund: Controls können mit der Methode `reset()` zurückgesetzt werde
 Gibt man dabei keinen neuen Startwert an, wird der Wert standardmäßig auf `null` gesetzt.
 Damit für dieses bestehende Verhalten kein Breaking Change entsteht, ist `null` standardmäßig im Typ enthalten.
 
-In vielen Fällen wird dies nicht mit dem benötigten Datenmodell übereinstimmen. Daher können das Standardverhalten ändern: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault`.
-Diese Einstellung ändert das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
+In vielen Fällen wird dies nicht mit dem benötigten Datenmodell übereinstimmen. Daher können wir das Standardverhalten ändern: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault` und ändern so das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
 Damit entfällt der Typ `null` und das `FormControl` besitzt nur noch den Typ `string`:
 
 
@@ -116,7 +115,7 @@ bookForm = new FormGroup({
 }
 ```
 
-Hier ist eine Einschränkung zu beachten: Das Property `value` und das Observable `valueChanges` geben nur die Werte der *aktivierten* Controls aus. Wurde ein Control über `disable()` deaktiviert, so wird es komplett ignoriert -- sogar die Validatoren werden nicht mehr berücksichtigt.
+Hier ist eine Einschränkung zu beachten: Das Property `value` und das Observable `valueChanges` geben nur die Werte der *aktivierten* Controls aus. Wurde ein Control über `disable()` deaktiviert, so wird es komplett ignoriert – sogar die Validatoren werden nicht mehr berücksichtigt.
 Da das Typsystem nicht bestimmen kann, ob ein Control aktiviert ist oder nicht, ist der Typ hier stets mit `Partial` definiert.
 Das bedeutet, dass alle Felder optional sind, also auch `undefined` beinhalten können:
 
@@ -142,7 +141,7 @@ Ansonsten müssten wir den vollständigen Typ manuell hinter dem Property notier
 ## Controls abrufen mit `.get()`
 
 Mit der Methode `get()` können wir in eine `FormGroup` "hinabsteigen" und ein Control abrufen.
-Das funktioniert selbst mit zusammengesetzten Pfaden hervorragend -- *it's magic!*
+Das funktioniert selbst mit zusammengesetzten Pfaden hervorragend – *it's magic!*
 
 ```ts
 const form = new FormGroup({
