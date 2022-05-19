@@ -206,8 +206,8 @@ bookForm = new FormGroup({
   isbn: new FormControl('')
 });
 
-bookForm.addControl('title', new FormControl('')) // FEHLER!
-bookForm.setControl('isbn', new FormControl(5)) // FEHLER!
+bookForm.addControl('title', new FormControl('')) // ❌ FEHLER!
+bookForm.setControl('isbn', new FormControl(5)) // ❌ FEHLER!
 ```
 
 In diesem Fall müssen wir auf die untypisierte Variante `UntypedFormControl` (siehe unten) oder auf den neuen `FormRecord` zurückgreifen.
@@ -221,11 +221,10 @@ Das ist besonders dann sinnvoll, wenn Controls zur Laufzeit hinzugefügt oder en
 ```ts
 const checkboxGroup = new FormRecord({
   acceptAGB: new FormControl(false),
-  acceptDSGVO: new FormControl(false),
-  subscribeNewsletter: new FormControl(true)
+  acceptDSGVO: new FormControl(false)
 });
 
-checkboxGroup.addControl('acceptCOC', new FormControl(false)); // ✅
+checkboxGroup.addControl('subscribeNewsletter', new FormControl(false)); // ✅
 ```
 
 Bei der Typisierung des Values kommt TypeScript allerdings wieder an seine Grenzen: Die Namen/Keys der Felder können nicht statisch ermittelt werden und sind deshalb generisch mit `string` definiert:
