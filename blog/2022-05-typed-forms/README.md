@@ -76,7 +76,7 @@ new FormControl('', {
     Validators.required,
     Validators.maxLength(15)
   ],
-  asyncValidators: [checkISBNValidator]
+  asyncValidators: [checkISBNValidator],
   initialValueIsDefault: true
 })
 ```
