@@ -3,7 +3,7 @@ title: 'Typisierte Reactive Forms – neu ab Angular 14'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-19
-last-change: 2022-05-19
+last-change: 2022-05-23
 keywords:
   - Angular
   - Angular 14
@@ -59,13 +59,15 @@ Der Hintergrund: Controls können mit der Methode `reset()` zurückgesetzt werde
 Gibt man dabei keinen neuen Startwert an, wird der Wert standardmäßig auf `null` gesetzt.
 Damit für dieses bestehende Verhalten kein Breaking Change entsteht, ist `null` standardmäßig im Typ enthalten.
 
-In vielen Fällen wird dies nicht mit dem benötigten Datenmodell übereinstimmen. Daher können wir das Standardverhalten ändern: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `initialValueIsDefault` und ändern so das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
+In vielen Fällen wird dies nicht mit dem benötigten Datenmodell übereinstimmen. Daher können wir das Standardverhalten ändern: Bei der Initialisierung von `FormControl` setzen wir dazu die neue Option `nonNullable` und ändern so das Reset-Verhalten: Beim Zurücksetzen wird nicht `null` verwendet, sondern der ursprünglich definierte Startwert.
 Damit entfällt der Typ `null` und das `FormControl` besitzt nur noch den Typ `string`:
 
 
 ```ts
-new FormControl('', { initialValueIsDefault: true }) // FormControl<string>
+new FormControl('', { nonNullable: true }) // FormControl<string>
 ```
+
+> **⚠️ ACHTUNG:** In der ersten Umsetzung war die Option unter dem Namen `initialValueIsDefault` verfügbar. Mit dem finalen Release von Angular 14.0.0 wurde der Name in `nonNullable` umbenannt.
 
 Üblicherweise werden im zweiten Argument von `FormControl` die Validatoren notiert.
 Möchte man die neue Option *und* Validatoren setzen, müssen diese mit in das Optionsobjekt aufgenommen werden. Das gilt auch für asynchrone Validatoren:
@@ -77,7 +79,7 @@ new FormControl('', {
     Validators.maxLength(15)
   ],
   asyncValidators: [checkISBNValidator],
-  initialValueIsDefault: true
+  nonNullable: true
 })
 ```
 
@@ -87,10 +89,10 @@ Falls der Typ eines einzelnen FormControls nicht automatisch inferiert werden ka
 new FormControl<string | null>(null) // FormControl<string | null>
 ```
 
-Es ist zu erwarten, dass die Option `initialValueIsDefault` in einer späteren Version von Angular per Default auf `true` gesetzt wird, sodass für alle Controls standardmäßig der Startwert zum Reset verwendet wird (und nicht `null`).
+Es ist zu erwarten, dass die Option `nonNullable` in einer späteren Version von Angular per Default auf `true` gesetzt wird, sodass für alle Controls standardmäßig der Startwert zum Reset verwendet wird (und nicht `null`).
 Da es sich dabei allerdings um einen Breaking Change handelt, wird das Angular-Team eine solche Änderung mit großer Vorsicht und einer Übergangsfrist durchführen müssen.
 
-Entwickeln Sie ein Formular "auf der grünen Wiese", empfehlen wir Ihnen, die Option `initialValueIsDefault` für jedes Control auf `true` zu setzen.
+Entwickeln Sie ein Formular "auf der grünen Wiese", empfehlen wir Ihnen, die Option `nonNullable` für jedes Control auf `true` zu setzen.
 Das vereinfacht die Arbeit mit den erzeugten Daten, weil die Typen den tatsächlichen Eingabewert widerspiegeln. Ein normales Input-Feld erzeugt zum Beispiel stets einen leeren String bzw. einen String mit Werten. Der Wert `null` beschäftigt uns hier tatsächlich nur beim Zurücksetzen des Formulars.
 
 ## FormGroup und FormArray
@@ -101,7 +103,7 @@ Die Methode `getRawValue()` liefert also ein Objekt mit dem erwarteten Typ:
 ```ts
 bookForm = new FormGroup({
   isbn: new FormControl('', {
-    initialValueIsDefault: true
+    nonNullable: true
   }),
   title: new FormControl(''),
   author: new FormControl('')
@@ -145,7 +147,7 @@ Das funktioniert selbst mit zusammengesetzten Pfaden hervorragend – *it's magi
 
 ```ts
 const form = new FormGroup({
-  title: new FormControl('', { initialValueIsDefault: true }),
+  title: new FormControl('', { nonNullable: true }),
   authors: new FormArray([
     new FormGroup({
       firstname: new FormControl(''),
@@ -166,13 +168,13 @@ form.get('authors.0.firstname')
 
 ## NonNullableFormBuilder verwenden
 
-Wenn wir in einem komplexen Formular jedes Control mit der Option `initialValueIsDefault` versehen, wächst das Formularmodell stark an und wird unübersichtlich.
+Wenn wir in einem komplexen Formular jedes Control mit der Option `nonNullable` versehen, wächst das Formularmodell stark an und wird unübersichtlich.
 
 Um ohne viel Tipparbeit ein `FormControl` zu erzeugen, können wir deshalb den `FormBuilder` nutzen.
 Diese Klasse bietet verschiedene Methoden an, um Formularmodelle schnell und kurz zu erzeugen.
 Ab Angular 14 existiert eine zweite Variante: der `NonNullableFormBuilder`.
 
-Damit können wir typisierte Controls erzeugen, in denen die Option `initialValueIsDefault` sofort auf `true` gesetzt ist.
+Damit können wir typisierte Controls erzeugen, in denen die Option `nonNullable` sofort auf `true` gesetzt ist.
 Selbstverständlich können wir den `FormBuilder` und die selbst erzeugten Klasseninstanzen in unserem Formularmodell kombinieren:
 
 ```ts
