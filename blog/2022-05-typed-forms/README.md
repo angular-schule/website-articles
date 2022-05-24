@@ -181,7 +181,7 @@ Selbstverständlich können wir den `FormBuilder` und die selbst erzeugten Klass
 import { NonNullableFormBuilder } from '@angular/forms';
 
 bookForm = new FormGroup({
-  isbn: new this.fb.control('', [
+  isbn: this.fb.control('', [
     Validators.required,
     Validators.maxLength(15)
   ]),
