@@ -18,6 +18,8 @@ In diesem Artikel geben wir einen Überblick und zeigen, wie Sie die neuen Featu
 
 > Wichtig: Die Standalone Features sind derzeit in *Developer Preview*. Die Schnittstelle kann sich also noch ändern, bevor das Feature als stable veröffentlicht wird.
 
+## NgModule und Standalone Components
+
 Angular-Module mit NgModule sind ein fester Bestandteil des Frameworks, um Anwendungen zu strukturieren. Mithilfe von Modulen können wir vor allem Features und andere zusammenhängende Teile von Apps strukturieren. Damit eine Komponente verwendet werden kann, muss sie immer in einem Modul deklariert werden – aber nur in genau einem.
 Diese Bündelung birgt aber immer wieder praktische Probleme, wenn es um Wiederverwendbarkeit von Komponenten, Pipes und Direktiven geht. Häufig steckt man diese Dinge in ein globales SharedModule, das überall dort importiert wird, wo eine Wiederverwendbarkeit Komponente benötigt wird. Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert. Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
 In der Praxis setzen viele deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als SCAM bekannt: Single-Component Angular Module.
@@ -27,58 +29,101 @@ Nun wurde dieses Thema direkt vom Angular-Team angegangen: Seit Angular 14 sind 
 Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, muss nicht in einem Modul deklariert werden, sondern kann alleinstehend verwendet werden.
 Dadurch werden Module mit NgModule optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
 
-Wir beschäftigen uns im Folgenden vor allem mit Komponenten. Standalone Features funktionieren allerdings auch für Pipes und Direktiven.
+Wir beschäftigen uns im Folgenden vor allem mit Komponenten. Die Standalone Features funktionieren genauso auch für Pipes und Direktiven.
 
 ## Standalone Components verwenden
 
-Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir das passende Flag im Decorator der Klasse:
+Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir das passende Flag `standalone` im Decorator der Klasse:
 
 ```ts
-CODE standalone 
+@Component({
+  selector: 'br-dashboard',
+  standalone: true,
+  // ...
+})
+export class DashboardComponent {}
 ```
 
 Diese Einstellung können wir auch sofort beim Generieren der Komponente mit der Angular CLI angeben:
 
 ```bash
-CODE CLI STANDALONE
+ng g component dashboard --standalone
 ```
 
 Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie importieren. Eine andere Standalone Component kann dafür in ihren Metadaten Imports definieren. Auf diese Weise erklären die Komponenten selbst, welche anderen Teile der Anwendung sie in ihrem Template verwenden möchten.
 
 ```ts
-CODE Imports
+@Component({
+  selector: 'br-root',
+  standalone: true,
+  imports: [DashboardComponent]
+  // ...
+})
+export class AppComponent {}
 ```
 
-Das sieht zunächst etwas aufwendiger, allerdings profitiert die Struktur der Anwendung stark davon:    Die tatsächlichen Beziehungen zwischen Komponenten sind so noch klarer auf den ersten Blick erkennbar.
+Das sieht zunächst etwas aufwendiger aus, allerdings profitiert die Struktur der Anwendung stark davon: Die tatsächlichen Beziehungen zwischen Komponenten sind so noch klarer auf den ersten Blick erkennbar.
 
 ## Kombination mit NgModules
 
-Beim Design von Standalone Components wurde sehr viel Wert auf die Abwärtskompatibilität gelegt. Standalone Components und NgModule können deshalb in Kombination genutzt werden.
+Beim Design von Standalone Components wurde sehr viel Wert auf die Abwärtskompatibilität gelegt.
+Standalone Components und NgModule können deshalb in Kombination genutzt werden.
 Eine Standalone Component wird dafür in das Modul importiert, so als wäre sie ein eigenes Modul. Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
 
 ```ts
-CODE NgModule Imports
+@NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+
+    DashboardComponent
+  ],
+  // ...
+})
+export class AppModule {}
 ```
 
-Genauso kann eine Standalone Component selbst Module importieren, deren Bestandteile sie in ihrem Template nutzen möchte. Das ist insbesondere für das CommonModule wichtig, das die eingebauten Pipes und Direktiven wie ngIf mitbringt:
+Genauso kann eine Standalone Component selbst Module importieren, deren Bestandteile sie in ihrem Template nutzen möchte.
+Das ist insbesondere für das `CommonModule` wichtig, das die eingebauten Pipes und Direktiven wie `ngIf` mitbringt:
 
 ```ts
-CODE Component Import Module
+@Component({
+  selector: 'br-dashboard',
+  standalone: true,
+  imports: [CommonModule, BooksSharedModule]
+  // ...
+})
+export class DashboardComponent {}
 ```
 
-Um mehrere Komponenten, Pipes und Direktiven gemeinsam zu verwenden, können diese als Array exportiert und importiert werden.
+Um mehrere Komponenten, Pipes und Direktiven gemeinsam einzubinden, können diese als Array exportiert und importiert werden.
 So kann z. B. eine Bibliothek all jene Direktiven zusammen exportieren, die auch gemeinsam genutzt werden müssen. So erhält man einen ähnlichen Komfort wie mit einem NgModule, das mehrere Dinge exportiert.
 
 ```ts
-CODE EXPORT ARRAY
+export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
+```
+
+```ts
+@Component({
+  selector: 'br-dashboard',
+  standalone: true,
+  imports: [SHARED_THINGS]
+  // ...
+})
+export class DashboardComponent {}
 ```
 
 ## AppComponent direkt bootstrappen
 
-Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale AppModule entfernen. Dafür wird direkt die erste Komponente gebootstrappt (in der Regel die AppComponent), anstatt ein ganzes Modul zu laden. In der Datei main.ts nutzen wir dazu die neue Funktion bootstrapApplication:
+Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale AppModule entfernen. Dafür wird direkt die erste Komponente gebootstrappt (in der Regel die `AppComponent`), anstatt ein ganzes Modul zu laden. In der Datei `main.ts` nutzen wir dazu die neue Funktion bootstrapApplication:
 
 ```ts
-CODE bootstrap
+import { bootstrapApplication } from '@angular/core';
+import { AppComponent } from './app/app.component';
+
+// main.ts
+bootstrapApplication(AppComponent)
+  .catch(e => console.error(e));
 ```
 
 
@@ -122,5 +167,4 @@ Für wiederverwendbare Komponenten lohnt es sich ggf., die Standalone Components
 <hr>
 
 
-<small>**Titelbild:** TODO
-  </small>
+<small>**Titelbild:** TODO</small>
