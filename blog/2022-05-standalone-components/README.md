@@ -20,18 +20,24 @@ In diesem Artikel geben wir einen Überblick und zeigen, wie Sie das neue Featur
 
 ## NgModule und Standalone Components
 
-Angular-Module mit NgModule sind ein fester Bestandteil des Frameworks, um Anwendungen zu strukturieren. Mithilfe von Modulen können wir vor allem Features und andere zusammenhängende Teile von Apps strukturieren. Damit eine Komponente verwendet werden kann, muss sie immer in einem Modul deklariert werden – aber nur in genau einem.
-Diese Bündelung birgt aber immer wieder praktische Probleme, wenn es um Wiederverwendbarkeit von Komponenten, Pipes und Direktiven geht. Häufig steckt man diese Dinge in ein globales SharedModule, das überall dort importiert wird, wo eine Wiederverwendbarkeit Komponente benötigt wird. Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert. Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
-In der Praxis setzen viele deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als SCAM bekannt: Single-Component Angular Module.
+Angular-Module mit NgModule sind ein fester Bestandteil des Frameworks, um Anwendungen zu strukturieren. Mithilfe von Modulen können wir vor allem fachliche Features und andere zusammenhängende Teile von Apps strukturieren.
+Damit eine Komponente verwendet werden kann, muss sie immer in einem Modul deklariert werden – aber nur in genau einem.
+Diese Bündelung birgt immer wieder praktische Probleme, wenn es um Wiederverwendbarkeit von Komponenten, Pipes und Direktiven geht.
+Häufig steckt man diese Dinge in ein globales `SharedModule`, das überall dort importiert wird, wo eine wiederverwendbare Komponente benötigt wird.
+Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert.
+Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
+In der Praxis setzen viele Entwicklerinnen und Entwickler deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als *SCAM* bekannt: *Single-Component Angular Module*.
 Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
 
-Nun wurde dieses Thema direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten Standalone Components als Developer Preview verfügbar!
+Nun wurde dieses Thema direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Features* als Developer Preview verfügbar!
 Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, muss nicht in einem Modul deklariert werden, sondern kann alleinstehend verwendet werden.
 Dadurch werden Module mit NgModule optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
 
-Wir beschäftigen uns im Folgenden vor allem mit Komponenten. Die Standalone Features funktionieren genauso auch für Pipes und Direktiven.
 
 ## Standalone Components verwenden
+
+> Die neuen Standalone Features funktionieren gleichermaßen für Komponenten, Pipes und Direktiven.
+> Der Einfachheit halber beschäftigen wir uns im Folgenden aber nur mit Komponenten.
 
 Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir das passende Flag `standalone` im Decorator der Klasse:
 
@@ -50,7 +56,7 @@ Diese Einstellung können wir auch sofort beim Generieren der Komponente mit der
 ng g component dashboard --standalone
 ```
 
-Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie importieren. Eine andere Standalone Component kann dafür in ihren Metadaten Imports definieren. Auf diese Weise erklären die Komponenten selbst, welche anderen Teile der Anwendung sie in ihrem Template verwenden möchten.
+Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie importieren. Eine andere Standalone Component kann dafür in ihren Metadaten Imports definieren. Auf diese Weise erklärt die Komponente selbst, welche anderen Teile der Anwendung sie in ihrem Template verwenden möchte.
 
 ```ts
 @Component({
@@ -67,8 +73,8 @@ Das sieht zunächst etwas aufwendiger aus, allerdings profitiert die Struktur de
 ## Kombination mit NgModules
 
 Beim Design von Standalone Components wurde sehr viel Wert auf die Abwärtskompatibilität gelegt.
-Standalone Components und NgModule können deshalb in Kombination genutzt werden.
-Eine Standalone Component wird dafür in das Modul importiert, so als wäre sie ein eigenes Modul. Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
+Standalone Components und NgModules können deshalb in Kombination genutzt werden.
+Eine Standalone Component wird dafür in ein NgModule importiert, so als wäre sie ein eigenes Modul. Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
 
 ```ts
 @NgModule({
@@ -98,7 +104,8 @@ export class DashboardComponent {}
 ```
 
 Um mehrere Komponenten, Pipes und Direktiven gemeinsam einzubinden, können diese als Array exportiert und importiert werden.
-So kann z. B. eine Bibliothek all jene Direktiven zusammen exportieren, die auch gemeinsam genutzt werden müssen. So erhält man einen ähnlichen Komfort wie mit einem NgModule, das mehrere Dinge exportiert.
+Zum Beispiel kann eine Bibliothek all jene Direktiven zusammen exportieren, die auch gemeinsam genutzt werden sollen.
+Auf diese Weise erhält man einen ähnlichen Komfort wie mit einem NgModule, das mehrere Dinge exportiert.
 
 ```ts
 export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
@@ -132,11 +139,10 @@ bootstrapApplication(AppComponent)
 
 ## Providers in Modulen
 
+> Für Services in der Anwendung werden in der Regel *Tree-Shakable Providers* verwendet, indem die Klasse mit `providedIn` markiert wird. Die folgenden Infos treffen nur auf Providers zu, die bisher direkt im `AppModule` unter `providers` angegeben wurden.
+
 Neben Komponenten, Pipes und Direktiven können Module verschiedene Providers für die Dependency Injection bereitstellen.
-
-> Für Services in der Anwendung werden in der Regel *Tree-Shakable Providers*  verwendet, indem die Klasse mit `providedIn` markiert wird. Die folgenden Infos treffen nur auf Providers zu, die zuvor direkt im `AppModule` unter `providers` angegeben wurden.
-
-An dieser Stelle wird es etwas komplizierter, denn auch Providers werden eigenständig bereitgestellt.
+An dieser Stelle wird es etwas komplizierter, denn auch Providers werden nun eigenständig behandelt.
 Dafür können wir in der Funktion `bootstrapApplication()` ein Array von Providers angeben.
 Das Ergebnis ist das gleiche, als hätten wir die Providers im `AppModule` hinterlegt.
 
@@ -148,11 +154,11 @@ bootstrapApplication(AppComponent, {
 }).catch(err => console.error(err));
 ```
 
-Importieren wir über den Decorator einer Komponente ein Modul, das Providers beinhaltet, so werden diese für die Komponente und den darunterliegenden Baum bereitgestellt.
+Importieren wir über den Decorator einer Komponente ein Modul, das Providers beinhaltet, so werden diese für die aktuelle und alle darunterliegenden Komponenten bereitgestellt.
 Auch die Eigenschaft `providers` im `Component`-Decorator funktioniert weiterhin ohne Veränderungen.
 
 Möchte man nur die Providers eines Moduls extrahieren und bereitstellen, kann die neue Funktion `importProvidersFrom()` genutzt werden.
-Die im Modul enthaltenen Komponenten, Pipes und Direktiven werden ignoriert.
+Die im Modul enthaltenen Komponenten, Pipes und Direktiven werden dabei ignoriert.
 Das ist besonders praktisch, wenn Module angefordert werden sollen, die ausschließlich Providers beinhalten, z. B. das `HttpClientModule` oder das `EffectsModule` von NgRx.
 
 ```ts
@@ -169,9 +175,9 @@ bootstrapApplication(AppComponent, {
 ## Projektstruktur
 
 Strukturieren wir die Anwendung mit NgModules, so wird jedes Modul in einem eigenen Unterordner generiert.
-Auch bisher empfehlen wir, abgrenzbare Features in eigenen Modulen (oder sogar eigenen Bibliotheken) zu strukturieren, die im Dateisystem sauber voneinander getrennt sind.
+Auch bisher empfehlen wir, abgrenzbare fachliche Features in eigenen Modulen (oder sogar eigenen Bibliotheken) zu strukturieren, die im Dateisystem sauber voneinander getrennt sind.
 
-Auch ohne Module ist diese Architekturidee weiterhin anwendbar:
+Ohne Module ist diese Architekturidee weiterhin anwendbar:
 Teile der Anwendung, die ein zusammenhängendes fachliches Feature sind, sollten in einem gemeinsamen Ordner untergebracht werden.
 Diese Feature-Ordner oder -Bibliotheken sollten möglichst "flach" im Dateisystem strukturiert werden, also ohne eine tiefe Verschachtelung.
 
@@ -218,7 +224,7 @@ bootstrapApplication(AppComponent, {
 
 ## Direktiven des Routers nutzen
 
-Wenn wir im Template einer Standalone-Komponente die Direktiven des Routers nutzen wollen, z. B. `RouterLink` oder `RouterOutlet`, müssen wir das `RouterModule` importieren.
+Wenn wir im Template einer Standalone-Komponente die Direktiven des Routers nutzen wollen, z. B. `RouterLink` oder `RouterOutlet`, müssen wir das `RouterModule` dort importieren.
 
 ```ts
 @Component({
@@ -234,10 +240,10 @@ export class AppComponent {}
 
 Beim Lazy Loading mit dem Router werden für eine definierte Basisroute die Kindrouten aus einem anderen Modul nachgeladen.
 Dieses zu ladende Kindmodul wird in ein eigenes Bundle verpackt, das erst zur Laufzeit asynchron nachgeladen wird.
-Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden:
+Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden. `loadChildren` verweist auf ein Feature-Modul:
 
 ```ts
-// mit NgModule
+// mit NgModule!
 {
   path: 'books',
   loadChildren: () => import('./books/books.module').then(m => m.BooksModule)
@@ -278,7 +284,8 @@ Um eine Komponente zu laden, nutzen wir `loadComponent`:
 }
 ```
 
-Prinzipiell funktioniert es also so, als würden wir die Komponente über `component` direkt in der Route angeben. Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route geladen wird.
+Prinzipiell funktioniert es also so, als würden wir die Komponente über `component` direkt in der Route angeben.
+Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route geladen wird.
 
 
 <hr>
