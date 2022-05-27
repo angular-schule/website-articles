@@ -28,12 +28,12 @@ Diese Bündelung birgt immer wieder praktische Probleme, wenn es um Wiederverwen
 Häufig steckt man diese Dinge in ein globales `SharedModule`, das überall dort importiert wird, wo eine wiederverwendbare Komponente benötigt wird.
 Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert.
 Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
-In der Praxis setzen viele Entwicklerinnen und Entwickler deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als *SCAM* bekannt: *Single-Component Angular Module*.
+In der Praxis setzen einige Entwicklerinnen und Entwickler deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als *SCAM* bekannt (*Single-Component Angular Module*).
 Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
 
 Nun wurde dieses Thema direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Features* als Developer Preview verfügbar!
-Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, muss nicht in einem Modul deklariert werden, sondern kann alleinstehend verwendet werden.
-Dadurch werden Module mit NgModule optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
+Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, wird nicht in einem Modul deklariert, sondern wird alleinstehend verwendet.
+Dadurch werden NgModules optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
 
 
 ## Standalone Components verwenden
@@ -52,13 +52,15 @@ Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir d
 export class DashboardComponent {}
 ```
 
+Dadurch wird die Komponente unabhängig von Modulen.
 Diese Einstellung können wir auch sofort beim Generieren der Komponente mit der Angular CLI angeben:
 
 ```bash
 ng g component dashboard --standalone
 ```
 
-Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie importieren. Eine andere Standalone Component kann dafür in ihren Metadaten Imports definieren. Auf diese Weise erklärt die Komponente selbst, welche anderen Teile der Anwendung sie in ihrem Template verwenden möchte.
+Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie dort importieren, wo sie benötigt wird.
+Eine andere Standalone Component kann dafür in ihren Metadaten Imports definieren. Auf diese Weise erklärt die Komponente selbst, welche anderen Teile der Anwendung sie in ihrem Template verwenden möchte:
 
 ```ts
 @Component({
@@ -71,6 +73,7 @@ export class AppComponent {}
 ```
 
 Das sieht zunächst etwas aufwendiger aus, allerdings profitiert die Struktur der Anwendung stark davon: Die tatsächlichen Beziehungen zwischen Komponenten sind so noch klarer auf den ersten Blick erkennbar.
+
 
 ## Kombination mit NgModules
 
@@ -292,10 +295,11 @@ Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren 
 
 <hr>
 
+
 Die neuen Standalone Features von Angular beseitigen den Overhead, der durch NgModules verursacht wurde.
 Jede Komponente importiert genau die Dinge, die sie selbst in ihrem Template nutzen möchte.
 Die Sichtbarkeit wird also nicht über die Zugehörigkeit zu einem Modul geregelt, sondern durch den Import.
-Die Struktur von Anwendungen wird dadurch leichter verständlich, weil das gesamte Wissen über die Abhängigkeiten in der Komponente liegt.
+Die Struktur der Anwendung wird dadurch leichter verständlich, weil das gesamte Wissen über die Abhängigkeiten in der Komponente liegt.
 
 Die neue Herangehensweise an die Angular-Entwicklung ist ein großer Bruch. Es wird einige Zeit dauern, bis sich die neuen Patterns und Architekturen etabliert haben.
 NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sicher in der Community angekommen sind.
