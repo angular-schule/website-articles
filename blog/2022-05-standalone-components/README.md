@@ -9,6 +9,8 @@ keywords:
   - Angular 14
   - NgModule
   - Standalone Components
+  - Standalone Pipes
+  - Standalone Directives
 language: de
 thumbnail: ./standalone.jpg
 ---
