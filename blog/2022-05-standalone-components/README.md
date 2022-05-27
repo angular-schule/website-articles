@@ -1,5 +1,5 @@
 ---
-title: 'Standalone Features – neu ab Angular 14'
+title: 'Standalone Components – neu ab Angular 14'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-28
