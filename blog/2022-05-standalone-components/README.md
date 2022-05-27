@@ -79,14 +79,17 @@ Das sieht zunächst etwas aufwendiger aus, allerdings profitiert die Struktur de
 
 Beim Design von Standalone Components wurde sehr viel Wert auf die Abwärtskompatibilität gelegt.
 Standalone Components und NgModules können deshalb in Kombination genutzt werden.
-Eine Standalone Component wird dafür in ein NgModule importiert, so als wäre sie ein eigenes Modul. Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
+Eine Standalone Component kann dafür auch unter `imports` in einem NgModule eingetragen, so als wäre sie ein eigenes Modul. (Tatsächlich besitzt die Komponente natürlich kein Modul, denn sie ist ja standalone.)
+Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
 
 ```ts
 @NgModule({
   imports: [
+    // Andere Module
     BrowserModule,
     AppRoutingModule,
 
+    // Standalone Components
     DashboardComponent
   ],
   // ...
@@ -100,17 +103,16 @@ Beim Generieren einer Komponente mit der Angular CLI wird deshalb immer schon da
 
 ```ts
 @Component({
-  selector: 'app-dashboard',
+  // ...
   standalone: true,
   imports: [CommonModule, BooksSharedModule]
-  // ...
 })
 export class DashboardComponent {}
 ```
 
 Um mehrere Komponenten, Pipes und Direktiven gemeinsam einzubinden, können diese als Array exportiert und importiert werden.
 Zum Beispiel kann eine Bibliothek all jene Direktiven zusammen exportieren, die auch gemeinsam genutzt werden sollen.
-Auf diese Weise erhält man einen ähnlichen Komfort wie mit einem NgModule, das mehrere Dinge exportiert.
+Auf diese Weise erhält man einen ähnlichen Komfort wie mit einem NgModule, das mehrere Dinge zur Nutzung bereitstellt.
 
 ```ts
 export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
@@ -118,10 +120,9 @@ export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
 
 ```ts
 @Component({
-  selector: 'app-dashboard',
+  // ...
   standalone: true,
   imports: [SHARED_THINGS]
-  // ...
 })
 export class DashboardComponent {}
 ```
@@ -129,7 +130,7 @@ export class DashboardComponent {}
 ## AppComponent direkt bootstrappen
 
 Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale `AppModule` entfernen.
-Stattdessen wird direkt die erste Komponente gebootstrappt (in der Regel die `AppComponent`).
+Stattdessen wird direkt die Wurzelkomponente gebootstrappt (in der Regel die `AppComponent`).
 In der Datei `main.ts` nutzen wir dazu die neue Funktion `bootstrapApplication()`:
 
 ```ts
@@ -162,7 +163,7 @@ bootstrapApplication(AppComponent, {
 Importieren wir über den Decorator einer Komponente ein Modul, das Providers beinhaltet, so werden diese für die aktuelle und alle darunterliegenden Komponenten bereitgestellt.
 Auch die Eigenschaft `providers` im `Component`-Decorator funktioniert weiterhin ohne Veränderungen.
 
-Möchte man nur die Providers eines Moduls extrahieren und bereitstellen, kann die neue Funktion `importProvidersFrom()` genutzt werden.
+Möchte man nur die Providers eines Moduls extrahieren und global bereitstellen, kann die neue Funktion `importProvidersFrom()` genutzt werden.
 Die im Modul enthaltenen Komponenten, Pipes und Direktiven werden dabei ignoriert.
 Das ist besonders praktisch, wenn Module angefordert werden sollen, die ausschließlich Providers beinhalten, z. B. das `HttpClientModule` oder das `EffectsModule` von NgRx.
 
