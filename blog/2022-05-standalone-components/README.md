@@ -8,7 +8,7 @@ keywords:
   - Angular
   - Angular 14
   - NgModule
-  Standalone Components
+  - Standalone Components
 language: de
 thumbnail: ./standalone.jpg
 ---
@@ -37,7 +37,7 @@ Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir d
 
 ```ts
 @Component({
-  selector: 'br-dashboard',
+  selector: 'app-dashboard',
   standalone: true,
   // ...
 })
@@ -54,7 +54,7 @@ Damit die Komponente nun tatsächlich genutzt werden kann, müssen wir sie impor
 
 ```ts
 @Component({
-  selector: 'br-root',
+  selector: 'app-root',
   standalone: true,
   imports: [DashboardComponent]
   // ...
@@ -88,7 +88,7 @@ Das ist insbesondere für das `CommonModule` wichtig, das die eingebauten Pipes 
 
 ```ts
 @Component({
-  selector: 'br-dashboard',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule, BooksSharedModule]
   // ...
@@ -105,7 +105,7 @@ export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
 
 ```ts
 @Component({
-  selector: 'br-dashboard',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [SHARED_THINGS]
   // ...
