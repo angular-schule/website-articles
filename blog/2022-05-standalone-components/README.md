@@ -84,7 +84,8 @@ export class AppModule {}
 ```
 
 Genauso kann eine Standalone Component selbst Module importieren, deren Bestandteile sie in ihrem Template nutzen möchte.
-Das ist insbesondere für das `CommonModule` wichtig, das die eingebauten Pipes und Direktiven wie `ngIf` mitbringt:
+Das ist insbesondere für das `CommonModule` wichtig, das die eingebauten Pipes und Direktiven wie `ngIf` mitbringt.
+Beim Generieren einer Komponente mit der Angular CLI wird deshalb immer schon das `CommonModule` standardmäßig importiert.
 
 ```ts
 @Component({
@@ -115,53 +116,182 @@ export class DashboardComponent {}
 
 ## AppComponent direkt bootstrappen
 
-Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale AppModule entfernen. Dafür wird direkt die erste Komponente gebootstrappt (in der Regel die `AppComponent`), anstatt ein ganzes Modul zu laden. In der Datei `main.ts` nutzen wir dazu die neue Funktion bootstrapApplication:
+Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale `AppModule` entfernen.
+Stattdessen wird direkt die erste Komponente gebootstrappt (in der Regel die `AppComponent`).
+In der Datei `main.ts` nutzen wir dazu die neue Funktion `bootstrapApplication()`:
 
 ```ts
-import { bootstrapApplication } from '@angular/core';
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 
-// main.ts
 bootstrapApplication(AppComponent)
-  .catch(e => console.error(e));
+  .catch(err => console.error(err));
 ```
 
 
 ## Providers in Modulen
 
 Neben Komponenten, Pipes und Direktiven können Module verschiedene Providers für die Dependency Injection bereitstellen.
-An dieser Stelle wird es etwas komplizierter, denn Providers sind nicht mehr an Module gekoppelt, sondern werden eigenständig bereitgestellt.
-Dafür können wir in der Funktion bootstrapApplication() die Provider angeben, z. B. um den Router zu konfigurieren.
+
+> Für Services in der Anwendung werden in der Regel *Tree-Shakable Providers*  verwendet, indem die Klasse mit `providedIn` markiert wird. Die folgenden Infos treffen nur auf Providers zu, die zuvor direkt im `AppModule` unter `providers` angegeben wurden.
+
+An dieser Stelle wird es etwas komplizierter, denn auch Providers werden eigenständig bereitgestellt.
+Dafür können wir in der Funktion `bootstrapApplication()` ein Array von Providers angeben.
+Das Ergebnis ist das gleiche, als hätten wir die Providers im `AppModule` hinterlegt.
 
 ```ts
-CODE providers
+bootstrapApplication(AppComponent, {
+  providers: [
+    { provide: MY_SETTING, useValue: 'my value' }
+  ]
+}).catch(err => console.error(err));
+```
+
+Importieren wir über den Decorator einer Komponente ein Modul, das Providers beinhaltet, so werden diese für die Komponente und den darunterliegenden Baum bereitgestellt.
+Auch die Eigenschaft `providers` im `Component`-Decorator funktioniert weiterhin ohne Veränderungen.
+
+Möchte man nur die Providers eines Moduls extrahieren und bereitstellen, kann die neue Funktion `importProvidersFrom()` genutzt werden.
+Die im Modul enthaltenen Komponenten, Pipes und Direktiven werden ignoriert.
+Das ist besonders praktisch, wenn Module angefordert werden sollen, die ausschließlich Providers beinhalten, z. B. das `HttpClientModule` oder das `EffectsModule` von NgRx.
+
+```ts
+import { importProvidersFrom } from '@angular/core';
+// ...
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule)
+  ]
+}).catch(err => console.error(err));
+```
+
+## Projektstruktur
+
+Strukturieren wir die Anwendung mit NgModules, so wird jedes Modul in einem eigenen Unterordner generiert.
+Auch bisher empfehlen wir, abgrenzbare Features in eigenen Modulen (oder sogar eigenen Bibliotheken) zu strukturieren, die im Dateisystem sauber voneinander getrennt sind.
+
+Auch ohne Module ist diese Architekturidee weiterhin anwendbar:
+Teile der Anwendung, die ein zusammenhängendes fachliches Feature sind, sollten in einem gemeinsamen Ordner untergebracht werden.
+Diese Feature-Ordner oder -Bibliotheken sollten möglichst "flach" im Dateisystem strukturiert werden, also ohne eine tiefe Verschachtelung.
+
+Für gemeinsam genutzte Teile war bisher immer ein `SharedModule` notwendig, das Komponenten, Pipes und Direktiven bereitstellt.
+Werden diese Teile nun als Standalone deklariert, ist der tatsächliche Ort im Dateisystem unerheblich.
+Entscheidend ist, wer welche Teile importiert.
+
+Kurz: Die Ideen zur Ordnerstruktur der Anwendung bleiben erhalten, auch wenn Standalone Components genutzt werden.
+
+
+## Routing
+
+Um den Router zu konfigurieren, musste bisher das `RouterModule` importiert werden.
+Neben den Direktiven wie `RouterLink` stellt das Modul auch Services bereit, z. B. `Router` oder `ActivatedRoute`.
+Diese beiden Bestandteile müssen nun getrennt behandelt werden.
+
+
+### Routen bereitstellen
+
+Zunächst müssen wir in der Datei `main.ts` das `RouterModule` mit der Methode `forRoot()` importieren.
+Dadurch werden die Providers und Root-Routen bereitgestellt.
+Wir empfehlen, die Routendefinitionen weiterhin in einer separaten Datei unterhalb des Ordners `src/app` aufzubewahren:
+
+```ts
+// app.routes.ts
+export const appRoutes: Routes = [
+  { path: 'books', component: DashboardComponent },
+  { path: 'books/:isbn', component: BookDetailsComponent },
+];
+```
+
+```ts
+// main.ts
+// ...
+import { appRoutes } from './app/app.routes';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(RouterModule.forRoot(appRoutes)),
+  ]
+}).catch(err => console.error(err));
 ```
 
 
-Auch für Lazy Loading ergeben sich Änderungen, denn die zu ladenden Komponenten sind nun nicht mehr in einem Modul gebündelt. Stattdessen verweisen wir bei der Definition der Basisroute für das Lazy Loading direkt auf eine zu ladende Standalone Component.
+## Direktiven des Routers nutzen
+
+Wenn wir im Template einer Standalone-Komponente die Direktiven des Routers nutzen wollen, z. B. `RouterLink` oder `RouterOutlet`, müssen wir das `RouterModule` importieren.
 
 ```ts
-TODO
-CODE Lazy Loading
+@Component({
+  // ...
+  standalone: true,
+  imports: [CommonModule, RouterModule]
+})
+export class AppComponent {}
 ```
 
-Für existierende Module mit Providers gibt es die neue Funktion importProvidersFrom(), mit der wir die Providers aus dem Modul extrahieren können.
+
+## Lazy Loading
+
+Beim Lazy Loading mit dem Router werden für eine definierte Basisroute die Kindrouten aus einem anderen Modul nachgeladen.
+Dieses zu ladende Kindmodul wird in ein eigenes Bundle verpackt, das erst zur Laufzeit asynchron nachgeladen wird.
+Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden:
 
 ```ts
-CODE importProvidersFrom 
+// mit NgModule
+{
+  path: 'books',
+  loadChildren: () => import('./books/books.module').then(m => m.BooksModule)
+}
 ```
 
+
+Mit Standalone Components funktioniert dieses Konzept sehr ähnlich – nur ohne Module.
+Wir definieren ebenfalls in den App-Routen eine Basisroute.
+Die Eigenschaft `loadChildren` gibt nun allerdings nur ein Array von Routen zurück:
+
+
+```ts
+// books/books.routes.ts
+export const booksRoutes: Routes = [
+  { path: '', component: DashboardComponent },
+  { path: ':isbn', component: BookDetailsComponent },
+];
+```
+
+```ts
+// app.routes.ts
+// ...
+{
+  path: 'books',
+  loadChildren: () => import('./books/books.routes').then(m => m.booksRoutes)
+}
+```
+
+Neu ist außerdem die Möglichkeit, eine einzelne Komponente mittels Lazy Loading direkt zu laden.
+Das ist besonders praktisch, wenn es sich bei der gerouteten Komponente gar nicht um ein komplexes Feature mit mehreren Kind-Routen handelt, sondern nur um eine einzelne Ansicht.
+Um eine Komponente zu laden, nutzen wir `loadComponent`:
+
+```ts
+{
+  path: 'dashboard',
+  loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
+}
+```
+
+Prinzipiell funktioniert es also so, als würden wir die Komponente über `component` direkt in der Route angeben. Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route geladen wird.
 
 
 <hr>
 
-Die Standalone Features von Angular werden derzeit als Developer Preview angeboten. Das heißt, dass sich die Schnittstelle später noch ändern kann.
+Die neuen Standalone Features von Angular beseitigen den Overhead, der durch NgModules verursacht wurde.
+Jede Komponente importiert genau die Dinge, die sie selbst in ihrem Template nutzen möchte.
+Die Sichtbarkeit wird also nicht über die Zugehörigkeit zu einem Modul geregelt, sondern durch den Import.
+Die Struktur von Anwendungen wird dadurch leichter verständlich, weil das gesamte Wissen über die Abhängigkeiten in der Komponente liegt.
+
 Die neue Herangehensweise an die Angular-Entwicklung ist ein großer Bruch. Es wird einige Zeit dauern, bis sich die neuen Patterns und Architekturen etabliert haben.
 NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sicher in der Community angekommen sind.
 Wir empfehlen Ihnen daher, auch weiterhin auf NgModules zu setzen.
 Für wiederverwendbare Komponenten lohnt es sich ggf., die Standalone Components auch jetzt schon auszuprobieren.
-
-
 
 
 <hr>
