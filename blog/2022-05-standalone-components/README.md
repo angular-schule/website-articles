@@ -297,4 +297,4 @@ Für wiederverwendbare Komponenten lohnt es sich ggf., die Standalone Components
 <hr>
 
 
-<small>**Titelbild:** TODO</small>
+<small>**Titelbild:** Photo by <a href="https://unsplash.com/@mourimoto">Mourizal Zativa</a> on <a href="https://unsplash.com">Unsplash</a> (edited)</small>
