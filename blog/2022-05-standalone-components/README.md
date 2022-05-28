@@ -33,7 +33,7 @@ Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Fr
 Einige Entwicklerinnen und Entwickler setzen deshalb in der Praxis darauf, für jede Komponente ein eigenes Modul zu erstellen. Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
 (Dieses Konzept ist auch als *SCAM (Single-Component Angular Module)* bekannt.)
 
-Nun wurde die Problematik der NgModules direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Features* als Developer Preview verfügbar!
+Nun wurde die Problematik der NgModules direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Components* als Developer Preview verfügbar!
 Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, wird nicht in einem Modul deklariert, sondern wird alleinstehend verwendet.
 Dadurch werden NgModules optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
 
