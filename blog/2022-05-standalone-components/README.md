@@ -3,11 +3,12 @@ title: 'Standalone Components – neu ab Angular 14'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-28
-last-change: 2022-05-27
+last-change: 2022-05-28
 keywords:
   - Angular
   - Angular 14
   - NgModule
+  - Standalone Features
   - Standalone Components
   - Standalone Pipes
   - Standalone Directives
@@ -254,10 +255,11 @@ export class AppComponent {}
 
 Beim Lazy Loading mit dem Router werden für eine definierte Basisroute die Kindrouten aus einem anderen Modul nachgeladen.
 Dieses zu ladende Kindmodul wird in ein eigenes Bundle verpackt, das erst zur Laufzeit asynchron nachgeladen wird.
-Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden. `loadChildren` verweist auf ein Feature-Modul:
+Mit Modulen kann die Basisroute für Lazy Loading wie folgt definiert werden. `loadChildren` verweist auf ein Feature-Modul:
 
 ```ts
-// mit NgModule: loadChildren lädt ein Modul
+// mit NgModule:
+// loadChildren lädt ein Modul
 {
   path: 'books',
   loadChildren: () => import('./books/books.module').then(m => m.BooksModule)
@@ -267,7 +269,7 @@ Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden. `l
 
 Mit Standalone Components funktioniert dieses Konzept sehr ähnlich – nur ohne Module.
 Wir definieren ebenfalls in den App-Routen eine Basisroute.
-Die Eigenschaft `loadChildren` gibt nun allerdings nur ein Array von Routen zurück:
+Die Eigenschaft `loadChildren` verweist nun allerdings nur auf ein Array von Routen:
 
 
 ```ts
@@ -302,19 +304,19 @@ Um eine Komponente zu laden, nutzen wir `loadComponent`:
 ```
 
 Prinzipiell funktioniert es also so, als würden wir die Komponente über `component` direkt in der Route angeben.
-Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route geladen wird.
+Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route heruntergeladen wird.
 
 
 ## Fazit
 
 Die neuen Standalone Features von Angular beseitigen den Overhead, der durch NgModules verursacht wurde.
-Jede Komponente importiert genau die Dinge, die sie selbst in ihrem Template nutzen möchte.
+Eine Standalone Component importiert genau die Dinge, die sie selbst in ihrem Template nutzen möchte.
 Die Sichtbarkeit wird also nicht über die Zugehörigkeit zu einem Modul geregelt, sondern durch den Import.
 Die Struktur der Anwendung wird dadurch leichter verständlich, weil das gesamte Wissen über die Abhängigkeiten in der Komponente liegt.
 
 Das Angular-Team hat das Design der Standalone Features sehr sorgfältig abgewägt und diskutiert.
 Dadurch integrieren sich Standalone Components nahtlos in eine bestehende Anwendung.
-Es handelt sich weiterhin um normale Komponenten, Pipes und Direktiven – sie sind jetzt aber keinem Modul mehr zugeordnet.
+Es handelt sich aber weiterhin um normale Komponenten, Pipes und Direktiven – sie sind jetzt nur keinem Modul mehr zugeordnet.
 
 Die neue Herangehensweise an die Angular-Entwicklung ist ein großer Bruch. Es wird einige Zeit dauern, bis sich die neuen Patterns und Architekturen etabliert haben.
 NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sicher in der Community angekommen sind.
