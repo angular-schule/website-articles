@@ -15,7 +15,8 @@ language: de
 thumbnail: ./standalone.jpg
 ---
 
-Das wohl am heißesten diskutierte Feature von Angular 14 sind die *Standalone Components*. Komponenten, Pipes und Direktiven müssen damit nicht mehr in einem NgModule deklariert werden, sondern können eigenständig genutzt werden.
+Das wohl am heißesten diskutierte Feature von Angular 14 sind die *Standalone Components*.
+Komponenten, Pipes und Direktiven müssen damit nicht mehr in einem NgModule deklariert werden, sondern können eigenständig genutzt werden.
 In diesem Artikel geben wir einen Überblick und zeigen, wie Sie das neue Feature praktisch verwenden.
 
 > Wichtig: Die Standalone Features sind derzeit in *Developer Preview*. Die Schnittstelle kann sich also noch ändern, bevor sie als stable veröffentlicht wird.
@@ -28,10 +29,10 @@ Diese Bündelung birgt immer wieder praktische Probleme, wenn es um Wiederverwen
 Häufig steckt man diese Dinge in ein globales `SharedModule`, das überall dort importiert wird, wo eine wiederverwendbare Komponente benötigt wird.
 Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert.
 Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
-In der Praxis setzen einige Entwicklerinnen und Entwickler deshalb bereits darauf, pro Komponente ein eigenes Modul zu erstellen. Dieses Konzept ist auch als *SCAM* bekannt (*Single-Component Angular Module*).
-Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
+Einige Entwicklerinnen und Entwickler setzen deshalb in der Praxis darauf, für jede Komponente ein eigenes Modul zu erstellen. Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
+(Dieses Konzept ist auch als *SCAM (Single-Component Angular Module)* bekannt.)
 
-Nun wurde dieses Thema direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Features* als Developer Preview verfügbar!
+Nun wurde die Problematik der NgModules direkt vom Angular-Team angegangen: Seit Angular 14 sind die sogenannten *Standalone Features* als Developer Preview verfügbar!
 Eine Komponente, Pipe oder Direktive, die als Standalone markiert ist, wird nicht in einem Modul deklariert, sondern wird alleinstehend verwendet.
 Dadurch werden NgModules optional: Die Komponenten importieren selbst die Dinge, die sie in ihren Templates benötigen. Eine Bündelung in Modulen entfällt, und die Struktur der Anwendung wird vereinfacht.
 
@@ -39,7 +40,7 @@ Dadurch werden NgModules optional: Die Komponenten importieren selbst die Dinge,
 ## Standalone Components verwenden
 
 > Die neuen Standalone Features funktionieren gleichermaßen für Komponenten, Pipes und Direktiven.
-> Der Einfachheit halber beschäftigen wir uns im Folgenden aber nur mit Komponenten.
+> Der Einfachheit halber gehen wir im Folgenden aber nur auf Komponenten ein.
 
 Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir das passende Flag `standalone` im Decorator der Klasse:
 
@@ -52,7 +53,7 @@ Um eine Komponente, Pipe oder Direktive alleinstehend zu verwenden, setzen wir d
 export class DashboardComponent {}
 ```
 
-Dadurch wird die Komponente unabhängig von Modulen.
+Dadurch wird die Komponente unabhängig von einem Angular-Modul und kann alleinstehend genutzt werden.
 Diese Einstellung können wir auch sofort beim Generieren der Komponente mit der Angular CLI angeben:
 
 ```bash
@@ -73,6 +74,7 @@ export class AppComponent {}
 ```
 
 Das sieht zunächst etwas aufwendiger aus, allerdings profitiert die Struktur der Anwendung stark davon: Die tatsächlichen Beziehungen zwischen Komponenten sind so noch klarer auf den ersten Blick erkennbar.
+Außerdem entfällt die Deklaration in einem Modul.
 
 
 ## Kombination mit NgModules
@@ -85,7 +87,7 @@ Sie ist dann in dem gesamten NgModule sichtbar und verwendbar:
 ```ts
 @NgModule({
   imports: [
-    // Andere Module
+    // andere Module
     BrowserModule,
     AppRoutingModule,
 
@@ -105,7 +107,10 @@ Beim Generieren einer Komponente mit der Angular CLI wird deshalb immer schon da
 @Component({
   // ...
   standalone: true,
-  imports: [CommonModule, BooksSharedModule]
+  imports: [
+    CommonModule,
+    BooksSharedModule
+  ]
 })
 export class DashboardComponent {}
 ```
@@ -122,7 +127,7 @@ export SHARED_THINGS = [BookComponent, IsbnPipe, ConfirmDirective];
 @Component({
   // ...
   standalone: true,
-  imports: [SHARED_THINGS]
+  imports: [CommonModule, SHARED_THINGS]
 })
 export class DashboardComponent {}
 ```
@@ -130,7 +135,7 @@ export class DashboardComponent {}
 ## AppComponent direkt bootstrappen
 
 Besteht die gesamte Anwendung nur aus Standalone Components ohne Module, können wir auch das globale `AppModule` entfernen.
-Stattdessen wird direkt die Wurzelkomponente gebootstrappt (in der Regel die `AppComponent`).
+Stattdessen wird direkt die Wurzelkomponente gebootstrappt, in der Regel die `AppComponent`.
 In der Datei `main.ts` nutzen wir dazu die neue Funktion `bootstrapApplication()`:
 
 ```ts
@@ -148,6 +153,8 @@ bootstrapApplication(AppComponent)
 > Für Services in der Anwendung werden in der Regel *Tree-Shakable Providers* verwendet, indem die Klasse mit `providedIn` markiert wird. Die folgenden Infos treffen nur auf Providers zu, die bisher direkt im `AppModule` unter `providers` angegeben wurden.
 
 Neben Komponenten, Pipes und Direktiven können Module verschiedene Providers für die Dependency Injection bereitstellen.
+Importiert man das Modul, sind die Provider mit an Bord.
+
 An dieser Stelle wird es etwas komplizierter, denn auch Providers werden nun eigenständig behandelt.
 Dafür können wir in der Funktion `bootstrapApplication()` ein Array von Providers angeben.
 Das Ergebnis ist das gleiche, als hätten wir die Providers im `AppModule` hinterlegt.
@@ -161,7 +168,7 @@ bootstrapApplication(AppComponent, {
 ```
 
 Importieren wir über den Decorator einer Komponente ein Modul, das Providers beinhaltet, so werden diese für die aktuelle und alle darunterliegenden Komponenten bereitgestellt.
-Auch die Eigenschaft `providers` im `Component`-Decorator funktioniert weiterhin ohne Veränderungen.
+Auch die Eigenschaft `providers` im `Component`-Decorator funktioniert weiterhin ohne Veränderungen, sollte aber bewusst eingesetzt werden.
 
 Möchte man nur die Providers eines Moduls extrahieren und global bereitstellen, kann die neue Funktion `importProvidersFrom()` genutzt werden.
 Die im Modul enthaltenen Komponenten, Pipes und Direktiven werden dabei ignoriert.
@@ -190,8 +197,9 @@ Diese Feature-Ordner oder -Bibliotheken sollten möglichst "flach" im Dateisyste
 Für gemeinsam genutzte Teile war bisher immer ein `SharedModule` notwendig, das Komponenten, Pipes und Direktiven bereitstellt.
 Werden diese Teile nun als Standalone deklariert, ist der tatsächliche Ort im Dateisystem unerheblich.
 Entscheidend ist, wer welche Teile importiert.
+Die gemeinsam genutzten Komponenten, Pipes und Direktiven sollten deshalb z. B. nach fachlichen Belangen in Unterordner gruppiert werden.
 
-Kurz: Die Ideen zur Ordnerstruktur der Anwendung bleiben erhalten, auch wenn Standalone Components genutzt werden.
+**Kurz: Die Ideen zur Ordnerstruktur der Anwendung bleiben erhalten, auch wenn Standalone Components genutzt werden.**
 
 
 ## Routing
@@ -249,7 +257,7 @@ Dieses zu ladende Kindmodul wird in ein eigenes Bundle verpackt, das erst zur La
 Mit Modulen kann die Basisroute für Lazy loading wie folgt definiert werden. `loadChildren` verweist auf ein Feature-Modul:
 
 ```ts
-// mit NgModule!
+// mit NgModule: loadChildren lädt ein Modul
 {
   path: 'books',
   loadChildren: () => import('./books/books.module').then(m => m.BooksModule)
@@ -273,6 +281,9 @@ export const booksRoutes: Routes = [
 ```ts
 // app.routes.ts
 // ...
+
+// mit Standalone Components:
+// loadChildren lädt ein Array von Routen
 {
   path: 'books',
   loadChildren: () => import('./books/books.routes').then(m => m.booksRoutes)
@@ -294,17 +305,20 @@ Prinzipiell funktioniert es also so, als würden wir die Komponente über `compo
 Trotzdem ist das Lazy Loading aktiv, sodass die Komponente erst beim Aktivieren der Route geladen wird.
 
 
-<hr>
-
+## Fazit
 
 Die neuen Standalone Features von Angular beseitigen den Overhead, der durch NgModules verursacht wurde.
 Jede Komponente importiert genau die Dinge, die sie selbst in ihrem Template nutzen möchte.
 Die Sichtbarkeit wird also nicht über die Zugehörigkeit zu einem Modul geregelt, sondern durch den Import.
 Die Struktur der Anwendung wird dadurch leichter verständlich, weil das gesamte Wissen über die Abhängigkeiten in der Komponente liegt.
 
+Das Angular-Team hat das Design der Standalone Features sehr sorgfältig abgewägt und diskutiert.
+Dadurch integrieren sich Standalone Components nahtlos in eine bestehende Anwendung.
+Es handelt sich weiterhin um normale Komponenten, Pipes und Direktiven – sie sind jetzt aber keinem Modul mehr zugeordnet.
+
 Die neue Herangehensweise an die Angular-Entwicklung ist ein großer Bruch. Es wird einige Zeit dauern, bis sich die neuen Patterns und Architekturen etabliert haben.
 NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sicher in der Community angekommen sind.
-Wir empfehlen Ihnen daher, auch weiterhin auf NgModules zu setzen.
+Wir empfehlen Ihnen daher, nicht sofort alle bestehenden Anwendungen zu migrieren, sondern auch weiterhin auf NgModules zu setzen.
 Für wiederverwendbare Komponenten lohnt es sich ggf., die Standalone Components auch jetzt schon auszuprobieren.
 
 
