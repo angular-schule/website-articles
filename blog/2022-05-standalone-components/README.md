@@ -236,6 +236,9 @@ bootstrapApplication(AppComponent, {
 }).catch(err => console.error(err));
 ```
 
+Um diesen Schritt zu vereinfachen, wird Angular vermutlich in Zukunft selbst eine Funktion wie `provideRouter()` anbieten, die nur die Providers ohne ein Modul liefert.
+Auch für das Framework NgRx sind Funktionen wie `provideStore()` oder `provideEffects()` denkbar.
+
 
 ## Direktiven des Routers nutzen
 
