@@ -324,7 +324,7 @@ Es handelt sich aber weiterhin um normale Komponenten, Pipes und Direktiven – 
 Die neue Herangehensweise an die Angular-Entwicklung ist ein großer Bruch. Es wird einige Zeit dauern, bis sich die neuen Patterns und Architekturen etabliert haben.
 NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sicher in der Community angekommen sind.
 Wir empfehlen Ihnen daher, nicht sofort alle bestehenden Anwendungen zu migrieren, sondern auch weiterhin auf NgModules zu setzen.
-Für wiederverwendbare Komponenten lohnt es sich ggf., die Standalone Components auch jetzt schon auszuprobieren.
+Für wiederverwendbare Komponenten, Pipes und Direktiven kann sich jedoch der Umstieg auf die neuen Standalone Components auch jetzt schon lohnen.
 
 
 <hr>
