@@ -329,7 +329,7 @@ NgModules werden noch so lange bestehen bleiben, bis die Standalone Features sic
 Wir empfehlen Ihnen daher, nicht sofort alle bestehenden Anwendungen zu migrieren, sondern auch weiterhin auf NgModules zu setzen.
 Für wiederverwendbare Komponenten, Pipes und Direktiven kann sich jedoch der Umstieg auf die neuen Standalone Components auch jetzt schon lohnen.
 
-Zur Ergänzung und Vertiefung empfehlen wir einen Blick in die [Angular-Dokumentation zu Standalone Components](https://next.angular.io/guide/standalone-components).
+Zur Ergänzung und Vertiefung empfehlen wir Ihnen einen Blick in die [Angular-Dokumentation zu Standalone Components](https://next.angular.io/guide/standalone-components).
 
 
 <hr>
