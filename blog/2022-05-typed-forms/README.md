@@ -3,7 +3,7 @@ title: 'Typisierte Reactive Forms – neu ab Angular 14'
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2022-05-19
-last-change: 2022-05-23
+last-change: 2022-05-29
 keywords:
   - Angular
   - Angular 14
