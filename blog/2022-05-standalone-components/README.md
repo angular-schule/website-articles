@@ -334,5 +334,6 @@ Zur Ergänzung und Vertiefung empfehlen wir Ihnen einen Blick in die [Angular-Do
 
 <hr>
 
+Vielen Dank an **Danny Koppenhagen** für Diskussion und Review zum Artikel!
 
 <small>**Titelbild:** Photo by <a href="https://unsplash.com/@mourimoto">Mourizal Zativa</a> on <a href="https://unsplash.com">Unsplash</a> (edited)</small>
