@@ -34,7 +34,7 @@ bookForm = new FormGroup({
 ```
 
 Über das Property `value` bzw. die Methode `getRawValue()` können wir den Wert des Formulars auslesen, um damit weiterzuarbeiten.
-Das Problem: Bis Angular 13 ist dieser Wert ist mit `any` typisiert!
+Das Problem: Bis Angular 13 ist dieser Wert mit `any` typisiert!
 
 ```ts
 this.bookForm.value // any
@@ -181,15 +181,15 @@ Selbstverständlich können wir den `FormBuilder` und die selbst erzeugten Klass
 import { NonNullableFormBuilder } from '@angular/forms';
 
 bookForm = new FormGroup({
-  isbn: this.fb.control('', [
+  isbn: this.nnfb.control('', [
     Validators.required,
     Validators.maxLength(15)
   ]),
-  title: this.fb.control(''),
-  author: this.fb.control('')
+  title: this.nnfb.control(''),
+  author: this.nnfb.control('')
 });
 
-constructor(private fb: NonNullableFormBuilder) {}
+constructor(private nnfb: NonNullableFormBuilder) {}
 ```
 
 
