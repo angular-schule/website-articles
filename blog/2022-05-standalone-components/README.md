@@ -26,11 +26,13 @@ In diesem Artikel geben wir einen Überblick und zeigen, wie Sie das neue Featur
 
 Angular-Module mit NgModule sind ein fester Bestandteil des Frameworks, um Anwendungen zu strukturieren. Mithilfe von Modulen können wir vor allem fachliche Features und andere zusammenhängende Teile von Apps gruppieren.
 Damit eine Komponente verwendet werden kann, muss sie immer in einem Modul deklariert werden – aber nur in genau einem.
+
 Diese Bündelung birgt immer wieder praktische Probleme, wenn es um Wiederverwendbarkeit von Komponenten, Pipes und Direktiven geht.
 Wo werden die Komponenten deklariert? Wo müssen welche Module importiert werden?
 Häufig steckt man diese Dinge in ein globales `SharedModule`, das überall dort importiert wird, wo eine wiederverwendbare Komponente benötigt wird.
 Dadurch entsteht ein schwerfälliges und allwissendes Modul, das eine entkoppelte Struktur der Anwendung eher verhindert.
 Außerdem macht der mentale Overhead der Module es komplizierter, das Angular-Framework zu erlernen.
+
 Einige Entwicklerinnen und Entwickler setzen deshalb in der Praxis darauf, für jede Komponente ein eigenes Modul zu erstellen. Dadurch wird die Idee von Modulen fast vollständig verabschiedet: Eine Komponente muss in ihr Modul genau die Dinge importieren, die sie verwenden möchte – nicht mehr und nicht weniger.
 (Dieses Konzept ist auch als *SCAM (Single-Component Angular Module)* bekannt.)
 
