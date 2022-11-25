@@ -16,7 +16,7 @@ thumbnail: pixabay-books-1655783.jpg
 In this blog post we want to have a closer look at this question.
 We will discuss a few possible strategies that depend on which technology to integrate.**
 
-> Note: The whole article is based on the assumption that you are using the [Angular Cli](https://cli.angular.io/).
+> Note: The whole article is based on the assumption that you are using the [Angular CLI](https://cli.angular.io/).
 
 <hr>
 

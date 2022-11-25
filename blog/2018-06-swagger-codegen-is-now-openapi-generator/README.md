@@ -11,8 +11,7 @@ language: en
 thumbnail: logo_header.png
 ---
 
-**
-[William Cheng](https://github.com/wing328), top contributor to Swagger Codegen,
+**[William Cheng](https://github.com/wing328), top contributor to Swagger Codegen,
 recently informed us about a big change for the swagger community.
 William and other top contributors (40+) of [Swagger Codegen](https://swagger.io/tools/swagger-codegen/) have decided to fork
 the project to maintain a community-driven version called ["OpenAPI Generator"](https://openapi-generator.tech),
