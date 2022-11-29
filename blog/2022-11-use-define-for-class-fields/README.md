@@ -82,7 +82,7 @@ In contrast, in the proprietary implementation of TypeScript, the initialisation
 This discrepancy between TypeScript and JavaScript is very inconvenient, since TypeScript is supposed to be a superset and should remain compatible with JavaScript as far as possible.
 To align the two programming languages again, the TypeScript team has introduced a new switch called `useDefineForClassFields`.
 As soon as the target of TypeScript is set to `ES2022`, this option is set by default to `true`.
-This means that the native implementation of JavaScript will be used and that the properties will behave differently than before.
+This means that the native implementation of JavaScript will be used and that the properties will behave in a different way than before.
 Depending on the setting, the following code has two different outputs:
 
 ```ts
