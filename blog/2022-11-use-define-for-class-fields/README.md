@@ -36,7 +36,7 @@ We will show you in detail what the problem is and how you should write your cod
 When working with Angular, we regularly initialise properties in our classes.
 For example, a class property can be initialised with a value directly when it is declared.
 There is also a shorthand notation that allows us to declare properties automatically via the constructor. 
-We normally use this short form in Angular to request dependencies through DI (dependency injection).
+We normally use this short form in Angular to request dependencies through DI (Dependency Injection).
 
 ```ts
 class User {
