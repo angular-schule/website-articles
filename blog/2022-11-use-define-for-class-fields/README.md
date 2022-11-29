@@ -18,7 +18,7 @@ sticky: false
 ---
 
 
-Did you already know that properties are implemented slightly differently in JavaScript and TypeScript and that there is an incompatible behaviour?
+Did you know that properties are implemented slightly differently in JavaScript and TypeScript and that there is an incompatible behaviour?
 That' why in projects with Angular 15, the option `useDefineForClassFields` is set in the TypeScript configuration.
 We will show you in detail what the problem is and how you should write your code so that it is future-proof for both programming languages.
 
