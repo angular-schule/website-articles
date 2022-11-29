@@ -116,7 +116,7 @@ The code now runs in a different order:
 3. The value is assigned to the property `currentYear`. 
 4. The following message is displayed in the console: `Current age: NaN`.
 
-You are invited to explore the different behaviour by yourself in this Stackblitz example:
+You are invited to explore the different behaviour by yourself in this Stackblitz example:  
 **[👉 Demo on Stackblitz: useDefineForClassFields](https://stackblitz.com/edit/angular-buch-usedefineforclassfields?file=src%2Fapp%2Fapp.component.ts,tsconfig.json)**
 
 
