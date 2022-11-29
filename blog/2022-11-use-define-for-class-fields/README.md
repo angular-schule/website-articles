@@ -118,7 +118,7 @@ You are welcome to check the different behaviour yourself in this Stackblitz exa
 **[👉 Demo on Stackblitz: useDefineForClassFields](https://stackblitz.com/edit/angular-buch-usedefineforclassfields?file=src%2Fapp%2Fapp.component.ts,tsconfig.json)**
 
 
-## Initialise properties in a future-proof way
+## Future-proof property initialisation
 
 We want to improve the previously described source code so that it works independently of the current setting.
 In order to achieve this, we can explicitly initialise the property as the first command in the constructor:
