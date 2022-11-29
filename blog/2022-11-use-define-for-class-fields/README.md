@@ -107,7 +107,7 @@ The shown code has the following step-by-step flow:
 3. The property `age` is initialised, and all values are available for calculation. 
 4. The following message is displayed in the console: `Current age: 25`.
 
-But if we set the option `useDefineForClassFields` in the file `tsconfig.json` to `true`, we get `NaN` as a result, which stands for `Not a Number`.
+However, if we set the option `useDefineForClassFields` to `true` in the `tsconfig.json` file, we get `NaN` as a result, which stands for `Not a Number`.
 The code now runs in a different order:
 
 1. The property `age` is initialised first, but not all values are available for calculation: At this point, the property `currentYear` is still `undefined`, so that the subtraction cannot produce a valid result.
