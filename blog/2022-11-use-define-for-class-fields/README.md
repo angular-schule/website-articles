@@ -31,7 +31,7 @@ We will show you in detail what the problem is and how you should write your cod
 * [Implications for existing Angular code](/blog/2022-11-use-define-for-class-fields#implications-for-existing-angular-code)
 
 
-## Initialising properties with TypeScript
+## Property initialisation in TypeScript
 
 When working with Angular, we regularly initialise properties in our classes.
 For example, a class property can be initialised with a value directly when it is declared.
