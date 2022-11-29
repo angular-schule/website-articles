@@ -142,7 +142,7 @@ The same result is shown in both cases.
 
 Of course, in a real project, we rarely use properties to perform arithmetic.
 But we have to be very careful when we do DI in Angular, especially when we want to use a service within the property initialisation.
-The following notation has the potential to be broken in the future:
+In the future, the following notation has the potential to break with an error:
 
 
 ```ts
