@@ -185,9 +185,9 @@ export class MyComponent {
 }
 ```
 
-> **Hint:** While initialising properties directly, we should access injected services by...
->* performing the initialisation in the constructor or
->* using the `inject()` function.
+> **Hint:** If we want to access injected dependencies at direct property initialisation, we should …
+>* perform the initialisation in the constructor or
+>* use the `inject()` function.
 
 
 ## Implications for existing Angular code
