@@ -195,7 +195,7 @@ export class MyComponent {
 As we have seen, the setting of `useDefineForClassFields` has a huge impact.
 If the switch would have been left in the default setting for existing Angular projects, there would be a lot of unexpected bugs in all projects.
 Therefore, the Angular team has explicitly disabled the setting for both existing and new projects with Angular 15.
-In the file `tsconfig.json` we find the following settings for that:
+In the `tsconfig.json` file we can find the following settings for that:
 
 ```json
 {
