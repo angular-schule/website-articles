@@ -172,7 +172,7 @@ export class MyComponent {
 ```
 
 Another option is to not request the dependency via the constructor at all, but to use the function `inject()`. This function also offers dependency injection.
-Even if we need the service instance more than once, we can store the requested dependency in a property and use it from anywhere in the class, as shown below:
+Even further, if we need the service instance more than once, we can store the requested dependency in a property and use it from anywhere in the class, as shown below:
 
 
 ```ts
