@@ -224,4 +224,4 @@ Learn Angular and best practices together with us and **[ask now for an offer](h
 
 <hr>
 
-<small>**Cover image:** Mols Bjerge National Park, Denmark, 2022. Photo from Ferdinand Malcher</small>
+<small>**Cover image:** Mols Bjerge National Park, Denmark, 2022. Photo by Ferdinand Malcher</small>
