@@ -212,7 +212,7 @@ The well-known proprietary behaviour will therefore remain in place for now.
 However, Angular usually follows the recommendations and defaults of TypeScript.
 For example, in the past the strict type checks were enabled for new projects.
 We asssume that one day the setting `useDefineForClassFields` will be turned to the default value `true` for new Angular projects.
-We therefore recommend that you develop your code as solid as possible now and set the `useDefineForClassFields` setting to `true` already now.
+We therefore recommend to already develop your code as solid as possible now and set the `useDefineForClassFields` setting to `true` before Angular does it by default.
 If the default setting will be changed in future, you will not be affected by any breaking change!
 
 
