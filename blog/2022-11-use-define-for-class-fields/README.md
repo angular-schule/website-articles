@@ -1,70 +1,70 @@
 ---
-title: 'TypeScript: useDefineForClassFields – zukünftige Breaking Changes vermeiden'
-author: Johannes Hoppe und Ferdinand Malcher
+title: 'TypeScript: useDefineForClassFields – How to avoid future Breaking Changes'
+author: Johannes Hoppe and Ferdinand Malcher
 mail: team@angular.schule
-published: 2022-11-25
-lastModified: 2022-11-25
+published: 2022-11-29
+lastModified: 2022-11-29
 keywords:
   - Angular
   - JavaScript
   - ECMAScript
   - TypeScript
   - ES2022
-  - Klassen-Propertys
+  - Class Properties
   - useDefineForClassFields
-language: de
+language: en
 thumbnail: usedefineforclassfields.jpg
 sticky: false
 ---
 
 
-Wussten Sie bereits, dass Propertys in JavaScript und TypeScript leicht unterschiedlich implementiert sind und es ein inkompatibles Verhalten gibt?
-In Projekten mit Angular 15 wird deshalb in der TypeScript-Konfiguration die Option `useDefineForClassFields` gesetzt.
-Wir zeigen Ihnen, was es damit auf sich hat und wie Sie Ihren Code schreiben müssen, damit er zukunftssicher in beiden Programmiersprachen gleich funktioniert.
+Did you already know that properties are implemented slightly differently in JavaScript and TypeScript and that there is an incompatible behaviour?
+That' why in projects with Angular 15, the option `useDefineForClassFields` is set in the TypeScript configuration.
+We will show you in detail what the problem is and how you should write your code so that it is future-proof for both programming languages.
 
 
 ## Inhalt
 
-* [Propertys initialisieren mit TypeScript](/blog/2022-11-use-define-for-class-fields#propertys-initialisieren-mit-typescript)
-* [Das proprietäre Verhalten von TypeScript](/blog/2022-11-use-define-for-class-fields#das-proprietäre-verhalten-von-typescript)
-* [Propertys zukunftssicher initialisieren](/blog/2022-11-use-define-for-class-fields#propertys-zukunftssicher-initialisieren)
-* [Auswirkungen auf bestehenden Angular-Code](/blog/2022-11-use-define-for-class-fields#auswirkungen-auf-bestehenden-angular-code)
+* [Initialising properties with TypeScript](/blog/2022-11-use-define-for-class-fields#initialising-properties-with-typescript)
+* [The proprietary behaviour of TypeScript](/blog/2022-11-use-define-for-class-fields#the-proprietary-behaviour-of-typescript)
+* [Initialise properties in a future-proof way](/blog/2022-11-use-define-for-class-fields#initialise-properties-in-a-future-proof-way)
+* [Implications for existing Angular code](/blog/2022-11-use-define-for-class-fields#implications-for-existing-angular-code)
 
 
-## Propertys initialisieren mit TypeScript
+## Initialising properties with TypeScript
 
-Bei der Arbeit mit Angular initialisieren wir regelmäßig Propertys in unseren Klassen.
-Ein Klassen-Property kann z. B. direkt bei der Deklaration mit einem Wert initialisiert werden.
-Außerdem gibt es eine Kurzschreibweise, mit der wir Propertys über den Konstruktor automatisch deklarieren können. 
-Diese Kurzform verwendet man in Angular, um Abhängigkeiten mittels Dependency Injection anzufordern.
+When working with Angular, we regularly initialise properties in our classes.
+For example, a class property can be initialised with a value directly when it is declared.
+There is also a shorthand notation that allows us to declare properties automatically via the constructor. 
+We normally use this short form in Angular to request dependencies through DI (dependency injection).
 
 ```ts
 class User {
-  // direkte Initialisierung
+  // direct initialisation
   age = 25;
 
-  // Kurzform
+  // short form
   constructor(private currentYear: number) {}
 }
 ```
 
-## Das proprietäre Verhalten von TypeScript
+## The proprietary behaviour of TypeScript
 
 
-Diese beiden zuvor gezeigten Schreibweisen sind proprietäre Features von TypeScript und existieren schon seit den frühesten Versionen der Sprache.
-Die Programmiersprache JavaScript bzw. der Standard ECMAScript unterstützte damals solche Klassen-Propertys nicht vollständig, da die Standardisierung noch nicht abgeschlossen war.
-Beim Design der Propertys von TypeScript ging man nach bestem Wissen und Gewissen davon aus, dass die gewählte Implementierung exakt das Verhalten einer zukünftigen Version von JavaScript nachahmen würde.
-Das hat leider nicht ganz funktioniert – die Standardisierung in ECMAScript ist über die Jahre einen anderen Weg gegangen.
+These two notations shown before are proprietary features of TypeScript and have existed since the earliest versions of the language.
+The JavaScript programming language ( or more correctly, the ECMAScript standard) did not fully support such class properties at that time, since the standardisation was still in progress.
+During the design of TypeScript's properties, the TS team assumed that the chosen implementation would accurately match the behaviour of a future version of JavaScript on the basis of their best knowledge and belief.
+Unfortunately, that didn't quite work out - standardisation in ECMAScript has gone a different way over the years.
 
-Die originalen Klassen-Propertys von TypeScript sind so implementiert, dass die Initialisierung mit Werten immer als erste Anweisung im Konstruktor durchgeführt wird.
-Die beiden folgenden Schreibweisen waren bislang im Ergebnis absolut identisch:
+The original class properties of TypeScript are implemented in such a way that initialisation with values is always performed as the first statement in the constructor.
+The two following notations have so far been absolutely identical in the result:
 
 ```ts
 class User {
   age = 25;
 }
 
-// ist in TypeScript exakt das gleiche wie:
+// is exactly the same in TypeScript as:
 class User {
   age: number;
 
@@ -74,15 +74,15 @@ class User {
 }
 ```
 
-In JavaScript verhalten sich die nativen Klassen-Propertys leider etwas anders:
-Es ist möglich, zunächst die Propertys zu initialisieren und erst *danach* den Konstruktor auszuführen.
-Es handelt sich in JavaScript also um zwei voneinander unabhängige Schritte – bei der proprietären Implementierung von TypeScript geschieht die Initialisierung der Propertys hingegen immer zusammen mit dem Aufruf des Konstruktors.
+In JavaScript, the native class properties unfortunately behave a little differently:
+It is possible to initialise properties first and execute the constructor *afterwards*.
+So these are two independent steps in JavaScript. By contrast, in the proprietary implementation of TypeScript, the initialisation of the properties always occurs together with the call to the constructor.
 
-Diese Diskrepanz zwischen TypeScript und JavaScript ist sehr unschön, da TypeScript als Obermenge so weit wie möglich mit JavaScript kompatibel bleiben sollte.
-Um die beiden Programmiersprachen wieder einander anzugleichen, hat das TypeScript-Team den Schalter `useDefineForClassFields` eingeführt.
-Sobald das Target von TypeScript auf `ES2022` gesetzt wird, steht diese Option standardmäßig auf `true`.
-Es wird dadurch im Kompilat die native Implementierung von JavaScript verwendet, und die Propertys verhalten sich im Detail leicht anders als zuvor.
-Der folgende Code hat – je nach Einstellung – zwei unterschiedliche Ausgaben:
+This discrepancy between TypeScript and JavaScript is very inconvenient, since TypeScript is supposed to be a superset and should remain compatible with JavaScript as far as possible.
+To align the two programming languages again, the TypeScript team has introduced a new switch called `useDefineForClassFields'.
+As soon as the target of TypeScript is set to `ES2022`, this option is set by default to `true`.
+This means that the native implementation of JavaScript will be used and that the properties will behave differently than before.
+Depending on the setting, the following code has two different outputs:
 
 ```ts
 class User {
@@ -98,30 +98,30 @@ class User {
 const user = new User(2023);
 ```
 
-Mit dem alten proprietären Verhalten von TypeScript (`useDefineForClassFields: false`) wird ein Alter von `25` berechnet, sofern man den Konstruktor der Klasse mit dem Wert `2023` aufruft.
-Der Code hat den folgenden Ablauf:
+By using the old proprietary behaviour of TypeScript (`useDefineForClassFields: false`), an age of `25` is calculated, if the constructor of the class is called with the value `2023`.
+The shown code has the following flow:
 
-1. Der Konstruktor wird mit dem aktuellen Jahr aufgerufen.
-2. Der Wert für das aktuelle Jahr wird dem Property `currentYear` zugewiesen.
-3. Anschließend wird das Property `age` initialisiert, wobei zur Berechnung alle Werte zur Verfügung stehen.
-4. Auf der Konsole erscheint: `Current age: 25`.
+1. The constructor is called with the current year.
+2. The value for the current year is assigned to the property `currentYear`.
+3. The property `age` is initialised, and all values are available for calculation. 
+4. The following message is displayed in the console: `Current age: 25`.
 
-Setzen wir die Option `useDefineForClassFields` in der Datei `tsconfig.json` hingegen auf `true`, erhalten wir als Ergebnis `NaN`, was für `Not a Number` steht.
-Der Code folgt dann einem anderen Ablauf:
+But if we set the option `useDefineForClassFields` in the file `tsconfig.json` to `true`, we get `NaN` as a result, which stands for `Not a Number`.
+The code now runs in a different order:
 
-1. Das Property `age` wird als Erstes initialisiert, wobei zur Berechnung nicht alle Werte zur Verfügung stehen: Zu diesem Zeitpunkt ist das Property `currentYear` noch `undefined`, sodass die Subtraktion kein gültiges Ergebnis liefern kann.
-2. Anschließend wird der Konstruktor mit dem aktuellen Jahr aufgerufen.
-3. Der Wert wird dem Property `currentYear` zugewiesen.
-4. Auf der Konsole erscheint: `Current age: NaN`.
+1. The property `age` is initialised first, but not all values are available for calculation: At this point, the property `currentYear` is still `undefined`, so that the subtraction cannot produce a valid result.
+2. The constructor is then called with the current year. 
+3. The value is assigned to the property `currentYear`. 
+4.The following message is displayed in the console: `Current age: NaN`.
 
-Sie können das unterschiedliche Verhalten in diesem Stackblitz-Beispiel gerne selbst nachvollziehen:  
-**[👉 Demo auf Stackblitz: useDefineForClassFields](https://stackblitz.com/edit/angular-buch-usedefineforclassfields?file=src%2Fapp%2Fapp.component.ts,tsconfig.json)**
+You are welcome to check the different behaviour yourself in this Stackblitz example:
+**[👉 Demo on Stackblitz: useDefineForClassFields](https://stackblitz.com/edit/angular-buch-usedefineforclassfields?file=src%2Fapp%2Fapp.component.ts,tsconfig.json)**
 
 
-## Propertys zukunftssicher initialisieren
+## Initialise properties in a future-proof way
 
-Den zuvor gezeigten Quelltext wollen wir verbessern, sodass er unabhängig von der jeweiligen Einstellung funktioniert.
-Dazu führen wir die Initialisierung des Propertys explizit als erste Zeile im Konstruktor durch:
+We want to improve the previously described source code so that it works independently of the current setting.
+In order to achieve this, we can explicitly initialise the property as the first command in the constructor:
 
 ```ts
 class User  {
@@ -136,28 +136,28 @@ class User  {
 const user = new User(2023);
 ```
 
-Durch diese Schreibweise ist es egal, ob das proprietäre Verhalten von TypeScript oder das standardisierte Verhalten von JavaScript aktiv ist.
-Es wird immer das korrekte Ergebnis angezeigt.
+With this notation, it doesn't matter whether the proprietary behaviour of TypeScript or the standardised behaviour of JavaScript is active.
+The same result is shown in both cases.
 
-Natürlich führt man in realen Projekten eher selten Arithmetik über Propertys durch.
-Im Entwicklungsalltag mit Angular ist vor allem dann Vorsicht geboten, wenn wir einen Service innerhalb der Property-Initialisierung verwenden wollen.
-Diese Schreibweise birgt die Gefahr, zukünftig nicht mehr zu funktionieren:
+Of course, in a real project, we rarely use properties to perform arithmetic.
+But we have to be very careful when we do DI in Angular, especially when we want to use a service within the property initialisation.
+The following notation has the potential to be broken in the future:
 
 
 ```ts
-// ⚠️ ACHTUNG: Dieser Code ist nicht zukunftssicher! ⚠️
+// ⚠️ ATTENTION: This code is not future-proof! ⚠️
 
 @Component({ /* ... */ })
 export class MyComponent {
-  // this.myService könnte undefined sein!
+  // this.myService could be undefined!
   data = this.myService.getData();
 
   constructor(private myService: MyDataService) { }
 }
 ```
 
-Um das Problem zu umgehen, sollten wir die Initialisierung grundsätzlich im Konstruktor durchführen.
-So ist unser Code zukunftssicher:
+To work around the problem, we should always do the initialisation in the constructor.
+This way our code is future-proof:
 
 ```ts
 @Component({ /* ... */ })
@@ -170,8 +170,8 @@ export class MyComponent {
 }
 ```
 
-Alternativ ist es möglich, die Abhängigkeit gar nicht über den Konstruktor anzufordern, sondern die Funktion `inject()` einzusetzen, mit der man ebenso Dependency Injection durchführen kann.
-Benötigen wir die Serviceinstanz mehrfach, können wir die angeforderte Abhängigkeit in einem Property ablegen und von überall in der Klasse aus verwenden.
+Another option is to not request the dependency via the constructor at all, but to use the function `inject()`. This function also offers dependency injection.
+Even if we need the service instance more than once, we can store the requested dependency in a property and use it from anywhere in the class, as shown below:
 
 
 ```ts
@@ -184,18 +184,17 @@ export class MyComponent {
 }
 ```
 
-> **Tipp:** Wenn wir bei der direkten Initialisierung von Propertys auf injizierte Services zugreifen wollen, sollten wir
->* die Initialisierung im Konstruktor durchführen oder
->* die Funktion `inject()` verwenden.
+> **Hint:** While initialising properties directly, we should access injected services by...
+>* performing the initialisation in the constructor or
+>* using the `inject()` function.
 
 
-## Auswirkungen auf bestehenden Angular-Code
+## Implications for existing Angular code
 
-
-Die gewählte Einstellung für `useDefineForClassFields` hat eine große Tragweite.
-Würde man den Schalter bei bestehenden Angular-Projekten in der Standardeinstellung belassen, so würde es mit sehr hoher Wahrscheinlichkeit an vielen Stellen zu Fehlern kommen.
-Daher hat das Angular-Team sowohl für bestehende als auch für neue Projekte die Einstellung mit Angular 15 explizit deaktiviert.
-In der Datei `tsconfig.json` finden wir dazu die folgenden Angaben:
+As we have seen, the setting of `useDefineForClassFields` has a huge impact.
+If the switch would have been left in the default setting for existing Angular projects, there would be a lot of unexpected bugs in all projects.
+Therefore, the Angular team has explicitly disabled the setting for both existing and new projects with Angular 15.
+In the file `tsconfig.json` we find the following settings for that:
 
 ```json
 {
@@ -206,27 +205,23 @@ In der Datei `tsconfig.json` finden wir dazu die folgenden Angaben:
   }
 }
 ```
-Das seit vielen Jahren bekannte proprietäre Verhalten bleibt also vorerst bestehen.
+The well-known proprietary behaviour will therefore remain in place for now.
 
-Üblicherweise folgt Angular aber den Empfehlungen und Vorgaben von TypeScript.
-So wurden z. B. in der Vergangenheit die strikten Typprüfungen für neue Projekte standardmäßig aktiviert.
-Es ist davon auszugehen, dass in Angular irgendwann einmal die Einstellung `useDefineForClassFields` auf den Standardwert `true` gesetzt wird.
-Wir empfehlen Ihnen also, Ihren Code jetzt schon möglichst robust zu entwickeln und bereits heute die Einstellung von `useDefineForClassFields` auf `true` zu setzen.
-Sollte in Zukunft die Standardeinstellung für geändert werden, so sind Sie dann von keinem Breaking Change betroffen!
+However, Angular usually follows the recommendations and defaults of TypeScript.
+For example, in the past the strict type checks were enabled for new projects.
+We asssume that one day the setting `useDefineForClassFields` will be turned to the default value `true` for new Angular projects.
+We therefore recommend that you develop your code as solid as possible now and set the `useDefineForClassFields` setting to `true` already now.
+If the default setting will be changed in future, you will not be affected by any breaking change!
 
-## Neue Auflage des Angular-Buchs
 
-Wir haben in den letzten Monaten intensiv an einer Neuauflage des deutschsprachigen Angular-Buchs gearbeitet!
-Natürlich haben wir vorsorglich alle Quelltexte im Angular-Buch so geschrieben, dass sie bereits zukunftssicher funktionieren. 
-Die Inhalte dieses Blogposts haben wir aus unserem Buch übernommen.
-Wenn Sie diesen Text hilfreich fanden, dann sollten Sie unbedingt das neue [Angular-Buch vorbestellen](https://amzn.eu/d/8fgTIWL).
+## Workshops for your team
 
-<div style="text-align: center">
-<img src="https://angular-buch.com/assets/img/book-cover-multiple-v4.png" alt="Buchcover 4. Auflage" style="max-width:500px">
-</div>
+The two authors of this article offer Angular training courses in German. 
+All our lessons are always up to date, of course. We only teach examples that are compatible with JavaScript behaviour.
+Learn Angular and best practices together with us and **[ask now for an offer](https://angular.schule/#anfrage)**.
 
 
 
 <hr>
 
-<small>**Titelbild:** Mols Bjerge Nationalpark, Dänemark, 2022. Foto von Ferdinand Malcher</small>
+<small>**Cover image:** Mols Bjerge National Park, Denmark, 2022. Photo from Ferdinand Malcher</small>
