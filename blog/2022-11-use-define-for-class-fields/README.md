@@ -25,9 +25,9 @@ We will show you in detail what the problem is and how you should write your cod
 
 ## Contents
 
-* [Initialising properties with TypeScript](/blog/2022-11-use-define-for-class-fields#initialising-properties-with-typescript)
+* [Property initialisation in TypeScript](/blog/2022-11-use-define-for-class-fields#property-initialisation-in-typescript)
 * [The proprietary behaviour of TypeScript](/blog/2022-11-use-define-for-class-fields#the-proprietary-behaviour-of-typescript)
-* [Initialise properties in a future-proof way](/blog/2022-11-use-define-for-class-fields#initialise-properties-in-a-future-proof-way)
+* [Future-proof property initialisation](/blog/2022-11-use-define-for-class-fields#future-proof-property-initialisation)
 * [Implications for existing Angular code](/blog/2022-11-use-define-for-class-fields#implications-for-existing-angular-code)
 
 
