@@ -100,7 +100,7 @@ const user = new User(2023);
 ```
 
 By using the old proprietary behaviour of TypeScript (`useDefineForClassFields: false`), an age of `25` is calculated when the constructor of the class is called with the value `2023`.
-The shown code has the following flow:
+The shown code has the following step-by-step flow:
 
 1. The constructor is called with the current year.
 2. The value for the current year is assigned to the property `currentYear`.
