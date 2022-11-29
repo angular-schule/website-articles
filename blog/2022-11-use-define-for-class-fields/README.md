@@ -52,7 +52,7 @@ class User {
 
 
 These two notations shown before are proprietary features of TypeScript and have existed since the earliest versions of the language.
-The JavaScript programming language ( or more correctly, the ECMAScript standard) did not fully support such class properties at that time, since the standardisation was still in progress.
+The JavaScript programming language (or more correctly, the ECMAScript standard) did not fully support class properties at that time, since the standardisation was still in progress.
 During the design of TypeScript's properties, the TS team assumed that the chosen implementation would accurately match the behaviour of a future version of JavaScript on the basis of their best knowledge and belief.
 Unfortunately, that didn't quite work out - standardisation in ECMAScript has gone a different way over the years.
 
