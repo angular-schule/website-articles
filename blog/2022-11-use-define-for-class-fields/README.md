@@ -57,7 +57,7 @@ During the design of TypeScript's properties, the TS team assumed that the chose
 Unfortunately, that didn't quite work out – standardisation in ECMAScript has gone a different way over the years.
 
 The original class properties of TypeScript are implemented in such a way that initialisation with values is always performed as the first statement in the constructor.
-The two following notations have so far been absolutely identical in the result:
+The results of the two following notations have so far been absolutely identical:
 
 ```ts
 class User {
