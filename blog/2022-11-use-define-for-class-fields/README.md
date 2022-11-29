@@ -74,7 +74,7 @@ class User {
 }
 ```
 
-In JavaScript, the native class properties unfortunately behave a little differently:
+Unfortunately, in JavaScript, native class properties behave a little differently:
 It is possible to initialise properties first and execute the constructor *afterwards*.
 So these are two independent steps in JavaScript. By contrast, in the proprietary implementation of TypeScript, the initialisation of the properties always occurs together with the call to the constructor.
 
