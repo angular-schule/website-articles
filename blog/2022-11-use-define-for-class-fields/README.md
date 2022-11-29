@@ -141,7 +141,7 @@ With this notation, it doesn't matter whether the proprietary behaviour of TypeS
 Both implementations produce the same result.
 
 Of course, in a real project, we rarely use properties to perform arithmetic.
-But we have to be very careful when we do DI in Angular, especially when we want to use a service within the property initialisation.
+However, we have to be very careful when using Dependency Injection in Angular, especially when we want to use a service within the property initialisation.
 In the future, the following notation has the potential to break with an error:
 
 
