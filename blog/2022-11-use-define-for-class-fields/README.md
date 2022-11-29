@@ -23,7 +23,7 @@ That's why projects with Angular 15 have the option `useDefineForClassFields` se
 We will show you in detail what the problem is and how you should write your code so that it is future-proof for both programming languages.
 
 
-## Inhalt
+## Contents
 
 * [Initialising properties with TypeScript](/blog/2022-11-use-define-for-class-fields#initialising-properties-with-typescript)
 * [The proprietary behaviour of TypeScript](/blog/2022-11-use-define-for-class-fields#the-proprietary-behaviour-of-typescript)
