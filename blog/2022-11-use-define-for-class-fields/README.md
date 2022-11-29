@@ -76,7 +76,8 @@ class User {
 
 Unfortunately, in JavaScript, native class properties behave a little differently:
 It is possible to initialise properties first and execute the constructor *afterwards*.
-So these are two independent steps in JavaScript. By contrast, in the proprietary implementation of TypeScript, the initialisation of the properties always occurs together with the call to the constructor.
+These are two independent steps in JavaScript.
+In contrast, in the proprietary implementation of TypeScript, the initialisation of the properties always occurs together with the constructor call.
 
 This discrepancy between TypeScript and JavaScript is very inconvenient, since TypeScript is supposed to be a superset and should remain compatible with JavaScript as far as possible.
 To align the two programming languages again, the TypeScript team has introduced a new switch called `useDefineForClassFields'.
