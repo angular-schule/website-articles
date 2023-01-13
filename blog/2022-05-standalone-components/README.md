@@ -16,7 +16,7 @@ language: de
 thumbnail: ./standalone.jpg
 ---
 
-Das wohl am heißesten diskutierte Feature von Angular 14 sind die *Standalone Components*.
+Das wohl am heißesten diskutierte aktuelle Feature von Angular 14 sind die *Standalone Components*.
 Komponenten, Pipes und Direktiven müssen damit nicht mehr in einem NgModule deklariert werden, sondern können eigenständig genutzt werden.
 In diesem Artikel geben wir einen Überblick und zeigen, wie Sie das neue Feature praktisch verwenden.
 
