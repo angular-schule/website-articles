@@ -44,7 +44,7 @@ __Wo/Wann:__
 
 __Material:__
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR5ADxU_Nzk_7f4-AeAL74GzzFleMIdlgc1L51U9P4qIwq-n8Eg8vzsUgIqZRH5neY7w30R9kdpf0h1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR5ADxU_Nzk_7f4-AeAL74GzzFleMIdlgc1L51U9P4qIwq-n8Eg8vzsUgIqZRH5neY7w30R9kdpf0h1/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>-->
 
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1JM1RzTbywEDwNcEaib6DqFRlBrlGh-WaPtV8-Wrwtpw/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/demo-api-codegen)
@@ -103,7 +103,8 @@ __Wo/Wann:__
 
 __Material:__
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlxcMBz5pkEtA1oQrrH9aZSIS2zg76j72jdlpOzexsMdUQLNJMC1s57cCCDTD4DYTHxWwYvdZ_DO-6/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlxcMBz5pkEtA1oQrrH9aZSIS2zg76j72jdlpOzexsMdUQLNJMC1s57cCCDTD4DYTHxWwYvdZ_DO-6/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>--> 
+
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1w7earjDAC9MR1Z8WnC3H_WArB42VgJVxRCbFB8E5pd0/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/demo-ssr-playground)
 
@@ -120,7 +121,8 @@ __Wo/Wann:__
 
 __Material:__
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUulNKdL2PPMeM3Sbfd6qx3qBz6oiP86kVnn_NRIb_qb5p1EQMjLovSKhOAFkXkkrNMhjO4RsEX3u7/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUulNKdL2PPMeM3Sbfd6qx3qBz6oiP86kVnn_NRIb_qb5p1EQMjLovSKhOAFkXkkrNMhjO4RsEX3u7/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>-->
+
 * [Slides (Google Docs)](https://docs.google.com/presentation/d/1YwJ71ktSUk3W7rDlwFdB9-aonKI0sncbjZwSkq_tF7A/edit?usp=sharing)
 * [Demo code (Github)](https://github.com/angular-schule/book-rating-ngrx)
 * weiterführender Artikel: [10 pure immutable operations you should know
