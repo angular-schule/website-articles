@@ -11,7 +11,7 @@ keywords:
   - Angular 17
 language: de
 thumbnail: header-logo.png
-hidden: true
+hidden: false
 sticky: true
 ---
 
