@@ -61,6 +61,6 @@ Eine Auswahl der wichtigsten Neuigkeiten:
 - Deferrable Views, um Teile von Templates erst zur Laufzeit nachzuladen: `@defer`
 - Neuer Application Builder auf Basis von ESBuild mit besserer Performance und Support für SSR und Pre-Rendering
 
-<!-- Auf der Website unseres Angular-Buchs berichten wir ausführlich über die Neuerungen: LINK -->
-
+**Auf der Website unseres Angular-Buchs berichten wir ausführlich über alle Neuerungen: [Angular 17 ist da!
+](https://angular-buch.com/blog/2023-11-angular17)**
 
