@@ -181,7 +181,7 @@ import { BookStoreService } from './book-store.service';
   selector: 'app-dashboard',
   template: `
     <ul>
-      @for (book of books; track book.isbn) {
+      @for (book of books(); track book.isbn) {
         <li>{{ book.title }}</li>
       }
     </ul>
