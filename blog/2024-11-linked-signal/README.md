@@ -196,7 +196,7 @@ export class DashboardComponent {
 
   sortBooks() {
     const sortedBooks = this.books().toSorted((a, b) => b.rating - a.rating);
-    this.books(sortedBooks);
+    this.books.set(sortedBooks);
   }
 }
 ```
