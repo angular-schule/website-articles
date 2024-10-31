@@ -164,7 +164,7 @@ class BookComponent  {
 
 With this setup, both `title` and `rating` reset when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers. 
 While the `linkedSignal` makes sure that the data resets when necessary, we can still update our local state directly. 
-In this example we update `rating` locally and communicated the change back to the parent component.
+In this example we update `rating` locally and communicate the change back to the parent component.
 
 ### Synchronizing Server-Data for Client-Side Edits
 
