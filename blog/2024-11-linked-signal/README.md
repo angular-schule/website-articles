@@ -40,7 +40,7 @@ Let’s go over what `linkedSignal` is, how it works, and some common use cases.
 
 ## What is LinkedSignal?
 
-`linkedSignal` is an experimental signal that Angular 19 introduces to help you manage state that automatically syncs with other signals. In simple terms, it’s a writable signal that resets itself when the value of its source signal changes. For example, if you’re tracking a selected book in a list, `linkedSignal` can help ensure that the selection resets when the list of books changes.
+`linkedSignal` is an experimental signal that Angular 19 introduces to help you manage state that automatically syncs with other signals. In simple terms, it’s a writable signal that resets itself when the value of its source signal changes.
 
 LinkedSignal has the following characteristics:
 
