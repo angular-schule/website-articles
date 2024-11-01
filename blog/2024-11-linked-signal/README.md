@@ -138,7 +138,7 @@ import { Book } from './book';
 })
 class BookComponent  {
   book = input.required<Book>();
-  ratingHasBeenChanged = output<{ isbn: string, newRating: number }>();
+  ratingChange = output<{ isbn: string, newRating: number }>();
 
   title = linkedSignal({
     source: this.book,
