@@ -154,7 +154,7 @@ class BookComponent  {
     const newRating = this.rating() + 1;
     this.rating.set(newRating);
 
-    this.ratingHasBeenChanged({ 
+    this.ratingChange.emit({ 
       isbn: this.book().isbn(),
       newRating
     });
