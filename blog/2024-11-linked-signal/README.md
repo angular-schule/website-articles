@@ -52,7 +52,7 @@ LinkedSignal has the following characteristics:
 
 To see how it works, let’s look at a complete example. 
 Here, we’re using `linkedSignal` to keep track of the first book in a list. 
-Whenever the list of books changes, the `firstBookInList` signal will automatically reset to the first book in the updated list.
+Whenever the list of books changes, the `firstBook` signal will automatically reset to the first book in the updated list.
 
 ```typescript
 import { Component, signal } from '@angular/core';
