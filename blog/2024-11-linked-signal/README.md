@@ -151,8 +151,7 @@ class BookComponent  {
   });
 
   doRateUp() {
-    const newRating = this.rating() + 1;
-    this.rating.set(newRating);
+    this.rating.update(rating => rating + 1);
 
     this.ratingChange.emit({ 
       isbn: this.book().isbn(),
@@ -186,7 +185,7 @@ import { BookStoreService } from './book-store.service';
       }
     </ul>
 
-    <button (click)="sortBooks()">Sort books by rating</button>
+    <button (click)="sortBooks()">Sort books by rating (locally)</button>
   `,
 })
 export class DashboardComponent {
@@ -202,19 +201,19 @@ export class DashboardComponent {
 ```
 
 In this example, `books` holds the server data.
-Usually we would directly use `toSignal()` to bridge the gap between the Observable from RxJS and the new signal world. But in this case, we would have no chance to edit the signal in any way (except by updating the Observable). 
+Usually we would directly use `toSignal()` to bridge the gap between the Observable from RxJS and the new signal world. However, in this case, we would have no chance to edit the signal in any way (except by updating the Observable). 
 
 But with the help of `linkedSignal` we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed. 
 In this example we are just sorting the list, but it could be also possible to change data of the books and send the data back to the server.
-There are many ways to leverage to use this new signal in our applications.
+There are many ways to use this new signal in our applications.
 
 
 ## LinkedSignal vs. Other Signals
 
 Here’s a quick comparison of `linkedSignal` with other types of signals in Angular:
 
-- **`signal()`**: A basic writable signal that maintains its value independently of other signals.
-- **`computed()`**: A read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
+- **`signal()`**: Creates a basic writable signal that maintains its value independently of other signals.
+- **`computed()`**: Creates a read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
 - **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing manual updates while staying linked to a source signal.
 
 Use `computed()` for derived data that doesn’t need to be overridden, while `linkedSignal()` is best for state that should reset based on specific dependencies.
@@ -225,7 +224,7 @@ Here are some tips for using `linkedSignal` effectively:
 
 - **Keep Computation Functions Simple**: Avoid complex calculations in the `computation` function to prevent cyclic dependencies and make your code easier to understand.
 - **Use for Resetting Patterns**: `linkedSignal` is ideal for cases where you need to reset a state based on a particular signal, like clearing a form field when a new item is selected.
-- **Consider Effects for Multiple Updates**: If you need multiple signals to react to a single change, using `effect()` might be clearer and more efficient than creating multiple `linkedSignal`s.
+- **Consider Effects for Multiple Updates**: If you need multiple signals to react to a single change, using `effect()` might be clearer and more efficient than creating multiple instances of `linkedSignal`.
 
 ## Conclusion
 
