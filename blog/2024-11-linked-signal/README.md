@@ -32,6 +32,7 @@ Here’s a look at what the Linked Signal is, how it works, and some common use 
 * [Advanced Scenarios for LinkedSignal](/blog/2024-11-linked-signal#advanced-scenarios-for-linkedSignal)
 * [LinkedSignal vs. Other Signals](/blog/2024-11-linked-signal#linkedSignal-vs-other-signals)
 * [Best Practices for Using LinkedSignal](/blog/2024-11-linked-signal#best-practices-for-using-linkedSignal)
+* [Demo Application](/blog/2024-11-linked-signal#demo-application)
 * [Conclusion](/blog/2024-11-linked-signal#conclusion)
 
 
@@ -241,6 +242,17 @@ Here are some tips for using Linked Signals effectively:
 - **Use for Resetting Patterns**: `linkedSignal()` is ideal for cases where you need to reset a state based on a particular signal, like clearing a form field when a new item is selected. 
   If you don't need reset functionality, consider using `computed()` instead.
 - **Consider Effects for Multiple Updates**: If you need multiple signals to react to a single change, using `effect()` might be clearer and more efficient than creating multiple signals with `linkedSignal()`.
+
+
+## Demo Application
+
+To make it easier to see Linked Signals in action, we’ve created a demo application on GitHub that showcases all of the examples discussed in this article.
+The first link leads you to the source code on Github. 
+The second link shows a deployed version of the application for you to try out.
+
+> **[1️⃣ Source on GitHub: demo-linked-signal](https://github.com/angular-schule/demo-linked-signal)**  
+> **[2️⃣ Live Example](https://angular-schule.github.io/demo-linked-signal/)**
+
 
 ## Conclusion
 
