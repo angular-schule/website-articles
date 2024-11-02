@@ -67,8 +67,7 @@ import { Component, signal } from '@angular/core';
   selector: 'app-book-list',
   template: `
     <p>First book in list: {{ firstBook() }}</p>
-    <button (click)="changeBookList()">Change Book List</button>
-  `,
+    <button (click)="changeBookList()">Change Book List</button>`
 })
 export class BookListComponent {
   books = signal(['Angular', 'React', 'Vue']);
@@ -107,11 +106,10 @@ While we could achieve the same result with `computed`, we also want to be able 
   selector: 'app-shopping-cart',
   template: `
     <p>Book: {{ selectedBook().title }}</p>
-    <input [(ngModel)]="amount" />
-  `,
-  standalone: true
+    <input [(ngModel)]="amount">`,
+  imports: [NgModel]
 })
-class ShoppingCartComponent {
+export class ShoppingCartComponent {
   selectedBook = input.required<Book>();
   amount = linkedSignal({
     source: this.selectedBook,
