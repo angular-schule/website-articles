@@ -22,7 +22,7 @@ In Angular 19, there's a [new experimental feature](https://github.com/angular/a
 
 It lets us create a writable signal that can automatically reset based on changes in other signals. 
 This makes it particularly useful for situations where local state needs to stay in sync with dynamic data. 
-Let’s take a look at what the Linked Signal is, see how it works, and revisit some common use cases.
+Here’s a look at what the Linked Signal is, how it works, and some common use cases.
 
 
 ## Contents
@@ -208,8 +208,8 @@ Usually we would directly use `toSignal()` to bridge the gap between the Observa
 However, in this case, we wouldn’t be able to edit the signal in any way (except by updating the Observable). 
 
 But with the help of a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed. 
-In this example we are just sorting the list, but it could be also possible to change data of the books and send the data back to the server.
-There are many ways to use this new signal in our applications.
+In this example, we’re just sorting the list, but it would also be possible to change the book data and send the updated state back to the server.
+There are many ways to use Linked Signals in our applications.
 
 
 ## Linked Signal vs. Other Signals
@@ -218,7 +218,7 @@ Here’s a quick comparison with other types of signals in Angular:
 
 - **`signal()`**: Creates a basic writable signal that maintains its value independently of other signals.
 - **`computed()`**: Creates a read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
-- **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing manual updates while staying linked to a source signal.
+- **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing the value to be updated manually while remaining linked to a source signal.
 
 Use `computed()` for derived data that doesn’t need to be overridden, while `linkedSignal()` is best for state that should reset based on specific dependencies.
 
@@ -227,17 +227,17 @@ Use `computed()` for derived data that doesn’t need to be overridden, while `l
 Here are some tips for using `linkedSignal()` effectively:
 
 - **Keep Computation Functions Simple**: Avoid complex calculations in the `computation` function to prevent cyclic dependencies and make your code easier to understand. 
-  If the computation somehow led to a cyclic read of itself, the execution will stop with the following error: ["Detected cycle in computations."](https://github.com/angular/angular/blob/7d0ba0cac85220cbbe4044667a51e5b95512f5d6/packages/core/primitives/signals/src/computed.ts#L114)
+  If a computation leads to a cyclic read of itself, Angular will stop execution with the following error: ["Detected cycle in computations."](https://github.com/angular/angular/blob/7d0ba0cac85220cbbe4044667a51e5b95512f5d6/packages/core/primitives/signals/src/computed.ts#L114)
 - **Use for Resetting Patterns**: `linkedSignal()` is ideal for cases where you need to reset a state based on a particular signal, like clearing a form field when a new item is selected. 
-  If you don't need a reset functionality, you should rather use `computed()`.
+  If you don't need reset functionality, consider using `computed()` instead.
 - **Consider Effects for Multiple Updates**: If you need multiple signals to react to a single change, using `effect()` might be clearer and more efficient than creating multiple instances of signals created by `linkedSignal()`.
 
 ## Conclusion
 
 The Linked Signal feature in Angular 19 provides a practical solution for managing state that needs to stay in sync with other signals. 
-It fills a gap between `signal()` and `computed()`, giving you a new way to handle complex, reactive frontends where state synchronization is essential. 
-Try out `linkedSignal()` in your Angular projects to see how it can simplify your state management. 
-Please keep in mind that this API is still experimental and could drastically change based on community feedback.
+It fills the gap between `signal()` and `computed()`, offering a new way to handle complex, reactive frontends where state synchronization is essential. 
+Try out `linkedSignal()` in your Angular project to see how it can simplify your state management. 
+Please keep in mind that this API is still experimental and could drastically change based on feedback from the community.
 
 <hr>
 
