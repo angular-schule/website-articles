@@ -107,7 +107,7 @@ While we could achieve the same result with `computed`, we also want to be able 
   template: `
     <p>Book: {{ selectedBook().title }}</p>
     <input [(ngModel)]="amount">`,
-  imports: [NgModel]
+  imports: [FormsModule]
 })
 export class ShoppingCartComponent {
   selectedBook = input.required<Book>();
