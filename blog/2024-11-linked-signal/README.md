@@ -18,7 +18,7 @@ sticky: false
 ---
 
 
-In Angular 19, there's a [new experimental feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. 
+In Angular 19, there’s a [new experimental feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. 
 
 It lets us create a writable signal that can automatically reset based on changes in other signals. 
 This makes it particularly useful for situations where local state needs to stay in sync with dynamic data. 
@@ -61,7 +61,7 @@ Up to here, all of this could have been achieved with a Computed Signal.
 However, the Linked Signal makes it possible to manually set the value in the `overrideFirstBook()` method.
 
 ```typescript
-import { Component, signal } from '@angular/core';
+import { Component, linkedSignal, signal } from '@angular/core';
 
 @Component({
   selector: 'app-book-list',
@@ -102,6 +102,8 @@ For example, a shopping cart component might want to reset the quantity field wh
 While we could achieve the same result with `computed`, we also want to be able to set the quantity based on the user's input.
 
 ```typescript
+import { Component, input, linkedSignal } from '@angular/core';
+
 @Component({
   selector: 'app-shopping-cart',
   template: `
@@ -130,7 +132,6 @@ Here’s how we could manage this with a Linked Signal:
 
 ```typescript
 import { Component, input, linkedSignal } from '@angular/core';
-import { Book } from './book';
 
 @Component({
   selector: 'app-book',
@@ -138,7 +139,7 @@ import { Book } from './book';
     <p>Title: {{ title() }}</p>
     <p>Rating: {{ rating() }}</p>
 
-    <button (click)="doRateUp()">Rate up!</button> 
+    <button (click)="doRateUp()">Rate up</button>
   `,
 })
 class BookComponent  {
@@ -167,15 +168,14 @@ class BookComponent  {
 With this setup, both `title` and `rating` reset when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers. 
 While the Linked Signal makes sure that the data resets when necessary, we can still update our local state directly. 
 In this example we update `rating` locally and communicate the change back to the parent component.
-Since we don't need to modify the `title` within the component, a simple computed signal fulfils this task.
+Since we don’t need to modify the `title` within the component, a simple computed signal fulfils this task.
 
 
 ### Synchronizing Server-Data for Client-Side Edits
 
-A Linked Signal can also help when working with server data that needs to be edited locally.
-If we're fetching data from an API but need to allow changes on the client side, we can use `linkedSignal()` to keep local edits in sync with the original server data.
-Here is an example that uses some books from our HTTP API with a `BookStoreService`:
-
+A Linked Signal is also helpful when working with server data that needs to be edited locally.
+If we’re fetching data from an API but need to allow changes on the client side, we can use `linkedSignal()` to keep local edits in sync with the original server data.
+Here is an example that uses data from our HTTP API, fetched through a simple `httpClient` wrapper called `BookStoreService`:
 
 ```typescript
 import { Component, inject, linkedSignal } from '@angular/core';
@@ -184,32 +184,42 @@ import { BookStoreService } from './book-store.service';
 @Component({
   selector: 'app-dashboard',
   template: `
-    <ul>
-      @for (book of books(); track book.isbn) {
-        <li>{{ book.title }}</li>
-      }
-    </ul>
+    @for (b of books(); track b.isbn) {
+      <app-book
+        (ratingChange)="handleRatingChange($event)"
+        [book]="b"
+      />
+    } 
 
-    <button (click)="sortBooks()">Sort books by rating (locally)</button>
+    <button (click)="changeOrder()">Change order (locally)</button>
   `,
 })
 export class DashboardComponent {
   private bookStore = inject(BookStoreService);
 
-  books = linkedSignal(toSignal(this.bookStore.getAllBooks()));
+  books = linkedSignal(
+    toSignal(this.bookStore.getAllBooks(), { initialValue: [] })
+  );
 
-  sortBooks() {
-    this.books.update(books => books.toSorted((a, b) => b.rating - a.rating);
+  changeOrder() {
+    this.books.update(books => books.toReversed());
+  }
+
+  handleRatingChange({ isbn, newRating }: { isbn: string, newRating: number }) {
+    this.books.update(books => books.map(b => b.isbn === isbn ? {...b, rating: newRating } : b));
   }
 }
 ```
 
 In this example, `books` holds the server data.
-Usually we would directly use `toSignal()` to bridge the gap between the Observable from RxJS and the new signal world. 
-However, in this case, we wouldn’t be able to edit the fetched data in any way (except by emitting a new item from the Observable). 
+Typically, we would use `toSignal()` to convert the RxJS Observable to a signal. 
+However, with `toSignal()` alone, we wouldn’t be able to edit the fetched data directly (except by emitting a new item from the Observable). 
 
-But with the help of a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed. 
-In this example, we’re just sorting the list, but it would also be possible to change the book data and send the updated state back to the server.
+Using a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed. 
+In this example, we’re changing the order of the books whenever the method `changeOrder()` is called.
+We're also handling the `ratingChange` event from the previous example.
+The corresponding `handleRatingChange` method accepts the identifier `isbn` and the new rating, and replaces the outdated book entity with an updated copy.
+To complete the flow, it would also be possible to modify the book data and send the updated state back to the server.
 
 
 ## Linked Signal vs. Other Signals
