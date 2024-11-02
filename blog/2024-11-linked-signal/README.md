@@ -1,6 +1,6 @@
 ---
 title: 'Angular 19: Introducing LinkedSignal for Responsive Local State Management'
-author: Johannes Hoppe and Ferdinand Malcher
+author: Johannes Hoppe
 mail: team@angular.schule
 published: 2024-11-04
 lastModified: 2024-11-04
