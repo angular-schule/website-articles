@@ -217,7 +217,7 @@ Since we don’t need to modify the `title` within the component, a simple compu
 
 A Linked Signal is also helpful when working with server data that needs to be edited locally.
 If we’re fetching data from an API but need to allow changes on the client side, we can use `linkedSignal()` to keep local edits in sync with the original server data.
-Here is an example that uses data from our HTTP API, fetched through a simple `httpClient` wrapper called `BookStoreService`:
+Here is an example that uses data from our HTTP API, fetched through a simple `HttpClient` wrapper called `BookStoreService`:
 
 ```typescript
 import { Component, inject, linkedSignal } from '@angular/core';
