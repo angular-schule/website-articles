@@ -121,7 +121,8 @@ export class ShoppingCartComponent {
 }
 ```
 
-In this case, whenever `selectedBook` changes, the `amount` input resets to `1`. 
+In this case, whenever selectedBook changes, the value of amount resets to 1.
+The input field reflects this change and resets to 1 as well.
 This pattern is useful in forms where we want fields to reset to a default state when certain inputs change.
 
 ## Advanced Scenarios for Linked Signals
