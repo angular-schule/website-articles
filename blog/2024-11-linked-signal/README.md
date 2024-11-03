@@ -51,6 +51,25 @@ A Linked Signal has the following characteristics:
 - **Writable and Reactive**: Like a [`signal`](https://angular.dev/guide/signals#writable-signals), we can update the value of a Linked Signal manually, but it also responds to changes in its source.
 - **A Combination of Signal and Computed**: It’s like [`computed`](https://angular.dev/guide/signals#computed-signals) because it derives its value from other signals, but it stays writable, allowing us to override it when needed.
 
+By combining these characteristics, Linked Signals provide a flexible way to manage state that adapts to changes in related signals but can also be directly controlled when required.
+To understand the flexibility of Linked Signals, consider the following example. 
+
+```ts
+const timestampMs = signal(Date.now());
+
+// with computed(): not writable
+const timestampSeconds = computed(() => timestampMs() / 1000);
+timestampSeconds.set(0); // ❌ compilation error
+
+// with linkedSignal(): writable
+const timestampSecondsLinked = linkedSignal(() => timestampMs() / 1000);
+timestampSecondsLinked.set(0); // ✅ works
+```
+
+Here, we use `linkedSignal()` in the shorthand syntax, which makes it similar to a signal returned by `computed()`.
+But unlike `computed()`, we also have the `set()` and `update()` functions, that can be called whenever required.
+The same functions don’t exist on the signal that is returned by `computed()`.
+
 
 ## Basic Usage of Linked Signal
 
