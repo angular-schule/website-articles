@@ -13,8 +13,9 @@ keywords:
   - Angular 19
   - Computed Signals 
 language: en
-thumbnail: ???.jpg
+thumbnail: linkedsignal.jpg
 sticky: false
+hidden: true
 ---
 
 
@@ -333,4 +334,4 @@ Please keep in mind that this API is still experimental and could drastically ch
 
 <hr>
 
-<small>**Cover image:** ???. Photo by ???</small>
+<small>**Cover image:** Generated with Adobe Firefly</small>
