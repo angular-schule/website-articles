@@ -172,7 +172,7 @@ import { Component, input, linkedSignal } from '@angular/core';
     <button (click)="doRateUp()">Rate up</button>
   `,
 })
-class BookComponent  {
+export class BookComponent  {
   book = input.required<Book>();
   ratingChange = output<{ isbn: string, newRating: number }>();
 
