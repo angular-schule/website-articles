@@ -66,9 +66,24 @@ const timestampSecondsLinked = linkedSignal(() => timestampMs() / 1000);
 timestampSecondsLinked.set(0); // ✅ works
 ```
 
-Here, we use `linkedSignal()` in the shorthand syntax, which makes it similar to a signal returned by `computed()`.
+Here, we use `linkedSignal()` in the **shorthand syntax**, which makes it similar to a signal returned by `computed()`.
 But unlike `computed()`, we also have the `set()` and `update()` functions, that can be called whenever required.
 The same functions don’t exist on the signal that is returned by `computed()`.
+
+Signals created with `computed()` or `linkedSignal()` as seen in the previous example, always update their value when any of the bound signals changes. 
+If we want to restrict the computation to a specific trigger signal, we can specify a source with a **computation function**. 
+The following Linked Signal only recomputes its value when the source changes:
+
+```ts
+const timestampMs = signal(Date.now());
+
+const timestampSecondsLinked = computed({
+  source: timestampMs,
+  computation: ms => ms / 1000
+});
+```
+
+Both examples for `timestampSecondsLinked` have the same behaviour, they show the timestamp in seconds.
 
 
 ## Basic Usage of Linked Signal
