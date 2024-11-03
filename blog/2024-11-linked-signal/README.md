@@ -27,11 +27,11 @@ Here’s a look at what the Linked Signal is, how it works, and some common use 
 
 ## Contents
 
-* [What is LinkedSignal?](/blog/2024-11-linked-signal#what-is-linkedSignal)
-* [Basic Usage of LinkedSignal](/blog/2024-11-linked-signal#basic-usage-of-linkedSignal)
-* [Advanced Scenarios for LinkedSignal](/blog/2024-11-linked-signal#advanced-scenarios-for-linkedSignal)
-* [LinkedSignal vs. Other Signals](/blog/2024-11-linked-signal#linkedSignal-vs-other-signals)
-* [Best Practices for Using LinkedSignal](/blog/2024-11-linked-signal#best-practices-for-using-linkedSignal)
+* [What is a LinkedSignal?](/blog/2024-11-linked-signal#what-is-a-linkedsignal)
+* [Basic Usage of LinkedSignal](/blog/2024-11-linked-signal#basic-usage-of-linkedsignal)
+* [Advanced Scenarios for LinkedSignal](/blog/2024-11-linked-signal#advanced-scenarios-for-linkedsignals)
+* [LinkedSignal vs. Other Signals](/blog/2024-11-linked-signal#linkedsignal-vs-other-signals)
+* [Best Practices for Using LinkedSignal](/blog/2024-11-linked-signal#best-practices-for-using-linked-signal)
 * [Demo Application](/blog/2024-11-linked-signal#demo-application)
 * [Conclusion](/blog/2024-11-linked-signal#conclusion)
 
