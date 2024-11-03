@@ -78,6 +78,9 @@ export class BookListComponent {
     computation: books => books[0]
   });
 
+  // this also works (shorthand version)
+  // firstBook = linkedSignal(() => this.books()[0]);
+
   overrideFirstBook() {
     // Manually updating `firstBook`, which now returns 'jQuery'
     this.firstBook.set('jQuery');
@@ -94,6 +97,12 @@ In this example:
 - The Linked Signal `firstBook` initially points to the first book in the list of `books`.
 - When `books` changes, `firstBook` recalculates to reflect the first item in the updated list.
 - However, we can also override the value manually, as shown with the 'jQuery' book. 
+
+The factory `linkedSignal` has two possible signatures:
+1. 
+There is also a **shorthand version** available. 
+
+# TODO
 
 
 ### Use Case with Input Signals
@@ -154,6 +163,9 @@ class BookComponent  {
     source: this.book,
     computation: book => book.rating,
   });
+
+  // this also works (shorthand version)
+  // rating = linkedSignal(() => this.book().rating);
 
   doRateUp() {
     const newRating = this.rating() + 1;
