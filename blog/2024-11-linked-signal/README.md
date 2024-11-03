@@ -219,7 +219,7 @@ import { BookStoreService } from './book-store.service';
   template: `
     @for (b of books(); track b.isbn) {
       <app-book
-        (ratingChange)="handleRatingChange($event)"
+        (ratingChange)="handleRatingChange($event.isbn, $event.newRating)"
         [book]="b"
       />
     } 
