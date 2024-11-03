@@ -132,12 +132,6 @@ In this example:
 - When `books` changes, `firstBook` recalculates to reflect the first item in the updated list.
 - However, we can also override the value manually, as shown with the 'jQuery' book. 
 
-The factory `linkedSignal` has two possible signatures:
-1. 
-There is also a **shorthand version** available. 
-
-# TODO
-
 
 ### Use Case with Input Signals
 
@@ -253,9 +247,9 @@ export class DashboardComponent {
     this.books.update(books => books.toReversed());
   }
 
-  handleRatingChange({ isbn, newRating }: { isbn: string, newRating: number }) {
-    this.books.update(books => {
-      return books.map(b => {
+  handleRatingChange(isbn: string, newRating: number) {
+    this.books.update(books =>
+      books.map(b => {
         // if this is the book we want to update, set the new rating
         if (b.isbn === isbn) {
           return { ...b, rating: newRating };
@@ -263,7 +257,8 @@ export class DashboardComponent {
           // leave all other books in the list unchanged
           return b;
         }
-      });
+      })
+    );
   }
 }
 ```
