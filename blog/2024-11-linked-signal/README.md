@@ -239,7 +239,16 @@ export class DashboardComponent {
   }
 
   handleRatingChange({ isbn, newRating }: { isbn: string, newRating: number }) {
-    this.books.update(books => books.map(b => b.isbn === isbn ? {...b, rating: newRating } : b));
+    this.books.update(books => {
+      return books.map(b => {
+        // if this is the book we want to update, set the new rating
+        if (b.isbn === isbn) {
+          return { ...b, rating: newRating };
+        } else {
+          // leave all other books in the list unchanged
+          return b;
+        }
+      });
   }
 }
 ```
