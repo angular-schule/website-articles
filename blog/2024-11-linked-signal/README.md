@@ -52,27 +52,29 @@ A Linked Signal has the following characteristics:
 - **A Combination of Signal and Computed**: It’s like [`computed`](https://angular.dev/guide/signals#computed-signals) because it derives its value from other signals, but it stays writable, allowing us to override it when needed.
 
 By combining these characteristics, Linked Signals provide a flexible way to manage state that adapts to changes in related signals but can also be directly controlled when required.
-To understand the flexibility of Linked Signals, consider the following example. 
+To understand the flexibility of Linked Signals, consider the following example which compares Computed and Linked Signals:
 
 ```ts
 const timestampMs = signal(Date.now());
 
-// with computed(): not writable
+// computed(): Signal (not writable)
 const timestampSeconds = computed(() => timestampMs() / 1000);
 timestampSeconds.set(0); // ❌ compilation error
 
-// with linkedSignal(): writable
+// linkedSignal(): WritableSignal (writable)
 const timestampSecondsLinked = linkedSignal(() => timestampMs() / 1000);
 timestampSecondsLinked.set(0); // ✅ works
 ```
 
-Here, we use `linkedSignal()` in the **shorthand syntax**, which makes it similar to a signal returned by `computed()`.
-But unlike `computed()`, we also have the `set()` and `update()` functions, that can be called whenever required.
-The same functions don’t exist on the signal that is returned by `computed()`.
+The signature and usage of `computed()` and `linkedSignal()` look very similar: Both accept a computation function which updates the result value of the signal when any of the bound signals (here: `timestampMs()`) changes.
+The difference lies in their return types: While `computed()` returns a read-only `Signal`, the new `linkedSignal` function creates a `WritableSignal`.
 
-Signals created with `computed()` or `linkedSignal()` as seen in the previous example, always update their value when any of the bound signals changes. 
-If we want to restrict the computation to a specific trigger signal, we can specify a source with a **computation function**. 
-The following Linked Signal only recomputes its value when the source changes:
+That means, we can override the value using `set()` and `update()` whenever required.
+A signal created with `computed()` does not allow modifying the value manually.
+
+In this first example, we used the **shorthand syntax** for the Linked Signal.
+It is also possible to separate the computation into a second function.
+The value of the source is automatically passed into the computation function.
 
 ```ts
 const timestampMs = signal(Date.now());
@@ -83,7 +85,9 @@ const timestampSecondsLinked = computed({
 });
 ```
 
-Both examples for `timestampSecondsLinked` have the same behaviour, they show the timestamp in seconds.
+Whether or not to use the the more elaborate options object with `source` and `computation` over the simpler shorthand syntax depends on use-case and taste.
+Both examples for `timestampSecondsLinked` above have the exact same behaviour.
+In more complex cases, a separate computation function might make the code more readable.
 
 
 ## Basic Usage of Linked Signal
@@ -91,9 +95,11 @@ Both examples for `timestampSecondsLinked` have the same behaviour, they show th
 To see how it works, let’s take a look at a complete example. 
 Our component has a list of books in the `books` signal.
 Then we’re using a Linked Signal to keep track of the *first book* in the list, created by the `linkedSignal()` factory function.
-Whenever the list of books changes, the `firstBook` signal will automatically reset to the first book in the updated list.
+We decided to use the full notation with an options object. The separate computation makes it more readable, compared to a one-line function that combines source and computation.
+
+Whenever the list of books changes, the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
 Up to here, all of this could have been achieved with a Computed Signal.
-However, the Linked Signal makes it possible to manually set the value in the `overrideFirstBook()` method.
+However, the Linked Signal makes it possible to manually override the value in the `overrideFirstBook()` method.
 
 ```typescript
 import { Component, linkedSignal, signal } from '@angular/core';
@@ -112,7 +118,7 @@ export class BookListComponent {
     computation: books => books[0]
   });
 
-  // this also works (shorthand version)
+  // this also works (shorthand notation)
   // firstBook = linkedSignal(() => this.books()[0]);
 
   overrideFirstBook() {
@@ -135,7 +141,7 @@ In this example:
 
 ### Use Case with Input Signals
 
-A common use for a Linked Signal could be components that reset based on an input signal. 
+A common use for a Linked Signal is a component that resets based on an input signal. 
 For example, a shopping cart component might want to reset the quantity field when the selected product changes. 
 While we could achieve the same result with `computed`, we also want to be able to set the quantity based on the user's input.
 
@@ -162,6 +168,8 @@ In this case, whenever `selectedBook` changes, the value of `amount` resets to 1
 The `<input>` field in the template reflects this change and resets to 1 as well.
 This pattern is useful in forms where we want fields to reset to a default state when certain inputs change.
 
+For this use-case, the full notation with `source` and `computation` is the most straight-forward way: We are not interested in the actual value of `selectedBook`. Instead, we just want to reset the value to `1` whenever `selectedBook` changes. This is why we separated `source` and `computation`.
+
 ## Advanced Scenarios for Linked Signals
 
 ### Nested State Management
@@ -186,14 +194,13 @@ export class BookComponent  {
   ratingChange = output<{ isbn: string, newRating: number }>();
 
   title = computed(() => this.book().title);
+  rating = linkedSignal(() => this.book().rating);
 
-  rating = linkedSignal({
+  // this also works (full notation)
+  /*rating = linkedSignal({
     source: this.book,
     computation: book => book.rating,
-  });
-
-  // this also works (shorthand version)
-  // rating = linkedSignal(() => this.book().rating);
+  });*/
 
   doRateUp() {
     const newRating = this.rating() + 1;
@@ -207,10 +214,15 @@ export class BookComponent  {
 }
 ```
 
-With this setup, both `title` and `rating` reset when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers. 
-While the Linked Signal makes sure that the data resets when necessary, we can still update our local state directly. 
+Our properties `title` and `rating` are derived from the `book` source.
+Both `title` and `rating` re-calculate their values when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers.
+While the Linked Signal makes sure that the data resets when necessary, we can still update our local state directly.
 In this example we update `rating` locally and communicate the change back to the parent component.
-Since we don’t need to modify the `title` within the component, a simple computed signal fulfils this task.
+Since we don’t need to modify the `title` within the component, a Computed Signal fulfils this task.
+
+We used the shorthand notation for the Linked Signal because the computation is very simple.
+Also, compared to `computed()`, both lines look very similar.
+However, depending on your taste, the full notation is also possible.
 
 
 ### Synchronizing Server-Data for Client-Side Edits
@@ -267,11 +279,16 @@ In this example, `books` holds the server data.
 Typically, we would use `toSignal()` to convert the RxJS Observable to a signal. 
 However, with `toSignal()` alone, we wouldn’t be able to edit the fetched data directly (except by emitting a new item from the Observable). 
 
-Using a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed. 
-In this example, we’re changing the order of the books whenever the method `changeOrder()` is called.
-We're also handling the `ratingChange` event from the previous example.
+Using a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed.
+
+We used the shorthand notation for `linkedSignal()` and passed in the signal from `toSignal()` directly. This is because we only want to convert the source into a Linked Signal. There is no need for an additional computation.
+
+We then change the order of the book list whenever the method `changeOrder()` is called.
+We’re also handling the `ratingChange` event from the previous example.
 The corresponding `handleRatingChange` method accepts the identifier `isbn` and the new rating, and replaces the outdated book entity with an updated copy.
 To complete the flow, it would also be possible to modify the book data and send the updated state back to the server.
+
+
 
 
 ## Linked Signal vs. Other Signals
@@ -282,7 +299,7 @@ Here’s a quick comparison with other types of signals in Angular:
 - **`computed()`**: Creates a read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
 - **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing the value to be updated manually while remaining linked to a source signal.
 
-Use `computed()` for derived data that doesn’t need to be overridden, while `linkedSignal()` is best for state that should reset based on specific dependencies.
+We recommend to use `computed()` for derived data that doesn’t need to be overridden, while `linkedSignal()` is best for state that should reset based on specific dependencies.
 
 ## Best Practices for Using Linked Signal
 
