@@ -337,4 +337,6 @@ Please keep in mind that this API is still experimental and could drastically ch
 
 <hr>
 
+<small>Thanks to Danny Koppenhagen for review and feedback!</small>
+
 <small>**Cover image:** Generated with Adobe Firefly</small>
