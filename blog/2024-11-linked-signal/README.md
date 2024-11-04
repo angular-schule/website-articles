@@ -98,7 +98,7 @@ Our component has a list of books in the `books` signal.
 Then we’re using a Linked Signal to keep track of the *first book* in the list, created by the `linkedSignal()` factory function.
 We decided to use the full notation with an options object. The separate computation makes it more readable, compared to a one-line function that combines source and computation.
 
-Whenever the list of books changes, the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
+Whenever the list of books changes (`changeBookList()` method), the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
 Up to here, all of this could have been achieved with a Computed Signal.
 However, the Linked Signal makes it possible to manually override the value in the `overrideFirstBook()` method.
 
