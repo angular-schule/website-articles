@@ -27,7 +27,7 @@ Here’s a look at what the Linked Signal is, how it works, and some common use 
 
 ## Contents
 
-* [What is a Linked Signal?](/blog/2024-11-linked-signal#what-is-a-linkedsignal)
+* [What is a Linked Signal?](/blog/2024-11-linked-signal#what-is-a-linked-signal)
 * [Basic Usage of Linked Signal](/blog/2024-11-linked-signal#basic-usage-of-linked-signal)
 * [Advanced Scenarios for Linked Signals](/blog/2024-11-linked-signal#advanced-scenarios-for-linked-signals)
 * [Linked Signal vs. Other Signals](/blog/2024-11-linked-signal#linked-signal-vs-other-signals)
