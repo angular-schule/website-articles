@@ -136,8 +136,10 @@ export class BookListComponent {
 
 In this example:
 - The Linked Signal `firstBook` initially points to the first book in the list of `books`.
+- We can override the value manually at any time, as shown with the "jQuery" book.
 - When `books` changes, `firstBook` recalculates to reflect the first item in the updated list.
-- However, we can also override the value manually, as shown with the 'jQuery' book. 
+
+The signal always holds the latest value – either set manually through `set()`/`update()` or calculated by the computation function when the source changes.
 
 
 ### Use Case with Input Signals
