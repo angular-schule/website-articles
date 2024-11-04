@@ -53,7 +53,7 @@ A Linked Signal has the following characteristics:
 - **A Combination of Signal and Computed**: It’s like [`computed`](https://angular.dev/guide/signals#computed-signals) because it derives its value from other signals, but it stays writable, allowing us to override it when needed.
 
 By combining these characteristics, Linked Signals provide a flexible way to manage state that adapts to changes in related signals but can also be directly controlled when required.
-To understand the flexibility of Linked Signals, consider the following example which compares Computed and Linked Signals:
+To understand the flexibility, consider the following example which compares Computed and Linked Signals:
 
 ```ts
 const timestampMs = signal(Date.now());
@@ -67,8 +67,8 @@ const timestampSecondsLinked = linkedSignal(() => timestampMs() / 1000);
 timestampSecondsLinked.set(0); // ✅ works
 ```
 
-The signature and usage of `computed()` and `linkedSignal()` look very similar: Both accept a computation function which updates the result value of the signal when any of the bound signals (here: `timestampMs()`) changes.
-The difference lies in their return types: While `computed()` returns a read-only `Signal`, the new `linkedSignal` function creates a `WritableSignal`.
+The signature and usage of `computed()` and `linkedSignal()` look very similar: Both accept a computation function which updates the result value of the signal when any of the bound signals (here: `timestampMs`) changes.
+The difference lies in their return types: While `computed()` returns a read-only `Signal`, the new `linkedSignal()` function creates a `WritableSignal`.
 
 That means, we can override the value using `set()` and `update()` whenever required.
 A signal created with `computed()` does not allow modifying the value manually.
@@ -95,10 +95,10 @@ In more complex cases, a separate computation function might make the code more 
 
 To see how it works, let’s take a look at a complete example. 
 Our component has a list of books in the `books` signal.
-Then we’re using a Linked Signal to keep track of the *first book* in the list, created by the `linkedSignal()` factory function.
+Then we’re using a Linked Signal to keep track of the *first book* in the list.
 We decided to use the full notation with an options object. The separate computation makes it more readable, compared to a one-line function that combines source and computation.
 
-Whenever the list of books changes (`changeBookList()` method), the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
+Whenever the list of books changes (e.g. through the `changeBookList()` method), the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
 Up to here, all of this could have been achieved with a Computed Signal.
 However, the Linked Signal makes it possible to manually override the value in the `overrideFirstBook()` method.
 
@@ -218,7 +218,7 @@ export class BookComponent  {
 ```
 
 Our properties `title` and `rating` are derived from the `book` source.
-Both `title` and `rating` re-calculate their values when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers.
+Both `title` and `rating` recalculate their values when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers.
 While the Linked Signal makes sure that the data resets when necessary, we can still update our local state directly.
 In this example we update `rating` locally and communicate the change back to the parent component.
 Since we don’t need to modify the `title` within the component, a Computed Signal fulfils this task.
@@ -288,10 +288,11 @@ We used the shorthand notation for `linkedSignal()` and passed in the signal fro
 
 We then change the order of the book list whenever the method `changeOrder()` is called.
 We’re also handling the `ratingChange` event from the previous example.
-The corresponding `handleRatingChange` method accepts the identifier `isbn` and the new rating, and replaces the outdated book entity with an updated copy.
+The corresponding `handleRatingChange()` method accepts the identifier `isbn` and the new rating, and replaces the outdated book entity with an updated copy.
 To complete the flow, it would also be possible to modify the book data and send the updated state back to the server.
 
-
+> ℹ️ **Did you know?** Angular introduced the new experimental **Resource API** in version 19. It allows you to load data asynchronously while keeping the result signal writable.
+> We presented the Resource API in a separate blog post (in German 🇩🇪): **[Die neue Resource API von Angular](https://angular-buch.com/blog/2024-10-resource-api)**
 
 
 ## Linked Signal vs. Other Signals
