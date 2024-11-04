@@ -302,7 +302,7 @@ Here’s a quick comparison with other types of signals in Angular:
 - **`computed()`**: Creates a read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
 - **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing the value to be updated manually while remaining linked to a source signal.
 
-We recommend to use `computed()` for derived data that doesn’t need to be overridden, while `linkedSignal()` is best for state that should reset based on specific dependencies.
+We recommend to only use `linkedSignal()` for state that should reset based on specific dependencies. Please continue to use `computed()` for derived data that doesn’t need to be overridden.
 
 ## Best Practices for Using Linked Signal
 
