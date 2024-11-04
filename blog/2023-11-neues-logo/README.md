@@ -11,8 +11,6 @@ keywords:
   - Angular 17
 language: de
 thumbnail: header-logo.png
-hidden: false
-sticky: true
 ---
 
 Die neue Major-Version 17 von Angular wurde Anfang November veröffentlicht. Für das Team und die Community war es ein besonderes Release: Angular wartet nicht nur mit spannenden neuen Features auf, sondern präsentiert sich seit 6. November 2023 in einem neuen Gewand.
