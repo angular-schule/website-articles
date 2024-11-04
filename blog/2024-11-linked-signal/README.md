@@ -55,6 +55,8 @@ By combining these characteristics, Linked Signals provide a flexible way to man
 To understand the flexibility, consider the following example which compares Computed and Linked Signals:
 
 ```ts
+import { computed, linkedSignal } from '@angular/core';
+
 const timestampMs = signal(Date.now());
 
 // computed(): Signal (not writable)
@@ -180,7 +182,7 @@ Suppose you have nested data such as book properties (`title` and `rating`), and
 Here’s how we could manage this with a Linked Signal:
 
 ```typescript
-import { Component, input, linkedSignal } from '@angular/core';
+import { Component, computed, input, linkedSignal } from '@angular/core';
 
 @Component({
   selector: 'app-book',
