@@ -80,7 +80,7 @@ The value of the source is automatically passed into the computation function.
 ```ts
 const timestampMs = signal(Date.now());
 
-const timestampSecondsLinked = computed({
+const timestampSecondsLinked = linkedSignal({
   source: timestampMs,
   computation: ms => ms / 1000
 });
