@@ -9,7 +9,7 @@ keywords:
   - JavaScript
   - Signals
   - Reactive Programming
-  - LinkedSignal
+  - Linked Signal
   - Angular 19
   - Computed Signals 
 language: en
