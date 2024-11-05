@@ -322,9 +322,9 @@ The first link leads to the source code on GitHub, where you can download it.
 The second link opens a deployed version of the application for you to try out.
 Last but not least, the third link provides an interactive demo on StackBlitz, where you can edit the source code and see the results in real time.
 
-> - **[1️⃣ Source on GitHub: demo-linked-signal](https://github.com/angular-schule/demo-linked-signal)**  
-> - **[2️⃣ Deployed application](https://angular-schule.github.io/demo-linked-signal/)**
-> - **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-linked-signal?file=src%2Fapp%2Fbooks%2Fdashboard%2Fdashboard.component.ts)**
+> **[1️⃣ Source on GitHub: demo-linked-signal](https://github.com/angular-schule/demo-linked-signal)**  
+> **[2️⃣ Deployed application](https://angular-schule.github.io/demo-linked-signal/)**  
+> **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-linked-signal?file=src%2Fapp%2Fbooks%2Fdashboard%2Fdashboard.component.ts)**  
 
 
 ## Conclusion
