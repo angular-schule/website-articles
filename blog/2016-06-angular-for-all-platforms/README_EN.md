@@ -114,8 +114,8 @@ function openFile() {
 [![Banner DWX](images/developer-week.jpg)](http://www.developer-week.de/)
 
 There will be a couple of talks about NativeScript at DWX, which are really worth attending.
- * [Introduction to NativeScript][1] on Monday 20-June at 17:00 - in this talk you will learn what NativeScript is made of, how it works inside and you will see some JavaScript examples on how to build mobile apps with it.
- * [Native Mobile Apps mit NativeScript und Angular 2.0][2] on Wednesday 22-June at 9:00 - in this talk you will learn how we built the NativeScript 2.0, how does it work with Angular 2 and how to aim for a shared code base between mobile and web apps.
+ * Talk: [Introduction to NativeScript][1] on Monday 20-June at 17:00 - in this talk you will learn what NativeScript is made of, how it works inside and you will see some JavaScript examples on how to build mobile apps with it.
+ * Talk: [Native Mobile Apps mit NativeScript und Angular 2.0][2] on Wednesday 22-June at 9:00 - in this talk you will learn how we built the NativeScript 2.0, how does it work with Angular 2 and how to aim for a shared code base between mobile and web apps.
 
 There is a great [Getting Started guide](http://docs.nativescript.org/angular/tutorial/ng-chapter-0), which you can follow to build a Native iOS and Android mobile app with Angular2 and NativeScript.
 
