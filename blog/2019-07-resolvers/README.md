@@ -109,7 +109,7 @@ Not good.
 And here we are with the problematic UX resolvers bring us.
 Try this out in the demo!
 
-<iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/angular-resolver-long?ctl=1&embed=1&file=src/app/app.component.ts&hideExplorer=1"></iframe>
+<iframe style="width:100%; height: 25em" style="Stackblitz-Demo" src="https://stackblitz.com/edit/angular-resolver-long?ctl=1&embed=1&file=src/app/app.component.ts&hideExplorer=1"></iframe>
 
 To make things clearer let's also take a look at a time diagram.
 The red bracket marks the time between navigation start and end.
@@ -417,7 +417,7 @@ So no actual need for resolvers here? 😇
 
 You can play around with this example in a StackBlitz project:
 
-<iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
+<iframe style="width:100%; height: 25em" title="Stackblitz-Demo" src="https://stackblitz.com/edit/angular-resolver-config?ctl=1&embed=1&file=src/app/config.service.ts"></iframe>
 
 
 ## A word on resolvers: Summary

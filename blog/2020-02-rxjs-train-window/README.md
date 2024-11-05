@@ -166,7 +166,7 @@ const result$ = source$.pipe(
 
 You can find a working demo on Stackblitz:
 
-<iframe style="width:100%; height: 25em" src="https://stackblitz.com/edit/angular-train-window?ctl=1&embed=1&file=src/app/app.component.ts"></iframe>
+<iframe style="width:100%; height: 25em" title="Stackblitz-Demo" src="https://stackblitz.com/edit/angular-train-window?ctl=1&embed=1&file=src/app/app.component.ts"></iframe>
 
 
 -------

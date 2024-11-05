@@ -322,7 +322,8 @@ const press$ = race(
   fromEvent(triggerBtn, 'touchstart')
 );
 const release$ = race(
-  // we're listening on document here in case the user moves away from the trigger and releases somewhere else
+  // we're listening on document here in case the user
+  // moves away from the trigger and releases somewhere else
   fromEvent(document, 'mouseup'),
   fromEvent(document, 'touchend')
 );
@@ -358,7 +359,7 @@ press$.pipe(
 
 **You can find a full working demo on Stackblitz:**
 
-<iframe style="width:100%; height: 30em" src="https://stackblitz.com/edit/rxjs-turn-signal?ctl=1&embed=1&file=index.ts"></iframe>
+<iframe style="width:100%; height: 30em" title="Stackblitz Demo" src="https://stackblitz.com/edit/rxjs-turn-signal?ctl=1&embed=1&file=index.ts"></iframe>
 
 ---
 
@@ -367,7 +368,7 @@ press$.pipe(
 ---
 
 Special thanks to
-- [Lisa Möller](https://moeller.media) who created the CSS car in the demo and took the header photo.
+- Lisa Möller who created the CSS car in the demo and took the header photo.
 - Johannes Hoppe and Danny Koppenhagen for review and feedback.
 
 <small>**Header image:** Traffic in Moscow, 2018, by Lisa Möller</small>

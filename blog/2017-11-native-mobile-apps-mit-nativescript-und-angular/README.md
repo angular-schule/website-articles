@@ -10,7 +10,7 @@ language: de
 thumbnail: teaser.jpg
 ---
 
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/pFId3_cs2_Q?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/pFId3_cs2_Q?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen title="YouTube-Video"></iframe></div>
 
 NativeScript ist einen freies Open-Source-Framework für die Entwicklung von nativen Apps für iOS, Android und Windows Phone. Die Geschäftslogik wird in JavaScript oder TypeScript entwickelt, Design und Stil werden per XML und CSS definiert. Heraus kommt plattformspezifischer Code. Schon wieder eine neue Art, Apps zu entwickeln? Wozu das Ganze? Warum sollte man auf NativeScript setzen? Diese und weitere Fragen werden wir in der Session klären. Wir werden die Architektur betrachten, eine App bauen, native APIs ansprechen und das Ganze mit Angular verdrahten. Klingt irre. Ist es auch. Und macht viel Spaß!
 

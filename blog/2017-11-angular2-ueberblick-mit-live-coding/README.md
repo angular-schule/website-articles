@@ -10,7 +10,7 @@ language: de
 thumbnail: teaser.jpg
 ---
 
-<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/U9crt6__AVA?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/U9crt6__AVA?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen title="YouTube-Video"></iframe></div>
 
 Dies ist ein älterer Vortrag aus dem Jahr 2016. Er ist vor allem dann relevant, wenn Sie den Umstieg von AngularJS auf Angular 2+ wagen wollen.
 
