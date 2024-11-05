@@ -18,9 +18,7 @@ sticky: false
 ---
 
 
-In Angular 19, there’s a [new experimental feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. 
-
-It lets us create a writable signal that can automatically reset based on changes in other signals. 
+In Angular 19, there’s a [new experimental feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. It lets us create a writable signal that can automatically reset based on changes in other signals. 
 This makes it particularly useful for situations where local state needs to stay in sync with dynamic data. 
 Here’s a look at what the Linked Signal is, how it works, and some common use cases.
 
