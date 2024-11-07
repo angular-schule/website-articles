@@ -26,7 +26,7 @@ In this article, we’ll explore how these two APIs compare, when to use each, a
 ## Angular 19 vs. Previous Versions: What’s Different?
 
 The `effect()` API was introduced as part of Angular’s new signal-based reactivity model [in Angular 16](https://blog.angular.dev/angular-v16-is-here-4d7a28ec680d).
-Angular 19 introduces a significant update to the `effect()` API, making it easier to manage side effects directly within `effect()` functions, even when they involve setting signals. 
+Angular 19 now introduces a significant update to the `effect()` API, making it easier to manage side effects directly within `effect()` functions, even when they involve setting signals. 
 
 This change marks a departure from Angular’s more restrictive approach, which aimed to discourage setting signals within `effect()` by requiring an `allowSignalWrites` flag to enable this behavior:
 
@@ -55,7 +55,7 @@ We interpret this new information in the following way:
 > 💡 **It is now a valid case to use `effect()` for state updates or side effects that are difficult to achieve with other reactive primitives, such as `computed()`**.
 
 This change to the paradigm is in line with new features introduced in Angular 19, such as `linkedSignal()` and `resource()`.
-Both help tp maintain cleaner and more declarative state management patterns where possible. 
+Both help to maintain cleaner and more declarative state management patterns where possible. 
 Good patterns are no longer enforced by the `allowSignalWrites` flag, but instead by useful high-level signal APIs.
 
 With this shift, here’s a new general rule of thumb:
@@ -71,7 +71,8 @@ Let’s dive into the specifics! 🚀
 Both `effect()` and `afterRenderEffect()` are designed to track and respond to changes in signals, but they differ in timing and use cases.
 
 - **`effect()`** runs as part of the Angular change detection cycle and can now safely modify signals without any additional flags.
-- **`afterRenderEffect()`** is a lower-level API that executes after the DOM has been updated. It’s particularly suited for tasks that require interacting directly with the DOM, such as measuring element sizes or making complex visual updates in phases.
+- **`afterRenderEffect()`** is a lower-level API that executes after the DOM has been updated. 
+  It’s particularly suited for tasks that require interacting directly with the DOM, such as measuring element sizes or making complex visual updates in phases.
 
 Here’s a simple comparison to illustrate how these functions operate:
 
@@ -90,16 +91,27 @@ afterRenderEffect(() => {
 As expected, the console output for `afterRenderEffect` is triggered after the output of `effect`.
 
 
-## Practical Scenarios and Examples
+## Introducing `effect()`
 
-### When to Choose `effect()` Over `computed()`
+Angular supports two types of effects: **component effects** and **root effects**. 
+Component effects are initiated when `effect()` is called within a component, directive, or a service tied to them. 
+Root effects, on the other hand, are initiated when `effect()` is called outside the component tree, such as in a root service, or by setting the `forceRoot` option.
 
-Choosing between `effect()` and `computed()` depends on the use case:
-- **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. 
-  We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-effect-and-afterRenderEffect)**
-- **Use `effect()`** when the operation is more complex, involves multiple signals, or needs to modify signal values, like synchronizing form states or logging events.
+The main difference between these effect types is their timing. 
+Component effects operate as part of Angular's change detection, which allows them to safely read input signals and manage views dependent on component state.
+Root effects, however, run as microtasks, independent of the component tree or change detection.
 
-Consider the example below, where `effect()` is used to synchronize form fields based on the input signal `currentBook`:
+In this article, we only discuss **component effects**.
+
+
+### Example for `effect()`: setting multipe things at once
+
+Consider the example below, where `effect()` is used to synchronize form fields based on the input signal `currentBook`.
+The API for reactive forms has not been updated to work hand in hand with signals, so we still need to patch the form as we have done in the past.
+However, some improvements to the Reactive Forms API have already been promised.
+We also want to set another signal after we have patched the form. 
+
+Here is our example of a form that can create a new book and edit an existing book:
 
 ```typescript
 @Component({
@@ -151,31 +163,69 @@ In this example, `effect()` is ideal for handling the side effect (patching the 
 We are also free to set signals in the effect now.
 To show that this is now perfectly valid, we updated another signal during that phase.
 We dediced for a signal called `isEditMode`, that is updated accordingly.
-In the past, we would have been using `ngOnchanges` to patch the form when the input was changed.
+In the past, we would have been using `ngOnChanges` to patch the form when the input was changed.
+
+
+### When to choose `effect()` over `computed()`
+
+The previous constraints on `effect()` have been removed, it is now more challenging to decide when to use `computed()` or `effect()`.
+In our opinion, the choice between `effect()` and `computed()` depends on the use case:
+- **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. 
+  We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-effect-and-afterRenderEffect)**
+- **Use `effect()`** if the operation is more complex, involves setting multiple signals or requires side effects to be performed outside the world of signals, such as synchronising reactive form states or logging events.
+
+For patching forms, there is currently no better approach than using effects. 
+This approach can also be easily migrated to what would have been done in the past with `ngOnchanges` – which is great.
+But whether we should have used a better computed signal for the `isEditMode` is questionable.
+It is not easy to make a decision here, because we could also have written the following:
+
+```ts
+isEditMode = computed(() => !!this.currentBook());
+```
+
+Perhaps we have to accept that in some situations both options are absolutely valid!
 
 
 ## Introducing `afterRenderEffect()`
 
-The `afterRenderEffect()` function, new in Angular 19, offers phased execution, allowing you to control when tasks occur during the DOM update process.
+The new `afterRenderEffect()` function allows us to control when tasks occur during the DOM update process.
 This is particularly beneficial for UI manipulations that require specific timing to avoid layout shifts and ensure smooth animations.
+
+The API itself mirrors the functionality of 
+* [`afterRender`](https://next.angular.dev/api/core/afterRender) *(registers a callback to be invoked each time the application finishes rendering)* and 
+* [`afterNextRender`](https://next.angular.dev/api/core/afterNextRender) *(Registers a callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
+
+which are both in **Developer Preview**!
+
+The Angular docs recommend avoiding `afterRender` when possible and suggest specifying explicit phases with `afterNextRender` to avoid significant performance degradation. 
+You’ll see a similar recommendation for `afterRenderEffect()`. There is one signature that is intended for use and another that exists but is not recommended.
+
+**But there is one big difference:** values are propagated from phase to phase as signals instead of as plain values.
+As a result, later phases may not need to execute if the values returned by earlier phases do not change.
+
+
+Before we start, some important facts to know about `afterRenderEffect()`:
+
+* **Phased Execution**: These effects can be registered for specific phases of the render cycle. The Angular team recommends adhering to these phases for optimal performance.
+* **Signal Integration**: These effects are supposed to work seamlessly with Angular’s signal reactivity system, and signals can be set during the phases.
+* **Selective Execution**: These effects run only when they are "dirty" due to signal dependencies. If no signal changes, the effect won’t trigger again.
+* **No SSR**: These effects execute only in browser environments, not on the server.
+
+---
+
+This version keeps your wording with just a slight refinement!
+
 
 ### Understanding the Phases
 
-`afterRenderEffect()` offers four distinct phases:
-1. **earlyRead**: Ideal for reading DOM properties before writes.
-2. **write**: Executes DOM write operations.
-3. **mixedReadWrite**: Allows for combined reads and writes but should be used sparingly.
-4. **read**: Executes DOM reads after writes are completed.
+Phased execution is useful for avoiding unnecessary layout recalculations.
+We can register for each phase by specifying a callback function.
+The first callback receive no parameters.
+Each subsequent phase callback will receive the return value of the previously run phase callback **as a signal**.
+This can be used to coordinate work across multiple phases.
 
-Let’s look at an example to demonstrate these phases.
-
-
-## TODO: EXAMPLE
-
-### Rules about the phased execution
-
-Phased execution is useful for avoiding unnecessary layout recalculations. 
-Here’s a quick guide:
+`afterRenderEffect()` offers four distinct phases.  
+They run in the following order:
 
 | Phase                 | Rule                   |
 |-----------------------|------------------------|
@@ -184,24 +234,41 @@ Here’s a quick guide:
 | 3. `mixedReadWrite`   | Use this phase to read from and write to the DOM simultaneously. **Never** use this phase if it is possible to divide the work among the other phases instead. |
 | 4. `read`             | Use this phase to **read** from the DOM. **Never** write to the DOM in this phase. |
 
-According to the docs, you should prefer using the `read` and `write` phases over the `earlyRead` and `mixedReadWrite` phases when possible, to avoid performance degradation.
+[According to the docs](https://next.angular.dev/api/core/afterRenderEffect), you should prefer using the `read` and `write` phases over the `earlyRead` and `mixedReadWrite` phases when possible, to avoid performance degradation.
+
+To summarise this, with `afterRenderEffect()` you can do the following in the four phases:
+1. **earlyRead**: Read DOM properties before writes.
+2. **write**: Execute DOM write operations.
+3. **mixedReadWrite**: Allows for combined reads and writes but should be used sparingly!
+4. **read**: Execute DOM reads after writes are completed.
+5. ...and you can pass on a value (or an object) from one phase to the next.
+
+As mentionend before, there is also a second signature of `afterRenderEffect()` that accepts a single callback. 
+This function registers an effect to run after rendering is complete, specifically during the `mixedReadWrite` phase.
+However, the Angular documentation recommends specifying an explicit phase for the effect whenever possible to avoid potential performance issues.
+Therefore, we won't cover this signature in our article, as its usage is not recommended.
+
+Let’s look at an example to demonstrate these phases.
+
+
+### Example for `afterRenderEffect()` ??? TODO
 
 
 ## Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity
 
-With Angular 19, we're witnessing the Angular team’s broader vision of Signal-based Components start to take shape.
+With Angular 19, the Angular team's broader vision of signal-based components is slowly taking shape.
 The long-term goal here is to eventually phase out all traditional lifecycle hooks, except for `ngOnInit` and `ngOnDestroy`.
 
-The recent addition of `effect()` and `afterRenderEffect()` showcases how Angular is moving in this direction. 
-These reactivity tools are more intuitive for managing component state changes and post-render interactions, gradually making other lifecycle hooks redundant.
-For instance, `afterRenderEffect()` is designed to handle tasks traditionally managed by `ngAfterViewInit` and `ngAfterViewChecked`, allowing developers to write more predictable and declarative code.
+The addition of `effect()` and `afterRenderEffect()` showcases how Angular is moving in this direction. 
+These effects are more intuitive for managing component state changes and post-render interactions, gradually making the old lifecycle hooks redundant.
+For instance, `afterRenderEffect()` is designed to handle tasks traditionally managed by `ngAfterViewInit` and `ngAfterViewChecked`.
 
 This approach has been in the pipeline for some time. 
 In April 2023, Angular’s team outlined this trajectory in their [RFC #49682](https://github.com/angular/angular/discussions/49682). 
-The document proposed the introduction of `afterRenderEffect()` as part of a roadmap to replace Angular’s current change detection and lifecycle management, moving away from imperative lifecycle hooks to a cleaner, more reactive pattern. 
+The document proposed the introduction of `afterRenderEffect()` as part of a roadmap to replace Angular’s current change detection, moving away from imperative lifecycle hooks to a cleaner, more reactive pattern. 
 
 Migrating from Angular lifecycle hooks to `effect()` and `afterRenderEffect()` is straightforward:
-- **ngOnInit / ngOnChanges** → `effect()`: Handles state or signal-based logic.
+- **ngOnInit / ngOnChanges** → `effect()`: Handles signal-based logic and other state.
 - **ngAfterViewInit / ngAfterViewChecked** → `afterRenderEffect()`: Manages DOM manipulations post-render.
 
 Or to put it another way, here’s a direct mapping:
@@ -213,21 +280,24 @@ Or to put it another way, here’s a direct mapping:
 | `ngAfterViewInit`     | `afterRenderEffect()`  |
 | `ngAfterViewChecked`  | `afterRenderEffect()`  |
 
+Now the only important hook left is actually `ngOnDestroy`.
+Will we also get a replacement for this, or will we no longer need this functionality once everything has been completely migrated to signals? 🤔
+
 
 ## Best Practices for Using `effect()` and `afterRenderEffect()`
 
 To make the most of these new APIs, here are a few best practices:
 
 1. **Use `computed()` for simple dependencies**: Reserve `effect()` for more complex or state-dependent operations.
-2. **Choose phases carefully in `afterRenderEffect()`**: Stick to specific phases to avoid layout thrashing, and avoid `mixedReadWrite` when possible.
+2. **Choose phases carefully in `afterRenderEffect()`**: Stick to the specific phases and avoid `mixedReadWrite` when possible.
 3. **Use `onCleanup()` to manage resources**: Always use `onCleanup()` within effects for any resource that needs disposal, especially with animations or intervals.
 4. **Direct DOM Manipulations only when necessary**: Remember, Angular’s reactive approach minimizes the need for manual DOM manipulations. 
-  Use these APIs only when Angular’s templating isn’t enough.
+  Use `afterRenderEffect()` only when Angular’s templating isn’t enough.
 
 
 ## Demo Application
 
-To make it easier to see Linked Signals in action, we’ve created a demo application on GitHub that showcases all the examples discussed in this article.
+To make it easier to see the effects in action, we’ve created a demo application on GitHub that showcases all the examples discussed in this article.
 The first link leads to the source code on GitHub, where you can download it.
 The second link opens a deployed version of the application for you to try out.
 Last but not least, the third link provides an interactive demo on StackBlitz, where you can edit the source code and see the results in real time.
@@ -239,14 +309,15 @@ Last but not least, the third link provides an interactive demo on StackBlitz, w
 
 ## Conclusion
 
-Angular’s new `effect()` and `afterRenderEffect()` APIs open up new possibilities for reactive and efficient DOM manipulation with the new world of signals.
-By understanding when to use each, leveraging phased execution, and carefully managing dependencies, developers can create responsive and performant Angular applications. 
+Angular’s new `effect()` API opens up new possibilities for reactive state management and `afterRenderEffect()` provides efficient DOM manipulation when needed.
+By understanding when to use each API, developers can create responsive and powerful Angular applications with a clean new syntax.
 
-Try out `effect()` and `afterRenderEffect()` in your next Angular 19 project, and see how they streamline state management and DOM interactions!
+Try out `effect()` and `afterRenderEffect()` in your next Angular project and see how they simplify your state management and DOM interactions!
+> **⚠️ Please note that both APIs are in the developer preview and may still be subject to change!**
 
 
 <hr>
 
-<small>Thanks to Danny Koppenhagen for review and feedback!</small>
+<small>Thanks to Ferdinand Malcher for review and feedback!</small>
 
 <small>**Cover image:** Generated with ChatGPT</small>
