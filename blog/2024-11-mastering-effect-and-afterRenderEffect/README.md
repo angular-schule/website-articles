@@ -313,7 +313,7 @@ Angular’s new `effect()` API opens up new possibilities for reactive state man
 By understanding when to use each API, developers can create responsive and powerful Angular applications with a clean new syntax.
 
 Try out `effect()` and `afterRenderEffect()` in your next Angular project and see how they simplify your state management and DOM interactions!
-> **⚠️ Please note that both APIs are in the developer preview and may still be subject to change!**
+> **⚠️ Please note that both APIs are in developer preview and may still be subject to change!**
 
 
 <hr>
