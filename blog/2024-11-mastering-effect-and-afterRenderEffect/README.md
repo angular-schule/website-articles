@@ -183,7 +183,7 @@ In the past, we would have been using `ngOnChanges` to patch the form when the i
 
 ### When to choose `effect()` over `computed()`
 
-The previous constraints on `effect()` have been removed, it is now more challenging to decide when to use `computed()` or `effect()`.
+The previous constraints on `effect()` have been removed, so it is now more challenging to decide when to use `computed()` or `effect()`.
 In our opinion, the choice between `effect()` and `computed()` depends on the use case:
 - **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. 
   We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-effect-and-afterRenderEffect)**
@@ -208,7 +208,7 @@ This is particularly beneficial for UI manipulations that require specific timin
 
 The API itself mirrors the functionality of 
 * [`afterRender`](https://next.angular.dev/api/core/afterRender) *(registers a callback to be invoked each time the application finishes rendering)* and 
-* [`afterNextRender`](https://next.angular.dev/api/core/afterNextRender) *(Registers a callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
+* [`afterNextRender`](https://next.angular.dev/api/core/afterNextRender) *(registers a callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
 
 which are both in **Developer Preview**!
 
@@ -231,8 +231,8 @@ As a result, later phases may not need to execute if the values returned by earl
 
 Phased execution is useful for avoiding unnecessary layout recalculations.
 We can register for each phase by specifying a callback function.
-The first callback receive no parameters.
-Each subsequent phase callback will receive the return value of the previously phase **as a signal**.
+The first callback receives no parameters.
+Each subsequent phase callback will receive the return value of the previous phase **as a signal**.
 This can be used to coordinate work across multiple phases.
 
 `afterRenderEffect()` offers four distinct phases.  
@@ -264,7 +264,7 @@ Therefore, we won't cover this signature in our article, as its usage is not rec
 
 When `afterRenderEffect()` is initially called, all registered phases execute once in sequence.
 However, for any phase to run again, it must be marked as "dirty" due to a change in signal dependencies. 
-This dependency-based system helps Angular optimize performance by preventing redundant executions.
+This dependency-based system helps Angular to optimize performance by preventing redundant executions.
 
 For a phase to be marked "dirty" and eligible to rerun, it must establish a dependency on a signal that changes. 
 If a phase does not track any signals, or if the tracked signals remain unchanged, the phase won’t be marked as dirty, and its code will not re-execute.
@@ -292,7 +292,7 @@ In this example, we demonstrate how `afterRenderEffect()` can be used to dynamic
 The textarea is designed to be resized by dragging the bottom-right corner, but we also want it to automatically adjust its height periodically.
 To achieve this, we read the current height from the DOM and update it based on a central signal called  `extraHeight`.
 
-This example was inspired by the article ["Angular 19: afterRenderEffect"](https://medium.com/@amosisaila/angular-19-afterrendereffect-5cf8e6482256) by Amos Lucian Isaila Onofrei, which we modified for a better separation between reads and writes. (the original example reads from the DOM in the write phase, which is explicitely not recommended according to the Angular docs.)
+This example was inspired by the article ["Angular 19: afterRenderEffect"](https://medium.com/@amosisaila/angular-19-afterrendereffect-5cf8e6482256) by Amos Lucian Isaila Onofrei, which we modified for a better separation between reads and writes. (The original example reads from the DOM in the write phase, which is explicitely not recommended according to the Angular docs.)
 
 Our example will demonstrate how to use multiple phases (`earlyRead`, `write`, and `read`) in `afterRenderEffect()` to handle DOM manipulation efficiently, while respecting Angular’s guidelines for separating reads and writes:
 
@@ -338,9 +338,9 @@ export class ResizableComponent {
 
         // Make `extraHeight` a dependency of `earlyRead`
         // Hint: change this code to `const newHeight = currentHeight();`, 
-        // so that we have no dependendy to a signal that is changed, and `write` will be executed only once
+        // so that we have no dependency to a signal that is changed, and `write` will be executed only once
         // Hint 2: if `currentHeight` changes in `earlyRead`, `write` will re-run, too. 
-        // resize the textarea manually to archive this
+        // resize the textarea manually to achieve this
         const newHeight = currentHeight() + this.extraHeight();
 
         this.myElement().nativeElement.style.height = `${newHeight}px`;
@@ -351,7 +351,7 @@ export class ResizableComponent {
         });
 
         // Pass the height to the next phase
-        // Hint: pass the same value to `read`, eg. `return 100`, to see how `read` is skipped
+        // Hint: pass the same value to `read`, e.g. `return 100`, to see how `read` is skipped
         return newHeight;
       },
 
@@ -378,7 +378,7 @@ export class ResizableComponent {
 ```
 
 In our setup, an interval updates the `extraHeight` signal every 4 seconds.
-By updating the signal `extraHeight`, we create a "dirty" state that restarts the `afterRenderEffect()` phases, which checks and adjusts the height of the `<textarea>` as needed:
+By updating `extraHeight`, we create a "dirty" state that restarts the `afterRenderEffect()` phases, which checks and adjusts the height of the `<textarea>` as needed:
 
 **Explanation of the Phases**  
 
