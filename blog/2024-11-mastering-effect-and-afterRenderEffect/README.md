@@ -49,7 +49,7 @@ However, developers found that the `allowSignalWrites` flag was not as effective
 The flag was planned as an exception, but it was too often used in legitimate cases where setting signals was reasonable or even necessary, such as updating a signal after a series of changes or working with multiple signals.
 In response, Angular’s new approach now allows setting signals within `effect()` by default, removing the need for `allowSignalWrites`.
 This more flexible design reflects Angular’s commitment to simplifying the development experience.
-Please review the [official blog post](https://blog.angular.dev/latest-updates-to-effect-in-angular-f2d2648defcd) that confirms this new guidance.
+See the [official blog post](https://blog.angular.dev/latest-updates-to-effect-in-angular-f2d2648defcd) that confirms this new guidance.
 
 We interpret this new information in the following way:
 > 💡 **It is now a valid case to use `effect()` for state updates or side effects that are difficult to achieve with other reactive primitives, such as `computed()`**.
@@ -98,7 +98,7 @@ Component effects are initiated when `effect()` is called within a component, di
 Root effects, on the other hand, are initiated when `effect()` is called outside the component tree, such as in a root service, or by setting the `forceRoot` option.
 
 The main difference between these effect types is their timing. 
-Component effects operate as part of Angular's change detection, which allows them to safely read input signals and manage views dependent on component state.
+Component effects operate as part of Angular’s change detection, which allows them to safely read input signals and manage views dependent on component state.
 Root effects, however, run as microtasks, independent of the component tree or change detection.
 
 In this article, we only discuss **component effects**.
@@ -205,7 +205,8 @@ But there is one big difference:
 
 As a result, later phases may not need to execute if the values returned by earlier phases do not change - and if there is no other dependency established (we will talk about this soon). Before we start, some important facts to know about the effects created by `afterRenderEffect()`:
 
-* **Phased Execution**: These effects can be registered for specific phases of the render cycle. The Angular team recommends adhering to these phases for optimal performance.
+* **Phased Execution**: These effects can be registered for specific phases of the render cycle. 
+  The Angular team recommends adhering to these phases for optimal performance.
 * **Signal Integration**: These effects are supposed to work seamlessly with Angular’s signal reactivity system, and signals can be set during the phases.
 * **Selective Execution**: These effects only rerun when they are "dirty" due to signal dependencies. If no signal changes, the effect won’t trigger again.
 * **No SSR**: These effects execute only in browser environments, not on the server.
@@ -375,7 +376,7 @@ Here’s a breakdown of each phase:
   The result, `currentHeight`, is passed to the next phase. 
   In this phase, we use the `extraHeight` as our tracked dependency to ensure that the code will run multiple times.
   We encourage you to remove this statement: `console.log('earlyRead: extra height:', this.extraHeight());`.
-  If you do this, you will see that the `earlyRead` will only execute once and that any manual change to the textarea will be ignored in the next run.
+  If you do this, you will see that the `earlyRead` callback will only execute once and that any manual change to the textarea will be ignored in the next run.
 
 2. **write Phase**: 
   The write phase adds the `extraHeight` value to the captured `currentHeight` and updates the textarea’s height style property.
@@ -398,7 +399,7 @@ With Angular 19, the Angular team's broader vision of signal-based components is
 The long-term goal here is to eventually phase out all traditional lifecycle hooks, except for `ngOnInit` and `ngOnDestroy`.
 
 The addition of `effect()` and `afterRenderEffect()` showcases how Angular is moving in this direction. 
-These effects are more intuitive for managing component state changes and post-render interactions, gradually making the old lifecycle hooks redundant.
+These effects are more intuitive for managing component state changes and post-render interactions, thus making the old lifecycle hooks redundant.
 For instance, `afterRenderEffect()` is designed to handle tasks traditionally managed by `ngAfterViewInit` and `ngAfterViewChecked`.
 
 This approach has been in the pipeline for some time. 
