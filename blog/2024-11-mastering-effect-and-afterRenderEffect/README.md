@@ -2,8 +2,8 @@
 title: 'Angular 19: Mastering effect() and afterRenderEffect()'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2024-11-07
-lastModified: 2024-11-07
+published: 2024-11-12
+lastModified: 2024-11-12
 keywords:
   - Angular
   - JavaScript
@@ -13,7 +13,7 @@ keywords:
   - afterRenderEffect
   - Angular 19
 language: en
-thumbnail: linkedsignal.jpg
+thumbnail: effect.jpg
 sticky: false
 ---
 
@@ -22,6 +22,21 @@ Angular 19 has a significant change with the simplification of the `effect()` AP
 This change impacts how Angular handles post-render tasks and is especially useful for applications that rely on precise timing for rendering and DOM manipulation. 
 In this article, we’ll explore how these two APIs compare, when to use each, and how to take advantage of phased execution with `afterRenderEffect()`.
 
+## Contents
+
+* [Angular 19 vs. Previous Versions: What’s Different?](/blog/2024-11-mastering-effect-and-afterRenderEffect#angular-vs-previous-versions-whats-different)
+* [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##core-differences-between-effect-and-afterrendereffect)
+* [Introducing `effect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-effect)
+  * [Example for `effect()`: setting multipe things at once](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-for-effect-setting-multipe-things-at-once)
+  * [When to choose `effect()` over `computed()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##when-to-choose-effect-over-computed)
+* [Introducing `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-afterrendereffect)
+  * [Understanding the Phases](/blog/2024-11-mastering-effect-and-afterRenderEffect##understanding-the-phases)
+  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-mastering-effect-and-afterRenderEffect##phases-only-run-again-when-dirty-through-signal-dependencies)
+  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-of-afterrendereffect-dynamically-resizing-a-textarea)
+* [Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-mastering-effect-and-afterRenderEffect##migration-guide-from-angular-lifecycle-hooks-to-signal-based-reactivity)
+* [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##best-practices-for-using-effect-and-afterrendereffect)
+* [Demo Application](/blog/2024-11-mastering-effect-and-afterRenderEffect##demo-application)
+* [Conclusion](/blog/2024-11-mastering-effect-and-afterRenderEffect##conclusion)
 
 ## Angular 19 vs. Previous Versions: What’s Different?
 
@@ -452,11 +467,11 @@ Angular’s new `effect()` API opens up new possibilities for reactive state man
 By understanding when to use each API, developers can create responsive and powerful Angular applications with a clean new syntax.
 
 Try out `effect()` and `afterRenderEffect()` in your next Angular project and see how they simplify your state management and DOM interactions!
-> **⚠️ Please note that both APIs are in developer preview and may still be subject to change!**
+> **⚠️ Please note that both APIs are in Developer Preview and may still be subject to change!**
 
 
 <hr>
 
 <small>Thanks to Ferdinand Malcher for review and feedback!</small>
 
-<small>**Cover image:** ??</small>
+<small>**Cover image:** Composed with Dall-E and the Generative Fill of Photoshop</small>
