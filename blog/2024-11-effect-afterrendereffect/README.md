@@ -68,7 +68,7 @@ This more flexible design reflects Angular's commitment to simplifying the devel
 See the [official blog post](https://blog.angular.dev/latest-updates-to-effect-in-angular-f2d2648defcd) that confirms this new guidance.
 
 We interpret this new information in the following way:
-> 💡 **It is now a valid case to use `effect()` for state updates or side effects that are difficult to achieve with other reactive primitives, such as `computed()`**.
+> 💡 **It is now a valid case to use `effect()` for state updates or side effects that are difficult to achieve with other reactive primitives like `computed()`**.
 
 This change to the paradigm is in line with new features introduced in Angular 19, such as [`linkedSignal()`](https://angular.schule/blog/2024-11-linked-signal) and `resource()`.
 Both help to maintain cleaner and more declarative state management patterns where possible. 
