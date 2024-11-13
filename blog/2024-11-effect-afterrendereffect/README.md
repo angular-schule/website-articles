@@ -34,6 +34,7 @@ In this article, we'll explore how these two APIs compare, when to use each, and
   * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-effect-afterrendereffect#phases-only-run-again-when-dirty-through-signal-dependencies)
   * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-effect-afterrendereffect#example-of-afterrendereffect-dynamically-resizing-a-textarea)
 * [Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-effect-afterrendereffect#migration-guide-from-angulars-lifecycle-hooks-to-signal-based-reactivity)
+* [Reminder: `afterRenderEffect()` shouldn't be used in line-of-business code](/blog/2024-11-effect-afterrendereffect#reminder-afterrendereffect-shouldnt-be-used-in-line-of-business-code)
 * [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect#best-practices-for-using-effect-and-afterrendereffect)
 * [Demo Application](/blog/2024-11-effect-afterrendereffect#demo-application)
 * [Conclusion](/blog/2024-11-effect-afterrendereffect#conclusion)
@@ -87,7 +88,7 @@ Both `effect()` and `afterRenderEffect()` are designed to track and respond to c
 
 - **`effect()`** runs as part of the Angular change detection cycle and can now safely modify signals without any additional flags.
 - **`afterRenderEffect()`** is a lower-level API that executes after the DOM has been updated. 
-  It's particularly suited for tasks that require interacting directly with the DOM, such as measuring element sizes or making complex visual updates in phases.
+  It's particularly suited for tasks that require interacting directly with the DOM, such as measuring element sizes or making complex visual updates.
 
 Here's a simple comparison to illustrate how these functions operate:
 
@@ -240,14 +241,36 @@ Before we start, here are some important facts to know about the effects created
 
 ### Understanding the Phases
 
-Phased execution is useful for avoiding unnecessary layout recalculations.
-We can register for each phase by specifying a callback function.
+Phased execution helps to avoid unnecessary layout recalculations.
+We can register effects for each phase by specifying a callback function:
+
+```ts
+afterRenderEffect({
+
+  // Read DOM properties before writes.
+  earlyRead: (onCleanup: EffectCleanupRegisterFn) => E,
+
+  // Execute DOM write operations.
+  write: (signal1: firstAvailableSignal<[E]>, onCleanup: EffectCleanupRegisterFn) => W,
+
+  //  Allows for combined reads and writes but should be used sparingly!
+  mixedReadWrite: (signal2: firstAvailableSignal<[W, E]>, onCleanup: EffectCleanupRegisterFn) => M,
+
+  // Execute DOM reads after writes are completed.
+  read: (signal3: firstAvailableSignal<[M, W, E]>, onCleanup: EffectCleanupRegisterFn) => void
+}): AfterRenderRef;
+```
+
+This is a simplified version of the [real `afterRenderEffect()` signature](https://github.com/angular/angular/blob/f3d931627523843281efb6f4207008ebbbbbb668/packages/core/src/render3/reactivity/after_render_effect.ts#L331).
 The first callback receives no parameters.
 Each subsequent phase callback will receive the return value of the previous phase **as a signal**.
-This can be used to coordinate work across multiple phases.
+So, if the `earlyRead` effect returns a value of type `E`, and the next registered effect is `write`, then `write` will receive a signal of `E`.
+However, if the next registered effect is `mixedReadWrite`, this effect will receive a signal of `E`, and so on.
+The `read` effect has no return value.
+The passing of values between phases can be used to coordinate work across multiple phases.
 
-`afterRenderEffect()` offers four distinct phases.  
-They run in the following order:
+
+Effects run in the following phase order, only when dirty through signal dependencies:
 
 | Phase                 | Rule                   |
 |-----------------------|------------------------|
@@ -258,13 +281,6 @@ They run in the following order:
 
 [According to the docs](https://next.angular.dev/api/core/afterRenderEffect), you should prefer using the `read` and `write` phases over the `earlyRead` and `mixedReadWrite` phases when possible, to avoid performance degradation.
 
-To summarise this, with `afterRenderEffect()` you can do the following in the four phases:
-1. **earlyRead**: Read DOM properties before writes.
-2. **write**: Execute DOM write operations.
-3. **mixedReadWrite**: Allows for combined reads and writes but should be used sparingly!
-4. **read**: Execute DOM reads after writes are completed.
-5. ...and you can pass on a value (or an object) from one phase to the next.
-
 As mentionend before, there is also a second signature of `afterRenderEffect()` that accepts a single callback. 
 This function registers an effect to run after rendering is complete, specifically during the `mixedReadWrite` phase.
 However, the Angular documentation recommends specifying an explicit phase for the effect whenever possible to avoid potential performance issues.
@@ -273,26 +289,26 @@ Therefore, we won't cover this signature in our article, as its usage is not rec
 
 ### Phases Only Run Again When "Dirty" Through Signal Dependencies
 
-When `afterRenderEffect()` is initially called, all registered phases execute once in sequence.
-However, for any phase to run again, it must be marked as "dirty" due to a change in signal dependencies. 
+When `afterRenderEffect()` is initially called, all registered effects execute once in sequence.
+However, for any effect to run again, it must be marked as "dirty" due to a change in signal dependencies. 
 This dependency-based system helps Angular to optimize performance by preventing redundant executions.
 
-For a phase to be marked "dirty" and eligible to rerun, it must establish a dependency on a signal that changes. 
-If a phase does not track any signals, or if the tracked signals remain unchanged, the phase won't be marked as dirty, and its code will not re-execute.
+For a effect to be marked "dirty" and eligible to rerun, it must establish a dependency on a signal that changes. 
+If a effect does not track any signals, or if the tracked signals remain unchanged, the effect won't be marked as dirty, and its code will not re-execute.
 
 There are two main ways to establish dependencies in `afterRenderEffect()`:
 
 1. **Tracking the Value of a Previous Phase's Output**: 
-  Each phase can return a value to be passed as input to the next phase (except `earlyRead`, which has no previous phase). 
-  This value is wrapped in a signal, and if we then read that signal in the following phase, we create a dependency. 
+  Each effect can return a value to be passed as input to the next effect (except `earlyRead`, which has no previous effect). 
+  This value is wrapped in a signal, and if we then read that signal in the following effect, we create a dependency. 
   It's important to understand that we must actually execute the signal's getter function because simply passing the signal around is insufficient to establish a dependency.
 
 2. **Directly Tracking Component Signals**: 
-  We can also create dependencies by accessing other signals directly within the phase. 
-  In the upcoming example, we read a signal from the component within the `earlyRead` phase to create a dependency and ensure the phase executes multiple times.
+  We can also create dependencies by accessing other signals directly within the effect. 
+  In the upcoming example, we read a signal from the component within the `earlyRead` effect to create a dependency and ensure the effect executes multiple times.
 
-> **💡 Angular ensures that phases only re-execute when their tracked signals change, marking the phase itself as "dirty."   
-  Without these signal dependencies, each phase will run only once!**
+> **💡 Angular ensures that effects only re-execute when their tracked signals change, marking the effect itself as "dirty."   
+  Without these signal dependencies, each effect will run only once!**
 
 
 ### Example of `afterRenderEffect()`: Dynamically Resizing a Textarea
@@ -303,7 +319,7 @@ In this example, we demonstrate how `afterRenderEffect()` can be used to dynamic
 The textarea is designed to be resized by dragging the bottom-right corner, but we also want it to automatically adjust its height periodically.
 To achieve this, we read the current height from the DOM and update it based on a central signal called `extraHeight`.
 
-This example was inspired by the article ["Angular 19: afterRenderEffect"](https://medium.com/@amosisaila/angular-19-afterrendereffect-5cf8e6482256) by Amos Lucian Isaila Onofrei, which we modified for a better separation between reads and writes. (The original example reads from the DOM in the write phase, which is explicitely not recommended according to the Angular docs.)
+This example was inspired by the article ["Angular 19: afterRenderEffect"](https://medium.com/@amosisaila/angular-19-afterrendereffect-5cf8e6482256) by Amos Lucian Isaila Onofrei, which we modified for a better separation between reads and writes. (The original example reads from the DOM in the `write` effect, which is explicitely not recommended according to the Angular docs.)
 
 Our example will demonstrate how to use multiple phases (`earlyRead`, `write`, and `read`) in `afterRenderEffect()` to handle DOM manipulation efficiently, while respecting Angular's guidelines for separating reads and writes:
 
@@ -338,7 +354,7 @@ export class ResizableComponent {
         const currentHeight: number = this.myElement()?.nativeElement.offsetHeight;
         console.log('earlyRead: offset height:', currentHeight);
 
-        // Pass the height to the next phase
+        // Pass the height to the next effect
         return currentHeight;
       },
 
@@ -361,12 +377,12 @@ export class ResizableComponent {
           console.log('write: cleanup is called', newHeight);
         });
 
-        // Pass the height to the next phase
+        // Pass the height to the next effect
         // Hint: pass the same value to `read`, e.g. `return 100`, to see how `read` is skipped
         return newHeight;
       },
 
-      // The read phase logs the updated height
+      // The read effect logs the updated height
       read: (newHeight, onCleanup) => {
         console.warn(`read executes`);
         console.log('read: new height:', newHeight());
@@ -394,27 +410,30 @@ By updating `extraHeight`, we create a "dirty" state that restarts the `afterRen
 **Explanation of the Phases**  
 
 In this example, an interval updates `extraHeight` every 4 seconds, creating a new round of execution across the phases. 
-Here's a breakdown of each phase:
+Here's a breakdown of each effect:
 
 1. **`earlyRead` Phase**: 
-  This phase captures the current height of the `textarea` by reading the `offsetHeight` directly from the DOM. 
+  The effect that runs in the `earlyRead` phase captures the current height of the `textarea` by reading the `offsetHeight` directly from the DOM. 
   This read operation from the DOM is necessary because the textarea can also be resized manually by the user, so its size must be checked before any adjustment.
-  The result, `currentHeight`, is passed to the next phase. 
-  In this phase, we use the `extraHeight` as our tracked dependency to ensure that the code will run multiple times.
+  The result, `currentHeight`, is passed to the next effect. 
+  In this effect, we use the `extraHeight` as our tracked dependency to ensure that the code will run multiple times.
   We encourage you to remove this statement: `console.log('earlyRead: extra height:', this.extraHeight());`.
-  If you do this, you will see that the `earlyRead` callback will only execute once and that any manual change to the textarea will be ignored in the next run.
+  If you do this, you will see that the `earlyRead` effect will only execute once and that any manual change to the textarea will be ignored in the next run.
 
 2. **`write` Phase**: 
-  The write phase adds the `extraHeight` value to the captured `currentHeight` and updates the textarea's height style property.
+  The effect that runs in the `write` phase adds the `extraHeight` value to the captured `currentHeight` and updates height style property of the `<textarea>`.
   This DOM write operation directly adjusts the element's height in pixels.
   An `onCleanup` function is provided to handle any required cleanup or resources before the next write operation.
-  In this example no cleanup is required, but we wanted to mention the fact that long-running tasks (such as a timeout) should be cleaned up. The cleanup will be called before entering the same phase again, or if the effect itself is destroyed.
-  The `write` phase then passes the new height, `newHeight`, to the `read` phase.
+  In this example no cleanup is required, but we wanted to mention the fact that long-running tasks (such as a timeout) should be cleaned up.
+  The cleanup will be called before entering the same phase again, or if the effect itself is destroyed via the `AfterRenderRef`.
+  The `write` effect then passes the new height, `newHeight`, to the `read` effect.
   Hint: Pass the same value to `read` (e.g. `return 100`) and you will see that the follow-up phase won't be executed.
-  Setting the same number twice won't be considered a change, so the `write` phase won't mark the `read` phase as dirty.
+  Setting the same number twice won't be considered a change, so the `write` effect won't mark the `read` effect as dirty.
 
-3. **`read` Phase**: The final `read` phase logs the `newHeight`. 
-  We could also read from the DOM in that phase and store the result to a new signal. But in this example this work is not necessary, because the `earlyRead` is already doing that job.
+3. **`read` Phase**: 
+  The effect that runs in the `read` phase logs the `newHeight`. 
+  We could also read from the DOM in that phase and store the result to a new signal.
+  But in this example this work is not necessary, because the `earlyRead` is already doing that job.
 
 > We encourage you to scroll down to check out our Demo Application. 
   Feel free to follow the hints in the comments to experiment with the specifics of each phase.
