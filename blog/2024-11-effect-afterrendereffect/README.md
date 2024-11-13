@@ -387,7 +387,7 @@ export class ResizableComponent {
 
       // The read effect logs the updated height
       read: (newHeight, onCleanup) => {
-        console.warn(`read executes`);
+        console.warn('read executes');
         console.log('read: new height:', newHeight());
       }
     });
