@@ -518,7 +518,7 @@ By understanding when to use each API, developers can create responsive and powe
 > **⚠️ Please note that both APIs are in Developer Preview and may still be subject to change!**
 
 But time flies by anyway.
-Why not try `effect()` and `afterRenderEffect()` in your next Angular project today and see how they simplify your state management and DOM interactions, it certainly will not take much time until the APIs are stable!
+Why not try `effect()` and `afterRenderEffect()` in your Angular project today and see how they simplify your state management and DOM interactions, it certainly will not take much time until the APIs are stable!
 
 
 <hr>
