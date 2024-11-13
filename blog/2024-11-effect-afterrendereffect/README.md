@@ -515,7 +515,6 @@ Last but not least, the third link provides an interactive demo on StackBlitz, w
 Angular's new `effect()` API opens up new possibilities for reactive state management and `afterRenderEffect()` provides efficient DOM manipulation when needed.
 By understanding when to use each API, developers can create responsive and powerful Angular applications with a clean new syntax.
 
-Try out `effect()` and `afterRenderEffect()` in your next Angular project and see how they simplify your state management and DOM interactions!
 > **⚠️ Please note that both APIs are in Developer Preview and may still be subject to change!**
 
 But time flies by anyway.
@@ -524,6 +523,6 @@ Why not try `effect()` and `afterRenderEffect()` in your next Angular project to
 
 <hr>
 
-<small>Thanks to Ferdinand Malcher for review and feedback!</small>
+<strong>Thanks to Ferdinand Malcher for _intensive_ review and feedback!</strong>
 
 <small>**Cover image:** Composed with Dall-E and Adobe Firefly</small>
