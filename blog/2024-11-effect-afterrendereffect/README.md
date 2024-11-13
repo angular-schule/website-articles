@@ -117,7 +117,7 @@ The main difference between these effect types is their timing.
 Component effects operate as part of Angular's change detection, which allows them to safely read input signals and manage views dependent on component state.
 Root effects, however, run as microtasks, independent of the component tree or change detection.
 
-In this article, we only discuss **component effects**.
+In this article, we only discuss **component effects** which allow to safely read and write signals inside components.
 
 
 ### Example for `effect()`: setting multipe things at once
