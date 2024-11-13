@@ -161,19 +161,22 @@ export class BookFormComponent {
     title: new FormControl(/* ... */),
     description: new FormControl(/* ... */),
   });
+  
   isEditMode = signal(false);
 
-  updateForm = effect(() => {
-    const book = this.currentBook();
-    if (book) {
-      this.bookForm.patchValue(book);
-      this.bookForm.controls.isbn.disable();
-      this.isEditMode.set(true);
-    } else {
-      this.bookForm.controls.isbn.enable();
-      this.isEditMode.set(false);
-    }
-  });
+  constructor() {
+    effect(() => {
+      const book = this.currentBook();
+      if (book) {
+        this.bookForm.patchValue(book);
+        this.bookForm.controls.isbn.disable();
+        this.isEditMode.set(true);
+      } else {
+        this.bookForm.controls.isbn.enable();
+        this.isEditMode.set(false);
+      }
+    });
+  }
 
   submitForm() {
     // ...handle form submission logic
