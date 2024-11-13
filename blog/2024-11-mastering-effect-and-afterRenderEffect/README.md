@@ -474,4 +474,4 @@ Try out `effect()` and `afterRenderEffect()` in your next Angular project and se
 
 <small>Thanks to Ferdinand Malcher for review and feedback!</small>
 
-<small>**Cover image:** Composed with Dall-E and the Generative Fill of Photoshop</small>
+<small>**Cover image:** Composed with Dall-E and Adobe Firefly</small>
