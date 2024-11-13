@@ -210,9 +210,12 @@ Perhaps we have to accept that in some situations both options are absolutely va
 
 ## Introducing `afterRenderEffect()`
 
-The new `afterRenderEffect()` function allows us to control when specific tasks are executed during the DOM update process.
-This is particularly beneficial for UI manipulations that require specific timing to avoid layout shifts and ensure smooth animations.
+While `effect()` is intended for general reactive state management and will see daily use, `afterRenderEffect()` is more specialized and is generally reserved for advanced cases. 
+It's designed specifically for scenarios requiring precise timing after Angular completes a rendering cycle. 
+This is useful for complex DOM manipulations that cannot be achieved purely with Angular's reactivity and are often tied to low-level updates,
+like measuring element dimensions, directly managing animations, or orchestrating third-party libraries.
 
+The new `afterRenderEffect()` function allows us to control when specific tasks are executed during the DOM update process.
 The API itself mirrors the functionality of 
 * [`afterRender`](https://next.angular.dev/api/core/afterRender) *(registers a callback to be invoked each time the application finishes rendering)* and 
 * [`afterNextRender`](https://next.angular.dev/api/core/afterNextRender) *(registers a callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
@@ -225,7 +228,8 @@ You'll see a similar recommendation for `afterRenderEffect()`. There is one sign
 However, there is one big difference between the hook methods and the new `afterRenderEffect()`:
 > **💡 Values are propagated from phase to phase as signals instead of as plain values.** 
 
-As a result, later phases may not need to execute if the values returned by earlier phases do not change – and if there is no other dependency established (we will talk about this soon). Before we start, here are some important facts to know about the effects created by `afterRenderEffect()`:
+As a result, later phases may not need to execute if the values returned by earlier phases do not change – and if there is no other dependency established (we will talk about this soon).
+Before we start, here are some important facts to know about the effects created by `afterRenderEffect()`:
 
 * **Phased Execution:** These effects can be registered for specific phases of the render cycle. 
   The Angular team recommends adhering to these phases for optimal performance.
@@ -415,6 +419,7 @@ Here's a breakdown of each phase:
 > We encourage you to scroll down to check out our Demo Application. 
   Feel free to follow the hints in the comments to experiment with the specifics of each phase.
 
+
 ## Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity
 
 In April 2023, the Angular team outlined their vision of signal-based components in [RFC #49682](https://github.com/angular/angular/discussions/49682).
@@ -441,6 +446,23 @@ Or to put it another way, here's a direct mapping:
 
 **Hint:** If you're transitioning away from classic lifecycle hooks, consider using [`DestroyRef`](https://angular.dev/api/core/DestroyRef).
 It allows you to set callbacks for cleanup or destruction tasks, so that you no longer need `ngOnDestroy` in your codebase. 
+
+
+## Reminder: `afterRenderEffect()` shouldn't be used in line-of-business code
+
+If you rarely needed `ngAfterViewInit` or `ngAfterContentChecked` in the past, `afterRenderEffect()` will likely be equally uncommon in your codebase. 
+It's aimed at addressing rare tasks and won't be used as frequently as foundational features like 
+[`signal()`](https://angular.dev/api/core/signal), 
+[`computed()`](https://angular.dev/api/core/computed), 
+`effect()`, `linkedSignal()`, or `resource()`.
+
+In this context, think of `afterRenderEffect()` as similar in importance to `ngAfterViewInit`.
+It's an advanced lifecycle tool rather than a daily necessity. 
+Use `afterRenderEffect()` only when you need precise control over DOM operations, low-level APIs, or third-party libraries that require specific timing and coordination across rendering phases.
+If you're not building your own component library (and there are already many component libraries available), `afterRenderEffect()` should be rarely seen.
+
+In everyday application code, `effect()` and other signal-based APIs will cover most reactive needs without the added complexity that `afterRenderEffect()` brings. 
+In short, reach for `afterRenderEffect()` only when standard approaches don't meet your specialized requirements.
 
 
 ## Best Practices for Using `effect()` and `afterRenderEffect()`
