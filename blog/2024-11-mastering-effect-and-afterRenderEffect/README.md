@@ -43,7 +43,7 @@ In this article, we’ll explore how these two APIs compare, when to use each, a
 The `effect()` API was introduced as part of Angular’s new signal-based reactivity model [in Angular 16](https://blog.angular.dev/angular-v16-is-here-4d7a28ec680d).
 Angular 19 now introduces a significant update to the `effect()` API, making it easier to manage side effects directly within `effect()` functions, even when they involve setting signals. 
 
-This change marks a departure from Angular’s more restrictive approach, which aimed to discourage setting signals within `effect()` by requiring an `allowSignalWrites` flag to enable this behavior:
+Before this change, effects had a more restrictive approach: It was discouraged to set signals within `effect()`, and to allow this behavior, we had to enable the `allowSignalWrites` flag:
 
 ```ts
 // OLD WAY
