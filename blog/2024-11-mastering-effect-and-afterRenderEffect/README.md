@@ -243,7 +243,7 @@ They run in the following order:
 |-----------------------|------------------------|
 | 1. `earlyRead`        | Use this phase to **read** from the DOM before a subsequent write callback. Prefer the read phase if reading can wait until after the write phase. **Never** write to the DOM in this phase. |
 | 2. `write`            | Use this phase to **write** to the DOM. **Never** read from the DOM in this phase. |
-| 3. `mixedReadWrite`   | Use this phase to read from and write to the DOM simultaneously. **Never** use this phase if it is possible to divide the work among the other phases instead. |
+| 3. `mixedReadWrite`   | Use this phase to read from and write to the DOM simultaneously. **Do not** use this phase if it is possible to divide the work among the other phases instead. |
 | 4. `read`             | Use this phase to **read** from the DOM. **Never** write to the DOM in this phase. |
 
 [According to the docs](https://next.angular.dev/api/core/afterRenderEffect), you should prefer using the `read` and `write` phases over the `earlyRead` and `mixedReadWrite` phases when possible, to avoid performance degradation.
@@ -275,11 +275,11 @@ There are two main ways to establish dependencies in `afterRenderEffect()`:
 1. **Tracking the Value of a Previous Phase’s Output**: 
   Each phase can return a value to be passed as input to the next phase (except `earlyRead`, which has no previous phase). 
   This value is wrapped in a signal, and if we then read that signal in the following phase, we create a dependency. 
-  It's important to understand that we must actually execute the signal’s value function because simply passing the signal around is insufficient to establish a dependency.
+  It's important to understand that we must actually execute the signal’s getter function because simply passing the signal around is insufficient to establish a dependency.
 
 2. **Directly Tracking Component Signals**: 
   We can also create dependencies by accessing other signals directly within the phase. 
-  For example, in the upcoming example, we read a signal from the component within the `earlyRead` phase to create a dependency and ensure the phase executes multiple times.
+  In the upcoming example, we read a signal from the component within the `earlyRead` phase to create a dependency and ensure the phase executes multiple times.
 
 > **💡 Angular ensures that phases only re-execute when their tracked signals change, marking the phase itself as "dirty."   
   Without these signal dependencies, each phase will run only once!**
@@ -309,7 +309,7 @@ import { Component, viewChild, ElementRef, signal, afterRenderEffect } from "@an
 export class ResizableComponent {
 
   myElement = viewChild.required<ElementRef>('myElement');
-  extraHeight = signal<number>(0);
+  extraHeight = signal(0);
 
   constructor() {
 
@@ -337,7 +337,7 @@ export class ResizableComponent {
 
         console.warn(`write executes`);
 
-        // Make `extraHeight` a dependency of `earlyRead`
+        // Make `extraHeight` a dependency of `write`
         // Hint: change this code to `const newHeight = currentHeight();`, 
         // so that we have no dependency to a signal that is changed, and `write` will be executed only once
         // Hint 2: if `currentHeight` changes in `earlyRead`, `write` will re-run, too. 
@@ -386,7 +386,7 @@ By updating `extraHeight`, we create a "dirty" state that restarts the `afterRen
 In this example, an interval updates `extraHeight` every 4 seconds, creating a new round of execution across the phases. 
 Here’s a breakdown of each phase:
 
-1. **earlyRead Phase**: 
+1. **`earlyRead` Phase**: 
   This phase captures the current height of the `textarea` by reading the `offsetHeight` directly from the DOM. 
   This read operation from the DOM is necessary because the textarea can also be resized manually by the user, so its size must be checked before any adjustment.
   The result, `currentHeight`, is passed to the next phase. 
@@ -394,22 +394,22 @@ Here’s a breakdown of each phase:
   We encourage you to remove this statement: `console.log('earlyRead: extra height:', this.extraHeight());`.
   If you do this, you will see that the `earlyRead` callback will only execute once and that any manual change to the textarea will be ignored in the next run.
 
-2. **write Phase**: 
+2. **`write` Phase**: 
   The write phase adds the `extraHeight` value to the captured `currentHeight` and updates the textarea’s height style property.
   This DOM write operation directly adjusts the element’s height in pixels.
   An `onCleanup` function is provided to handle any required cleanup or resources before the next write operation.
   In this example no cleanup is required, but we wanted to mention the fact that long-running tasks (such as a timeout) should be cleaned up. The cleanup will be called before entering the same phase again, or if the effect itself is destroyed.
   The `write` phase then passes the new height, `newHeight`, to the `read` phase.
-  Hint: Pass the same value to `read` (eg. `return 100`) and you will see that the follow-up phase won't be executed.
+  Hint: Pass the same value to `read` (e.g. `return 100`) and you will see that the follow-up phase won't be executed.
   Setting the same number twice won’t be considered a change, so the `write` phase won’t mark the `read` phase as dirty.
 
-3. **read Phase**: The final `read` phase logs the `newHeight`. 
+3. **`read` Phase**: The final `read` phase logs the `newHeight`. 
   We could also read from the DOM in that phase and store the result to a new signal. But in this example this work is not necessary, because the `earlyRead` is already doing that job.
 
 > We encourage you to scroll down to check out our Demo Application. 
   Feel free to follow the hints in the comments to experiment with the specifics of each phase.
 
-## Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity
+## Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity
 
 With Angular 19, the Angular team's broader vision of signal-based components is slowly taking shape.
 The long-term goal here is to eventually phase out all traditional lifecycle hooks, except for `ngOnInit` and `ngOnDestroy`.
@@ -444,15 +444,15 @@ Will we also get a replacement for this, or will we no longer need this function
 To make the most of these new APIs, here are a few best practices:
 
 1. **Use `computed()` for simple dependencies**: Reserve `effect()` for more complex or state-dependent operations.
-2. **Choose phases carefully in `afterRenderEffect()`**: Stick to the specific phases and avoid `mixedReadWrite` when possible.
-3. **Use `onCleanup()` to manage resources**: Always use `onCleanup()` within effects for any resource that needs disposal, especially with animations or intervals.
-4. **Direct DOM Manipulations only when necessary**: Remember, Angular’s reactive approach minimizes the need for manual DOM manipulations. 
+2. **Choose phases carefully in `afterRenderEffect()`:** Stick to the specific phases and avoid `mixedReadWrite` when possible.
+3. **Use `onCleanup()` to manage resources:** Always use `onCleanup()` within effects for any resource that needs disposal, especially with animations or intervals.
+4. **Direct DOM Manipulations only when necessary:** Remember, Angular’s reactive approach minimizes the need for manual DOM manipulations. 
   Use `afterRenderEffect()` only when Angular’s templating isn’t enough.
 
 
 ## Demo Application
 
-To make it easier to see the effects in action, we’ve created a demo application on GitHub that showcases all the examples discussed in this article.
+To make it easier to see the effects in action, we’ve created a demo application that showcases all the examples discussed in this article.
 The first link leads to the source code on GitHub, where you can download it.
 The second link opens a deployed version of the application for you to try out.
 Last but not least, the third link provides an interactive demo on StackBlitz, where you can edit the source code and see the results in real time.
