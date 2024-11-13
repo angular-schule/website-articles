@@ -301,7 +301,7 @@ Let's take a closer look at `afterRenderEffect()` through a practical example.
 
 In this example, we demonstrate how `afterRenderEffect()` can be used to dynamically adjust the height of a `<textarea>` based on both user and programmatic changes.
 The textarea is designed to be resized by dragging the bottom-right corner, but we also want it to automatically adjust its height periodically.
-To achieve this, we read the current height from the DOM and update it based on a central signal called  `extraHeight`.
+To achieve this, we read the current height from the DOM and update it based on a central signal called `extraHeight`.
 
 This example was inspired by the article ["Angular 19: afterRenderEffect"](https://medium.com/@amosisaila/angular-19-afterrendereffect-5cf8e6482256) by Amos Lucian Isaila Onofrei, which we modified for a better separation between reads and writes. (The original example reads from the DOM in the write phase, which is explicitely not recommended according to the Angular docs.)
 
