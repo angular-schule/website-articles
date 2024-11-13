@@ -417,20 +417,17 @@ Here's a breakdown of each phase:
 
 ## Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity
 
-With Angular 19, the Angular team's broader vision of signal-based components is slowly taking shape.
-The long-term goal here is to eventually phase out all traditional lifecycle hooks, except for `ngOnInit` and `ngOnDestroy`.
+In April 2023, the Angular team outlined their vision of signal-based components in [RFC #49682](https://github.com/angular/angular/discussions/49682).
+The long-term goal is to phase out traditional lifecycle hooks, though the RFC discusses retaining `ngOnInit` and `ngOnDestroy`. (Now, we also have replacements for these.)
+The document proposed introducing `afterRenderEffect()` as part of a roadmap, and with Angular 19, the final vision of signal-based components is beginning to take shape.
 
 The addition of `effect()` and `afterRenderEffect()` showcases how Angular is moving in this direction. 
 These effects are more intuitive for managing component state changes and post-render interactions, thus making the old lifecycle hooks redundant.
 For instance, `afterRenderEffect()` is designed to handle tasks traditionally managed by `ngAfterViewInit` and `ngAfterViewChecked`.
 
-This approach has been in the pipeline for some time. 
-In April 2023, Angular's team outlined this trajectory in their [RFC #49682](https://github.com/angular/angular/discussions/49682). 
-The document proposed the introduction of `afterRenderEffect()` as part of a roadmap to replace Angular's current change detection, moving away from imperative lifecycle hooks to a cleaner, more reactive pattern. 
-
 Migrating from Angular lifecycle hooks to `effect()` and `afterRenderEffect()` is straightforward:
-- **ngOnInit / ngOnChanges** → `effect()`: Handles signal-based logic and other state.
-- **ngAfterViewInit / ngAfterViewChecked** → `afterRenderEffect()`: Manages DOM manipulations post-render.
+- **`ngOnInit` / `ngOnChanges`** → `effect()`: Handles signal-based logic and other state.
+- **`ngAfterViewInit` / `ngAfterViewChecked`** → `afterRenderEffect()`: Manages DOM manipulations post-render.
 
 Or to put it another way, here's a direct mapping:
 
@@ -441,8 +438,9 @@ Or to put it another way, here's a direct mapping:
 | `ngAfterViewInit`     | `afterRenderEffect()`  |
 | `ngAfterViewChecked`  | `afterRenderEffect()`  |
 
-Now the only important hook left is actually `ngOnDestroy`.
-Will we also get a replacement for this, or will we no longer need this functionality once everything has been completely migrated to signals? 🤔
+
+**Hint:** If you're transitioning away from classic lifecycle hooks, consider using [`DestroyRef`](https://angular.dev/api/core/DestroyRef).
+It allows you to set callbacks for cleanup or destruction tasks, so that you no longer need `ngOnDestroy` in your codebase. 
 
 
 ## Best Practices for Using `effect()` and `afterRenderEffect()`
