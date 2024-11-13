@@ -240,7 +240,7 @@ They run in the following order:
 
 | Phase                 | Rule                   |
 |-----------------------|------------------------|
-| 1. `earlyRead`        | Use this phase to **read** from the DOM before a subsequent write callback, for example to perform custom layout that the browser doesn't natively support. Prefer the read phase if reading can wait until after the write phase. **Never** write to the DOM in this phase. |
+| 1. `earlyRead`        | Use this phase to **read** from the DOM before a subsequent write callback. Prefer the read phase if reading can wait until after the write phase. **Never** write to the DOM in this phase. |
 | 2. `write`            | Use this phase to **write** to the DOM. **Never** read from the DOM in this phase. |
 | 3. `mixedReadWrite`   | Use this phase to read from and write to the DOM simultaneously. **Never** use this phase if it is possible to divide the work among the other phases instead. |
 | 4. `read`             | Use this phase to **read** from the DOM. **Never** write to the DOM in this phase. |
