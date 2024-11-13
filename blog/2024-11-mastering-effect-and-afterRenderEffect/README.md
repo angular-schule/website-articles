@@ -24,19 +24,19 @@ In this article, we’ll explore how these two APIs compare, when to use each, a
 
 ## Contents
 
-* [Angular 19 vs. Previous Versions: What’s Different?](/blog/2024-11-effect-afterrendereffect#angular-vs-previous-versions-whats-different)
-* [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect##core-differences-between-effect-and-afterrendereffect)
-* [Introducing `effect()`](/blog/2024-11-effect-afterrendereffect##introducing-effect)
-  * [Example for `effect()`: setting multipe things at once](/blog/2024-11-effect-afterrendereffect##example-for-effect-setting-multipe-things-at-once)
-  * [When to choose `effect()` over `computed()`](/blog/2024-11-effect-afterrendereffect##when-to-choose-effect-over-computed)
-* [Introducing `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect##introducing-afterrendereffect)
-  * [Understanding the Phases](/blog/2024-11-effect-afterrendereffect##understanding-the-phases)
-  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-effect-afterrendereffect##phases-only-run-again-when-dirty-through-signal-dependencies)
-  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-effect-afterrendereffect##example-of-afterrendereffect-dynamically-resizing-a-textarea)
-* [Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-effect-afterrendereffect##migration-guide-from-angular-lifecycle-hooks-to-signal-based-reactivity)
-* [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect##best-practices-for-using-effect-and-afterrendereffect)
-* [Demo Application](/blog/2024-11-effect-afterrendereffect##demo-application)
-* [Conclusion](/blog/2024-11-effect-afterrendereffect##conclusion)
+* [Angular 19 vs. Previous Versions: What’s Different?](/blog/2024-11-mastering-effect-and-afterRenderEffect#angular-vs-previous-versions-whats-different)
+* [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##core-differences-between-effect-and-afterrendereffect)
+* [Introducing `effect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-effect)
+  * [Example for `effect()`: setting multipe things at once](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-for-effect-setting-multipe-things-at-once)
+  * [When to choose `effect()` over `computed()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##when-to-choose-effect-over-computed)
+* [Introducing `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-afterrendereffect)
+  * [Understanding the Phases](/blog/2024-11-mastering-effect-and-afterRenderEffect##understanding-the-phases)
+  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-mastering-effect-and-afterRenderEffect##phases-only-run-again-when-dirty-through-signal-dependencies)
+  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-of-afterrendereffect-dynamically-resizing-a-textarea)
+* [Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-mastering-effect-and-afterRenderEffect##migration-guide-from-angular-lifecycle-hooks-to-signal-based-reactivity)
+* [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##best-practices-for-using-effect-and-afterrendereffect)
+* [Demo Application](/blog/2024-11-mastering-effect-and-afterRenderEffect##demo-application)
+* [Conclusion](/blog/2024-11-mastering-effect-and-afterRenderEffect##conclusion)
 
 ## Angular 19 vs. Previous Versions: What’s Different?
 
