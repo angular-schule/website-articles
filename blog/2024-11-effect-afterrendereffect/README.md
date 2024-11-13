@@ -136,11 +136,17 @@ Here is our example of a form that can create a new book and edit an existing bo
     @let c = bookForm.controls;
 
     <form [formGroup]="bookForm" (ngSubmit)="submitForm()">
-      <input [formControl]="c.isbn" placeholder="ISBN" />
-      <input [formControl]="c.title" placeholder="Title" />
-      <textarea [formControl]="c.description" placeholder="Description"></textarea>
-      <button type="submit">
-        @if (isEditMode()) { Edit } @else { Create }
+      <label for="isbn">ISBN</label>
+      <input id="isbn" [formControl]="c.isbn" />
+
+      <label for="title">Title</label>
+      <input id="title" [formControl]="c.title" />
+
+      <label for="description">Description</label>
+      <textarea id="description" [formControl]="c.description"></textarea>
+
+      <button type="submit" aria-label="Submit Form">
+        {{ isEditMode() ? 'Edit Book' : 'Create Book' }}
       </button>
     </form>
   `,
