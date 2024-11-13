@@ -1,5 +1,5 @@
 ---
-title: 'Angular 19: Mastering effect() and afterRenderEffect()'
+title: 'Angular 19: Mastering effect and afterRenderEffect'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2024-11-12
@@ -55,9 +55,9 @@ effect(() => {
 Previously, Angular’s documentation advised developers to avoid setting signals in `effect()`, as it could lead to issues like `ExpressionChangedAfterItHasBeenChecked` errors, circular updates, or unnecessary change detection cycles.
 Developers were encouraged to keep `effect()` usage limited to specific side effects, such as:
 
-- Logging changes for analytics or debugging purposes.
-- Keeping data in sync with local storage (e.g., `window.localStorage`).
-- Implementing custom DOM behaviors not achievable with template syntax.
+- Logging changes for analytics or debugging purposes,
+- Keeping data in sync with local storage (e.g. `window.localStorage`),
+- Implementing custom DOM behaviors not achievable with template syntax or
 - Handling third-party UI libraries, such as rendering to a `<canvas>` element or integrating charting libraries.
 
 However, developers found that the `allowSignalWrites` flag was not as effective in encouraging these patterns as initially expected.
@@ -103,14 +103,14 @@ afterRenderEffect(() => {
 });
 ```
 
-As expected, the console output for `afterRenderEffect` is triggered after the output of `effect`.
+As expected, the console output for `afterRenderEffect()` is triggered after the output of `effect()`.
 
 
 ## Introducing `effect()`
 
 Angular supports two types of effects: **component effects** and **root effects**. 
 Component effects are initiated when `effect()` is called within a component, directive, or a service tied to them. 
-Root effects, on the other hand, are initiated when `effect()` is called outside the component tree, such as in a root service, or by setting the `forceRoot` option.
+Root effects, on the other hand, are initiated when `effect()` is called outside the component tree, such as in a [singleton service](https://angular.dev/guide/ngmodules/singleton-services), or by setting the `forceRoot` option.
 
 The main difference between these effect types is their timing. 
 Component effects operate as part of Angular’s change detection, which allows them to safely read input signals and manage views dependent on component state.
@@ -121,8 +121,8 @@ In this article, we only discuss **component effects**.
 
 ### Example for `effect()`: setting multipe things at once
 
-Consider the example below, where `effect()` is used to synchronize form fields based on the input signal `currentBook`.
-The API for reactive forms has not been updated to work hand in hand with signals, so we still need to patch the form as we have done in the past.
+In the following example we use `effect()` to synchronize form fields based on the input signal `currentBook`.
+The API for Reactive Forms has not yet been updated to work hand in hand with signals, so we still need to patch the form as we have done in the past.
 However, some improvements to the Reactive Forms API have already been promised.
 We also want to set another signal after we have patched the form. 
 
@@ -184,26 +184,27 @@ In the past, we would have been using `ngOnChanges` to patch the form when the i
 ### When to choose `effect()` over `computed()`
 
 The previous constraints on `effect()` have been removed, so it is now more challenging to decide when to use `computed()` or `effect()`.
-In our opinion, the choice between `effect()` and `computed()` depends on the use case:
-- **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. 
+In our opinion, it depends on the use case:
+- **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. Inside a computed signal, it is strictly not allowed to set other signals.
   We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-effect-and-afterRenderEffect)**
 - **Use `effect()`** if the operation is more complex, involves setting multiple signals or requires side effects to be performed outside the world of signals, such as synchronising reactive form states or logging events.
 
 For patching forms, there is currently no better approach than using effects. 
 This approach can also be easily migrated to what would have been done in the past with `ngOnchanges` – which is great.
-But whether we should have used a better computed signal for the `isEditMode` is questionable.
-It is not easy to make a decision here, because we could also have written the following:
+However, it remains questionable whether a computed signal would have been a better fit for `isEditMode`.
+The following is also possible:
 
 ```ts
 isEditMode = computed(() => !!this.currentBook());
 ```
 
-Perhaps we have to accept that in some situations both options are absolutely valid!
+It is not easy to make a decision here, and we suspect that it highly depends on personal taste.
+Perhaps we have to accept that in some situations both options are absolutely valid. 🙂
 
 
 ## Introducing `afterRenderEffect()`
 
-The new `afterRenderEffect()` function allows us to control when tasks occur during the DOM update process.
+The new `afterRenderEffect()` function allows us to control when specific tasks are executed during the DOM update process.
 This is particularly beneficial for UI manipulations that require specific timing to avoid layout shifts and ensure smooth animations.
 
 The API itself mirrors the functionality of 
@@ -215,16 +216,16 @@ which are both in **Developer Preview**!
 The Angular docs recommend avoiding `afterRender` when possible and suggest specifying explicit phases with `afterNextRender` to avoid significant performance degradation. 
 You’ll see a similar recommendation for `afterRenderEffect()`. There is one signature that is intended for use and another that exists but is not recommended.
 
-But there is one big difference:
+However, there is one big difference between the hook methods and the new `afterRenderEffect()`:
 > **💡 Values are propagated from phase to phase as signals instead of as plain values.** 
 
-As a result, later phases may not need to execute if the values returned by earlier phases do not change - and if there is no other dependency established (we will talk about this soon). Before we start, some important facts to know about the effects created by `afterRenderEffect()`:
+As a result, later phases may not need to execute if the values returned by earlier phases do not change – and if there is no other dependency established (we will talk about this soon). Before we start, here are some important facts to know about the effects created by `afterRenderEffect()`:
 
-* **Phased Execution**: These effects can be registered for specific phases of the render cycle. 
+* **Phased Execution:** These effects can be registered for specific phases of the render cycle. 
   The Angular team recommends adhering to these phases for optimal performance.
-* **Signal Integration**: These effects are supposed to work seamlessly with Angular’s signal reactivity system, and signals can be set during the phases.
-* **Selective Execution**: These effects only rerun when they are "dirty" due to signal dependencies. If no signal changes, the effect won’t trigger again.
-* **No SSR**: These effects execute only in browser environments, not on the server.
+* **Signal Integration:** These effects are supposed to work seamlessly with Angular’s signal reactivity system, and signals can be set during the phases.
+* **Selective Execution:** These effects only rerun when they are "dirty" due to signal dependencies. If no signal changes, the effect won’t trigger again.
+* **No SSR:** These effects execute only in browser environments, not on the server.
 
 
 ### Understanding the Phases
