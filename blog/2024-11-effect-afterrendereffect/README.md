@@ -491,7 +491,7 @@ In short, reach for `afterRenderEffect()` only when standard approaches don't me
 
 To make the most of these new APIs, here are a few best practices:
 
-1. **Use `computed()` for simple dependencies**: Reserve `effect()` for more complex or state-dependent operations.
+1. **Use `computed()` for simple dependencies:** Reserve `effect()` for more complex or state-dependent operations.
 2. **Choose phases carefully in `afterRenderEffect()`:** Stick to the specific phases and avoid `mixedReadWrite` when possible.
 3. **Use `onCleanup()` to manage resources:** Always use `onCleanup()` within effects for any resource that needs disposal, especially with animations or intervals.
 4. **Direct DOM Manipulations only when necessary:** Remember, Angular's reactive approach minimizes the need for manual DOM manipulations. 
