@@ -24,19 +24,19 @@ In this article, we’ll explore how these two APIs compare, when to use each, a
 
 ## Contents
 
-* [Angular 19 vs. Previous Versions: What’s Different?](/blog/2024-11-mastering-effect-and-afterRenderEffect#angular-vs-previous-versions-whats-different)
-* [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##core-differences-between-effect-and-afterrendereffect)
-* [Introducing `effect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-effect)
-  * [Example for `effect()`: setting multipe things at once](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-for-effect-setting-multipe-things-at-once)
-  * [When to choose `effect()` over `computed()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##when-to-choose-effect-over-computed)
-* [Introducing `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##introducing-afterrendereffect)
-  * [Understanding the Phases](/blog/2024-11-mastering-effect-and-afterRenderEffect##understanding-the-phases)
-  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-mastering-effect-and-afterRenderEffect##phases-only-run-again-when-dirty-through-signal-dependencies)
-  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-mastering-effect-and-afterRenderEffect##example-of-afterrendereffect-dynamically-resizing-a-textarea)
-* [Migration Guide: From Angular Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-mastering-effect-and-afterRenderEffect##migration-guide-from-angular-lifecycle-hooks-to-signal-based-reactivity)
-* [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-mastering-effect-and-afterRenderEffect##best-practices-for-using-effect-and-afterrendereffect)
-* [Demo Application](/blog/2024-11-mastering-effect-and-afterRenderEffect##demo-application)
-* [Conclusion](/blog/2024-11-mastering-effect-and-afterRenderEffect##conclusion)
+* [Angular 19 vs. Previous Versions: What’s Different?](/blog/2024-11-effect-afterrendereffect#angular-vs-previous-versions-whats-different)
+* [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect#core-differences-between-effect-and-afterrendereffect)
+* [Introducing `effect()`](/blog/2024-11-effect-afterrendereffect#introducing-effect)
+  * [Example for `effect()`: setting multipe things at once](/blog/2024-11-effect-afterrendereffect#example-for-effect-setting-multipe-things-at-once)
+  * [When to choose `effect()` over `computed()`](/blog/2024-11-effect-afterrendereffect#when-to-choose-effect-over-computed)
+* [Introducing `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect#introducing-afterrendereffect)
+  * [Understanding the Phases](/blog/2024-11-effect-afterrendereffect#understanding-the-phases)
+  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](/blog/2024-11-effect-afterrendereffect#phases-only-run-again-when-dirty-through-signal-dependencies)
+  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](/blog/2024-11-effect-afterrendereffect#example-of-afterrendereffect-dynamically-resizing-a-textarea)
+* [Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity](/blog/2024-11-effect-afterrendereffect#migration-guide-from-angulars-lifecycle-hooks-to-signal-based-reactivity)
+* [Best Practices for Using `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect#best-practices-for-using-effect-and-afterrendereffect)
+* [Demo Application](/blog/2024-11-effect-afterrendereffect#demo-application)
+* [Conclusion](/blog/2024-11-effect-afterrendereffect#conclusion)
 
 ## Angular 19 vs. Previous Versions: What’s Different?
 
@@ -69,7 +69,7 @@ See the [official blog post](https://blog.angular.dev/latest-updates-to-effect-i
 We interpret this new information in the following way:
 > 💡 **It is now a valid case to use `effect()` for state updates or side effects that are difficult to achieve with other reactive primitives, such as `computed()`**.
 
-This change to the paradigm is in line with new features introduced in Angular 19, such as `linkedSignal()` and `resource()`.
+This change to the paradigm is in line with new features introduced in Angular 19, such as [`linkedSignal()`](https://angular.schule/blog/2024-11-linked-signal) and `resource()`.
 Both help to maintain cleaner and more declarative state management patterns where possible. 
 Good patterns are no longer enforced by the `allowSignalWrites` flag, but instead by useful high-level signal APIs.
 
@@ -186,7 +186,7 @@ In the past, we would have been using `ngOnChanges` to patch the form when the i
 The previous constraints on `effect()` have been removed, so it is now more challenging to decide when to use `computed()` or `effect()`.
 In our opinion, it depends on the use case:
 - **Use `computed()`** for deriving a value based on other signals, especially when you need a pure, read-only reactive value. Inside a computed signal, it is strictly not allowed to set other signals.
-  We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-effect-and-afterRenderEffect)**
+  We covered `computed()` and `linkedSignal()` in this article: **[Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-linked-signal)**
 - **Use `effect()`** if the operation is more complex, involves setting multiple signals or requires side effects to be performed outside the world of signals, such as synchronising reactive form states or logging events.
 
 For patching forms, there is currently no better approach than using effects. 
