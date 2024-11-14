@@ -2,8 +2,8 @@
 title: 'Angular 19: Mastering effect and afterRenderEffect'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2024-11-12
-lastModified: 2024-11-12
+published: 2024-11-14
+lastModified: 2024-11-14
 keywords:
   - Angular
   - JavaScript
