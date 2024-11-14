@@ -153,7 +153,7 @@ Please choose between one of the two options to prevent this:
 
 We should take a look at the generated files:
 
-<img src="https://angular-schule.github.io/website-articles/blog/2018-04-swagger-codegen/generated-code.png" width="243" alt="Screenshot">
+<img src="https://angular-schule.github.io/website-articles/2018-04-swagger-codegen/generated-code.png" width="243" alt="Screenshot">
 
 
 You will see that this is a complete angular project with all required config files and typescript files to create an [angular package](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit).
