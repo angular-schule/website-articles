@@ -110,15 +110,16 @@ As expected, the console output for `afterRenderEffect()` is triggered after the
 
 ## Introducing `effect()`
 
-Angular supports two types of effects: **component effects** and **root effects**. 
-Component effects are initiated when `effect()` is called within a component, directive, or a service tied to them. 
-Root effects, on the other hand, are initiated when `effect()` is called outside the component tree, such as in a [singleton service](https://angular.dev/guide/ngmodules/singleton-services), or by setting the `forceRoot` option.
+In this article, we discuss effects that are created within a component. 
+These are called **component effects** and allow safe reading and writing of component properties and signals. 
+It is also possible to create effects in services. 
+If a service is provided at the root level in the application (also known as a singleton), these effects are called **root effects**.
 
-The main difference between these effect types is their timing. 
-Component effects operate as part of Angular's change detection, which allows them to safely read input signals and manage views dependent on component state.
-Root effects, however, run as microtasks, independent of the component tree or change detection.
+The main difference between these types of effects is their timing. 
+Component effects operate as part of Angular's change detection, allowing them to safely read input signals and manage views that depend on component state. 
+Root effects, however, run as microtasks, independently of the component tree or change detection.
 
-In this article, we only discuss **component effects** which allow to safely read and write signals inside components.
+In this article, we focus solely on **component effects**, which allow to safely read and write signals within components.
 
 
 ### Example for `effect()`: setting multiple things at once
