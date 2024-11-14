@@ -1,4 +1,4 @@
-name: Purge Cloudflare Cash
+name: Purge Cloudflare Cache
 
 on: [page_build]
 
