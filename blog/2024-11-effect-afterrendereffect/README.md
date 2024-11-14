@@ -314,7 +314,7 @@ There are two main ways to establish dependencies in `afterRenderEffect()`:
   We can also create dependencies by accessing other signals directly within the effect. 
   In the upcoming example, we read a signal from the component within the `earlyRead` effect to create a dependency and ensure the effect executes multiple times.
 
-> **💡 Angular ensures that effects only re-execute when their tracked signals change, marking the effect itself as "dirty."   
+> **💡 Angular ensures that effects only re-execute when their tracked signals change, marking the effect itself as "dirty."
   Without these signal dependencies, each effect will run only once!**
 
 
