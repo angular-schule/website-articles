@@ -15,5 +15,5 @@ jobs:
         PURGE_API_TOKEN: ${{ secrets.PURGE_API_TOKEN }}
         PURGE_ZONE: ${{ secrets.PURGE_ZONE }}
       run: |
-        sh .github/workflows/purge-cash.sh
+        sh .github/workflows/purge-cache.sh
 
