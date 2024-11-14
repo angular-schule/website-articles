@@ -24,7 +24,7 @@ In this article, we'll explore how these two APIs compare, when to use each, and
 
 ## Contents
 
-* [Angular 19 vs. Previous Versions: What's Different?](/blog/2024-11-effect-afterrendereffect#angular-vs-previous-versions-whats-different)
+* [Angular 19 vs. Previous Versions: What's Different?](/blog/2024-11-effect-afterrendereffect#angular-19-vs-previous-versions-whats-different)
 * [Core Differences Between `effect()` and `afterRenderEffect()`](/blog/2024-11-effect-afterrendereffect#core-differences-between-effect-and-afterrendereffect)
 * [Introducing `effect()`](/blog/2024-11-effect-afterrendereffect#introducing-effect)
   * [Example for `effect()`: setting multiple things at once](/blog/2024-11-effect-afterrendereffect#example-for-effect-setting-multiple-things-at-once)
