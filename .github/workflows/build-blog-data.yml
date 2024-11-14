@@ -1,0 +1,34 @@
+name: Build blog data
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_NAME: The Buildbot
+  GITHUB_EMAIL: buildbot@angular2buch.de
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Build
+        run: |
+          cd build
+          npm install
+          npm run build
+
+      - name: Deploy to branch
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cd build && npx angular-cli-ghpages --no-notfound --dir=dist --branch=gh-pages --no-silent --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
