@@ -19,7 +19,7 @@ which supports both OpenAPI spec v2 and v3.**
 
 <hr>
 
-<a href="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png"><img src="https://angular-schule.github.io/website-articles/blog/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png" width="50%"></a>
+<a href="https://angular-schule.github.io/website-articles/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png"><img src="https://angular-schule.github.io/website-articles/2018-06-swagger-codegen-is-now-openapi-generator/tweet.png" width="50%"></a>
 
 
 For the reasons behind the fork, please refer to the official

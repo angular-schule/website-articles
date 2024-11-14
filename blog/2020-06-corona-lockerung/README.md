@@ -38,10 +38,10 @@ Weiter Informationen [zu unserer Schulung in Heidelberg finden Sie hier](https:/
 
 <div class="row mb-4">
   <div class="col-6">
-    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_maske.jpg" alt="Beispiel Behelfsmaske">
+    <img src="https://angular-schule.github.io/website-articles/2020-06-corona-lockerung/img_maske.jpg" alt="Beispiel Behelfsmaske">
   </div>
   <div class="col-6">
-    <img src="https://angular-schule.github.io/website-articles/blog/2020-06-corona-lockerung/img_abstand.jpg" alt="Beispiel Abstandsregel">
+    <img src="https://angular-schule.github.io/website-articles/2020-06-corona-lockerung/img_abstand.jpg" alt="Beispiel Abstandsregel">
   </div>
 </div>
 
