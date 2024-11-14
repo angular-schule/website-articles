@@ -235,10 +235,11 @@ However, there is one big difference between the hook methods and the new `after
 As a result, later phases may not need to execute if the values returned by earlier phases do not change – and if there is no other dependency established (we will talk about this soon).
 Before we start, here are some important facts to know about the effects created by `afterRenderEffect()`:
 
+* **Post-Render Execution:** These effects run when it's safe to make changes to the DOM. ([source: keynote slides from ng-poland 2024](https://docs.google.com/presentation/d/1puZmyZ-dgnt6_b0nOBaDMpyf_FmQld1h8yAmWxjA6gk/edit?usp=sharing))
 * **Phased Execution:** These effects can be registered for specific phases of the render cycle. 
-  The Angular team recommends adhering to these phases for optimal performance.
-* **Signal Integration:** These effects are supposed to work seamlessly with Angular's signal reactivity system, and signals can be set during the phases.
-* **Selective Execution:** These effects only rerun when they are "dirty" due to signal dependencies. If no signal changes, the effect won't trigger again.
+  The Angular team recommends following these phases for optimal performance.
+* **Signal Integration:** These effects work seamlessly with Angular's signal reactivity system,  and signals can be set during the phases.
+* **Selective Execution:** These effects run at least once but only rerun when marked "dirty" due to signal dependencies. If no signal changes, the effect won't trigger again.
 * **No SSR:** These effects execute only in browser environments, not on the server.
 
 
@@ -283,6 +284,7 @@ Effects run in the following phase order, only when dirty through signal depende
 | 4. `read`             | Use this phase to **read** from the DOM. **Never** write to the DOM in this phase. |
 
 [According to the docs](https://next.angular.dev/api/core/afterRenderEffect), you should prefer using the `read` and `write` phases over the `earlyRead` and `mixedReadWrite` phases when possible, to avoid performance degradation.
+Angular is unable to verify or enforce that phases are used correctly and instead relies on each developer to follow the documented guidelines.
 
 As mentionend before, there is also a second signature of `afterRenderEffect()` that accepts a single callback. 
 This function registers an effect to run after rendering is complete, specifically during the `mixedReadWrite` phase.
