@@ -8,6 +8,7 @@ on:
 env:
   GITHUB_NAME: The Buildbot
   GITHUB_EMAIL: buildbot@angular2buch.de
+  BRANCH: gh-pages
 
 jobs:
   build-and-deploy:
@@ -31,4 +32,4 @@ jobs:
       - name: Deploy to branch
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cd build && npx angular-cli-ghpages --no-notfound --dir=dist --branch=gh-pages --no-silent --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
+        run: cd build && npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
