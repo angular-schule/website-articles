@@ -326,7 +326,7 @@ title = signalFromControl(this.bookForm.controls.title);
 this.title.set('Angular');
 
 // Signal value will be updated to 'Signals'
-this.bookForm.setValue({ isbn: '123', 'Signals' });
+this.bookForm.setValue({ isbn: '123', title: 'Signals' });
 ```
 
 
