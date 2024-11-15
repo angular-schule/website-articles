@@ -4,16 +4,15 @@ import hljs from 'highlight.js';
 
 // Synchronous highlighting with highlight.js
 marked.setOptions({
-  highlight: (code) => hljs.highlightAuto(code).value
+  highlight: code => hljs.highlightAuto(code).value
 });
 
 // original from: https://github.com/bouzuya/jekyll-markdown-parser/blob/master/src/index.ts
 export class JekyllMarkdownParser {
 
-  constructor(private baseUrl: string) {
-  }
+  constructor(private baseUrl: string) {}
 
-  private _imageRenderer(href, title, text) {
+  private _imageRenderer(href: string, title: string, text: string) {
     let out = `<img src="${this.baseUrl + href}" alt="${text}"`;
     if (title) {
       out += ' title="' + title + '"';

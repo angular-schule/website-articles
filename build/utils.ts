@@ -1,19 +1,4 @@
-import { mkdir, writeFile } from 'fs/promises';
-import { join } from 'path';
 import { BlogEntry, BlogEntryLight } from './types';
-import { existsSync } from 'fs';
-
-export async function writeJSON(path: string, data: any) {
-  const fullFilename = join(__dirname, path);
-  await writeFile(fullFilename, JSON.stringify(data));
-  console.log('Generated file:', fullFilename)
-}
-
-export async function createFolderIfNotExists(folder: string) {
-  if (!existsSync(folder)) {
-    await mkdir(folder, { recursive: true });
-  }
-}
 
 export function extractFirstBigParagraph(html: string): string {
   if (!html) {
@@ -38,8 +23,7 @@ export function extractFirstBigParagraph(html: string): string {
   return '';
 }
 
-
-export function makeLightBlogList(fullList: BlogEntry[]) {
+export function makeLightBlogList(fullList: BlogEntry[]): BlogEntryLight[] {
   return fullList
     .filter(entry => !entry.meta.hidden)
     .map(entry => {

@@ -1,17 +1,13 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 14",
-
   "compilerOptions": {
-    "lib": ["es2020"],
+    "lib": ["es2023"],
     "module": "commonjs",
-    "target": "es2020",
-
+    "target": "es2023",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmitOnError": false,
-    "noImplicitAny": false
+    "noImplicitAny": true
   }
 }

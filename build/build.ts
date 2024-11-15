@@ -1,24 +1,31 @@
-import { config } from './config';
-import { BlogService } from './blog.service';
-import { writeJSON, makeLightBlogList, createFolderIfNotExists } from './utils';
+import { copy, remove, writeJson, mkdirp } from 'fs-extra';
 
-import { copy, remove } from 'fs-extra';
+import { buildConfig } from './config';
+import { BlogService } from './blog.service';
+import { makeLightBlogList } from './utils';
 
 (async () => {
-  const blogService = new BlogService(config.markdownBaseUrl);
+  const blogService = new BlogService(buildConfig);
 
-  await remove('./dist');
-  await createFolderIfNotExists('./dist/data/posts');
-  await createFolderIfNotExists('./dist/assets');
-  await copy('../blog', './dist/');
-  await copy('../index.html', './dist/index.html');
+  // empty dist folder (for local builds)
+  await remove(buildConfig.distFolder);
+  await mkdirp(buildConfig.distFolder);
 
+  // copy static files (images, etc.) to dist folder
+  await copy(buildConfig.blogPostsFolder, buildConfig.distFolder);
+  await copy('../index.html', buildConfig.distFolder + '/index.html');
+  console.log('Copied static files to dist');
+
+  // generate light blog list
   const blogList = await blogService.getBlogList();
   const blogListLight = makeLightBlogList(blogList);
-  await writeJSON('./dist/bloglist.json', blogListLight);
+  await writeJson(buildConfig.distFolder + '/bloglist.json', blogListLight);
 
+  // replace README with entry.json for all blog posts
   blogList.forEach(async (entry) => {
-    await writeJSON(`./dist/${entry.slug}/entry.json`, entry);
-    await remove(`./dist/${entry.slug}/README.md`);
+    const entryJsonPath = `${buildConfig.distFolder}/${entry.slug}/entry.json`;
+    await writeJson(entryJsonPath, entry);
+    await remove(`${buildConfig.distFolder}/${entry.slug}/README.md`);
+    console.log('Generated post file:', entryJsonPath);
   });
 })();

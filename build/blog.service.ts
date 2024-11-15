@@ -1,39 +1,34 @@
 import * as emoji from 'node-emoji'
-import { JekyllMarkdownParser } from './jekyll-markdown-parser';
 import { readdir, readFile } from 'fs/promises';
 
+import { JekyllMarkdownParser } from './jekyll-markdown-parser';
 import { BlogEntry } from './types';
+import { BuildConfig } from './config';
 
 export class BlogService {
 
-  constructor(private markdownBaseUrl: string) {}
+  constructor(private config: BuildConfig) {}
 
-  async getBlogEntry(slug: string): Promise<BlogEntry> {
-    const blogList = await this.getBlogList();
-    const entry = blogList.find(e => e.slug === slug);
-    if (!entry) {
-      throw new Error(`No entry found for "${slug}"`);
-    }
-    return entry;
-  }
-
-  // dead simple way to sort things: create a sort key that can be easily sorted
+  /** simple way to sort things: create a sort key that can be easily sorted */
   private getSortKey(entry: BlogEntry) {
     return (entry.meta.sticky ? 'Z' : 'A') + '---' + (+entry.meta.published) + '---' + entry.slug;
   }
 
+  /** Read all post folders from the blog directory */
   private async readBlogFolders() {
-    const folderContents = await readdir('../blog', { withFileTypes: true });
+    const folderContents = await readdir(this.config.blogPostsFolder, { withFileTypes: true });
     return folderContents
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
   }
 
+  /** Read README file from a blog post folder */
   private async readBlogFileFromFolder(folder: string) {
-    const path = `../blog/${folder}/README.md`;
+    const path = `${this.config.blogPostsFolder}/${folder}/README.md`;
     return readFile(path, 'utf8');
   }
 
+  /** read metadata and contents for all blog posts as list */
   async getBlogList() {
     const blogDirs = await this.readBlogFolders();
     const blogEntries: BlogEntry[] = [];
@@ -60,17 +55,17 @@ export class BlogService {
     return blogEntries.sort((a, b) => this.getSortKey(b).localeCompare(this.getSortKey(a)));
   }
 
-
-  private readmeToBlogEntry(readme: string, folder: string) {
-    const parser = new JekyllMarkdownParser(this.markdownBaseUrl + folder);
-    const parsedJekyllMarkdown = parser.parse(readme);
+  /** convert markdown README to full blog post object */
+  private readmeToBlogEntry(readmeMarkdown: string, folder: string) {
+    const parser = new JekyllMarkdownParser(this.config.markdownBaseUrl + folder);
+    const parsedJekyllMarkdown = parser.parse(readmeMarkdown);
 
     const meta = parsedJekyllMarkdown.parsedYaml || {};
 
     if (meta.thumbnail &&
       !meta.thumbnail.startsWith('http') &&
       !meta.thumbnail.startsWith('//')) {
-      meta.thumbnail = this.markdownBaseUrl + folder + '/' + meta.thumbnail;
+      meta.thumbnail = this.config.markdownBaseUrl + folder + '/' + meta.thumbnail;
     }
 
     return {
