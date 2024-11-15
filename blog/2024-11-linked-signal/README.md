@@ -332,7 +332,7 @@ Last but not least, the third link provides an interactive demo on StackBlitz, w
 The Linked Signal feature in Angular 19 provides a practical solution for managing state that needs to stay in sync with other signals. 
 It fills the gap between `signal()` and `computed()`, offering a new way to handle complex reactive frontends where state synchronization is essential. 
 Try out `linkedSignal()` in your Angular project to see how it can simplify your state management. 
-** ⚠️ Please keep in mind that this API is still experimental and could drastically change based on feedback from the community.**
+**⚠️ Please keep in mind that this API is still experimental and could drastically change based on feedback from the community.**
 
 <hr>
 
