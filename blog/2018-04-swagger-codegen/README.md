@@ -56,7 +56,7 @@ In this article we will use the following API:
 
 Please feel free to explore it via [Swagger UI](https://api.angular.schule/swagger-ui/).
 
-[![Screenshot](swagger-ui.png)](https://api.angular.schule/swagger-ui/)
+[![Screenshot Swagger UI](swagger-ui.png)](https://api.angular.schule/swagger-ui/)
 
 Swagger codegen has a plenty of arguments to adjust.
 The minimal command line arguments are:

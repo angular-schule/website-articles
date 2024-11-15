@@ -181,7 +181,7 @@ ng run your-angular-project:deploy-firebase
 
 ## How to make your own deployment builder
 
-[![Teaser](ng-deploy-starter-project.jpg)](https://github.com/angular-schule/ngx-deploy-starter)
+[![](ng-deploy-starter-project.jpg)](https://github.com/angular-schule/ngx-deploy-starter)
 
 As a cloud platform provider (or as a fan of that service), you should consider to implement a dedicated deployment builder, too.
 The spectrum of possibilities is wide: Let's think about a deployment via FTP, to AWS, to Heroku, to Rackspace etc. – it's up to YOU to launch the next rocket! 🚀

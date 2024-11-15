@@ -189,7 +189,7 @@ export function log<T>(message?: string): OperatorFunction<T, T> {
 }
 ```
 
-![](observer-wrapper.png)
+![Illustration of the Observer Wrapper from the previous code snippet](observer-wrapper.png)
 
 
 If you take a look into the [RxJS source code](https://github.com/ReactiveX/rxjs/blob/cfbfaac36c847a1d09434a78ac1737c4a3149c5c/src/internal/operators/map.ts#L39-L46) you will see: that's exactly the approach they go for all the built-in operators.

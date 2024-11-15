@@ -27,8 +27,7 @@ Depending on the use-case, I favour a different approach to read and change in m
 
 ## Hello GraphQL
 
-<!--![Logo graphql](logo-graphql.svg?sanitize=true)-->
-<img src="https://angular-schule.github.io/website-articles/2018-06-apollo-graphql-code-generator/logo-graphql.svg?sanitize=true" width="75%">
+<img src="logo-graphql.svg" width="75%">
 
 One fundamental problem of a classical REST api is the amount of received data.
 Sometimes we fetch too much data, so there is data in the response we don't use.
@@ -156,8 +155,7 @@ You can learn more about the query language in [the official documentation](http
 
 ## Querying data with Apollo Angular
 
-<!--![Logo Apollo](logo-apollo.svg?sanitize=true)-->
-<img src="https://angular-schule.github.io/website-articles/2018-06-apollo-graphql-code-generator/logo-apollo.svg?sanitize=true" width="75%">
+<img src="logo-apollo.svg" width="75%">
 
 GraphQL has become very popular in recent times and there are a lot of implementations for various programming languages and frameworks.
 In the Angular world, the [Apollo](https://www.apollographql.com/) library is quite popular. 
@@ -286,8 +284,7 @@ Of course, other people have already done the hard work for us.
 
 ## Generating types with GraphQL code generator
 
-<!--![Logo GraphQL code generator](logo-graphql-code-generator.svg?sanitize=true)-->
-<img src="https://angular-schule.github.io/website-articles/2018-06-apollo-graphql-code-generator/logo-graphql-code-generator.svg?sanitize=true" width="50%">
+<img src="logo-graphql-code-generator.svg" width="50%">
 
 All information we need is already in the GraphQL schema.
 We are not going to use the [__Apollo__ GraphQL code generator](https://github.com/apollographql/apollo-codegen) here.
