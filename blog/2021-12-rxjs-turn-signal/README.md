@@ -64,7 +64,7 @@ const stepTimeMs = 500;
 const rawSignal$ = timer(0, stepTimeMs).pipe(map(e => e % 2 === 0));
 ```
 
-![Marble Diagram](./marble-map.svg)
+![Marble Diagram](marble-map.svg)
 
 ## The trigger
 
@@ -128,7 +128,7 @@ press$.pipe(
 
 In the following marble diagram you can see that emissions from the source are being ignored as long as the signal is running.
 
-![Marble Diagram](./marble-exhaustmap.svg)
+![Marble Diagram](marble-exhaustmap.svg)
 
 ## Displaying the signal
 
@@ -183,7 +183,7 @@ timer(0, 1000).pipe(
 ).subscribe(e => console.log(e));
 ```
 
-![Marble Diagram](./marble-takeuntilsimple.svg)
+![Marble Diagram](marble-takeuntilsimple.svg)
 
 Back to our turn signal, things become a little more challenging.
 The signalling period must be terminated when at least 3 cycles have passed *and* the trigger has been released.
@@ -246,7 +246,7 @@ press$.pipe(
 )
 ```
 
-![Marble Diagram](./marble-takeuntil.svg)
+![Marble Diagram](marble-takeuntil.svg)
 
 ## Switching off the light
 
@@ -300,7 +300,7 @@ While a signal cycle is running, all other presses will be ignored.
 The signal ends after the trigger is released and at least 3 cycles have been finished.
 Regardless of how the interrupted signal ends, it will always switch off the light when it leaves the room.
 
-![Marble Diagram](./marble-final.svg)
+![Marble Diagram](marble-final.svg)
 
 Here is the full code:
 

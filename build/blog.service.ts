@@ -57,7 +57,7 @@ export class BlogService {
 
   /** convert markdown README to full blog post object */
   private readmeToBlogEntry(readmeMarkdown: string, folder: string) {
-    const parser = new JekyllMarkdownParser(this.config.markdownBaseUrl + folder);
+    const parser = new JekyllMarkdownParser(this.config.markdownBaseUrl + folder + '/');
     const parsedJekyllMarkdown = parser.parse(readmeMarkdown);
 
     const meta = parsedJekyllMarkdown.parsedYaml || {};

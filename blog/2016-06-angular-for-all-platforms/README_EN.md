@@ -12,7 +12,7 @@ In simple terms the architecture is split into two parts:
 - Platform agnostic - where your markup (HTML) is parsed by a Dom Adapter and then compiled into a set of Proto Views. This process is not specific to any platforms and most of its pieces can be shared between platforms.
 - Platform specific - here is where the magic happens. To target each platform you need a Platform Specific Renderer, which based on the Proto Views generates a Visual Tree (used to display the UI). The Renderer is also responsible for propagating the changes and events between the Proto Views and the Visual Tree.
 
-![Angular2 Platform Agnostic](./images/Angular2-platform-agnostic.png "Angular2 Platform Agnostic")
+![Angular2 Platform Agnostic](images/Angular2-platform-agnostic.png "Angular2 Platform Agnostic")
 
 With this architecture in place it was a matter of creating the necessary extensions to target different platforms.  
 
@@ -20,7 +20,7 @@ With this architecture in place it was a matter of creating the necessary extens
 ## Adding mobile to the picture
 
 
-![Login Screen](./images/LoginScreen.png "Login Screen")
+![Login Screen](images/LoginScreen.png "Login Screen")
 
 This opened up the doors to [NativeScript](https://www.nativescript.org/), an Open Source framework for building iOS, Android and ([soon](https://www.nativescript.org/blog/details/nativescript-runtime-preview-for-windows-10)) Windows Universal apps with 100% Native UI.
 Since the middle of 2015 both the Angular and the NativeScript teams have been working on bringing the two together. This resulted in the creation of NativeScript 2.0 ([news](http://sdtimes.com/nativescript-2-0-brings-mobile-strategy-options-angularjs-developers/)).
@@ -28,12 +28,12 @@ Since the middle of 2015 both the Angular and the NativeScript teams have been w
 As a result NativeScript uses HTML as the markup to define the UI structure and Parse 5 as the DOM adapter. The biggest work was in implementing the NativeScript Renderer, which provides communication between the Proto Views and the Native UI components.
 
 Here is how this fits in the Angular 2 architecture.
-![Angular2 with NativeScript](./images/Angular2-with-NativeScript.png "Angular2 with NativeScript")
+![Angular2 with NativeScript](images/Angular2-with-NativeScript.png "Angular2 with NativeScript")
 
 
 ## Why NativeScript
 
-![Login Screen](./images/nativescript-loves-angular.png)
+![Login Screen](images/nativescript-loves-angular.png)
 
 ### It works with Angular 2
 You can use all of the [Angular 2 syntax](https://angular.io/docs/ts/latest/guide/template-syntax.html#) and get a mobile app as a result:

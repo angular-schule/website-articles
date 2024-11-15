@@ -179,7 +179,7 @@ But how can we solve this?
 Abstractly speaking: Currently we retrieve the data normalized via the API (1) and put it normalized into the state (2).
 Then we use selectors (3) to retrieve the data normalized in each component and only then de-normalize it on each and every template (4) that displays it.
 
-![Normalization points](./normalization_points.svg)
+![Normalization points](normalization_points.svg)
 
 It seems there are three points where we could intervene and do the de-normalization instead:
 

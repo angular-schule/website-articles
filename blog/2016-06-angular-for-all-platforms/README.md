@@ -23,25 +23,25 @@ Vereinfacht ausgedrückt ist die Angular-2-Architektur in zwei Teile aufgeteilt:
 - __Plattform-spezifischer Teil__: hier geschieht die Magie. Es werden plattformspezifische Renderer verwendet, um die unterschiedlichen Zielplattformen abzubilden. Jene Renderer haben die Aufgabe, aus den „Proto Views“ einen „Visual Tree“ zu generieren. Dieser kann dann verwendet werden, um die Oberfläche anzuzeigen. Der Renderer ist ebenso dafür verantwortlich, Änderungen und Events zwischen „Proto Views“ und „Visual Tree“ auszutauschen.
 
 
-![Angular2 Platform Agnostic](./images/Angular2-platform-agnostic.png "Angular2 Platform Agnostic")
+![Angular2 Platform Agnostic](images/Angular2-platform-agnostic.png "Angular2 Platform Agnostic")
 
 Durch diese durchdachte Architektur ist es möglich, neue Ziele zu definieren. Es müssen nur die notwendigen Erweiterungen implementiert werden.
 
 
 ## Native Mobile Anwendungen
 
-![Login Screen](./images/LoginScreen.png "Login Screen")
+![Login Screen](images/LoginScreen.png "Login Screen")
 
 Auf Grundlage der plattformunabhängigen Architektur von Angular kann [NativeScript](https://www.nativescript.org/) seine Stärken zeigen. NativeScript ist ein Open-Source-Framework, mit dem man native Apps für iOS, Android und [bald](https://www.nativescript.org/blog/details/nativescript-runtime-preview-for-windows-10) auch Windows 10 bzw. Windows Phone 10 entwickeln kann. „Nativ“ bedeutet, dass tatsächlich echte native UI-Elemente aus der JavaScript-Umgebung heraus angesprochen werden können. Seit Mitte 2015 arbeiten das Angular-Team und das NativeScript-Team zusammen, um beide Frameworks miteinander zu verbinden. Das Ergebnis dieser Zusammenarbeit ist NativeScript 2.0 ([News](http://sdtimes.com/nativescript-2-0-brings-mobile-strategy-options-angularjs-developers/)).
 
 Die Lösung für Angular besteht darin, dass sehr spezielles Markup in HTML definiert wird. Diese Markup kann dann vom DOM-Adapter „Parse5“ geparst werden. Den größten Anteil an der Umsetzung nimmt der „NativeScript Renderer“ ein. Dieser garantiert nicht zuletzt den Austausch zwischen „Proto Views“ und  den nativen UI Komponenten der jeweiligen Platform:
 
-![Angular2 with NativeScript](./images/Angular2-with-NativeScript.png "Angular2 with NativeScript")
+![Angular2 with NativeScript](images/Angular2-with-NativeScript.png "Angular2 with NativeScript")
 
 
 ## Warum NativeScript?
 
-![Login Screen](./images/nativescript-loves-angular.png)
+![Login Screen](images/nativescript-loves-angular.png)
 
 ### Kurzum: es funktioniert wunderbar mit Angular
 
@@ -70,7 +70,7 @@ export class MyComponent {
 
 ### Abstraktionsschicht
 
-NativeScript hat eine 	beträchtliche Abstraktionsschicht an Board, welche die Unterschiede zwischen den unterstützen  Zielplattformen (iOS, Android, UWP) ausbügelt. Hierdurch kann man mit einer einzigen Code-Basis alle nennenswerten Geräte bedienen. Besonders wichtig ist eine gescheite UI-Abstraktion, bei der jede [UI-Komponente](http://docs.nativescript.org/ui/ui-views) eine eigene native Implementierung besitzen muss. Zum Glück müssen wir nicht diese spezifische Implementierungen selbst entwickeln. Es wurde bereits eine grundlegende Auswahl an Bedienelementen vom NativeScript-Team umsetzt. So können wir folgendes Markup definieren und erhalten eine ***native Oberfläche***, die in allen Betriebsystemen die jeweils zu erwarteten Bedienelemente besitzt:
+NativeScript hat eine beträchtliche Abstraktionsschicht an Board, welche die Unterschiede zwischen den unterstützen  Zielplattformen (iOS, Android, UWP) ausbügelt. Hierdurch kann man mit einer einzigen Code-Basis alle nennenswerten Geräte bedienen. Besonders wichtig ist eine gescheite UI-Abstraktion, bei der jede [UI-Komponente](http://docs.nativescript.org/ui/ui-views) eine eigene native Implementierung besitzen muss. Zum Glück müssen wir nicht diese spezifische Implementierungen selbst entwickeln. Es wurde bereits eine grundlegende Auswahl an Bedienelementen vom NativeScript-Team umsetzt. So können wir folgendes Markup definieren und erhalten eine ***native Oberfläche***, die in allen Betriebsystemen die jeweils zu erwarteten Bedienelemente besitzt:
 
 ```HTML
 @Component({

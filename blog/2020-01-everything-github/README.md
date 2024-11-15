@@ -421,13 +421,13 @@ then we want to use a personal access token. The procedure is as following:
    You won’t be able to see it again later! 
 If you want to remember the token later, save it in a secure place only (e.g. a password manager).
     Please make sure that the token has the following permissions:
-   ![repo access](./screenshot_5_repo-access.png)
+   ![repo access]screenshot_5_repo-access.png)
 
 2. Open your Angular app's GitHub repo.
 
 3. Go to **Settings** > **Secrets** and click on **Add a new secret**.
 
-    ![add new secret](./screenshot_5_add-new-secret.png)
+    ![add new secret](screenshot_5_add-new-secret.png)
 
     Secrets are encrypted environment variables and only exposed to selected GitHub Actions.
     GitHub automatically redacts secrets printed to the log, but you should avoid printing secrets to the log intentionally.
@@ -436,7 +436,7 @@ If you want to remember the token later, save it in a secure place only (e.g. a 
     If you prefer, you can also choose the name `PERSONAL_TOKEN` for all further steps.
     Finish this chapter by clicking the green **Add secret** button. 
 
-    ![secret name and value](./screenshot_5_secret-token-value.png)
+    ![secret name and value](screenshot_5_secret-token-value.png)
 
     It is perfectly fine not to store the token anywhere else.
     You can always create new tokens and just throw the old ones away.
@@ -448,7 +448,7 @@ GitHub Actions usage is free for public repositories, as mentioned before.
 
 1. Again in our repo, we go to **Actions** and click on **Set up workflow yourself**.
 
-    ![setup workflow](./screenshot_5_setup-workflow.png)
+    ![setup workflow](screenshot_5_setup-workflow.png)
 
 2. An editor will open. Keep the file name (e.g. `main.yml`) as it is and simply replace the entire content with the following example:
 
@@ -530,7 +530,7 @@ GitHub Actions usage is free for public repositories, as mentioned before.
 
 6. Click on **Start commit**, add message and description if you like and click on **Commit new file**. This will add the config file to the repo.
 
-    ![start commit](./screenshot_5_start-commit.png)
+    ![start commit](screenshot_5_start-commit.png)
 
 4.  **Done!** 🚀.  
 
@@ -608,7 +608,7 @@ In our example the app should be accessible through the domain `everything-githu
     The `<username>` (or organisation name) is in our case `angular-schule`.
     As an example, the following screenshot shows the required setting for the DNS provider [cloudflare.com](https://cloudflare.com):
       
-    ![Screenshot Cloudflare](./screenshot_6_cname-cloudflare.png)
+    ![Screenshot Cloudflare](screenshot_6_cname-cloudflare.png)
 
 2. Now we have to adjust the `ng deploy` command a little bit!
     By using our own domain, we no longer have to use a subdirectory.
@@ -626,7 +626,7 @@ In our example the app should be accessible through the domain `everything-githu
 
 3. It is important that you have an SSL certificate, because otherwise Chrome will tell your visitors that your website is not secure:
 
-    ![Screenshot Not Secure](./screenshot_6_not-secure.png)
+    ![Screenshot Not Secure](screenshot_6_not-secure.png)
 
     **Pretty ugly, isn't it?**  
     The good news: nowadays you don't have to spend money for a SSL certificate anymore!
@@ -635,7 +635,7 @@ In our example the app should be accessible through the domain `everything-githu
     You can make the necessary changes in the repository settings.
     Go to **Settings** > GitHub Pages and select **Enforce HTTPS**, to enable HTTPS encryption for your site:
 
-    ![Screenshot HTTPS GitHub](./screenshot_6_https-github.png)
+    ![Screenshot HTTPS GitHub](screenshot_6_https-github.png)
 
     It can take up to 24 hours before this option is available.
     As soon as the change is applied, you can now surf the website via HTTPS:  
@@ -662,12 +662,12 @@ We need to use the same `--cname` parameter as described before, but we have to 
       The `<username>` (or organisation name) is in our case `angular-schule`.
       As an example, the following screenshot shows the required setting for the DNS provider [cloudflare.com](https://cloudflare.com):
 
-      ![Screenshot CNAME flatteing 1](./screenshot_6_cname-flattening-cloudflare1.png)
+      ![Screenshot CNAME flatteing 1](screenshot_6_cname-flattening-cloudflare1.png)
 
       We should also set a `CNAME` entry for `www`, as many people always type in this subdomain.
       The final settings should look like this:
 
-      ![Screenshot CNAME flatteing 2](./screenshot_6_cname-flattening-cloudflare2.png)
+      ![Screenshot CNAME flatteing 2](screenshot_6_cname-flattening-cloudflare2.png)
     
     * To create an `A` record, point your apex domain to the following IP addresses from GitHub:
       ```

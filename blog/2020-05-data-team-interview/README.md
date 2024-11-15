@@ -45,4 +45,4 @@ Die Schulung ist somit auch eine Motivation für uns, an Projekten mit Angular z
 
 **🅰️ Ferdinand:**<br>**Vielen Dank für das interessante Gespräch und die Einblicke, Marcel! Wir wünschen euch viel Spaß mit Angular und viel Erfolg in euren Projekten!**
 
-![Das DATA-team nach erfolgreich abgeschlossener Angular-Schulung](./teamfoto.jpg)
+![Das DATA-team nach erfolgreich abgeschlossener Angular-Schulung](teamfoto.jpg)

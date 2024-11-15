@@ -139,7 +139,7 @@ It can easily be determined what version part will be increased and much more.
 
 If you want to try you _commitlint_ separately, you can even try it out using `npx`:
 
-![commitlint cli](./commitlint.svg)
+![commitlint cli](commitlint.svg)
 
 _ngx-semantic-version_ will add the configuration file `commitlint.config.js` which can be adjusted later by your personal needs.
 
@@ -170,7 +170,7 @@ The tool _commitizen_ is there to help beginners and to prevent your own neglige
 It introduces a lots of restrictions for our commit messages so that it's easier for developers to follow the pattern.
 [Commitizen](https://www.npmjs.com/package/commitizen) will help you to always define a commit message in the appropriate format using an interactive CLI:
 
-![commitizen cli](./commitizen.svg)
+![commitizen cli](commitizen.svg)
 
 When adding _ngx-semantic-version_ it will configure _commitizen_ to use the _conventional changelog_ style as well:
 
@@ -186,7 +186,7 @@ When adding _ngx-semantic-version_ it will configure _commitizen_ to use the _co
 
 If you are using Visual Studio Code, you can also use the extension [Visual Studio Code Commitizen Support](https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-commitizen) which will let you type the commit message directly in the editor:
 
-![commitizen vscode plugin](./commitizen-vscode.gif)
+![commitizen vscode plugin](commitizen-vscode.gif)
 
 
 
