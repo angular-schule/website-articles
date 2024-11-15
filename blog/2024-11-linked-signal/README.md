@@ -311,6 +311,8 @@ export function signalFromControl<T>(control: AbstractControl<T>) {
 }
 ```
 
+In this example, you see an effect that establishes a **reactive listener**, which automatically responds to changes in signals. The function inside `effect()` makes sure that whenever the signal `controlSignal` changes, the form control value is updated via `setValue()`. This creates a **two-way synchronization** between the signal and the form control.
+For a more detailed exploration of `effect()` and its capabilities, read our article: **[Angular 19: Mastering effect and afterRenderEffect](/blog/2024-11-effect-afterrendereffect)**.
 The helper can be used as follows:
 
 ```ts
