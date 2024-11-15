@@ -294,6 +294,43 @@ To complete the flow, it would also be possible to modify the book data and send
 > We presented the Resource API in a separate blog post (in German 🇩🇪): **[Die neue Resource API von Angular](https://angular-buch.com/blog/2024-10-resource-api)**
 
 
+### Connecting Reactive Forms with Signals
+
+We can even use Linked Signals for building helpers that connect other worlds to signals.
+For example, this wrapper function synchronises a `FormControl` (or any other control) from Angular's Reactive Forms with a signal.
+Data is synchronized bidirectionally: When the form value changes (`valueChanges`), the signal value will be updated.
+The signal returned from the function is writable, so whenever we change the value in the signal, the form value will be updated (`setValue()`).
+
+```ts
+export function signalFromControl<T>(control: AbstractControl<T>) {
+  const controlSignal = linkedSignal(
+    toSignal(control.valueChanges, { initialValue: control.value })
+  );
+  effect(() => control.setValue(controlSignal()));
+  return controlSignal;
+}
+```
+
+The helper can be used as follows:
+
+```ts
+bookForm = new FormGroup({
+  isbn: new FormControl('', { nonNullable: true }),
+  title: new FormControl('', { nonNullable: true }),
+});
+
+title = signalFromControl(this.bookForm.controls.title);
+
+// ...
+// Form value will be updated to 'Angular'
+this.title.set('Angular');
+
+// Signal value will be updated to 'Signals'
+this.bookForm.setValue({ isbn: '123', 'Signals' });
+```
+
+
+
 ## Linked Signal vs. Other Signals
 
 Here’s a quick comparison with other types of signals in Angular:
