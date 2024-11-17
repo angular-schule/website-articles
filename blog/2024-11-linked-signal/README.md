@@ -3,7 +3,7 @@ title: 'Angular 19: Introducing LinkedSignal for Responsive Local State Manageme
 author: Johannes Hoppe and Ferdinand Malcher
 mail: team@angular.schule
 published: 2024-11-04
-lastModified: 2024-11-15
+lastModified: 2024-11-17
 keywords:
   - Angular
   - JavaScript
@@ -18,9 +18,9 @@ sticky: false
 ---
 
 
-In Angular 19, there’s a [new feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. It lets us create a writable signal that can automatically reset based on changes in other signals. 
+In Angular 19, there's a [new feature](https://github.com/angular/angular/commit/8311f00faaf282d1a5b1ddca29247a2fba94a692) called a **Linked Signal** that makes it easier to keep track of local state that depends on other signals. It lets us create a writable signal that can automatically reset based on changes in other signals. 
 This makes it particularly useful for situations where local state needs to stay in sync with dynamic data. 
-Here’s a look at what the Linked Signal is, how it works, and some common use cases.
+Here's a look at what the Linked Signal is, how it works, and some common use cases.
 
 
 ## Contents
@@ -47,7 +47,7 @@ A Linked Signal can be created by using the [`linkedSignal()` factory function](
 A Linked Signal has the following characteristics:
 
 - **Writable and Reactive**: Like a [`signal`](https://angular.dev/guide/signals#writable-signals), we can update the value of a Linked Signal manually, but it also responds to changes in its source.
-- **A Combination of Signal and Computed**: It’s like [`computed`](https://angular.dev/guide/signals#computed-signals) because it derives its value from other signals, but it stays writable, allowing us to override it when needed.
+- **A Combination of Signal and Computed**: It's like [`computed`](https://angular.dev/guide/signals#computed-signals) because it derives its value from other signals, but it stays writable, allowing us to override it when needed.
 
 By combining these characteristics, Linked Signals provide a flexible way to manage state that adapts to changes in related signals but can also be directly controlled when required.
 To understand the flexibility, consider the following example which compares Computed and Linked Signals:
@@ -92,9 +92,9 @@ In more complex cases, a separate computation function might make the code more 
 
 ## Basic Usage of Linked Signal
 
-To see how it works, let’s take a look at a complete example. 
+To see how it works, let's take a look at a complete example. 
 Our component has a list of books in the `books` signal.
-Then we’re using a Linked Signal to keep track of the *first book* in the list.
+Then we're using a Linked Signal to keep track of the *first book* in the list.
 We decided to use the full notation with an options object. The separate computation makes it more readable, compared to a one-line function that combines source and computation.
 
 Whenever the list of books changes (e.g. through the `changeBookList()` method), the `firstBook` signal will automatically recalculate its value to the first book in the updated list.
@@ -177,7 +177,7 @@ For this use-case, the full notation with `source` and `computation` is the most
 ### Nested State Management
 
 Suppose you have nested data such as book properties (`title` and `rating`), and we want these fields to reset when a different `book` is selected. 
-Here’s how we could manage this with a Linked Signal:
+Here's how we could manage this with a Linked Signal:
 
 ```typescript
 import { Component, computed, input, linkedSignal } from '@angular/core';
@@ -220,7 +220,7 @@ Our properties `title` and `rating` are derived from the `book` source.
 Both `title` and `rating` recalculate their values when `book` changes, helping to keep data synchronized in cases where the structure of state is hierarchical or dependent on specific identifiers.
 While the Linked Signal makes sure that the data resets when necessary, we can still update our local state directly.
 In this example we update `rating` locally and communicate the change back to the parent component.
-Since we don’t need to modify the `title` within the component, a Computed Signal fulfils this task.
+Since we don't need to modify the `title` within the component, a Computed Signal fulfils this task.
 
 We used the shorthand notation for the Linked Signal because the computation is very simple.
 Also, compared to `computed()`, both lines look very similar.
@@ -230,7 +230,7 @@ However, depending on your taste, the full notation is also possible.
 ### Synchronizing Server-Data for Client-Side Edits
 
 A Linked Signal is also helpful when working with server data that needs to be edited locally.
-If we’re fetching data from an API but need to allow changes on the client side, we can use `linkedSignal()` to keep local edits in sync with the original server data.
+If we're fetching data from an API but need to allow changes on the client side, we can use `linkedSignal()` to keep local edits in sync with the original server data.
 Here is an example that uses data from our HTTP API, fetched through a simple `HttpClient` wrapper called `BookStoreService`:
 
 ```typescript
@@ -279,14 +279,14 @@ export class DashboardComponent {
 
 In this example, `books` holds the server data.
 Typically, we would use `toSignal()` to convert the RxJS Observable to a signal. 
-However, with `toSignal()` alone, we wouldn’t be able to edit the fetched data directly (except by emitting a new item from the Observable). 
+However, with `toSignal()` alone, we wouldn't be able to edit the fetched data directly (except by emitting a new item from the Observable). 
 
 Using a Linked Signal, we can still modify the data locally, and any major reset (such as a reload) can restore it to the original source if needed.
 
 We used the shorthand notation for `linkedSignal()` and passed in the signal from `toSignal()` directly. This is because we only want to convert the source into a Linked Signal. There is no need for an additional computation.
 
 We then change the order of the book list whenever the method `changeOrder()` is called.
-We’re also handling the `ratingChange` event from the previous example.
+We're also handling the `ratingChange` event from the previous example.
 The corresponding `handleRatingChange()` method accepts the identifier `isbn` and the new rating, and replaces the outdated book entity with an updated copy.
 To complete the flow, it would also be possible to modify the book data and send the updated state back to the server.
 
@@ -336,13 +336,13 @@ this.bookForm.setValue({ isbn: '123', title: 'Signals' });
 
 ## Linked Signal vs. Other Signals
 
-Here’s a quick comparison with other types of signals in Angular:
+Here's a quick comparison with other types of signals in Angular:
 
 - **`signal()`**: Creates a basic writable signal that maintains its value independently of other signals. It has a start value, and the value can be overridden with `set()` and `update()`.
 - **`computed()`**: Creates a read-only signal derived from other signals, recalculating automatically but without allowing manual changes.
 - **`linkedSignal()`**: Combines the reactivity of `computed()` with the mutability of `signal()`, allowing the value to be updated manually while remaining linked to a source signal.
 
-We recommend to only use `linkedSignal()` for state that should reset based on specific dependencies. Please continue to use `computed()` for derived data that doesn’t need to be overridden.
+We recommend to only use `linkedSignal()` for state that should reset based on specific dependencies. Please continue to use `computed()` for derived data that doesn't need to be overridden.
 
 ## Best Practices for Using Linked Signal
 
@@ -357,14 +357,14 @@ Here are some tips for using Linked Signals effectively:
 
 ## Demo Application
 
-To make it easier to see Linked Signals in action, we’ve created a demo application on GitHub that showcases all the examples discussed in this article.
+To make it easier to see Linked Signals in action, we've created a demo application on GitHub that showcases all the examples discussed in this article.
 The first link leads to the source code on GitHub, where you can download it.
 The second link opens a deployed version of the application for you to try out.
 Last but not least, the third link provides an interactive demo on StackBlitz, where you can edit the source code and see the results in real time.
 
-> **[1️⃣ Source on GitHub: demo-linked-signal](https://github.com/angular-schule/demo-linked-signal)**  
-> **[2️⃣ Deployed application](https://angular-schule.github.io/demo-linked-signal/)**  
-> **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-linked-signal?file=src%2Fapp%2Fbooks%2Fdashboard%2Fdashboard.component.ts)**  
+> **[1️⃣ Source on GitHub: demo-linked-signal](https://github.com/angular-schule/demo-linked-signal)**<br>
+> **[2️⃣ Deployed application](https://angular-schule.github.io/demo-linked-signal/)**<br>
+> **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-linked-signal?file=src%2Fapp%2Fbooks%2Fdashboard%2Fdashboard.component.ts)**
 
 
 ## Conclusion

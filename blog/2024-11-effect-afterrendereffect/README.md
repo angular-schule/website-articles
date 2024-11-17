@@ -3,7 +3,7 @@ title: 'Angular 19: Mastering effect and afterRenderEffect'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2024-11-14
-lastModified: 2024-11-14
+lastModified: 2024-11-17
 keywords:
   - Angular
   - JavaScript
@@ -240,7 +240,7 @@ Before we start, here are some important facts to know about the effects created
 * **Post-Render Execution:** These effects run when it's safe to make changes to the DOM. ([source: keynote slides from ng-poland 2024](https://docs.google.com/presentation/d/1puZmyZ-dgnt6_b0nOBaDMpyf_FmQld1h8yAmWxjA6gk/edit?usp=sharing))
 * **Phased Execution:** These effects can be registered for specific phases of the render cycle. 
   The Angular team recommends following these phases for optimal performance.
-* **Signal Integration:** These effects work seamlessly with Angular's signal reactivity system,  and signals can be set during the phases.
+* **Signal Integration:** These effects work seamlessly with Angular's signal reactivity system, and signals can be set during the phases.
 * **Selective Execution:** These effects run at least once but only rerun when marked "dirty" due to signal dependencies. If no signal changes, the effect won't trigger again.
 * **No SSR:** These effects execute only in browser environments, not on the server.
 
@@ -259,7 +259,7 @@ afterRenderEffect({
   // Execute DOM write operations.
   write: (signal1: firstAvailableSignal<[E]>, onCleanup: EffectCleanupRegisterFn) => W,
 
-  //  Allows for combined reads and writes but should be used sparingly!
+  // Allows for combined reads and writes but should be used sparingly!
   mixedReadWrite: (signal2: firstAvailableSignal<[W, E]>, onCleanup: EffectCleanupRegisterFn) => M,
 
   // Execute DOM reads after writes are completed.
@@ -414,7 +414,7 @@ export class ResizableComponent {
 In our setup, an interval updates the `extraHeight` signal every 4 seconds.
 By updating `extraHeight`, we create a "dirty" state that restarts the `afterRenderEffect()` phases, which checks and adjusts the height of the `<textarea>` as needed:
 
-**Explanation of the Phases**  
+**Explanation of the Phases**
 
 In this example, an interval updates `extraHeight` every 4 seconds, creating a new round of execution across the phases. 
 Here's a breakdown of each effect:
@@ -509,9 +509,9 @@ The first link leads to the source code on GitHub, where you can download it.
 The second link opens a deployed version of the application for you to try out.
 Last but not least, the third link provides an interactive demo on StackBlitz, where you can edit the source code and see the results in real time.
 
-> **[1️⃣ Source on GitHub: demo-effect-and-afterRenderEffect](https://github.com/angular-schule/demo-effect-and-afterRenderEffect)**  
-> **[2️⃣ Deployed application](https://angular-schule.github.io/demo-effect-and-afterRenderEffect/)**  
-> **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-effect-and-afterRenderEffect)**  
+> **[1️⃣ Source on GitHub: demo-effect-and-afterRenderEffect](https://github.com/angular-schule/demo-effect-and-afterRenderEffect)**<br>
+> **[2️⃣ Deployed application](https://angular-schule.github.io/demo-effect-and-afterRenderEffect/)**<br>
+> **[3️⃣ StackBlitz Demo](https://stackblitz.com/github/angular-schule/demo-effect-and-afterRenderEffect)**
 
 
 ## Conclusion
