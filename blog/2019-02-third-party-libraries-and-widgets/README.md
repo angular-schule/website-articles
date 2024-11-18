@@ -9,7 +9,7 @@ keywords:
   - library
   - libraries
 language: en
-thumbnail: pixabay-books-1655783.jpg
+header: pixabay-books-1655783.jpg
 ---
 
 **For an upcoming workshop we were asked how to integrate third-party libraries into an Angular application.

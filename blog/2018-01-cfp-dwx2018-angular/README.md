@@ -8,7 +8,7 @@ keywords:
   - DWX
   - CFP
 language: de
-thumbnail: dwx2018-header.jpg
+header: dwx2018-header.jpg
 ---
 
 In meiner Rolle als [Track-Chair](https://www.developer-week.de/adboard/) für den Themenbereich __Angular__ wurde ich mehrfach gefragt, nach welchen Kriterien ich die Auswahl treffen werde.

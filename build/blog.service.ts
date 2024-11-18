@@ -1,4 +1,5 @@
 import * as emoji from 'node-emoji'
+import sizeOf from 'image-size';
 import { readdir, readFile } from 'fs/promises';
 
 import { JekyllMarkdownParser } from './jekyll-markdown-parser';
@@ -62,10 +63,12 @@ export class BlogService {
 
     const meta = parsedJekyllMarkdown.parsedYaml || {};
 
-    if (meta.thumbnail &&
-      !meta.thumbnail.startsWith('http') &&
-      !meta.thumbnail.startsWith('//')) {
-      meta.thumbnail = this.config.markdownBaseUrl + folder + '/' + meta.thumbnail;
+
+    if (meta.header) {
+      const url = meta.header;
+      const relativePath = this.config.blogPostsFolder + '/' + folder + '/' + meta.header;
+      const { width, height } = this.getImageDimensions(relativePath);
+      meta.header = { url, width, height };
     }
 
     return {
@@ -73,6 +76,11 @@ export class BlogService {
       html: emoji.emojify(parsedJekyllMarkdown.html),
       meta: meta
     } as BlogEntry;
+  }
+
+  private getImageDimensions(path: string) {
+    const { width, height } = sizeOf(path);
+    return { width, height };
   }
 }
 

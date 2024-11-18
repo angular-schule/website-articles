@@ -15,7 +15,7 @@ keywords:
   - NgRx Entities
   - Memoization
 language: en
-thumbnail: data-views-header.jpg
+header: data-views-header.jpg
 
 ---
 

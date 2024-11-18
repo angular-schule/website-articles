@@ -7,7 +7,7 @@ keywords:
   - Angular
   - VSCode
 language: de
-thumbnail: angular-shield-overflow.png
+header: angular-shield-overflow.png
 ---
 
 Gut vorbereitet in den Workshop:  

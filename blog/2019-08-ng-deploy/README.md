@@ -10,7 +10,7 @@ keywords:
   - ng deploy
   - ng-deploy
 language: en
-thumbnail: space-shuttle.jpg
+header: space-shuttle.jpg
 hidden: false
 ---
 

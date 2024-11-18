@@ -10,8 +10,8 @@ keywords:
   - DateValueAccessor
   - DATE_VALUE_ACCESSOR
 language: en
-thumbnail: img/screenshot.png
-darken-thumbnail: true
+header: img/screenshot.png
+darken-header: true
 ---
 
 ## The problem

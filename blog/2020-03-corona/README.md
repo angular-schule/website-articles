@@ -9,7 +9,7 @@ keywords:
   - Remote
   - Online
 language: de
-thumbnail: homeoffice_angular.jpg
+header: homeoffice_angular.jpg
 ---
 
 In diesen Tagen überschlagen sich die Ereignisse in Europa und der Welt rund um das Thema Coronavirus (COVID-19).  

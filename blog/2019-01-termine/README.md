@@ -7,7 +7,7 @@ last-change: 2019-01-03
 keywords:
   - Angular
 language: de
-thumbnail: banner.jpg
+header: banner.jpg
 sticky: false
 ---
 

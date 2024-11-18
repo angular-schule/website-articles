@@ -8,7 +8,7 @@ keywords:
   - Array
   - TypeScript
 language: en
-thumbnail: glass-cube-and-sphere-1423317.jpg
+header: glass-cube-and-sphere-1423317.jpg
 ---
 
 ## Without any framework

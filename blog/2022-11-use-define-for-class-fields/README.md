@@ -13,7 +13,7 @@ keywords:
   - Class Properties
   - useDefineForClassFields
 language: en
-thumbnail: usedefineforclassfields.jpg
+header: usedefineforclassfields.jpg
 sticky: false
 ---
 

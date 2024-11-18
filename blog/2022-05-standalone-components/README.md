@@ -13,7 +13,7 @@ keywords:
   - Standalone Pipes
   - Standalone Directives
 language: de
-thumbnail: ./standalone.jpg
+header: ./standalone.jpg
 ---
 
 Das wohl am heißesten diskutierte aktuelle Feature von Angular 14 sind die *Standalone Components*.

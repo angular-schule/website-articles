@@ -10,7 +10,7 @@ keywords:
   - Observable
   - Car
 language: en
-thumbnail: rxjs-turnsignal.jpg
+header: rxjs-turnsignal.jpg
 ---
 
 

@@ -10,7 +10,7 @@ keywords:
   - Reactive Forms
   - Typed Forms
 language: de
-thumbnail: typedforms.jpg
+header: typedforms.jpg
 ---
 
 Mit Version 14 von Angular erscheint ein lang erwartetes Feature: *stark typisierte Formulare!*

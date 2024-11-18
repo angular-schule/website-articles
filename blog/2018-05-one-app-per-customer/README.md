@@ -8,7 +8,7 @@ keywords:
   - NgModule
   - Modules
 language: en
-thumbnail: 100-apps.png
+header: 100-apps.png
 ---
 
 **In this article, I will discuss some ideas how to produce individual Angular apps.

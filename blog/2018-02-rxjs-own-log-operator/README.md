@@ -10,7 +10,7 @@ keywords:
   - Observable
   - Angular
 language: en
-thumbnail: birds-meeting-1309186.jpg
+header: birds-meeting-1309186.jpg
 ---
 
 

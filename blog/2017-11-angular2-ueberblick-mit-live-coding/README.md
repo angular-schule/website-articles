@@ -7,7 +7,7 @@ keywords:
   - Angular
   - Angular2
 language: de
-thumbnail: teaser.jpg
+header: teaser.jpg
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/U9crt6__AVA?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen title="YouTube-Video"></iframe></div>

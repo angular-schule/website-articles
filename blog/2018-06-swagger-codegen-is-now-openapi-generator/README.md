@@ -8,7 +8,7 @@ keywords:
   - NgModule
   - Modules
 language: en
-thumbnail: logo_header.png
+header: logo_header.png
 ---
 
 **[William Cheng](https://github.com/wing328), top contributor to Swagger Codegen,

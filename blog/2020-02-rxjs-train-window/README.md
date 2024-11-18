@@ -9,7 +9,7 @@ keywords:
   - Reactive Programming
   - Observable
 language: en
-thumbnail: rxjs-train.jpg
+header: rxjs-train.jpg
 
 ---
 

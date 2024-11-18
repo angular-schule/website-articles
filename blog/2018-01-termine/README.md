@@ -7,7 +7,7 @@ last-change: 2018-06-02
 keywords:
   - Angular
 language: de
-thumbnail: banner.jpg
+header: banner.jpg
 ---
 
 Als Trainer der Angular.Schule veranstalten wir regelmäßig Schulungen zu Angular.  

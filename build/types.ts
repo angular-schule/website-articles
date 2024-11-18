@@ -15,8 +15,12 @@ export interface BlogEntryMeta {
   'last-change'?: Date | string; // Date on backend, ISO-formated string on client, foo!
   keywords?: string[];
   language: string;
-  thumbnail: string;
-  'darken-thumbnail': boolean;
+  header: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  'darken-header': boolean;
   category: string; // schule, buch, general
   sticky?: boolean;
 }
@@ -44,6 +48,10 @@ export interface BlogEntryLight {
     twitter2?: string;
 
     published: Date | string;
-    thumbnail: string
+    header: {
+      url: string;
+      width: number;
+      height: number;
+    };
   };
 }

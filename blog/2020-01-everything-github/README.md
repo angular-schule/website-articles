@@ -22,7 +22,7 @@ keywords:
   - CI
   - Build Pipeline
 language: en
-thumbnail: everything-github.png
+header: everything-github.png
 ---
 
 **In this article we want to use several tools from the GitHub universe to launch a website with Angular.

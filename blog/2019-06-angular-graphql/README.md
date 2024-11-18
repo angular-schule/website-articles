@@ -10,7 +10,7 @@ keywords:
   - GraphQL
   - GraphQL-codegen
 language: de
-thumbnail: banner-graphql.png
+header: banner-graphql.png
 ---
 
 Im Juni 2019 halten einen neuen Talk auf den beiden Konferenzen Developer Week und enterJS. Wir stellen Ihnen GraphQL und Angular vor.

@@ -4,7 +4,7 @@ author: Angular.Schule Team
 mail: team@angular.schule
 published: 2020-05-08
 language: de
-thumbnail: datateam.png
+header: datateam.png
 ---
 
 Die Firma [DATA-team](https://www.data-team.de) aus Leipzig hat sich auf Softwareentwicklung für Mahnwesen und Vollstreckung spezialisiert. Im Februar 2020 hat das sympathische Entwicklerteam zusammen mit der Angular.Schule einen soliden Start in Angular gemacht. Im Gespräch heute ist Marcel Jänicke, der die 4-tägige Inhouse-Schulung bei DATA-team organisiert hat.

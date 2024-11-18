@@ -13,7 +13,7 @@ keywords:
   - afterRenderEffect
   - Angular 19
 language: en
-thumbnail: effect.jpg
+header: effect.jpg
 sticky: false
 ---
 

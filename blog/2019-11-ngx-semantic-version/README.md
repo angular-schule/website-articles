@@ -18,7 +18,7 @@ keywords:
   - Conventional Commits
   - Conventional Changelog
 language: en
-thumbnail: ngx-semantic-version-header.jpg
+header: ngx-semantic-version-header.jpg
 ---
 
 **In this article I will introduce the new tool `ngx-semantic-version`.

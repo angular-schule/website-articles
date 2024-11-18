@@ -10,7 +10,7 @@ keywords:
   - rekursiv
   - Rekursion
 language: de
-thumbnail: marbles.png
+header: marbles.png
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/78bfWXlNI7s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube-Video"></iframe></div>

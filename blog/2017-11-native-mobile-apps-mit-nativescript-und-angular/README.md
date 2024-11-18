@@ -7,7 +7,7 @@ keywords:
   - Angular
   - NativeScript
 language: de
-thumbnail: teaser.jpg
+header: teaser.jpg
 ---
 
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/pFId3_cs2_Q?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen title="YouTube-Video"></iframe></div>

@@ -35,7 +35,7 @@ export function makeLightBlogList(fullList: BlogEntry[]): BlogEntryLight[] {
           author: entry.meta.author,
           mail: entry.meta.mail,
           published: entry.meta.published,
-          thumbnail: entry.meta.thumbnail,
+          header: entry.meta.header,
         },
       };
 

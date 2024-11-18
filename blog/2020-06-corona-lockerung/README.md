@@ -9,7 +9,7 @@ keywords:
   - Remote
   - Online
 language: de
-thumbnail: img_maske.jpg
+header: img_maske.jpg
 ---
 
 **Update Januar 2021:**  

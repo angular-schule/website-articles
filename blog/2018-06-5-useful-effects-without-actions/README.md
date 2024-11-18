@@ -13,7 +13,7 @@ keywords:
   - Observables
   - Redux
 language: en
-thumbnail: canyonlands.jpg
+header: canyonlands.jpg
 ---
 
 **In this article we will discuss how we can leverage the power of Effects in NgRx. We will use observable streams other than the usual action stream to build some powerful and neat effects.**

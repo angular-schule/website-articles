@@ -8,7 +8,7 @@ keywords:
   - Codegen
   - TypeScript
 language: en
-thumbnail: swagger-banner.png
+header: swagger-banner.png
 ---
 
 **In this article, we will take a look at swagger codegen. It will save you a ton of work and pain by generating HTTP services automatically from your swagger API description.**
