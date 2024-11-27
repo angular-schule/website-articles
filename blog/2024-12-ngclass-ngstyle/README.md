@@ -11,16 +11,18 @@ keywords:
   - ngClass
   - ngStyle
   - Deprecation
+  - Property Binding
 language: de
 header: ngclass.jpg
 ---
 
-Voraussichtlich in der Version 19.1 von Angular werden die Direktiven `ngClass` und `ngStyle` als deprecated markiert (siehe [PR #58860](https://github.com/angular/angular/pull/58860)).
+Voraussichtlich in der Version 19.1 von Angular werden die Direktiven `ngClass` und `ngStyle` als *deprecated* markiert.
 In diesem Blogpost erläutern wir die Hintergründe und die Migration.
 
 ## tl;dr
 
-Die Direktiven `ngClass` und `ngStyle` können in der Regel nahtlos mit Property Bindings auf die nativen Propertys ersetzt werden:
+Die Direktiven `ngClass` und `ngStyle` werden als *deprecated*  markiert, siehe [Pull Request #58860](https://github.com/angular/angular/pull/58860).
+Sie können in der Regel nahtlos mit Property Bindings auf die nativen Propertys `class` und `style` ersetzt werden:
 
 ```html
 <!-- VORHER -->
@@ -40,6 +42,7 @@ Die Direktiven `ngClass` und `ngStyle` können in der Regel nahtlos mit Property
 
 Angular bietet seit jeher die beiden Attributdirektiven `ngClass` und `ngStyle` an.
 Damit können wir CSS-Klassen bzw. CSS-Stile auf ein DOM-Element im Template anwenden.
+
 Die Attribute `class` und `style` ermöglichen dies in HTML grundsätzlich mit *statischen* Werten:
 
 ```html
@@ -59,11 +62,11 @@ Sollen CSS-Klassen und Stile dynamisch angewendet werden, z. B. aus Propertys de
 Diese Direktiven werden mit Angular 19.1 als deprecated markiert und in einer späteren Version entfernt.
 Was bedeutet das für die Templates unserer Angular-Anwendungen?
 
-## Lösung: Property Bindings mit `[class]` und `[style]`
+## Die Lösung: Property Bindings mit `[class]` und `[style]`
 
 Mit Property Bindings können wir grundsätzlich auch alle nativen Propertys von DOM-Elementen beschreiben, darunter die Propertys `class` und `style`.
 Diese Schreibweise ist schon immer möglich und ist in einer Sonderform als *Class Binding* bzw. *Style Binding* bekannt.
-Damit können wir einzelne Klassen abhängig von einer Bedingung anwenden und Werte für CSS-Propertys direkt schreiben:
+Damit können wir einzelne Klassen abhängig von einer Bedingung anwenden und Werte für CSS-Propertys schreiben:
 
 ```html
 <p [style.font-size]="myFontSize"></p>
@@ -82,24 +85,24 @@ Dabei funktionieren verschiedene Schreibweisen, die bisher auch mit `ngClass` un
 <div [class]="{ alert: true, danger: isError(), success: !isError() }"></div>
 ```
 
-In den meisten Fällen können die Direktiven `ngClass` und `ngStyle` also nahtlos gegen Property Bindings mit den Propertys `class` und `style` ersetzt werden.
+In den meisten Fällen können die Direktiven `ngClass` und `ngStyle` also nahtlos durch Property Bindings mit `class` und `style` ersetzt werden.
 Diese Migration ist mithilfe von *Suchen & Ersetzen* im Editor unkompliziert möglich.
-Außerdem wird Angular vermutlich ein Migrationsskript anbieten, um die Templates umzustellen.
+Außerdem wird Angular wahrscheinlich ein Migrationsskript anbieten, um die Templates umzustellen.
 Bitte vergessen Sie nicht, auch die Imports der Direktiven in der Komponentenklasse zu entfernen.
 
 ## Warum?
 
 Da mit den nativen Mitteln von Browser und Angular alle notwendigen Bindings erstellt werden können, ist es nicht mehr zwingend notwendig, die Direktiven zu verwenden.
-Zusätzliche Bausteine erschweren aber nicht nur, Angular zu lernen, sondern: Die Größe des ausgelieferten JavaScript-Bundles wächst mit jeder zusätzlichen Direktive.
+Zusätzliche Bausteine erschweren es nicht nur, Angular zu lernen, sondern: Die Größe des ausgelieferten JavaScript-Bundles wächst mit jeder zusätzlichen Direktive.
 
-Wir haben die Templates dieser Website migriert und auf `ngClass` und `ngStyle` verzichtet. Die Ersparnis bei der Bundle-Größe betrug in diesem Szenario etwa 5 KB.
+Wir haben die Templates unserer Website migriert und auf `ngClass` und `ngStyle` verzichtet. Die Ersparnis bei der Bundle-Größe betrug in diesem Szenario etwa 5 KB.
 
 ## Limitationen
 
 Obwohl `[class]` und `[style]` ein direkter Ersatz für die Direktiven sind, funktionieren einige wenige Details anders:
 
 - Es kann kein `Set` übergeben werden. Es wird empfohlen, stattdessen ein Array zu verwenden.
-- In der Objektschreibweise konnte ein Schlüssel auch mehrere Klassen oder CSS-Propertys beinhalten: `[ngClass]="{ 'foo bar': isFoo() }"`. Diese Schreibweise ist mit dem nativen Binding nicht mehr möglich. Es wird empfohlen, einzelne Objektschlüssel zu verwenden.
+- In der Objektschreibweise konnte ein Schlüssel auch mehrere Klassen oder CSS-Propertys beinhalten: `[ngClass]="{ 'foo bar': isFoo() }"`. Diese Schreibweise ist mit dem nativen Binding nicht mehr möglich. Es wird empfohlen, die Klassen einzeln aufzuführen: `[class]="{ foo: isFoo(), bar: isFoo() }"`
 
 
 ## Fazit
