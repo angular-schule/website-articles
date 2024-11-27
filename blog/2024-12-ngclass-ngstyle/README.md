@@ -92,7 +92,7 @@ Bitte vergessen Sie nicht, auch die Imports der Direktiven in der Komponentenkla
 Da mit den nativen Mitteln von Browser und Angular alle notwendigen Bindings erstellt werden können, ist es nicht mehr zwingend notwendig, die Direktiven zu verwenden.
 Zusätzliche Bausteine erschweren aber nicht nur, Angular zu lernen, sondern: Die Größe des ausgelieferten JavaScript-Bundles wächst mit jeder zusätzlichen Direktive.
 
-Wir haben die Templates dieser Website migriert und auf `ngClass` und `ngStyle` verzichtet. Die Ersparnis in der Bundle-Größe betrug in diesem Szenario etwa 5 KB.
+Wir haben die Templates dieser Website migriert und auf `ngClass` und `ngStyle` verzichtet. Die Ersparnis bei der Bundle-Größe betrug in diesem Szenario etwa 5 KB.
 
 ## Limitationen
 
