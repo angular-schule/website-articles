@@ -61,7 +61,7 @@ Was bedeutet das für die Templates unserer Angular-Anwendungen?
 
 ## Lösung: Property Bindings mit `[class]` und `[style]`
 
-Mit Property Bindings können wir grundsätzlich auch alle nativen Propertys von DOM-Elementen beschrieben, darunter die Propertys `class` und `style`.
+Mit Property Bindings können wir grundsätzlich auch alle nativen Propertys von DOM-Elementen beschreiben, darunter die Propertys `class` und `style`.
 Diese Schreibweise ist schon immer möglich und ist in einer Sonderform als *Class Binding* bzw. *Style Binding* bekannt.
 Damit können wir einzelne Klassen abhängig von einer Bedingung anwenden und Werte für CSS-Propertys direkt schreiben:
 
