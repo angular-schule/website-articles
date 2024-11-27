@@ -2,8 +2,8 @@
 title: 'Goodbye, ngClass und ngStyle!'
 author: Ferdinand Malcher
 mail: ferdinand@malcher.media
-published: 2024-12-XX
-lastModified: 2024-12-XX
+published: 2024-11-27
+lastModified: 2024-11-27
 keywords:
   - Angular
   - Attributdirektiven
@@ -111,3 +111,7 @@ Die Direktiven `ngClass` und `ngStyle` hatten lange ihre Berechtigung und waren 
 Inzwischen unterstützt Angular fast alle Schreibweisen aber auch mit Property Bindings auf die nativen DOM-Propertys `class` und `style`.
 Wir empfehlen Ihnen also, auf die Direktiven zu verzichten und Property Bindings zu verwenden.
 Wir begrüßen diesen Schritt sehr, die API-Oberfläche des Frameworks weiter zu verkleinern und unnötige Teile zu entfernen.
+
+<hr>
+
+<small>**Titelbild:** generiert mit Adobe Firefly</small>
