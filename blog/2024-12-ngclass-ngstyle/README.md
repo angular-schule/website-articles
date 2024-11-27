@@ -71,7 +71,7 @@ Damit können wir einzelne Klassen abhängig von einer Bedingung anwenden und We
 <div class="alert" [class.danger]="isError()" [class.success]="!isError()"></div>
 ```
 
-Auch ohne diese Sonderform können wir `class` und `style` direkt mithilfe von Property Bindings beschreiben.
+Auch ohne diese Sonderform können wir `class` und `style` direkt mithilfe von Property Bindings abbilden.
 Dabei funktionieren verschiedene Schreibweisen, die bisher auch mit `ngClass` und `ngStyle` möglich warebn: als String, als Array von Strings oder als Objekt für Entscheidungen.
 
 ```html
