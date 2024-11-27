@@ -15,7 +15,7 @@ language: de
 header: ngclass.jpg
 ---
 
-Mit Angular 19.1 werden die Direktiven `ngClass` und `ngStyle` als deprecated markiert.
+Voraussichtlich in der Version 19.1 von Angular werden die Direktiven `ngClass` und `ngStyle` als deprecated markiert (siehe [PR #58860](https://github.com/angular/angular/pull/58860)).
 In diesem Blogpost erläutern wir die Hintergründe und die Migration.
 
 ## tl;dr
