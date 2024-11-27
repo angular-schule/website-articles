@@ -112,6 +112,10 @@ Inzwischen unterstützt Angular fast alle Schreibweisen aber auch mit Property B
 Wir empfehlen Ihnen also, auf die Direktiven zu verzichten und Property Bindings zu verwenden.
 Wir begrüßen diesen Schritt sehr, die API-Oberfläche des Frameworks weiter zu verkleinern und unnötige Teile zu entfernen.
 
+Laut dem Pull Request wird es noch eine Migration durch die Angular CLI geben, um Templates dort anzupassen, wo es automatisch möglich ist.
+Es ist also nicht notwendig, die bestehenden Direktiven sofort manuell zu ändern.
+Gleichzeitig empfehlen wir aber, bei neuem Code sofort auf die moderne Schreibweise umzusteigen.
+
 <hr>
 
 <small>**Titelbild:** generiert mit Adobe Firefly</small>
