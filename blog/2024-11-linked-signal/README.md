@@ -39,7 +39,7 @@ Here's a look at what the Linked Signal is, how it works, and some common use ca
 
 ## What is a Linked Signal?
 
-A Linked Signal is an experimental feature that Angular 19 introduces to help you manage state that automatically syncs with other signals. 
+A Linked Signal is a new feature that Angular 19 introduces to help you manage state that automatically syncs with other signals.
 In simple terms, we receive a writable signal that resets itself when the value of its source signal changes.
 A Linked Signal can be created by using the [`linkedSignal()` factory function](https://next.angular.dev/api/core/linkedSignal).
 
