@@ -290,4 +290,4 @@ Ferdinand, Danny, and Johannes**
 
 <hr>
 
-<small>**Cover photo:** Morning mood in the Anklam wetland. Photo by Ferdinand Malcher</small>
+<small>**Cover photo:** Morning mood at Anklamer Stadtbruch wetland. Photo by Ferdinand Malcher</small>
