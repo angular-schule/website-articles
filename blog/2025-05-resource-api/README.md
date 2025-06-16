@@ -2,8 +2,8 @@
 title: 'Reactive Angular: Loading Data with the Resource API'
 author: Ferdinand Malcher
 mail: ferdinand@malcher.media
-published: 2025-05-01
-lastModified: 2025-05-01
+published: 2025-05-13
+lastModified: 2025-05-13
 keywords:
   - Resource API
   - Promise
@@ -18,14 +18,14 @@ header: header-resource-api.jpg
 An interesting new feature in Angular is the *Resource API*. It allows us to intuitively load data and process it in components.
 In this blog post, we introduce the ideas behind this new interface.
 
-A Resource represents a data set that is loaded asynchronously. This usually involves HTTP requests to fetch data from a server. However, the Resource goes a step further than just executing a simple HTTP request: The data can be reloaded at any time or even manually overwritten. Additionally, the Resource independently provides information about the loading state. All information and data are exposed as signals, ensuring the current value is always available when changes occur.
+A Resource represents a data set that is loaded asynchronously. This usually involves HTTP requests to fetch data from a server. However, Resource goes a step further than just executing a simple HTTP request: The data can be reloaded at any time or even manually overwritten. Additionally, Resource independently provides information about the loading state. All information and data are exposed as signals, ensuring the current value is always available when changes occur.
 
 ## What happened before: Example without Resource
 
-To start, let’s consider a scenario implemented in the classic way, without the new Resource API.
+To start, let's consider a scenario implemented in the classic way, without the new Resource API.
 
 We want to display a list of books in a component, which will be loaded via HTTP from a server.
-The corresponding `BookStoreService` already exists and is injected via dependency injection. The `getAll()` method in the service uses Angular’s `HttpClient` and returns an Observable.
+The corresponding `BookStoreService` already exists and is injected via dependency injection. The `getAll()` method in the service uses Angular's `HttpClient` and returns an Observable.
 
 In the component, we need a `books` property to cache the data for display in the template.
 The property is initialized as a signal, following modern practices.
@@ -43,24 +43,24 @@ export class BookListComponent {
     });
   }
 }
-````
+```
 
-However, it usually doesn't stop with this simple scenario-additional requirements arise:
+However, it usually doesn't stop with this simple scenario as additional requirements arise:
 
-- **The book list should be reloadable on button click.** This requires creating a new method (e.g., `reloadList()`) to restart the HTTP request, subscribe again, etc. – duplicating the constructor code.
+- **The book list should be reloadable on button click.** This requires creating a new method (e.g., `reloadList()`) to restart the HTTP request, subscribe again, etc. This duplicates the constructor code.
 - **No parallel requests should be made.** If data is to be reloaded while a previous request is still running, it should either be canceled or the new request ignored.
 - **A loading indicator should be shown.** We could add a `loading` property and toggle it to `true` or `false` at the appropriate points.
-- **Data should be modifiable/overwritable locally.** We could set a new value on the signal – but afterward, we wouldn’t know whether the value was set locally or loaded from the server.
+- **Data should be modifiable/overwritable locally.** We could set a new value on the signal. But afterwards, we wouldn't know whether the value was set locally or loaded from the server.
 - **The subscription should end when the component is destroyed.** For this we can use [`takeUntilDestroyed()`](https://angular.dev/api/core/rxjs-interop/takeUntilDestroyed) or another RxJS-based solution.
 
-All these aspects can of course be implemented with moderate effort – but we often need to repeat similar steps to achieve our goal.
+All these aspects can of course be implemented with moderate effor, but we often need to repeat similar steps to achieve our goal.
 Instead of using imperative style as shown, we could also use RxJS. However, the core issue remains: it's relatively tedious to implement recurring everyday tasks.
 
 The new Resource API aims to fill this gap!
 
 ## The new Resource API
 
-A Resource represents a data set loaded via a loader function.
+A Resource represents data loaded via a loader function.
 We initialize it using the `resource()` function.
 The provided loader is a function that performs the asynchronous data loading.
 This loader runs immediately when the Resource is initialized.
@@ -79,8 +79,8 @@ myResource = resource({
 });
 ```
 
-Interestingly, the loader must return a Promise. While this native browser model is valid, Angular has traditionally used Observables and RxJS for asynchronous operations.
-Angular breaks from tradition here by favoring the browser’s native construct.
+Interestingly, the loader must return a Promise. Though there is nothing wrong with this native browser model, Angular has traditionally used Observables and RxJS for asynchronous operations.
+Angular breaks from tradition here by favoring the browser's native construct.
 
 To perform an HTTP request using a Resource, we have three options:
 
@@ -111,9 +111,9 @@ booksResource = resource({
 });
 ```
 
-### Option 2: Observables and Angular’s `HttpClient`
+### Option 2: Observables and Angular's `HttpClient`
 
-We use Angular’s `HttpClient` as usual, so the `getAll()` method returns an Observable.
+We use Angular's `HttpClient` as usual, so the `getAll()` method returns an Observable.
 To define the loader, we must convert the Observable to a Promise using `firstValueFrom()`.
 
 ```ts
@@ -153,7 +153,7 @@ We can display the loaded books in the template like this:
 
 ## Status of the Resource
 
-Using the `status` signal, we can evaluate the state of the Resource, e.g., to show a loading indicator. All `status` values are fields from the [enum `ResourceStatus`](https://next.angular.dev/api/core/ResourceStatus):
+Using the `status` signal, we can evaluate the state of the Resource, e.g., to show a loading indicator. All `status` values are fields from the [`ResourceStatus` enum](https://angular.dev/api/core/ResourceStatus):
 
 | Status from `ResourceStatus` | Description                                                             |
 | ---------------------------- | ----------------------------------------------------------------------- |
@@ -193,7 +193,7 @@ Using the built-in `isLoading` property solves this quickly: this signal returns
 
 ## Reloading the Resource
 
-A Resource provides the `reload()` method.
+A Resource provides a `reload()` method.
 When called, the loader function is executed again internally and the data is reloaded.
 The result is then again available through the `value` signal.
 
@@ -214,7 +214,7 @@ export class BookListComponent {
 
 The Resource ensures that only one request is executed at a time.
 Reloading is only possible once the previous load has completed.
-You can see this behavior clearly in the [Angular source code](https://github.com/angular/angular/blob/19.0.0-next.11/packages/core/src/resource/resource.ts#L170-L176).
+You can see this behavior clearly in the [Angular source code](https://github.com/angular/angular/blob/20.0.0/packages/core/src/resource/resource.ts#L294-L296).
 
 
 ## Overwriting the Value Locally
@@ -222,7 +222,7 @@ You can see this behavior clearly in the [Angular source code](https://github.co
 The Resource allows the value to be overwritten locally.
 The `value` signal is a `WritableSignal` and offers the familiar `set()` and `update()` methods.
 
-We want to sort the book list locally, for example, by rating on button click.
+We want to sort the book list locally on button click, sorted by rating.
 In the method, we can sort the list and directly overwrite the `value` signal.
 
 
@@ -244,18 +244,18 @@ export class BookListComponent {
 
 We want to point out two things in this code:
 
-- The `value` signal returns type `T | undefined`, in our case `Book[] | undefined`. If the data hasn’t been loaded yet, the value is `undefined`. Therefore, we need to check whether `currentBookList` exists. It would be desirable if we could pass an initial value to the Resource so that `undefined` could be avoided.
-- Instead of `Array.sort()`, we use the new method `Array.toSorted()`, which does not mutate the array and returns a sorted copy. This preserves immutability. `toSorted()` can only be used if the `lib` option in `tsconfig.json` includes at least `ES2023` – which is not the case in new Angular projects yet.
+- The `value` signal returns type `T | undefined`, in our case `Book[] | undefined`. If the data hasn't been loaded yet, the value is `undefined`. Therefore, we need to check whether `currentBookList` exists. We can also pass a default value through the `defaultValue` option to avoid this behavior.
+- Instead of `Array.sort()`, we use the new method `Array.toSorted()`, which does not mutate the array and returns a sorted copy. This preserves immutability. `toSorted()` can only be used if the `lib` option in `tsconfig.json` includes at least `ES2023`, which is not the case in new Angular projects yet.
 
 
 ## `request`: Loader with Parameter
 
 Our app should have a detail page that displays a single book.
 So the HTTP request must receive information about which book to load.
-When navigating to a different detail page, loading must restart – for another book.
+When navigating to a different detail page, loading must restart for another book.
 
 The loader must therefore be able to work with parameters.
-Let’s assume the component has an input property `isbn` through which the current ISBN is available.
+Let's assume the component has an input property `isbn` through which the current ISBN is available.
 
 In the loader, we could now use the signal `this.isbn` to pass the ISBN to the service:
 
@@ -271,7 +271,7 @@ export class BookDetailsComponent {
 }
 ```
 
-This code basically works – but only once! The loader function is *untracked*. This means it won’t automatically rerun when the signal values it depends on change (unlike with `effect()` or `computed()`).
+This code basically works – but only once! The loader function is *untracked*. This means it won't automatically rerun when the signal values it depends on change (unlike with `effect()` or `computed()`).
 
 To solve this, we can use the `request` property: Here we pass a signal. Whenever this signal changes its value, the loader will automatically run again.
 
@@ -312,7 +312,7 @@ export class BookDetailsComponent {
 
 ## `rxResource`: Resource with Observables
 
-In all previous examples, we implemented the loader function using Promises. The browser's Fetch API returns a Promise, and the RxJS function `firstValueFrom()` helped us create a Promise from the Observable returned by Angular’s `HttpClient`.
+In all previous examples, we implemented the loader function using Promises. The browser's Fetch API returns a Promise, and the RxJS function `firstValueFrom()` helped us create a Promise from the Observable returned by Angular's `HttpClient`.
 
 Even though Angular now uses signals in many places instead of Observables, reactive programming with RxJS still has its valid use cases.
 Angular therefore provides the `rxResource` function. It works just like `resource`, but the loader function returns an Observable instead.
@@ -366,7 +366,7 @@ export class BookDetailsComponent {
 }
 ```
 
-If we’re using Angular’s `HttpClient` and `firstValueFrom`, cancellation becomes very cumbersome – we would need to convert the `AbortSignal` into an Observable to use the `takeUntil` operator to stop the stream. In this case, we strongly recommend using `rxResource`.
+If we're using Angular's `HttpClient` and `firstValueFrom`, cancellation becomes very cumbersome – we would need to convert the `AbortSignal` into an Observable to use the `takeUntil` operator to stop the stream. In this case, we strongly recommend using `rxResource`.
 
 By the way, the Resource also ensures that an active request is stopped when the component is destroyed.
 
@@ -380,7 +380,7 @@ We welcome Angular's focus on addressing this common everyday problem. The solut
 
 Angular continues its journey toward embracing signals in the framework. The need to use RxJS and Observables for simple tasks is further reduced.
 
-It remains to be seen what role Angular’s `HttpClient` will play in the future. By promoting the use of Promises, Angular encourages HTTP communication via the native Fetch API. It would be desirable for `HttpClient` and Resource to work seamlessly together. One could imagine `HttpClient` directly returning a Resource, avoiding the intermediate step through an Observable or Promise.
+It remains to be seen what role Angular's `HttpClient` will play in the future. By promoting the use of Promises, Angular encourages HTTP communication via the native Fetch API. It would be desirable for `HttpClient` and Resource to work seamlessly together. One could imagine `HttpClient` directly returning a Resource, avoiding the intermediate step through an Observable or Promise.
 In our view, the new interface is a solid foundation-and we're excited to see what comes next!
 
 
