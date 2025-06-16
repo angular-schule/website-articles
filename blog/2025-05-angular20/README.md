@@ -91,7 +91,7 @@ The goal: Angular applications should contain less boilerplate, and we should th
 Instead of automatically generated constructs like `product-detail.component.ts`, we’re now expected to think: What is this class called? What does it do? How much does the name say on its own?
 We welcome this development, as it leads to shorter, more purposeful file and class names.
 
-A practical example: For routed components, we prefer the suffix `page`, such as `checkout-page.ts` (class name `CheckoutPage`), because it clearly indicates its purpose - without referring to technical details like `Component`.
+A practical example: For routed components, we prefer the suffix `page`, such as `checkout-page.ts` (class name `CheckoutPage`). It clearly indicates its purpose without referring to technical details like `Component`.
 A component that only displays content and contains no logic could be named `CheckoutView`, for example.
 
 If you want to keep the previous behavior, you can still specify a `type` when generating, which will result in a suffix.
