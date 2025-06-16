@@ -2,8 +2,8 @@
 title: 'Angular 20 is here!'
 author: Angular Book Team
 mail: team@angular-buch.com
-published: 2025-06-01
-lastModified: 2025-06-01
+published: 2025-06-16
+lastModified: 2025-06-16
 keywords:
   - Angular
   - Angular 20
