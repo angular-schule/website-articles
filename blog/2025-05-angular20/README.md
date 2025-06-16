@@ -233,7 +233,7 @@ You'll find more details and examples in our Signals series:
 
 ## httpResource: Load data with signals
 
-In October 2024, the new experimental Resource API was introduced. We covered it in detail in a [blog post](https://angular.schule/blog/2025-06-resource-api).
+In October 2024, the new experimental Resource API was introduced. We covered it in detail in a [blog post](https://angular.schule/blog/2025-05-resource-api).
 It connects the synchronous world of signals with asynchronously fetched data, e.g. via HTTP.
 The data is loaded asynchronously using a loader and provided via signals.
 
