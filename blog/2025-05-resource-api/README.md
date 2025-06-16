@@ -20,6 +20,10 @@ In this blog post, we introduce the ideas behind this new interface.
 
 A Resource represents a data set that is loaded asynchronously. This usually involves HTTP requests to fetch data from a server. However, Resource goes a step further than just executing a simple HTTP request: The data can be reloaded at any time or even manually overwritten. Additionally, Resource independently provides information about the loading state. All information and data are exposed as signals, ensuring the current value is always available when changes occur.
 
+
+> 🇩🇪 This article is available in German language here: [Neu in Angular 19: Daten laden mit der Resource API](https://angular-buch.com/blog/2024-10-resource-api)
+
+
 ## What happened before: Example without Resource
 
 To start, let's consider a scenario implemented in the classic way, without the new Resource API.
