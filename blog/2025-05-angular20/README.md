@@ -12,7 +12,6 @@ keywords:
   - Component Suffix
 language: en
 header: angular20.jpg
-sticky: true
 ---
 
 Everything new comes in May - or at least a new major version of Angular:
