@@ -142,7 +142,7 @@ booksResource = resource({
 The loader is executed immediately when the Resource object is initialized. The Resource processes the response and offers the following signals to work with the data:
 
 - `value`: loaded data, here `Book[]`
-- `status`: state of the Resource, type `ResourceStatus`, e.g., *Resolved* or *Loading*, see next section
+- `status`: state of the Resource, type `ResourceStatus`, e.g., `resolved` or `loading`, see next section
 - `error`: error
 
 We can display the loaded books in the template like this:
@@ -157,16 +157,16 @@ We can display the loaded books in the template like this:
 
 ## Status of the Resource
 
-Using the `status` signal, we can evaluate the state of the Resource, e.g., to show a loading indicator. All `status` values are fields from the [`ResourceStatus` enum](https://angular.dev/api/core/ResourceStatus):
+Using the `status` signal, we can evaluate the state of the Resource, e.g., to show a loading indicator. All `status` values are defined by the [`ResourceStatus` union type](https://angular.dev/api/core/ResourceStatus):
 
 | Status from `ResourceStatus` | Description                                                             |
 | ---------------------------- | ----------------------------------------------------------------------- |
-| `Idle`                       | No request is defined and nothing is loading. `value()` is `undefined`. |
-| `Error`                      | Loading failed. `value()` is `undefined`.                               |
-| `Loading`                    | The Resource is currently loading.                                      |
-| `Reloading`                  | The Resource is reloading after `reload()` was called.                  |
-| `Resolved`                   | Loading is complete.                                                    |
-| `Local`                      | The value was overwritten locally.                                      |
+| `idle`                       | No request is defined and nothing is loading. `value()` is `undefined`. |
+| `error`                      | Loading failed. `value()` is `undefined`.                               |
+| `loading`                    | The Resource is currently loading.                                      |
+| `reloading`                  | The Resource is reloading after `reload()` was called.                  |
+| `resolved`                   | Loading is complete.                                                    |
+| `local`                      | The value was overwritten locally.                                      |
 
 
 For a loading indicator, we could process the state in a computed signal and return a boolean if the Resource is currently loading:
@@ -175,7 +175,7 @@ For a loading indicator, we could process the state in a computed signal and ret
 import { resource, computed, ResourceStatus } from '@angular/core';
 // ...
 
-isLoading = computed(() => this.booksResource.status() === ResourceStatus.Loading);
+isLoading = computed(() => this.booksResource.status() === 'loading');
 ```
 
 ```html
@@ -185,7 +185,7 @@ isLoading = computed(() => this.booksResource.status() === ResourceStatus.Loadin
 ```
 
 To cover all cases, we also need to account for the `Reloading` state.
-Using the built-in `isLoading` property solves this quickly: this signal returns `true` if the Resource is in the `Loading` or `Reloading` state:
+Using the built-in `isLoading` property solves this quickly: this signal returns `true` if the Resource is in the `loading` or `reloading` state:
 
 ```html
 @if (booksResource.isLoading()) {
