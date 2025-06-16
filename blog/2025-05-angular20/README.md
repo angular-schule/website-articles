@@ -137,7 +137,7 @@ The setting can also be controlled with the new `zoneless` parameter, which can 
 
 ```bash
 ng new my-app --zoneless
-ng new my-app --nozoneless
+ng new my-app --no-zoneless
 ```
 
 
