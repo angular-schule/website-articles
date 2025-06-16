@@ -266,7 +266,7 @@ booksResource = httpResource<Book[]>(
 );
 ```
 
-Please note that a resource is solely meant for *retrieving* data from an API and exposing it with signals.
+Please note that a resource is only meant for *retrieving* data from an API and exposing it with signals.
 Write operations such as create, update, or delete cannot be handled with a resource.
 You must continue to use `HttpClient` directly for those.
 
