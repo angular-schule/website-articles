@@ -207,7 +207,7 @@ import { describe, beforeEach, it, expect } from 'vitest';
 
 Run the tests as usual using `ng test`.
 
-Vitest is largely compatible with the APIs of [Jest](https://jestjs.io/) and Karma - switching is definitely worth trying.
+Vitest is largely compatible with the APIs of [Jest](https://jestjs.io/) and Karma, so switching is definitely worth trying.
 Ideally, you'll need only minimal changes in your tests.
 
 One of the three experimental builders (Jest, Web Test Runner, Vitest) will likely become the new standard.
