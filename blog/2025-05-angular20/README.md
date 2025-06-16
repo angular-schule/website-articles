@@ -2,8 +2,8 @@
 title: 'Angular 20 is here!'
 author: Angular Book Team
 mail: team@angular-buch.com
-published: 2025-06-16
-lastModified: 2025-06-16
+published: 2025-05-30
+lastModified: 2025-05-30
 keywords:
   - Angular
   - Angular 20
@@ -20,7 +20,7 @@ On **May 28, 2025**, **Angular 20** was released! You can find the release infor
 For migrating to Angular 20, we recommend using the `ng update` command.
 Detailed information on the required steps can be found in the [Angular Update Guide](https://angular.dev/update-guide).
 
-
+> 🇩🇪 This article is available in German language here: [Angular 20 ist da!](https://angular-buch.com/blog/2025-05-angular20)
 
 
 ## Versions of TypeScript and Node.js
