@@ -88,7 +88,7 @@ export class BookCard {}
 ```
 
 The goal: Angular applications should contain less boilerplate, and we should think more deliberately about naming abstractions.
-Instead of automatically generated constructs like `product-detail.component.ts`, we’re now expected to think: What is this class called? What does it do? How much does the name say on its own?
+Instead of automatically generated constructs like `product-detail.component.ts`, we're now expected to think: What is this class called? What does it do? How much does the name say on its own?
 We welcome this development, as it leads to shorter, more purposeful file and class names.
 
 A practical example: For routed components, we prefer the suffix `page`, such as `checkout-page.ts` (class name `CheckoutPage`). It clearly indicates its purpose without referring to technical details like `Component`.
@@ -115,7 +115,7 @@ The interface is largely stable. However, short-term changes may still occur, so
 
 To activate zoneless change detection, use the `provideZonelessChangeDetection()` function.
 The word `experimental` has been removed from the function name.
-It’s also recommended to enable a global error handler that catches unhandled exceptions.
+It's also recommended to enable a global error handler that catches unhandled exceptions.
 
 ```ts
 // app.config.ts
@@ -148,7 +148,7 @@ With Angular 20, the old directives `ngIf`, `ngFor`, and `ngSwitch` are marked a
 They will likely be completely removed from the framework with Angular 22 (in one year).
 
 The background is the new built-in control flow introduced with Angular 17.
-These directives can be replaced by Angular’s built-in expressions: `@if`, `@for`, `@switch`, and `@let`.
+These directives can be replaced by Angular's built-in expressions: `@if`, `@for`, `@switch`, and `@let`.
 
 ```html
 <!-- with directive (deprecated) -->
@@ -159,7 +159,7 @@ These directives can be replaced by Angular’s built-in expressions: `@if`, `@f
 ```
 
 <!-- We covered the control flow syntax in detail in our [blog post on Angular 17](/blog/2023-11-angular17#neuer-control-flow-if-for-switch). -->
-The Angular CLI also provides a migration script, so switching to the new syntax shouldn’t be difficult:
+The Angular CLI also provides a migration script, so switching to the new syntax shouldn't be difficult:
 
 ```bash
 ng generate @angular/core:control-flow
@@ -173,10 +173,10 @@ Since this decision, the Angular team has been working on integrating alternativ
 Two years ago, experimental builders for [Jest and Web Test Runner](https://blog.angular.dev/moving-angular-cli-to-jest-and-web-test-runner-ef85ef69ceca) were released.
 With Angular 20, another experimental integration is added for [Vitest](https://vitest.dev):
 Vitest has already become a staple in other web frameworks based on the [Vite](https://vite.dev) bundler.
-Angular’s build process has already [used ESBuild with Vite since version 16](/blog/2023-05-angular16#esbuild).
+Angular's build process has already [used ESBuild with Vite since version 16](/blog/2023-05-angular16#esbuild).
 With this gradual switch, we can now also use Vitest for unit and integration tests.
 
-Which of the experimental test runners will become Angular’s new standard is not yet decided!
+Which of the experimental test runners will become Angular's new standard is not yet decided!
 All approaches are experimental and will be evaluated further in the coming months.
 
 To use Vitest with the Angular CLI, first add the required dependencies:
@@ -198,7 +198,7 @@ Then, adjust the testing configuration in the `angular.json` file:
 }
 ```
 
-In your tests, use Vitest’s functions by importing the following:
+In your tests, use Vitest's functions by importing the following:
 
 ```ts
 import { describe, beforeEach, it, expect } from 'vitest';
@@ -208,11 +208,11 @@ import { describe, beforeEach, it, expect } from 'vitest';
 Run the tests as usual using `ng test`.
 
 Vitest is largely compatible with the APIs of [Jest](https://jestjs.io/) and Karma - switching is definitely worth trying.
-Ideally, you’ll need only minimal changes in your tests.
+Ideally, you'll need only minimal changes in your tests.
 
 One of the three experimental builders (Jest, Web Test Runner, Vitest) will likely become the new standard.
 We welcome the move to rely on established standards outside the Angular ecosystem and to deprecate the custom Karma test runner.
-We’ll continue to keep you updated.
+We'll continue to keep you updated.
 
 
 ## Stable Signal APIs: `effect`, `linkedSignal`, and `toSignal`
@@ -226,7 +226,7 @@ These functions were previously experimental and are now part of the stable API 
 * `linkedSignal()` enables bidirectional binding between a signal and an external source - e.g. a component or a FormControl.
 * `toSignal()` converts observable data into a readable signal - ideal for integrating existing streams.
 
-You’ll find more details and examples in our Signals series:
+You'll find more details and examples in our Signals series:
 
 * [New in Angular 19: LinkedSignal for reactive state management (German language)](https://angular-buch.com/blog/2024-11-linked-signal)
 * [Angular 19: Mastering effect and afterRenderEffect](https://angular.schule/blog/2024-11-effect-afterrendereffect)
@@ -239,7 +239,7 @@ It connects the synchronous world of signals with asynchronously fetched data, e
 The data is loaded asynchronously using a loader and provided via signals.
 
 A few weeks ago, another variant of the Resource was introduced: `httpResource`.
-It uses Angular’s `HttpClient` under the hood to perform an HTTP request directly.
+It uses Angular's `HttpClient` under the hood to perform an HTTP request directly.
 You no longer need to write the request yourself - the resource handles it for you.
 
 ```ts
@@ -274,10 +274,10 @@ You must continue to use `HttpClient` directly for those.
 ## Miscellaneous
 
 You can always find all details about the updates in the changelogs for [Angular](https://github.com/angular/angular/blob/main/CHANGELOG.md) and the [Angular CLI](https://github.com/angular/angular-cli/blob/main/CHANGELOG.md).
-We’ve compiled a few interesting highlights here:
+We've compiled a few interesting highlights here:
 
 - **`provideServerRouting()` deprecated:** The function `provideServerRouting()` is deprecated. Instead, use `provideServerRendering()` with the `withRoutes()` feature. (see [commit](https://github.com/angular/angular-cli/commit/33b9de3eb1fa596a4d5a975d05275739f2f7b8ae))
-- **Chrome DevTools:** Integration of Angular into Chrome DevTools has significantly improved. The *Performance* tab now lets you analyze Angular’s change detection and other performance parameters.
+- **Chrome DevTools:** Integration of Angular into Chrome DevTools has significantly improved. The *Performance* tab now lets you analyze Angular's change detection and other performance parameters.
 - **Official mascot:** The Angular team wants to introduce an official mascot for the framework - and the community is invited to participate! Vote for your favorite or share your thoughts in the [RFC on GitHub](https://github.com/angular/angular/discussions/61733).
 
 <hr>
