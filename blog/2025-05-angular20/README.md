@@ -228,7 +228,7 @@ These functions were previously experimental and are now part of the stable API 
 
 You'll find more details and examples in our Signals series:
 
-* [New in Angular 19: LinkedSignal for reactive state management (German language)](https://angular-buch.com/blog/2024-11-linked-signal)
+* [Angular 19: Introducing LinkedSignal for Responsive Local State Management](https://angular.schule/blog/2024-11-linked-signal)
 * [Angular 19: Mastering effect and afterRenderEffect](https://angular.schule/blog/2024-11-effect-afterrendereffect)
 
 
