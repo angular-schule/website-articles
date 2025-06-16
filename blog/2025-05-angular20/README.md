@@ -289,6 +289,6 @@ Do you have questions about the new version or about our book? Reach out to us!
 **Best wishes from
 Ferdinand, Danny, and Johannes**
 
----
+<hr>
 
 <small>**Cover photo:** Morning mood in the Anklam wetland. Photo by Ferdinand Malcher</small>
