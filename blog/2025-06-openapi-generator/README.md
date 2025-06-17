@@ -207,16 +207,110 @@ Each option can be passed via `--additional-properties=...` or configured via an
 | `zonejsVersion`                  | Compatible version of `zone.js`. |
 
 
-Let me know if you want the full list exported to CSV or used in a config file template.
-
-
 In the next section, we’ll explore how to build and integrate this code into your Angular project.
 
 
+## Using the Generated Code
+
+To integrate the generated API client into your Angular application, simply register the client using `provideApi()` inside your `app.config.ts`. 
+This setup is fully compatible with Angular’s standalone application structure:
+
+```ts
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { provideApi } from './shared/book-monkey-api';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // [...]
+    provideHttpClient(),
+    provideApi()
+  ]
+};
+```
+
+Don't forget to include `provideHttpClient()`.
+It registers Angular's HttpClient for injection.
+This is required, because the generated client uses HttpClient internally for every request.
+
+> **IMPORTANT:** The `provideApi()` function is currently only available in the latest snapshot builds of OpenAPI Generator. 
+  It will become officially available with version **7.14.0**.
+
+<!-- see: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
+
+### Custom Base Path
+
+If your API lives under a different domain or base path, you can pass a custom string:
+
+```ts
+provideApi('https://api6.angular-buch.com')
+```
+
+This is very helpful if you have different domains or paths for different development stages.
+
+### Full Configuration
+
+You can also pass a full configuration object to set credentials or headers:
+
+```ts
+provideApi({
+  withCredentials: true,
+  username: 'admin',
+  password: 'secret'
+})
+```
+
+### Dynamic Configuration (via Factory)
+
+For dynamic configuration (e.g. based on an injected service), use Angular's `useFactory` syntax:
+
+```ts
+import { provideApi, Configuration } from './shared/book-monkey-api';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: Configuration,
+      useFactory: (authService: AuthService) =>
+        new Configuration({
+          basePath: 'https://api6.angular-buch.com',
+          username: authService.getUsername(),
+          password: authService.getPassword()
+        }),
+      deps: [AuthService]
+    }
+  ]
+};
+```
+
+In this example, `AuthService` is a custom service that you need to implement yourself. 
+It provides dynamic values like username and password (or tokens) at runtime.
+You can tailor it to your authentication needs—for example, to return credentials from local storage or a login flow.
+
+Alternatively, you can skip the configuration options entirely and use Angular HTTP interceptors to inject headers or handle authentication globally.
+However, that approach is outside the scope of this article.
+
+### Legacy Fallback: Still Using AppModule?
+
+If you haven't migrated to standalone yet, you can still use the `ApiModule` approach:
+
+```ts
+import { ApiModule } from './shared/book-monkey-api';
+
+@NgModule({
+  imports: [ApiModule.forRoot(() => new Configuration())]
+})
+export class AppModule {}
+```
+
+But we highly recommend the new `provideApi()` method for all modern Angular projects.
 
 
 
-npx openapi-generator-cli version-manager set 7.14.0-SNAPSHOT
+
+
 
 
 
