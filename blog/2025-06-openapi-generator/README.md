@@ -239,6 +239,18 @@ This is required, because the generated client uses HttpClient internally for ev
 
 <!-- see: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
 
+If you feel uncomfortable using the latest version, use this existing syntax until the next version is released:
+
+```ts
+importProvidersFrom(
+  ApiModule.forRoot(() =>
+    new Configuration({
+      basePath: 'https://api6.angular-buch.com' 
+    })
+  )
+)
+```
+
 ### Custom Base Path
 
 If your API lives under a different domain or base path, you can pass a custom string:
