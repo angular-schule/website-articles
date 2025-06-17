@@ -421,7 +421,36 @@ This makes it very easy to build reactive apps:
 ```
 
 This pattern results in highly declarative and clean code, perfectly aligned with Angular's new Signal-based approach.
+**Learn more about the resource API in our dedicated article:
+[Reactive Angular: Loading Data with the Resource API](/blog/2025-05-resource-api).**
 
+
+## Conclusion
+
+Congratulations! 🎉
+
+You can now generate fully-typed Angular API clients with ease.
+Ready to drop into any modern application.
+No more manual wiring of HTTP calls. 
+No more syncing models by hand. 
+No more guesswork.
+
+You've seen how to:
+
+* install and lock the OpenAPI Generator for consistent output
+* generate TypeScript code directly from your OpenAPI spec,
+* setup the application using the new `provideApi()` syntax,
+* and consume your API with powerful Angular features like `toSignal()` and `rxResource()`.
+
+With this setup, your API becomes a living contract, which automatically produces the client-side code you need.
+
+Now go build something awesome. 🚀
+
+<hr>
+
+<small>Many thanks to Ferdinand Malcher for review and feedback.</small>
+
+<small>**Cover image:**  ??? </small>
 
 
 
