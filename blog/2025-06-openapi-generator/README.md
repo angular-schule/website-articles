@@ -2,7 +2,7 @@
 title: "Generating Angular API clients with OpenAPI Generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2025-06-17
+published: 2025-06-18
 keywords:
   - OpenAPI
   - OpenAPI Generator
@@ -13,7 +13,7 @@ keywords:
   - TypeScript
   - Angular
 language: en
-header: openapi-generator-banner-TODO.png
+header: logo_header.png
 ---
 
 **In this article, we'll show how to use OpenAPI Generator to automatically generate Angular HTTP services from your OpenAPI spec.**
@@ -130,7 +130,8 @@ npx openapi-generator-cli generate \
   -o ./src/app/shared/book-monkey-api
 ```
 
-**Hint:** 
+**Hint:** 💡 On Windows (Command Prompt), remove the backslashes and write the command in a single line.
+
 
 Let's break this down:
 
@@ -142,7 +143,7 @@ Let's break this down:
 | `-g`                        | The generator to use (here: `typescript-angular`)         |
 | `-o`                        | The output directory for the generated code               |
 
-These are the bare minimum arguments required arguments. 
+These are the bare minimum arguments required.
 With this, you'll get:
 
 - Typed Angular services for each REST resource
@@ -161,6 +162,7 @@ npx openapi-generator-cli config-help -g typescript-angular
 
 This gives you a full list of tweakable settings — from service naming patterns to enum handling and many more.
 
+<!--
 The following table contains the formatted output of the help command.
 Each option can be passed via `--additional-properties=...` or configured via an external config file (e.g. `openapitools.json`).
 
@@ -205,12 +207,12 @@ Each option can be passed via `--additional-properties=...` or configured via an
 | `useSquareBracketsInArrayNames`  | Append `[]` to array param names. Default: `false`. |
 | `withInterfaces`                 | Generate interfaces alongside classes. Default: `false`. |
 | `zonejsVersion`                  | Compatible version of `zone.js`. |
-
+-->
 
 In the next section, we'll explore how to build and integrate this code into your Angular project.
 
 
-## Setup the Generated Code
+## Set Up the Generated Code
 
 To integrate the generated API client into your Angular application, simply register the client using `provideApi()` inside your `app.config.ts`. 
 This setup is fully compatible with Angular's standalone application structure:
@@ -234,10 +236,10 @@ Don't forget to include `provideHttpClient()`.
 It registers Angular's HttpClient for injection.
 This is required, because the generated client uses HttpClient internally for every request.
 
-> **IMPORTANT:** The `provideApi()` function is currently only available in the latest snapshot builds of OpenAPI Generator. 
+> **IMPORTANT:** The `provideApi()` function is currently available only in the latest snapshot builds of OpenAPI Generator. 
   It will become officially available with version **7.14.0**.
 
-<!-- see: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
+<!-- merken: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
 
 
 ### Custom Base Path
@@ -306,7 +308,7 @@ import { ApiModule } from './shared/book-monkey-api';
 export class AppModule {}
 ```
 
-But we highly recommend the new `provideApi()` method for all modern Angular projects.
+That said, we highly recommend switching to `provideApi()` for all modern Angular projects.
 
 
 ### Using the stable API until the next release
@@ -366,15 +368,14 @@ This modern pattern keeps your components fully reactive and simplifies state ha
 
 ## Modern Data Loading with `rxResource()`
 
-Angular 19 introduced a new reactive primitive: `rxResource()` (still in `experimental` stage as of Angular 20).
+Angular 19 introduced a new reactive primitive: `rxResource()` (still marked as *experimental* as of Angular 20).
 It's designed to simplify the way we work with asynchronous data streams - especially when fetching data from APIs.
 
 Instead of manual subscription handling or conversion to signals (via `toSignal()` for example), `rxResource()` wraps our observable-based data source into a signal-friendly API.
 It automatically manages loading states, errors, and the latest value.
 All this state is exposed as dedicated reactive signals.
 
-This makes it a perfect companion for services generated with OpenAPI Generator,
-
+This makes it a perfect companion for services generated with OpenAPI Generator.
 Here's how we can use the generated `BooksService` together with the new `rxResource()`:
 
 ```ts
@@ -439,7 +440,7 @@ You've seen how to:
 
 * install and lock the OpenAPI Generator for consistent output
 * generate TypeScript code directly from your OpenAPI spec,
-* setup the application using the new `provideApi()` syntax,
+* set up the application using the new `provideApi()` syntax,
 * and consume your API with powerful Angular features like `toSignal()` and `rxResource()`.
 
 With this setup, your API becomes a living contract, which automatically produces the client-side code you need.
@@ -450,7 +451,7 @@ Now go build something awesome. 🚀
 
 <small>Many thanks to Ferdinand Malcher for review and feedback.</small>
 
-<small>**Cover image:**  ??? </small>
+<small>**Cover image:** Official logo of the OpenAPI generator, with custom square patterns by Johannes</small>
 
 
 
