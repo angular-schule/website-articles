@@ -25,9 +25,9 @@ header: openapi-generator-banner-TODO.png
 Every Angular project that talks to a backend faces the same repetitive pain: writing boilerplate code to interact with REST endpoints. 
 HTTP clients, models, DTOs, error handling, and keeping everything in sync when the API changes - it adds up fast and slows teams down.
 
-Wouldn’t it be great if all of that could be automated?
+Wouldn't it be great if all of that could be automated?
 
-That’s exactly what **API code generators** do. 
+That's exactly what **API code generators** do. 
 They take your OpenAPI specification and generate fully-typed, ready-to-use client code: consistently, reliably, and within seconds. 
 No more hand-written HTTP services. 
 No more copy-pasting types. 
@@ -37,9 +37,9 @@ A few years ago, I wrote a popular article on [using Swagger Codegen to generate
 Since then, the ecosystem has moved forward: **OpenAPI Generator** emerged as the actively maintained, community-driven successor to Swagger Codegen. 
 It's more powerful, better supported, and trusted by companies and open-source projects around the world.
 
-> 👉 In this updated article, I’ll show you how easy it is to generate a complete API client for Angular using OpenAPI Generator - and how to integrate it seamlessly into your Angular project.
+> 👉 In this updated article, I'll show you how easy it is to generate a complete API client for Angular using OpenAPI Generator - and how to integrate it seamlessly into your Angular project.
 
-**Let’s get started! 🚀**
+**Let's get started! 🚀**
 
 
 ## What you need
@@ -70,11 +70,11 @@ Now, when you check your project into Git (including the file `openapitools.json
 - No "works on my machine" issues due to different generator versions.
 - No unexpected diffs caused by subtle changes in templates or behavior.
 
-That’s exactly what we want for a clean and reliable workflow.
+That's exactly what we want for a clean and reliable workflow.
 
 ### Switching Code Generator Versions
 
-Let’s say you want to lock your project to version `7.13.0`. 
+Let's say you want to lock your project to version `7.13.0`. 
 You can do this by running:
 
 ```bash
@@ -99,7 +99,7 @@ Here's the next chapter, as requested — with a clear explanation, strong motiv
 
 
 
-## Let’s Generate Our First Angular API Client
+## Let's Generate Our First Angular API Client
 
 Before we dive into code, take a moment to explore [https://api6.angular-buch.com/](api6.angular-buch.com).
 This public REST API is part of the **BookMonkey 6** demo application - the updated companion project for the upcoming **5th edition** of our German-language Angular book.
@@ -117,7 +117,7 @@ This graphical interface is fully generated from the OpenAPI specification, loca
 → `https://api6.angular-buch.com/openapi.json`
 
 If this metadata is rich enough to render a complete admin UI, then it's clearly powerful enough to generate a fully functional Angular API client.
-Let’s do that now!
+Let's do that now!
 
 ### Generate an Angular Client in One Line
 
@@ -132,7 +132,7 @@ npx openapi-generator-cli generate \
 
 **Hint:** 
 
-Let’s break this down:
+Let's break this down:
 
 | Parameter                   | Meaning                                                   |
 | --------------------------- | --------------------------------------------------------- |
@@ -150,7 +150,7 @@ With this, you'll get:
 - Models for all schemas (e.g. `book`, `author`, etc...)
 - `HttpClient`-based methods for every endpoint
 
-> 🛠️ Pro Tip: Place the output directory somewhere inside your app’s structure, but outside of actual components or routing - we suggest a path like `src/app/shared/book-monkey-api/`.
+> 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing - we suggest a path like `src/app/shared/book-monkey-api/`.
 
 The CLI supports many more options.
 To see all available configuration options for the `typescript-angular` generator:
@@ -207,13 +207,13 @@ Each option can be passed via `--additional-properties=...` or configured via an
 | `zonejsVersion`                  | Compatible version of `zone.js`. |
 
 
-In the next section, we’ll explore how to build and integrate this code into your Angular project.
+In the next section, we'll explore how to build and integrate this code into your Angular project.
 
 
-## Using the Generated Code
+## Setup the Generated Code
 
 To integrate the generated API client into your Angular application, simply register the client using `provideApi()` inside your `app.config.ts`. 
-This setup is fully compatible with Angular’s standalone application structure:
+This setup is fully compatible with Angular's standalone application structure:
 
 ```ts
 // app.config.ts
@@ -327,7 +327,100 @@ This approach works reliably and only requires a one-time configuration in your 
 It can easily be replaced later on by `provideApi()`.
 
 
+## Integrating the generated service in your component
 
+Once the API client is generated and configured, you can directly inject and use the provided services.
+Here's a minimal example:
+
+```ts
+import { JsonPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+import { BooksService } from './shared/book-monkey-api';
+
+@Component({
+  selector: 'app-root',
+  imports: [JsonPipe],
+  template: `<pre>{{ books() | json }}</pre>`
+})
+export class App {
+
+  #booksService = inject(BooksService);
+  readonly books = toSignal(this.#booksService.booksGet())
+}
+```
+
+This works out of the box because our prepared OpenAPI spec defines a `tag` named `books`.
+The code generator automatically creates a `BooksService` for that group of endpoints.
+A well-crafted and thoughtfully named OpenAPI spec is worth the effort: 
+The more care you put into naming resources, operations, and tags, the better the generated service and method names will be. 
+This investment pays off with clean, predictable, and developer-friendly TypeScript code that feels natural to use throughout your application.
+
+In addition to services, the generator also provides all related models with full TypeScript typing.
+In this example, the method `booksGet()` returns an `Observable<Book[]>`, using the interface `Book` that was also generated.
+
+To fit modern Angular best practices, we use `toSignal()` to turn the Observable into a signal.
+This modern pattern keeps your components fully reactive and simplifies state handling without a manual `subscribe()` call or the `async` pipe.
+
+
+## Modern Data Loading with `rxResource()`
+
+Angular 19 introduced a new reactive primitive: `rxResource()` (still in `experimental` stage as of Angular 20).
+It's designed to simplify the way we work with asynchronous data streams - especially when fetching data from APIs.
+
+Instead of manual subscription handling or conversion to signals (via `toSignal()` for example), `rxResource()` wraps our observable-based data source into a signal-friendly API.
+It automatically manages loading states, errors, and the latest value.
+All this state is exposed as dedicated reactive signals.
+
+This makes it a perfect companion for services generated with OpenAPI Generator,
+
+Here's how we can use the generated `BooksService` together with the new `rxResource()`:
+
+```ts
+import { JsonPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+
+import { BooksService } from './shared/book-monkey-api';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [JsonPipe],
+  template: `<pre>{{ booksResource.value() | json }}</pre>`
+})
+export class App {
+
+  #booksService = inject(BooksService);
+
+  readonly booksResource = rxResource({
+    stream: () => this.#booksService.booksGet()
+  });
+}
+```
+
+The `rxResource()` primitive comes with several useful properties, all of which are Signals:
+
+* **`value()`**: Returns the current data (or `undefined` if not yet available).
+* **`isLoading()`**: Returns `true` while the request is in-flight.
+* **`error()`**: Contains an `Error` object if the call failed, otherwise `null`.
+
+This makes it very easy to build reactive apps:
+
+```html
+@if (booksResource.error()) {
+  <p>❌ Failed to load books.</p>
+}
+@else if (booksResource.isLoading()) {
+  <p>⏳ Loading books...</p>
+}
+@else {
+  <pre>{{ booksResource.value() | json }}</pre>
+}
+```
+
+This pattern results in highly declarative and clean code, perfectly aligned with Angular's new Signal-based approach.
 
 
 
