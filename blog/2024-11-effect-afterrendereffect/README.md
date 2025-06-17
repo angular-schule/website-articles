@@ -1,9 +1,9 @@
 ---
-title: 'Angular 19: Mastering effect and afterRenderEffect'
+title: 'Reactive Angular: Mastering effect and afterRenderEffect'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2024-11-14
-lastModified: 2024-11-17
+lastModified: 2025-06-17
 keywords:
   - Angular
   - JavaScript
@@ -12,6 +12,7 @@ keywords:
   - Effect
   - afterRenderEffect
   - Angular 19
+  - Angular 20
 language: en
 header: effect.jpg
 sticky: false
@@ -148,9 +149,11 @@ Here is our example of a form that can create a new book and edit an existing bo
       <label for="description">Description</label>
       <textarea id="description" [formControl]="c.description"></textarea>
 
-      <button type="submit" aria-label="Submit Form">
-        {{ isEditMode() ? 'Edit Book' : 'Create Book' }}
+      @let formLabel = isEditMode() ? 'Edit Book' : 'Create Book';
+      <button type="submit" [attr.aria-label]="formLabel">
+        {{ formLabel }}
       </button>
+
     </form>
   `,
 })
@@ -224,12 +227,11 @@ like measuring element dimensions, directly managing animations, or orchestratin
 The new `afterRenderEffect()` function allows us to control when specific tasks are executed during the DOM update process.
 The API itself mirrors the functionality of 
 * [`afterRender`](https://next.angular.dev/api/core/afterRender) *(registers a callback to be invoked each time the application finishes rendering)* and 
-* [`afterNextRender`](https://next.angular.dev/api/core/afterNextRender) *(registers callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
+* afterNextRender *(registers callbacks to be invoked the next time the application finishes rendering, during the specified phases.)* 
 
-which are both in **Developer Preview**!
-
-The Angular documentation recommends avoiding `afterRender` when possible and suggest specifying explicit phases with `afterNextRender` to avoid significant performance degradation. 
-You'll see a similar recommendation for `afterRenderEffect()`. There is one signature that is intended for use and another that exists but is not recommended.
+The `afterRender` function no longer exists since Angular 20. 
+Even before that, the documentation recommended specifying explicit phases with `afterNextRender` to avoid significant performance losses. 
+There is a similar recommendation for `afterRenderEffect()`: There is one signature that is intended for use and another that exists but is not recommended.
 
 However, there is one big difference between the hook methods and the new `afterRenderEffect()`:
 > **💡 Values are propagated from phase to phase as signals instead of as plain values.** 
@@ -516,13 +518,10 @@ Last but not least, the third link provides an interactive demo on StackBlitz, w
 
 ## Conclusion
 
-Angular's new `effect()` API opens up new possibilities for reactive state management and `afterRenderEffect()` provides efficient DOM manipulation when needed.
-By understanding when to use each API, developers can create responsive and powerful Angular applications with a clean new syntax.
-
-> **⚠️ Please note that both APIs are in Developer Preview and may still be subject to change!**
-
-But time flies by anyway.
-Why not try `effect()` and `afterRenderEffect()` in your Angular project today and see how they simplify your state management and DOM interactions, it certainly will not take much time until the APIs are stable!
+Both APIs open up new, elegant ways of state and DOM management in Angular: reactive, precise and clear. 
+Those who familiarise themselves with `effect()` and `afterRenderEffect()` at an early stage will benefit today from the architecture of tomorrow.
+Take the opportunity to try out the new interfaces in your application!
+The functions have been considered **stable** since Angular 20.
 
 
 <hr>
