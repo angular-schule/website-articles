@@ -239,17 +239,6 @@ This is required, because the generated client uses HttpClient internally for ev
 
 <!-- see: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
 
-If you feel uncomfortable using the latest version, use this existing syntax until the next version is released:
-
-```ts
-importProvidersFrom(
-  ApiModule.forRoot(() =>
-    new Configuration({
-      basePath: 'https://api6.angular-buch.com' 
-    })
-  )
-)
-```
 
 ### Custom Base Path
 
@@ -320,6 +309,22 @@ export class AppModule {}
 But we highly recommend the new `provideApi()` method for all modern Angular projects.
 
 
+### Using the stable API until the next release
+
+If you feel uncomfortable relying on a snapshot version, you can use the current stable API until version `7.14.0` is released:
+
+```ts
+importProvidersFrom(
+  ApiModule.forRoot(() =>
+    new Configuration({
+      basePath: 'https://api6.angular-buch.com' 
+    })
+  )
+)
+```
+
+This approach works reliably and only requires a one-time configuration in your `app.config.ts`.
+It can easily be replaced later on by `provideApi()`.
 
 
 
