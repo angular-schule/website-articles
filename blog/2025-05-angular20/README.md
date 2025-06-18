@@ -269,6 +269,55 @@ Please note that a resource is only meant for *retrieving* data from an API and 
 Write operations such as create, update, or delete cannot be handled with a resource.
 You must continue to use `HttpClient` directly for those.
 
+## API Adjustments to `resource` and `rxResource`
+
+The Resource API remains *experimental* in Angular 20.
+This means the interface can still change without official prior notice.
+Recently, there have been two interesting adjustments.
+
+We have updated our comprehensive [blog post on the Resource API](https://angular.schule/blog/2025-05-resource-api) accordingly, so you will always find up-to-date examples there.
+
+### resource: `params` instead of `request`
+
+Parameters for a resource are now passed via the `params` property, no longer via `request`.
+The property in the `ResourceLoaderParams` interface, from which we read the parameters, is now also called `params`.
+
+```ts
+// ❌ BEFORE
+booksResource = resource({
+  request: () => this.isbn(),
+  loader: ({ request }) => this.#bs.getSingle(request)
+});
+
+// ✅ AFTER
+booksResource = resource({
+  params: () => this.isbn(),
+  loader: ({ params }) => this.#bs.getSingle(params)
+});
+```
+
+We welcome this change, as the terms "request" and "loader" could easily be confused before.
+With the term "params", it is now clearer that these are parameters that trigger the loader.
+
+
+### rxResource: `stream` instead of `loader`
+
+The `rxResource` is a special variant of the Resource that uses an RxJS Observable as a loader (the simple Resource expects a Promise as a loader).
+An Observable can deliver any number of elements, so the term "loader" does not always fit.
+Therefore, the property has been renamed to `stream`.
+
+```ts
+// ❌ VORHER
+booksResource = rxResource({
+  loader: () => this.#bs.getAll()
+});
+
+// ✅ NACHHER
+booksResource = rxResource({
+  stream: () => this.#bs.getAll()
+});
+```
+
 
 ## Miscellaneous
 
