@@ -249,13 +249,11 @@ This is required, because the generated client uses `HttpClient` internally for 
 
 ### Custom Base Path
 
-If your API lives under a different domain or base path, you can pass a custom string:
+If your API lives under a different domain or base path, you can pass a custom string.
+This is very helpful if you have different domains or paths for different development stages.
 
 ```ts
 provideApi('https://api6.angular-buch.com')
-```
-
-This is very helpful if you have different domains or paths for different development stages.
 
 ### Full Configuration
 
