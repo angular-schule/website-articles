@@ -66,7 +66,8 @@ It gives you the look and feel of all the other Node.js-based tooling that you a
 
 But more importantly, it installs a **specific version** of the generator and writes that information into the file `openapitools.json` inside your project.
 
-Now, when you check your project into Git (including the file `openapitools.json`), your teammates - or the CI pipeline - will automatically use **the exact same version** when they run the CLI.
+Now, when you check your project into Git (including the file `openapitools.json`), your teammates (or the CI pipeline) will automatically use **the exact same version** when they run the CLI.
+
 
 - This ensures **100% reproducible code generation** across your entire team.
 - No "works on my machine" issues due to different generator versions.
