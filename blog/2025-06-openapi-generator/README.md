@@ -157,7 +157,8 @@ With this, you'll get:
 - Models for all schemas (e.g. `book`, `author`, etc...)
 - `HttpClient`-based methods for every endpoint
 
-> 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing - we suggest a path like `src/app/shared/book-monkey-api/`.
+> 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing. We suggest a path like `src/app/shared/book-monkey-api/`.
+
 
 The CLI supports many more options.
 To see all available configuration options for the `typescript-angular` generator:
