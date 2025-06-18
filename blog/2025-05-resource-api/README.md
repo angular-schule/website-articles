@@ -3,7 +3,7 @@ title: 'Reactive Angular: Loading Data with the Resource API'
 author: Ferdinand Malcher
 mail: ferdinand@malcher.media
 published: 2025-05-13
-lastModified: 2025-05-13
+lastModified: 2025-06-18
 keywords:
   - Resource API
   - Promise
@@ -29,7 +29,7 @@ A Resource represents a data set that is loaded asynchronously. This usually inv
 To start, let's consider a scenario implemented in the classic way, without the new Resource API.
 
 We want to display a list of books in a component, which will be loaded via HTTP from a server.
-The corresponding `BookStoreService` already exists and is injected via dependency injection. The `getAll()` method in the service uses Angular's `HttpClient` and returns an Observable.
+The corresponding `BookStore` service already exists and is injected via dependency injection. The `getAll()` method in the service uses Angular's `HttpClient` and returns an Observable.
 
 In the component, we need a `books` property to cache the data for display in the template.
 The property is initialized as a signal, following modern practices.
@@ -37,12 +37,12 @@ In the constructor, we subscribe to the Observable from `getAll()`. As soon as t
 
 ```ts
 @Component({ /* ... */ })
-export class BookListComponent {
-  private bs = inject(BookStoreService);
+export class BookList {
+  #bs = inject(BookStore);
   books = signal<Book[]>([]);
 
   constructor() {
-    this.bs.getAll().subscribe(receivedBooks => {
+    this.#bs.getAll().subscribe(receivedBooks => {
       this.books.set(receivedBooks);
     });
   }
@@ -96,11 +96,11 @@ To perform an HTTP request using a Resource, we have three options:
 
 ### Option 1: Promises and the native Fetch API
 
-In the `BookStoreService`, we use the native Fetch API so that the `getAll()` method returns a Promise. In the loader, we can use this Promise directly.
+In the `BookStore`, we use the native Fetch API so that the `getAll()` method returns a Promise. In the loader, we can use this Promise directly.
 
 ```ts
 @Injectable({ /* ... */ })
-export class BookStoreService {
+export class BookStore {
   // ...
   getAll(): Promise<Book[]> {
     return fetch(this.apiUrl + '/books').then(res => res.json());
@@ -111,7 +111,7 @@ export class BookStoreService {
 ```ts
 // Component
 booksResource = resource({
-  loader: () => this.bs.getAll()
+  loader: () => this.#bs.getAll()
 });
 ```
 
@@ -122,7 +122,7 @@ To define the loader, we must convert the Observable to a Promise using `firstVa
 
 ```ts
 @Injectable({ /* ... */ })
-export class BookStoreService {
+export class BookStore {
   // ...
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl + '/books');
@@ -133,7 +133,7 @@ export class BookStoreService {
 ```ts
 // Component
 booksResource = resource({
-  loader: () => firstValueFrom(this.bs.getAll())
+  loader: () => firstValueFrom(this.#bs.getAll())
 });
 ```
 
@@ -161,7 +161,7 @@ Using the `status` signal, we can evaluate the state of the Resource, e.g., to s
 
 | Status from `ResourceStatus` | Description                                                             |
 | ---------------------------- | ----------------------------------------------------------------------- |
-| `idle`                       | No request is defined and nothing is loading. `value()` is `undefined`. |
+| `idle`                       | No params are defined and nothing is loading. `value()` is `undefined`. |
 | `error`                      | Loading failed. `value()` is `undefined`.                               |
 | `loading`                    | The Resource is currently loading.                                      |
 | `reloading`                  | The Resource is reloading after `reload()` was called.                  |
@@ -207,7 +207,7 @@ The result is then again available through the `value` signal.
 
 ```ts
 @Component({ /* ... */ })
-export class BookListComponent {
+export class BookList {
   booksResource = resource({ /* ... */ });
 
   reloadList() {
@@ -232,7 +232,7 @@ In the method, we can sort the list and directly overwrite the `value` signal.
 
 ```ts
 @Component({ /* ... */ })
-export class BookListComponent {
+export class BookList {
   booksResource = resource({ /* ... */ });
 
   sortBookListLocally() {
@@ -252,7 +252,7 @@ We want to point out two things in this code:
 - Instead of `Array.sort()`, we use the new method `Array.toSorted()`, which does not mutate the array and returns a sorted copy. This preserves immutability. `toSorted()` can only be used if the `lib` option in `tsconfig.json` includes at least `ES2023`, which is not the case in new Angular projects yet.
 
 
-## `request`: Loader with Parameter
+## `params`: Loader with Parameter
 
 Our app should have a detail page that displays a single book.
 So the HTTP request must receive information about which book to load.
@@ -265,48 +265,53 @@ In the loader, we could now use the signal `this.isbn` to pass the ISBN to the s
 
 ```ts
 @Component({ /* ... */ })
-export class BookDetailsComponent {
-  isbn = input.required<string>();
+export class BookDetails {
+  #bs = inject(BookStore);
+  readonly isbn = input.required<string>();
 
   bookResource = resource({
     // NOTE: Only executed once!
-    loader: () => this.bs.getSingle(this.isbn())
+    loader: () => this.#bs.getSingle(this.isbn())
   });
 }
 ```
 
 This code basically works – but only once! The loader function is *untracked*. This means it won't automatically rerun when the signal values it depends on change (unlike with `effect()` or `computed()`).
 
-To solve this, we can use the `request` property: Here we pass a signal. Whenever this signal changes its value, the loader will automatically run again.
+To solve this, we can use the `params` property: Here we pass a signal or a function that uses signals inside. Whenever these signal change their value, the loader will automatically run again.
 
 The request signal thus provides the parameters with which the loader is executed.
 
 ```ts
 @Component({ /* ... */ })
-export class BookDetailsComponent {
-  isbn = input.required<string>();
+export class BookDetails {
+  #bs = inject(BookStore);
+  readonly isbn = input.required<string>();
 
   bookResource = resource({
-    request: this.isbn,
-    loader: () => this.bs.getSingle(this.isbn())
+    params: this.isbn,
+    // or
+    params: () => this.isbn(),
+    loader: () => this.#bs.getSingle(this.isbn())
   });
 }
 ```
 
 To make the loader a bit more generic and reusable, we can avoid directly calling `this.isbn()`.
-The value from `request` is conveniently passed as an argument to the loader function.
+The value from `params` is conveniently passed as an argument to the loader function.
 This allows us to outsource the loader to a separate function and reuse it in other Resources.
 
-The loader automatically receives an argument of type `ResourceLoaderParams`, which has a `request` property. In our example, it holds the ISBN returned by the `request` signal.
+The loader automatically receives an argument of type `ResourceLoaderParams`, which has a `params` property. In our example, it holds the ISBN returned by the `params` function.
 
 ```ts
 @Component({ /* ... */ })
-export class BookDetailsComponent {
-  isbn = input.required<string>();
+export class BookDetails {
+  #bs = inject(BookStore);
+  readonly isbn = input.required<string>();
 
   bookResource = resource({
-    request: this.isbn,
-    loader: ({ request }) => this.bs.getSingle(request)
+    params: this.isbn,
+    loader: ({ params }) => this.#bs.getSingle(params)
   });
 }
 ```
@@ -322,9 +327,11 @@ Even though Angular now uses signals in many places instead of Observables, reac
 Angular therefore provides the `rxResource` function. It works just like `resource`, but the loader function returns an Observable instead.
 This way, we can use Observables from `HttpClient` directly.
 
+Since an Observable *can* emit an infinite number of values, the property here is called `stream` instead of `loader`.
+
 ```ts
 @Injectable({ /* ... */ })
-export class BookStoreService {
+export class BookStore {
   // ...
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl + '/books');
@@ -337,7 +344,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 // ...
 
 booksResource = rxResource({
-  loader: () => this.bs.getAll()
+  stream: () => this.#bs.getAll()
 });
 ```
 
@@ -353,17 +360,18 @@ The loader also receives a so-called `AbortSignal` in its parameter object.
 This is a native browser object that indicates when the request should be aborted.
 
 Together with the native Fetch API, this object can be used directly.
-If `this.isbn` changes while the loader is still running, the current Fetch request will be aborted.
+If `this.isbn` changes while the loader is still running, the current fetch request will be aborted.
 
 ```ts
 @Component({ /* ... */ })
-export class BookDetailsComponent {
-  isbn = input.required<string>();
+export class BookDetails {
+  #bs = inject(BookStore);
+  readonly isbn = input.required<string>();
 
   bookResource = resource({
-    request: this.isbn,
-    loader: ({ abortSignal }) => fetch(
-      detailsUrl + '/' + this.isbn(),
+    params: this.isbn,
+    loader: ({ abortSignal, aprams }) => fetch(
+      detailsUrl + '/' + params,
       { signal: abortSignal }
     )
   });
@@ -374,10 +382,44 @@ If we're using Angular's `HttpClient` and `firstValueFrom`, cancellation becomes
 
 By the way, the Resource also ensures that an active request is stopped when the component is destroyed.
 
+
+## httpResource: Resource for HTTP Requests
+
+In early 2025, another variant of the Resource was introduced: `httpResource`.
+It uses Angular's `HttpClient` under the hood to perform an HTTP request directly.
+You no longer need to write the request yourself – the resource handles it for you.
+
+```ts
+booksResource = httpResource<Book[]>(
+  () => 'https://api.example.org/books',
+  { defaultValue: [] }
+);
+```
+
+The request must be generated using a function.
+This is because it runs in a *reactive context*: If you use signals inside the function, the request is re-executed automatically when any of those signals change. This is similar to the `params` property in a resource.
+Additional request details can be passed in an options object:
+
+```ts
+booksResource = httpResource<Book[]>(
+  () => ({
+    url: 'https://api.example.org/books',
+    params: {
+      search: 'Angular'
+    }
+  })
+);
+```
+
+Please note that a resource is only meant for *retrieving* data from an API and exposing it with signals.
+Write operations such as create, update, or delete cannot be handled with a resource.
+You must continue to use `HttpClient` directly for those.
+
+
 ## Conclusion
 
 With the new Resource API, Angular introduces an intuitive and well-integrated interface for loading data from a server.
-Use cases beyond a simple HTTP request-especially reloading data and showing a loading indicator-can be implemented quickly with the Resource.
+Use cases beyond a simple HTTP request, especially reloading data and showing a loading indicator, can be implemented quickly with the Resource.
 Until now, that required a lot of manual effort.
 
 We welcome Angular's focus on addressing this common everyday problem. The solution covers most use cases reliably and offers a standardized approach-only more advanced needs will require custom implementation going forward.
