@@ -39,8 +39,6 @@ It's more powerful, better supported, and trusted by companies and open-source p
 
 > 👉 In this updated article, I'll show you how easy it is to generate a complete API client for Angular using OpenAPI Generator - and how to integrate it seamlessly into your Angular project.
 
-**Let's get started! 🚀**
-
 
 ## What you need
 
@@ -78,7 +76,7 @@ That's exactly what we want for a clean and reliable workflow.
 ### Switching Code Generator Versions
 
 To ensure consistent output across your team and avoid accidental diffs, it's a good idea to lock your project to a specific version of the OpenAPI Generator.
-Let's say you want to lock your project to version `7.13.0`. 
+Suppose you want to lock your project to version `7.13.0`. 
 You can do this by running:
 
 ```bash
@@ -119,7 +117,7 @@ This graphical interface is fully generated from the OpenAPI specification, loca
 → `https://api6.angular-buch.com/openapi.json`
 
 If this metadata is rich enough to render a complete admin UI, then it's clearly powerful enough to generate a fully functional Angular API client.
-Let's do that now!
+
 
 ### Generate an Angular Client in One Line
 
@@ -135,7 +133,7 @@ npx openapi-generator-cli generate \
 **Hint:** 💡 On Windows (Command Prompt), remove the backslashes and write the command in a single line.
 
 
-Let's break this down:
+The following table explains each argument in detail:
 
 | Parameter                   | Meaning                                                   |
 | --------------------------- | --------------------------------------------------------- |
@@ -158,58 +156,12 @@ With this, you'll get:
 
 The CLI supports many more options.
 To see all available configuration options for the `typescript-angular` generator, use the following command.
-This gives you a full list of tweakable settings – from service naming patterns to enum handling and many more.
 
 ```bash
 npx openapi-generator-cli config-help -g typescript-angular
+```
 
-<!--
-The following table contains the formatted output of the help command.
-Each option can be passed via `--additional-properties=...` or configured via an external config file (e.g. `openapitools.json`).
-
-| Option                            | Description |
-|-----------------------------------|-------------|
-| `allowUnicodeIdentifiers`         | Allow Unicode in names. Default: `false`. |
-| `apiModulePrefix`                 | Prefix for the generated `ApiModule`. |
-| `configurationPrefix`            | Prefix for the generated `Configuration`. |
-| `disallowAdditionalPropertiesIfNotPresent` | Controls handling of `additionalProperties`. Default: `true`. |
-| `ensureUniqueParams`             | Renames parameters to avoid duplicates. Default: `true`. |
-| `enumNameSuffix`                 | Suffix for enum names. Default: `Enum`. |
-| `enumPropertyNaming`             | Naming for enum props: `camelCase`, `PascalCase`, `snake_case`, `UPPERCASE`, `original`. Default: `PascalCase`. |
-| `enumPropertyNamingReplaceSpecialChar` | Replace `+`/`-` in enum strings. Default: `false`. |
-| `enumUnknownDefaultCase`         | Adds fallback case `unknown_default_open_api` to all enums. Default: `false`. |
-| `fileNaming`                     | File naming convention: `camelCase` or `kebab-case`. Default: `camelCase`. |
-| `legacyDiscriminatorBehavior`    | Enable legacy discriminator behavior. Default: `true`. |
-| `licenseName`                    | License name in package metadata. Default: `Unlicense`. |
-| `modelFileSuffix`                | File suffix for model files. |
-| `modelPropertyNaming`            | Property naming for models: `camelCase`, `PascalCase`, `snake_case`, `original`. Default: `original`. |
-| `modelSuffix`                    | Suffix for model class names. |
-| `ngPackagrVersion`               | Version of `ng-packagr` to use. |
-| `ngVersion`                      | Angular version compatibility. Default: `19.0.0`. |
-| `npmName`                        | Required: name of the npm package. |
-| `npmRepository`                  | URL for a private npm repository (for `publishConfig`). |
-| `npmVersion`                     | Version of the npm package. Default: `1.0.0`. |
-| `nullSafeAdditionalProps`       | Indexers for `additionalProperties` return `undefined`. Default: `false`. |
-| `paramNaming`                    | Parameter naming: `camelCase`, `PascalCase`, `snake_case`, `original`. Default: `camelCase`. |
-| `prependFormOrBodyParameters`    | Put body/form params first. Default: `false`. |
-| `providedIn`                     | Injection scope: `root`, `none`, `any`, `platform`. Default: `root`. |
-| `queryParamObjectFormat`         | Format for query object: `dot`, `json`, `key`. Default: `dot`. |
-| `rxjsVersion`                    | Compatible RxJS version. |
-| `serviceFileSuffix`              | File suffix for service files. Default: `.service`. |
-| `serviceSuffix`                  | Suffix for service class names. Default: `Service`. |
-| `snapshot`                       | Adds timestamp to version (e.g. `1.0.0-SNAPSHOT.20250615`). Default: `false`. |
-| `sortModelPropertiesByRequiredFlag` | Required model props come first. Default: `true`. |
-| `sortParamsByRequiredFlag`       | Required method args come first. Default: `true`. |
-| `stringEnums`                    | Use TypeScript string enums. Default: `false`. |
-| `supportsES6`                    | Use ES6-compatible syntax. Default: `false`. |
-| `taggedUnions`                   | Use tagged unions via discriminators. Default: `false`. |
-| `tsVersion`                      | Compatible TypeScript version. |
-| `useSingleRequestParameter`      | Group all method parameters into a single object. Default: `false`. |
-| `useSquareBracketsInArrayNames`  | Append `[]` to array param names. Default: `false`. |
-| `withInterfaces`                 | Generate interfaces alongside classes. Default: `false`. |
-| `zonejsVersion`                  | Compatible version of `zone.js`. |
--->
-
+This gives you a full list of tweakable settings – from service naming patterns to enum handling and many more.
 
 
 ## Set Up the Generated Code
