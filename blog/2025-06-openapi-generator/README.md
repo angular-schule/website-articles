@@ -377,7 +377,7 @@ This modern pattern keeps your components fully reactive and simplifies state ha
 ## Modern Data Loading with `rxResource()`
 
 Angular 19 introduced a new reactive primitive: `rxResource()` (still marked as *experimental* as of Angular 20).
-It's designed to simplify the way we work with asynchronous data streams - especially when fetching data from APIs.
+It's designed to simplify the way we work with asynchronous data streams, especially when fetching data from an API.
 
 Instead of manual subscription handling or conversion to signals (via `toSignal()` for example), `rxResource()` wraps our observable-based data source into a signal-friendly API.
 It automatically manages loading states, errors, and the latest value.
