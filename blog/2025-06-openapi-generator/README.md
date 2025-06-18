@@ -53,7 +53,8 @@ It's more powerful, better supported, and trusted by companies and open-source p
 Theoretically, you could download the latest version of the code generator manually: 
 just grab the `openapi-generator-cli.jar` from [Maven Central](https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/).
 
-But in practice, I **highly recommend** using the official node.js-based CLI wrapper instead.
+But in practice, I **highly recommend** using the official Node.js-based CLI wrapper instead.
+
 
 ```bash
 npm install @openapitools/openapi-generator-cli --save-dev
