@@ -219,7 +219,8 @@ In the next section, we'll explore how to build and integrate this code into you
 
 ## Set Up the Generated Code
 
-To integrate the generated API client into your Angular application, simply register the client using `provideApi()` inside your `app.config.ts`. 
+To integrate the generated API client into your Angular application, you have to register the client using `provideApi()` inside your `app.config.ts`. 
+
 This setup is fully compatible with Angular's standalone application structure:
 
 ```ts
