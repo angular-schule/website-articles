@@ -294,7 +294,8 @@ export const appConfig: ApplicationConfig = {
 
 In this example, `AuthService` is a custom service that you need to implement yourself. 
 It provides dynamic values like username and password (or tokens) at runtime.
-You can tailor it to your authentication needs—for example, to return credentials from local storage or a login flow.
+You can tailor it to your authentication needs: for example, it could return credentials from local storage or a login flow.
+
 
 Alternatively, you can skip the configuration options entirely and use Angular HTTP interceptors to inject headers or handle authentication globally.
 However, that approach is outside the scope of this article.
