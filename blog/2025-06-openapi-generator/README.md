@@ -37,8 +37,7 @@ A few years ago, I wrote a popular article on [using Swagger Codegen to generate
 Since then, the ecosystem has moved forward: **OpenAPI Generator** emerged as the actively maintained, community-driven successor to Swagger Codegen. 
 It's more powerful, better supported, and trusted by companies and open-source projects around the world.
 
-> 👉 In this updated article, I'll show you how easy it is to generate a complete API client for Angular using OpenAPI Generator - and how to integrate it seamlessly into your Angular project.
-
+> 👉 In this revamped article, I'll show you how easy it is to generate a complete API client using OpenAPI Generator - and how to integrate it seamlessly into your Angular project.
 
 ## What you need
 
@@ -97,11 +96,12 @@ npx openapi-generator-cli version
 This ensures that every team member uses exactly the same code generator version, even if newer versions are released later.
 You can also use this mechanism to test new versions or roll back safely.
 
-## Let's Generate Our First Angular API Client
+
+## Generating Your First Angular API Client
 
 Before we take a look at the code, take a moment to explore [https://api6.angular-buch.com/](api6.angular-buch.com).
 
-This public REST API is part of the **BookMonkey 6** demo application, the updated companion project for the upcoming **5th edition** of our German-language Angular book.
+This public REST API is part of the **BookMonkey 6** demo application, the updated companion project for the upcoming **5th edition** of our German Angular book.
 
 
 > 📘 Save the date!
@@ -166,7 +166,7 @@ This gives you a full list of tweakable settings – from service naming pattern
 
 ## Set Up the Generated Code
 
-To integrate the generated API client into your Angular application, you have to register the client using `provideApi()` inside your `app.config.ts`. 
+To integrate the generated API client into your Angular application, register it using `provideApi()` inside your `app.config.ts`.
 
 This setup is fully compatible with Angular's standalone application structure:
 
@@ -232,7 +232,7 @@ export const appConfig: ApplicationConfig = {
           basePath: 'https://api6.angular-buch.com',
           username: authService.getUsername(),
           password: authService.getPassword()
-        };
+        });
       }
     }
   ]
