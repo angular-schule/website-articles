@@ -307,12 +307,12 @@ An Observable can deliver any number of elements, so the term "loader" does not 
 Therefore, the property has been renamed to `stream`.
 
 ```ts
-// ❌ VORHER
+// ❌ BEFORE
 booksResource = rxResource({
   loader: () => this.#bs.getAll()
 });
 
-// ✅ NACHHER
+// ✅ AFTER
 booksResource = rxResource({
   stream: () => this.#bs.getAll()
 });
