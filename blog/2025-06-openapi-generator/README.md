@@ -98,7 +98,8 @@ npx openapi-generator-cli version
 This ensures that every team member uses exactly the same code generator version, even if newer versions are released later.
 You can also use this mechanism to test new versions or roll back safely.
 
-Here's the next chapter, as requested — with a clear explanation, strong motivation, and helpful technical details:
+
+
 
 
 
