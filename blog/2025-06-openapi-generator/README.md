@@ -62,7 +62,8 @@ npm install @openapitools/openapi-generator-cli --save-dev
 
 This small package gives you a simple command-line tool: `openapi-generator-cli`.
 Once installed, you can execute it via `npx openapi-generator-cli`.
-It gives you the look and feel of all the other node.js based tooling that you are already used to.
+It gives you the look and feel of all the other Node.js-based tooling that you are already used to.
+
 But more importantly, it installs a **specific version** of the generator and writes that information into the file `openapitools.json` inside your project.
 
 Now, when you check your project into Git (including the file `openapitools.json`), your teammates - or the CI pipeline - will automatically use **the exact same version** when they run the CLI.
