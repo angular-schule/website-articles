@@ -300,7 +300,7 @@ You can tailor it to your authentication needs: for example, it could return cre
 Alternatively, you can skip the configuration options entirely and use Angular HTTP interceptors to inject headers or handle authentication globally.
 However, that approach is outside the scope of this article.
 
-### Legacy Fallback: Still Using AppModule?
+### Legacy Fallback: Still Using NgModules?
 
 If you haven't migrated to standalone yet, you can still use the `ApiModule` approach:
 
