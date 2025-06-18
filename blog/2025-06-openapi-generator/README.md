@@ -214,7 +214,6 @@ Each option can be passed via `--additional-properties=...` or configured via an
 | `zonejsVersion`                  | Compatible version of `zone.js`. |
 -->
 
-In the next section, we'll explore how to build and integrate this code into your Angular project.
 
 
 ## Set Up the Generated Code
