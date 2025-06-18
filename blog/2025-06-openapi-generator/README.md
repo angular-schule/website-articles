@@ -107,7 +107,8 @@ You can also use this mechanism to test new versions or roll back safely.
 
 Before we take a look at the code, take a moment to explore [https://api6.angular-buch.com/](api6.angular-buch.com).
 
-This public REST API is part of the **BookMonkey 6** demo application - the updated companion project for the upcoming **5th edition** of our German-language Angular book.
+This public REST API is part of the **BookMonkey 6** demo application, the updated companion project for the upcoming **5th edition** of our German-language Angular book.
+
 
 > 📘 Save the date!
 > The new edition is scheduled for **early 2026**.
