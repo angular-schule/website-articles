@@ -161,13 +161,11 @@ With this, you'll get:
 
 
 The CLI supports many more options.
-To see all available configuration options for the `typescript-angular` generator:
+To see all available configuration options for the `typescript-angular` generator, use the following command.
+This gives you a full list of tweakable settings – from service naming patterns to enum handling and many more.
 
 ```bash
 npx openapi-generator-cli config-help -g typescript-angular
-```
-
-This gives you a full list of tweakable settings — from service naming patterns to enum handling and many more.
 
 <!--
 The following table contains the formatted output of the help command.
