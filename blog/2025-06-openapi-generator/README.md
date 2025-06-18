@@ -77,6 +77,8 @@ That's exactly what we want for a clean and reliable workflow.
 
 ### Switching Code Generator Versions
 
+
+To ensure consistent output across your team and avoid accidental diffs, it's a good idea to lock your project to a specific version of the OpenAPI Generator.
 Let's say you want to lock your project to version `7.13.0`. 
 You can do this by running:
 
