@@ -322,13 +322,16 @@ If you feel uncomfortable relying on a snapshot version, you can use the current
 The function `importProvidersFrom()` extracts providers from an NgModule declaration so that we can pass them into our `providers` array.
 
 ```ts
-importProvidersFrom(
-  ApiModule.forRoot(() =>
-    new Configuration({
-      basePath: 'https://api6.angular-buch.com' 
-    })
-  )
-)
+providers: [
+  importProvidersFrom(
+    ApiModule.forRoot(() =>
+      new Configuration({
+        basePath: 'https://api6.angular-buch.com' 
+      })
+    )
+  ),
+  // ...
+]
 ```
 
 This approach works reliably and only requires a one-time configuration in your `app.config.ts`.
