@@ -238,9 +238,8 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-Don't forget to include `provideHttpClient()`.
-It registers Angular's HttpClient for injection.
-This is required, because the generated client uses HttpClient internally for every request.
+Don't forget to include `provideHttpClient()` to register Angular's `HttpClient` for injection.
+This is required, because the generated client uses `HttpClient` internally for every request.
 
 > **IMPORTANT:** The `provideApi()` function is currently available only in the latest snapshot builds of OpenAPI Generator. 
   It will become officially available with version **7.14.0**.
