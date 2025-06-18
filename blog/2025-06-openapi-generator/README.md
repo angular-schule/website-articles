@@ -279,13 +279,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: Configuration,
-      useFactory: (authService: AuthService) =>
-        new Configuration({
+      useFactory: () => {
+        const authService = inject(AuthService);
+        return new Configuration({
           basePath: 'https://api6.angular-buch.com',
           username: authService.getUsername(),
           password: authService.getPassword()
-        }),
-      deps: [AuthService]
+        };
+      }
     }
   ]
 };
