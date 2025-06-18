@@ -318,7 +318,8 @@ That said, we highly recommend switching to `provideApi()` for all modern Angula
 
 ### Using the stable API until the next release
 
-If you feel uncomfortable relying on a snapshot version, you can use the current stable API until version `7.14.0` is released:
+If you feel uncomfortable relying on a snapshot version, you can use the current stable API until version `7.14.0` is released.
+The function `importProvidersFrom()` extracts providers from an NgModule declaration so that we can pass them into our `providers` array.
 
 ```ts
 importProvidersFrom(
