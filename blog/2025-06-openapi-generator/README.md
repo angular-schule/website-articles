@@ -42,7 +42,7 @@ It's more powerful, better supported, and trusted by companies and open-source p
 ## What you need
 
 - A valid OpenAPI 2.0 or 3.x spec file (JSON/YAML) that describes your REST backend.
-- Java 11+ installed, or Docker installed (if installing Java directly is not an option)
+- Java 11+ or Docker installed (if you prefer not to install Java directly)
 
 
 ## Installation: Use the CLI wrapper for consistent builds
@@ -59,7 +59,7 @@ npm install @openapitools/openapi-generator-cli --save-dev
 
 This small package gives you a simple command-line tool: `openapi-generator-cli`.
 Once installed, you can execute it via `npx openapi-generator-cli`.
-It gives you the look and feel of all the other Node.js-based tooling that you are already used to.
+It gives you the look and feel of all the other Node.js-based tooling you're already familiar with.
 
 But more importantly, it installs a **specific version** of the generator and writes that information into the file `openapitools.json` inside your project.
 
@@ -148,7 +148,7 @@ With this, you'll get:
 
 - Typed Angular services for each REST resource
 - A full NgModule (`ApiModule`)
-- Models for all schemas (e.g. `book`, `author`, etc...)
+- Models for all schemas (for example `book`, `author`, etc...)
 - `HttpClient`-based methods for every endpoint
 
 > 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing. We suggest a path like `src/app/shared/book-monkey-api/`.
@@ -201,6 +201,7 @@ This is very helpful if you have different domains or paths for different develo
 
 ```ts
 provideApi('https://api6.angular-buch.com')
+```
 
 ### Full Configuration
 
