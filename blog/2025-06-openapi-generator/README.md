@@ -121,6 +121,9 @@ If this metadata is rich enough to render a complete admin UI, then it's clearly
 
 ### Generate an Angular Client in One Line
 
+To generate the client code, we'll now run the code generator against our OpenAPI specification.
+This will produce fully-typed Angular services and interfaces based on the API definition.
+
 We start with the most minimal setup:
 
 ```bash
