@@ -223,7 +223,7 @@ provideApi({
 For dynamic configuration (e.g. based on an injected service), use Angular's `useFactory` syntax:
 
 ```ts
-import { provideApi, Configuration } from './shared/book-monkey-api';
+import { Configuration } from './shared/book-monkey-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
