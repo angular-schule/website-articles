@@ -250,7 +250,7 @@ However, that approach is outside the scope of this article.
 
 ### Legacy Fallback: Still Using NgModules?
 
-If you haven't migrated to standalone yet, you can still use the `ApiModule` approach:
+If your project hasn't migrated to standalone yet, you can still use the traditional approach by importing the generated `ApiModule`:
 
 ```ts
 import { ApiModule } from './shared/book-monkey-api';
