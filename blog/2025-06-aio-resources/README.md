@@ -231,7 +231,6 @@ If you're maintaining an Angular library and think it belongs here, just send a 
 We're happy to grow this list again, together with the community.
 
 Also, if you're missing another section, just ping us.
-We're happy to grow this list together with the community.
 
 <hr>
 
