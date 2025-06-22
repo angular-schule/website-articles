@@ -11,7 +11,7 @@ keywords:
   - resources
   - resources.json
 language: en
-header: TODO.png
+header: header-aio-resources.png
 ---
 
 **The old list of valuable resources from angular.io is gone. Here you can find a mirror.**
@@ -235,5 +235,3 @@ Also, if you're missing another section, just ping us.
 <hr>
 
 <small>Many thanks to Ferdinand Malcher for the review.</small>
-
-<small>**Cover image:** ???</small>
