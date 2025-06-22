@@ -229,7 +229,7 @@ High-performance UI controls with the most complete Angular support available. W
 
 ## Want to add your resource?
 
-If you're maintaining an Angular library and think it belongs here, just send a [PR](https://github.com/angular-schule/website-articles/blob/main/blog/2025-06-2025-06-aio-resources/README.md).
+If you're maintaining an Angular library and think it belongs here, just send a [PR](https://github.com/angular-schule/website-articles/blob/main/blog/2025-06-aio-resources/README.md).
 We're happy to grow this list again, together with the community.
 
 Also, if you're missing another section, just ping us.
