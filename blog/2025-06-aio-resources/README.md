@@ -6,6 +6,7 @@ published: 2025-06-20
 keywords:
   - Angular
   - angular.io
+  - angular.dev
   - aio
   - marketing
   - resources
@@ -20,7 +21,7 @@ header: header-aio-resources.png
 
 # What happened to the Angular Resources?
 
-With the move from the old `angular .io` website to the new site at [angular.dev](https://angular.dev), not everything made the jump.
+With the move from the old `angular.io` website to the new site at [angular.dev](https://angular.dev), not everything made the jump.
 One particular gem that's now missing: the official list of Angular resources.
 
 Remember this one?
@@ -33,8 +34,9 @@ But soon after the release of Angular 18, this curated list of Angular resources
 
 ## What now? 🤷
 
-If you're new to Angular and wondering, "Which UI library should I use?" or "What are my options for state management?", 
-there's no longer an official source that guides you through the ecosystem.
+With the official angular.io resources page gone, navigating the ecosystem just got trickier. 
+New developers might wonder, "Which UI library should I use?" or "What are my options for state management?" 
+This gap leaves everyone searching for reliable recommendations without an official starting point.
 
 So we thought: 
 > _Let's preserve the last state of the angular.io/resources page, right here on our blog!_ 😎
@@ -46,7 +48,7 @@ For now, we've decided to bring back only the "UI Components" and "Data Librarie
 Those are the ones we've referenced most often in our own [Angular workshops](https://angular.schule/).
 But referring to an archive.org link isn't cool!
 
-Without much more ado, here's the good old list for you!
+Without further ado, here's the good old list for you!
 (We've restored the list and updated a few links for accuracy.)
 
 ### Data Libraries
