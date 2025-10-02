@@ -1,5 +1,5 @@
 ---
-title: 'Mein experimenteller @Service()-Decorator für Angular'
+title: 'My experimental @Service() decorator for Angular'
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2025-09-30
@@ -13,30 +13,30 @@ keywords:
   - Ivy
   - ɵɵdefineInjectable
   - ɵɵinject
-language: de
+language: en
 header: service.jpg
 ---
 
-Mit Angular 20 entfällt der Service-Suffix im neuen Style Guide.
-Das sorgt zwar für kürzere Dateinamen, macht aber die Rolle der Klassen weniger offensichtlich.
-Dieser Artikel zeigt ein **Gedankenexperiment**, bei dem ein eigener `@Service`-Decorator dieses Problem elegant löst.
+With Angular 20, the service suffix has been removed from the new style guide.
+While this leads to shorter filenames, it also makes the role of classes less obvious.
+This article presents a **thought experiment** that introduces a custom `@Service` decorator to solve this issue elegantly.
 
 
-## Angular 20: Der Service-Suffix ist weg
+## Angular 20: The service suffix is gone
 
-Die neue Major-Version von Angular bringt einige tiefgreifende Veränderungen mit sich.
-So wurde der neue [Angular coding style guide](https://angular.dev/style-guide) für v20 stark überarbeitet und verschlankt.
-Es wird *nicht* mehr empfohlen, Komponenten, Services und Direktiven mit einem Suffix zu versehen.
+The new major version of Angular brings some significant changes.
+The new [Angular coding style guide](https://angular.dev/style-guide) for v20 has been greatly revised and condensed.
+It is *no longer* recommended to suffix components, services, and directives.
 
-Der Befehl `ng generate service book-store` generiert demnach nicht mehr eine Klasse mit dem Namen `BookStoreService`, sondern vergibt nur noch den Namen `BookStore`.
-Folgerichtig wird aus `book-store.service.ts` nun einfach nur `book-store.ts`.
+The command `ng generate service book-store` no longer creates a class named `BookStoreService`, but instead just `BookStore`.
+Accordingly, `book-store.service.ts` is now simply `book-store.ts`.
 
-Das ist prinzipiell eine tolle Sache.
-Wir erhalten kürzere Dateinamen und mehr Fokus auf bewusste Benennung.
-Aber einen kleinen Nachteil hat das Ganze:
-Wir erkennen nicht mehr auf den ersten Blick, dass eine Klasse als Service genutzt werden soll.
+That's generally a great idea.
+We get shorter filenames and more emphasis on deliberate naming.
+But there is one small downside:
+We no longer immediately recognize that a class is intended to be used as a service.
 
-**bis Angular 19:**
+**until Angular 19:**
 
 ```ts
 // book-store.service.ts
@@ -45,9 +45,9 @@ Wir erkennen nicht mehr auf den ersten Blick, dass eine Klasse als Service genut
   providedIn: 'root'
 })
 export class BookStoreService { }
-```
+````
 
-**ab Angular 20:**
+**starting from Angular 20:**
 
 ```ts
 // book-store.ts
@@ -58,10 +58,10 @@ export class BookStoreService { }
 export class BookStore { }
 ```
 
-Wer Angular bereits länger nutzt, weiß, dass der `@Injectable`-Decorator fast immer einen Service kennzeichnet.
-Dennoch könnte der Einsatzzweck dieses Decorators sicherlich klarer kommuniziert werden.
+Anyone who has used Angular for a while knows that the `@Injectable` decorator almost always indicates a service.
+Still, the purpose of this decorator could certainly be communicated more clearly.
 
-In Spring beispielsweise ist `@Service` eine gängige Annotation, welche verdeutlicht, dass eine Klasse Service-Logik enthält.
+In Spring, for example, `@Service` is a common annotation that makes it clear that a class contains service logic.
 
 ```java
 import org.springframework.stereotype.Service;
@@ -72,21 +72,18 @@ public class BookStoreService {
 }
 ```
 
-Zusätzlich gibt es noch weitere Annotationen wie `@Repository`, `@Controller` oder `@Component`.
-Ich finde es weiterhin sehr charmant, dass der Einsatzzweck schon am Anfang der Klasse eindeutig erkennbar ist.
+There are also other annotations like `@Repository`, `@Controller`, or `@Component`.
+I find it very elegant that the purpose of a class is clearly visible at the top.
 
+## The motivation – My `@Service()` decorator for Angular
 
-## Die Motivation – Mein `@Service()`-Decorator für Angular
+So what do we do if we want to drop the familiar `Service` suffix but still make it obvious that a class is a service?
 
-Was tun wir also, wenn wir auf das altbekannte `Service`-Suffix verzichten wollen
-und trotzdem noch deutlich machen möchten, dass eine Klasse ein Service ist?
+My idea: Why don't we just introduce a custom decorator named `@Service()`?
+Then the decorator itself would make it clear that the class is a service.
+And while we're at it, let's also remove the repetitive `providedIn: 'root'`.
 
-Mein Gedanke dazu: Warum führen wir nicht einfach einen eigenen Decorator namens `@Service()` ein?
-Dann wäre direkt durch den Decorator ersichtlich, dass es sich bei der Klasse um einen Service handelt.
-Und weil wir schon mal dabei sind, sparen wir uns auch gleich noch das immer gleiche `providedIn: 'root'`.
-
-Wenn ich mir also eine Änderung am Angular-Framework wünschen könnte,
-dann wäre es vielleicht folgende neue Syntax:
+If I could wish for a change in the Angular framework, it might look like this:
 
 ```ts
 // book-store.ts
@@ -95,32 +92,30 @@ dann wäre es vielleicht folgende neue Syntax:
 export class BookStore { }
 ```
 
-Folgende Verbesserungen stelle ich mir konkret vor:
+Here's what I specifically envision as improvements:
 
-1. Wir verzichten weiterhin auf das Suffix `Service`.
-2. Wir müssen nicht mehr bei jedem Service erneut `providedIn: 'root'` schreiben. Das hat mich schon immer gestört.
+1. We continue to omit the `Service` suffix.
+2. We no longer have to write `providedIn: 'root'` for every service. That's always annoyed me.
 
+## The goal: more compact, clearer, and less boilerplate code
 
-## Das Ziel: Kompakter, klarer und weniger Boilerplate-Code
+So, my goal is a more elegant decorator that:
 
-Mein Ziel ist demnach ein eleganterer Decorator, der:
+* clearly signals that the class is a service,
+* automatically registers it in the root injector (`providedIn: 'root'`),
+* is fully compatible with the AOT compiler and Ivy.
 
-* auf einen Blick klarstellt, dass es sich bei der Klasse um einen Service handelt,
-* automatisch die Bereitstellung im Root-Injector übernimmt (`providedIn: 'root'`),
-* vollständig kompatibel mit dem AOT-Compiler und Ivy ist.
+In short: a decorator that has a compact syntax and brings me personal joy. 😇
 
-Um es kurz zu sagen: Ein Decorator, der eine möglichst kompakte Syntax hat mir persönlich Freude bereitet. 😇
+## What options do we have?
 
-
-## Welche Ansätze gibt es überhaupt?
-
-Die Entwicklung eines solchen eigenen Decorators ist leider nicht komplett trivial, vor allem, da Angular intern sehr genau festlegt, wie DI funktioniert.
-Schauen wir uns ein paar mögliche Ansätze gemeinsam an:
+Developing such a custom decorator isn't completely trivial, especially since Angular tightly controls how DI works internally.
+Let's look at a few possible approaches:
 
 
-### Idee 1: Vererbung von `@Injectable`
+### Idea 1: Inheriting from `@Injectable`
 
-Ein logischer Gedanke wäre, eine Basisklasse mit `@Injectable()` zu annotieren und Services daraus abzuleiten:
+A logical idea would be to annotate a base class with `@Injectable()` and extend it:
 
 ```ts
 @Injectable({ 
@@ -131,19 +126,18 @@ export class BaseService {}
 export class BookStore extends BaseService {}
 ```
 
-Das funktioniert allerdings nicht, da Angular die Metadaten zur Compile-Zeit direkt an der Zielklasse speichert.
-Diese Metadaten werden leider nicht vererbt.
-Das Framework findet den Service einfach nicht, und wir erhalten die folgende Fehlermeldung:
+Unfortunately, this doesn't work because Angular stores metadata at compile time directly on the target class.
+These metadata are not inherited.
+The framework simply doesn't find the service, and we get the following error:
 
-> **❌ Fehlermeldung:** NullInjectorError: No provider for BookStore!
+> **❌ Error:** NullInjectorError: No provider for BookStore!
 
-Abgesehen davon, dass diese Lösung technisch nicht funktioniert, erfüllt sie auch nicht unser Ziel, einen echten Decorator zu erstellen.
-Ziel verfehlt!
+Aside from the technical issue, this also doesn't meet our goal of creating a real decorator.
 
 
-## Idee 2: Eigener Decorator, der `@Injectable` wrappt
+## Idea 2: Custom decorator that wraps `@Injectable`
 
-Eine zweite Idee wäre es, einen einfachen Wrapper zu erstellen:
+A second idea would be to create a simple wrapper:
 
 ```ts
 export function Service(): ClassDecorator {
@@ -151,31 +145,30 @@ export function Service(): ClassDecorator {
 }
 ```
 
-Diese Variante funktioniert nur im JIT-Modus (Just-in-Time). 
-Angulars AOT-Compiler unterstützt dieses dynamische Vorgehen leider nicht.
+This variant only works in JIT mode (Just-in-Time).
+Angular's AOT compiler doesn't support this dynamic approach.
 
-> **❌ Fehlermeldung:** The injectable 'BookStore2' needs to be compiled using the JIT compiler, but '@angular/compiler' is not available.
+> **❌ Error:** The injectable 'BookStore2' needs to be compiled using the JIT compiler, but '@angular/compiler' is not available.
 > JIT compilation is discouraged for production use-cases! Consider using AOT mode instead.
 > Alternatively, the JIT compiler should be loaded by bootstrapping using '@angular/platform-browser-dynamic' or '@angular/platform-server',
   or manually provide the compiler with 'import "@angular/compiler";' before bootstrapping.
 
 
+## Idea 3: Using internal Angular Ivy APIs
 
-## Idee 3: Nutzung interner Angular-Ivy-APIs
+The previous approaches didn't work. Now let's look at internal Ivy APIs.
+These are mechanisms Angular itself uses to provide services.
+**Important: We are consciously venturing into experimental territory!**
+We're using an internal but undocumented Angular API.
+This approach is more suitable as an experiment than a recommendation for production.
 
-Die bisherigen Ansätze haben nicht funktioniert. Jetzt schauen wir uns die internen Ivy-APIs an.
-Das sind Mechanismen, die Angular selbst zur Bereitstellung von Services nutzt. 
-**Wichtig: An dieser Stelle bewegen wir uns bewusst auf experimentelles Terrain!** 
-Wir greifen auf eine intern genutzte, aber nicht offiziell bereitgestellte Angular-API zurück.
-Dieser Ansatz eignet sich daher eher als Experiment denn als Empfehlung für produktiven Code.
+The central internal API of interest is [`ɵɵdefineInjectable`](https://github.com/angular/angular/blob/a40abf09f1abcabda3752ed915bb90e4eafe078d/packages/core/src/di/interface/defs.ts#L167).
+This function creates the necessary metadata so Angular can inject the class automatically.
+The linked code also includes usage hints: (**This should be assigned to a static `ɵprov` field on a type, which will then be an `InjectableType`.**)
 
-Die zentrale interne API, die für uns interessant ist, heißt [`ɵɵdefineInjectable`](https://github.com/angular/angular/blob/a40abf09f1abcabda3752ed915bb90e4eafe078d/packages/core/src/di/interface/defs.ts#L167).
-Diese Funktion erstellt für eine Klasse die nötigen Metadaten, sodass Angular sie automatisch injizieren kann.
-Im verlinkten Code finden sich auch Hinweise zur Verwendung: (**This should be assigned to a static `ɵprov` field on a type, which will then be an `InjectableType`.**)
+### Minimal version without constructor injection
 
-### Minimalversion ohne Konstruktor-Injection
-
-Beginnen wir mit einem minimalistischen Ansatz, der sehr einfach ist, aber auch eine klare Einschränkung mit sich bringt:
+Let's start with a minimal approach that's simple but has a clear limitation:
 
 ```ts
 import { ɵɵdefineInjectable } from '@angular/core';
@@ -193,20 +186,20 @@ export function Service(): ClassDecorator {
 }
 ```
 
-Was macht dieser Code?
+What does this code do?
 
-* Wir erzeugen mit `ɵɵdefineInjectable` eine "injectable definition" und setzen diese direkt als neues Property an das `target`.
-* Die Einstellung `providedIn: 'root'` sorgt dafür, dass der Service global verfügbar ist, ohne dass wir das immer wiederholen müssen.
-* Die Factory-Funktion erzeugt einfach eine neue Instanz der Klasse – **aber ohne Konstruktor-Abhängigkeiten**.
+* It uses `ɵɵdefineInjectable` to create an "injectable definition" and assigns it as a new property to `target`.
+* `providedIn: 'root'` ensures the service is globally available without repeating that setting.
+* The factory function simply creates a new instance of the class – **but without constructor dependencies**.
 
-Der große Vorteil dieses Ansatzes ist seine Einfachheit. 
-Allerdings wissen wir zur Laufzeit schlicht nicht, welche Abhängigkeiten der Konstruktor erwartet. 
-Wir haben den Konstruktor daher notgedrungen ohne Argumente aufgerufen.
-Der große Nachteil besteht somit darin, dass generische Konstruktor-Injection nicht möglich ist.
+The big advantage of this approach is its simplicity.
+However, at runtime, we don't know what dependencies the constructor expects.
+So we're forced to call it without arguments.
+The major downside is that generic constructor injection isn't possible.
 
-Das folgende Beispiel macht dies deutlich.
-Wir erwarten, das der Service `BookRating` per Konstruktor-Injection verfügbar gemacht wird.
-Stattdessen ist der Wert aber einfach nur `undefined`.
+This example demonstrates this issue.
+We expect the `BookRating` service to be injected via the constructor.
+Instead, we just get `undefined`.
 
 ```ts
 @Service()
@@ -218,20 +211,19 @@ export class BookStore {
 }
 ```
 
-Diese Variante eignet sich also ausschließlich für Services ohne Konstruktor-Abhängigkeiten.
+So this version is only suitable for services without constructor dependencies.
 
+### Gregor's version: Constructor injection with explicit dependencies
 
-### Gregors Variante: Konstruktor-Injection mit expliziten Abhängigkeiten
+While researching, I discovered that my fellow GDE Gregor Woiwode explored this topic 5 years ago.
+He presented [his solution](https://stackoverflow.com/a/59759381) on StackOverflow.
+His decorator is called `@InjectableEnhanced` and shares the same goal as this article.
 
-An dieser Stelle habe ich bei meinen Recherchen festgestellt, dass mein geschätzter GDE-Kollege Gregor Woiwode sich bereits vor 5 Jahren mit dem Thema beschäftigt hat.
-[Seine Lösung](https://stackoverflow.com/a/59759381) hat er auf StackOverflow vorgestellt.
-Sein Decorator heißt `@InjectableEnhanced` und hat prinzipiell die gleiche Zielsetzung wie dieser Artikel.
-
-Gregor hat bereits damals demonstriert, wie man die fehlende Konstruktor-Injection nachbilden kann. 
-Dabei nutzt er ebenfalls dieselbe API wie zuvor, definiert aber explizit alle Abhängigkeiten innerhalb der Factory-Funktion:
+Gregor already demonstrated how to simulate constructor injection.
+He uses the same API but explicitly defines dependencies in the factory function:
 
 ```ts
-// Gregor's Code, minimal abgewandelt:
+// Gregor's code, slightly modified:
 
 export function InjectableEnhanced() {
   return <T extends new (...args: any[]) => InstanceType<T>>(target: T) => {
@@ -261,24 +253,24 @@ export class BookStore {
 }
 ```
 
-Was passiert hier genau?
+What's happening here?
 
-* Gregor definiert nicht nur `ɵprov`, sondern explizit auch `ɵfac` (die Factory), die normalerweise automatisch vom Angular-Compiler erzeugt wird. 
-  Er verhindert zudem, dass jemand die Klasse direkt instanziieren kann. Der Code verhindert dies mit einer frühen Exception.
-  Wer Bedenken hat, dass jemand die dekorierten Service manuell instanziiert, kann diese Prüfung gerne beibehalten.
-* Innerhalb der Factory-Funktion injiziert der Code explizit jede Abhängigkeit einzeln mittels `ɵɵinject`. 
-  In diesem Fall handelt es sich um unseren Service `BookRating`.
-  Dadurch unterstützt er direkte Konstruktor-Injection.
-* Aber Achtung: Wir müssen jede Abhängigkeit einzeln und explizit in der Factory-Funktion angeben!
-  Das ist aufwändig und anfällig für Fehler, falls sich die Konstruktorparameter ändern.
+* Gregor not only defines `ɵprov` but also `ɵfac` (the factory), which is usually created automatically by the Angular compiler.
+  He also prevents direct instantiation of the class with an early exception.
+  If you're concerned about manual instantiation, keep this check.
+* Within the factory, he injects each dependency explicitly using `ɵɵinject`.
+  In this case, it's our `BookRating` service.
+  This supports direct constructor injection.
+* But caution: We have to list each dependency manually in the factory!
+  This is error-prone and tedious if the constructor parameters change.
 
-Der Code lässt sich auch so umschreiben, sodass er dem vorherigen Beispiel entspricht.
-Statt der direkten Zuweisung `((target as any).ɵprov)`, würde ich eher `Object.defineProperty() ` verwenden.
-Dieser Stil ist zwar etwas ausführlicher, dafür umgehen wir aber nicht mehr das Typsystem per Cast auf `any`.
-Die Fehlermeldung habe ich dabei auch weggelassen:
+The code can also be rewritten to match the previous example.
+Instead of assigning `((target as any).ɵprov)`, I'd rather use `Object.defineProperty()`.
+It's more verbose, but avoids casting to `any`.
+I've also left out the error message:
 
 ```ts
-// Gregors Code, gekürzt und angepasst:
+// Gregor's code, shortened and adapted:
 
 export function Service(): ClassDecorator {
   return (target: any) => {
@@ -305,36 +297,34 @@ export class BookStore {
 }
 ```
 
-Dieser Ansatz ist technisch geschickt gelöst, hat aber eine klare Einschränkung: 
-Er ist nicht generisch genug für alle Fälle.
-Für jeden einzelnen Service müssen wir manuell die Abhängigkeiten auflisten.
-Gregors Lösung funktioniert somit perfekt für spezielle Fälle mit wenigen oder immer denselben Abhängigkeiten.
+This approach is technically clever but has a limitation:
+It isn't generic enough for all cases.
+Each service must list dependencies manually.
+Gregor's solution works great for specific cases with few or fixed dependencies.
 
+## Idea 4: Automatic dependency resolution with reflect-metadata
 
-## Idee 4: Automatische Dependency-Auflösung mit reflect-metadata
+To enable constructor injection without manually listing dependencies,
+we could use the library [reflect-metadata](https://www.npmjs.com/package/reflect-metadata).
+This requires enabling `emitDecoratorMetadata: true` in `tsconfig.json` and adding `reflect-metadata` as a dependency.
 
-Um Konstruktor-Injectionen ohne manuelle Angabe von Abhängigkeiten zu ermöglichen, 
-könnten wir die Bibliothek [reflect-metadata](https://www.npmjs.com/package/reflect-metadata) nutzen. 
-Dies erfordert die Aktivierung von `emitDecoratorMetadata: true` in der `tsconfig.json` und die Einbindung von `reflect-metadata` als zusätzliche Abhängigkeit.
+In older Angular versions, `reflect-metadata` was often required because the JIT compiler evaluated metadata at runtime.
+With Ivy (since Angular 9) and AOT compilation, Angular generates static metadata at build time,
+so `reflect-metadata` is usually unnecessary in production.
 
-In früheren Angular-Versionen war `reflect-metadata` oft notwendig, da der JIT-Compiler Metadaten zur Laufzeit auswertete. 
-Mit Ivy (ab Angular 9) und AOT-Compilation generiert Angular statische Metadaten während der Build-Zeit, 
-wodurch `reflect-metadata` in Produktionsumgebungen meist überflüssig ist. 
+Using this library increases bundle size, which modern Angular projects aim to avoid.
+I therefore didn't pursue this further and don't want to reintroduce `reflect-metadata` to my projects.
 
-Die Verwendung dieser Bibliothek erhöht unnötig die Bundle-Größe, was moderne Angular-Projekte vermeiden sollten.
-Ich habe diesen Ansatz daher nicht weiter verfolgt, `reflect-metadata` möchte ich nicht wieder als Abhängigkeit in meinem Projekt sehen. 
+### Idea 5: The final idea: Dependency injection with `inject()`
 
+Can we make it even simpler, without manually listing constructor dependencies?
+This is where Angular's new `inject()` function comes in (which didn't exist in 2020).
 
-### Idee 5: Die finale Idee: Dependency Injection mit `inject()`
-
-Können wir es nicht einfacher haben, und zwar ohne jegliche manuelle Angabe der Konstruktor-Abhängigkeiten?
-Genau an dieser Stelle kommt die neue Angular-Funktion `inject()` ins Spiel (die es 2020 noch nicht gab).
-
-Mit `inject()` lassen sich Abhängigkeiten direkt innerhalb der Klassendefinition beziehen, ohne sie über den Konstruktor zu injizieren. 
-Dadurch entfallen all unsere bisherigen Probleme:
+With `inject()`, we can obtain dependencies directly within the class definition, no need for constructor injection.
+That solves all our previous problems:
 
 ```ts
-// derselbe Code erneut, aus dem vorherigen Beispiel von Idee 3
+// same code again, from previous Idea 3 example
 import { ɵɵdefineInjectable } from '@angular/core';
 
 export function Service(): ClassDecorator {
@@ -350,18 +340,18 @@ export function Service(): ClassDecorator {
 }
 ```
 
-So sieht die Verwendung dann aus:
+Here's how to use it:
 
 ```ts
 
 @Service()
 export class BookStore {
 
-  #service = inject(BookRating); // Abhängigkeit direkt injiziert
+  #service = inject(BookRating); // dependency directly injected
 }
 ```
 
-Hier ein weiteres Beispiel:
+Here's another example:
 
 ```ts
 import { inject } from '@angular/core';
@@ -378,52 +368,50 @@ export class BookStore {
 }
 ```
 
-Klingt doch elegant – zumindest für unser kleines Experiment!
+Sounds elegant - at least for our little experiment!
 
+### Conclusion and final thoughts
 
-### Fazit und abschließende Gedanken
+We've now explored several versions of a custom `@Service()` decorator and seen:
 
-Wir haben nun mehrere Varianten für einen eigenen `@Service()`-Decorator betrachtet und dabei folgende Möglichkeiten kennengelernt:
+1. **Minimal version without constructor injection:**
+   Simple, but too limited for most real-world use.
 
-1. **Minimalversion ohne Konstruktor-Injection:**
-   Ein einfacher Ansatz, aber für viele reale Situationen zu stark eingeschränkt.
+2. **Gregor's 2020 version with explicit constructor injection:**
+   Technically interesting and gives insight into how DI works under Ivy.
+   In practice, suitable only for specific cases due to the need to list dependencies manually.
+   Less maintainable.
 
-2. **Gregors Variante aus dem Jahr 2020 mit expliziter Konstruktor-Injection:**
-   Technisch interessant und zeigt deutlich, wie Dependency Injection unter Ivy funktioniert. 
-   In der Praxis ist dieser Ansatz allerdings nur für spezielle Fälle geeignet, da jede Abhängigkeit einzeln aufgeführt werden muss. 
-   Das macht den Ansatz weniger wartbar.
+3. **Automatic dependency resolution via `reflect-metadata`:**
+   Convenient and generic, but the extra dependency increases bundle size and doesn't fit modern Ivy-based Angular.
 
-3. **Automatische Dependency-Auflösung via `reflect-metadata`:**
-   Bequem und generisch, aber die zusätzliche Abhängigkeit von `reflect-metadata` erhöht unnötig die Bundle-Größe und passt nicht mehr in moderne Ivy-basierte Angular-Projekte.
+4. **Modern approach: Dependency injection with `inject()`:**
+   Leverages Angular's new `inject()` API.
+   Constructor injection isn't used, but also no longer necessary.
+   This final idea with `inject()` appeals to me personally.
 
-4. **Moderner Ansatz: Dependency Injection mit `inject()`:**
-   Dieser Ansatz nutzt die Möglichkeiten der neuen Angular-API `inject()`. 
-   Konstruktor-Injection ist dabei weiterhin nicht möglich, wird aber auch nicht mehr zwingend benötigt. 
-   Diese finale Idee mit dem Einsatz von `inject()` gefällt mir persönlich gut.
+But should we really use this decorator?
 
-Aber sollten wir diesen Decorator nun wirklich einsetzen?
+Ultimately, as mentioned in the intro, this decorator is a **thought experiment**.
+Exploring Angular's internal APIs like this is fun and educational, but in production we should be cautious:
 
-Letztlich ist dieser Decorator, wie eingangs erwähnt, ein **Gedankenexperiment**.
-Es ist spannend und lehrreich, interne Angular-APIs auf diese Weise zu erkunden, jedoch sollten wir im produktiven Kontext Vorsicht walten lassen:
+* **Use of internal APIs:**
+  The Ivy APIs (`ɵɵdefineInjectable`, `ɵɵinject`) are undocumented and could change in future Angular versions.
+  This poses a risk that the code may break or need major updates.
 
-* **Nutzung interner APIs:**
-  Die verwendeten Ivy-APIs (`ɵɵdefineInjectable`, `ɵɵinject`) sind nicht offiziell dokumentiert und könnten sich in zukünftigen Angular-Versionen ändern. 
-  Dies birgt ein erhebliches Risiko, dass der Code irgendwann nicht mehr funktioniert oder aufwändig angepasst werden muss.
+* **Maintainability and team understanding:**
+  A custom decorator may seem elegant, but every new team member must learn why it exists and how it works.
 
-* **Wartbarkeit und Verständnis im Team:**
-  Ein selbst geschriebener Decorator wirkt vielleicht zunächst elegant, doch jedes neue Teammitglied müsste erst lernen, warum im Projekt ein "magischer" Decorator verwendet wird und wie genau dieser funktioniert.
+* **Low benefit vs. risk:**
+  The only gain is slightly better readability and a bit less boilerplate.
+  But the risks and maintenance cost may outweigh this.
 
-* **Geringer Mehrwert vs. Risiko:**
-  Der einzige Gewinn dieses Decorators ist eine leichte Verbesserung der Lesbarkeit und minimal weniger Boilerplate-Code.
-  Demgegenüber steht jedoch das erwähnte Risiko und der Aufwand zur Pflege.
+For these reasons, I'd probably continue using the reliable `@Injectable()` decorator in production Angular code.
+The official API gives us stability, maintainability, and future-proofing.
 
-Aus diesen Gründen würde ich in produktivem Angular-Code wahrscheinlich weiterhin den bewährten `@Injectable()`-Decorator einsetzen.
-Die offizielle Angular-API garantiert uns Stabilität, Wartbarkeit und Zukunftssicherheit.
+**What do you think?**
 
+How do you like this experimental `@Service()` decorator?
+Would you try it anyway, or do you prefer to stick with good old `@Injectable()` like I do? …or should I switch everything to `@Service()`? 😅
 
-**Was meinst du dazu?**
-
-Wie findest du diesen experimentellen `@Service()`-Decorator?
-Würdest du ein solches Konstrukt dennoch einmal ausprobieren, oder bleibst du wie ich lieber beim bewährten `@Injectable()`? …oder sollte ich doch alles auf `@Service()` umstellen? 😅
-
-Ich freue mich auf dein Feedback auf X oder BlueSky! 😊
+I'd love to hear your feedback on X or BlueSky! 😊
