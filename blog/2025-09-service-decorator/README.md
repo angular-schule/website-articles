@@ -255,10 +255,10 @@ export class BookStore {
 
 What's happening here?
 
-* Gregor not only defines `ɵprov` but also `ɵfac` (the factory), which is usually created automatically by the Angular compiler.
-  He also prevents direct instantiation of the class with an early exception.
+* The code from Gregor not only defines `ɵprov` but also `ɵfac` (the factory), which is usually created automatically by the Angular compiler.
+  The code also prevents direct instantiation of the class with an early exception.
   If you're concerned about manual instantiation, keep this check.
-* Within the factory, he injects each dependency explicitly using `ɵɵinject`.
+* Within the factory, the code injects each dependency explicitly using `ɵɵinject`.
   In this case, it's our `BookRating` service.
   This supports direct constructor injection.
 * But caution: We have to list each dependency manually in the factory!
@@ -266,7 +266,7 @@ What's happening here?
 
 The code can also be rewritten to match the previous example.
 Instead of assigning `((target as any).ɵprov)`, I'd rather use `Object.defineProperty()`.
-It's more verbose, but avoids casting to `any`.
+It's a littbe bit more verbose, but avoids casting to `any`.
 I've also left out the error message:
 
 ```ts
@@ -297,10 +297,11 @@ export class BookStore {
 }
 ```
 
-This approach is technically clever but has a limitation:
+This approach is a clever technical solution, but it has one clear limitation:
 It isn't generic enough for all cases.
 Each service must list dependencies manually.
-Gregor's solution works great for specific cases with few or fixed dependencies.
+Gregor's old solution still works great for specific cases with few or fixed dependencies.
+
 
 ## Idea 4: Automatic dependency resolution with reflect-metadata
 
