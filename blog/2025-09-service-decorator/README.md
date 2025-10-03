@@ -116,7 +116,7 @@ Developing such a custom decorator isn't completely trivial, especially since An
 Let's look at a few possible approaches:
 
 
-### Idea 1: Inheriting from `@Injectable`
+## Idea 1: Inheriting from `@Injectable`
 
 A logical idea would be to annotate a base class with `@Injectable()` and extend it:
 
@@ -332,7 +332,7 @@ so `reflect-metadata` is usually unnecessary in production.
 Using this library increases bundle size, which modern Angular projects aim to avoid.
 I therefore didn't pursue this further and don't want to reintroduce `reflect-metadata` to my projects.
 
-### Idea 5: The final idea: Dependency injection with `inject()`
+## Idea 5: The final idea: Dependency injection with `inject()`
 
 Can we make it even simpler, without manually listing constructor dependencies?
 This is where Angular's new `inject()` function comes in (which didn't exist in 2020).
