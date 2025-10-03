@@ -59,9 +59,9 @@ export class BookStore { }
 ```
 
 Anyone who has used Angular for a while knows that the `@Injectable` decorator almost always indicates a service.
-Still, the purpose of this decorator could certainly be communicated more clearly.
+Nevertheless, in my opinion, the intended use of this decorator could be communicated even more clearly.
 
-In Spring, for example, `@Service` is a common annotation that makes it clear that a class contains service logic.
+In the well-known Java framework Spring Boot, `@Service` is a common annotation that indicates that a class contains service logic:
 
 ```java
 import org.springframework.stereotype.Service;
@@ -72,8 +72,11 @@ public class BookStoreService {
 }
 ```
 
-There are also other annotations like `@Repository`, `@Controller`, or `@Component`.
-I find it very elegant that the purpose of a class is clearly visible at the top.
+Additionally, there are other annotations like `@Repository`.
+In Spring, `@Repository` has exactly the same functionality as `@Service`.
+The only difference is that `@Repository` also signals that this class implements the repository pattern.
+Personally, I find it very elegant when the purpose of a class is as clearly identifiable as possible.
+
 
 ## The motivation – My `@Service()` decorator for Angular
 
@@ -127,8 +130,8 @@ export class BookStore extends BaseService {}
 ```
 
 Unfortunately, this doesn't work because Angular stores metadata at compile time directly on the target class.
-These metadata are not inherited.
-The framework simply doesn't find the service, and we get the following error:
+This metadata is not inherited.
+The framework simply doesn't find the service, and we get the following error at runtime:
 
 > **❌ Error:** NullInjectorError: No provider for BookStore!
 
@@ -145,13 +148,23 @@ export function Service(): ClassDecorator {
 }
 ```
 
-This variant only works in JIT mode (Just-in-Time).
-Angular's AOT compiler doesn't support this dynamic approach.
+This code also compiles, but as soon as we try to inject the decorated service via DI, we get the following runtime error:
 
 > **❌ Error:** The injectable 'BookStore2' needs to be compiled using the JIT compiler, but '@angular/compiler' is not available.
 > JIT compilation is discouraged for production use-cases! Consider using AOT mode instead.
 > Alternatively, the JIT compiler should be loaded by bootstrapping using '@angular/platform-browser-dynamic' or '@angular/platform-server',
   or manually provide the compiler with 'import "@angular/compiler";' before bootstrapping.
+
+To better understand this error message, we need some background knowledge about the terms 'AOT' and 'JIT', which can be quickly explained:
+Angular supports two types of compilation: the **JIT mode (Just-in-Time)** and the **AOT mode (Ahead-of-Time)**.
+In JIT mode, Angular compiles components and decorators at runtime directly in the browser.
+While flexible, this approach is relatively slow and therefore not recommended in production.
+In contrast, AOT mode performs the compilation during the build process.
+This results in significantly better performance and smaller bundle sizes.
+Since the introduction of the Ivy engine (since Angular 9), AOT is the default mode, and as developers we normally don't need to worry about this topic anymore.
+Therefore, it's important that our decorators are fully AOT-compatible, which unfortunately is not the case here.
+
+Conclusion: This variant only works in JIT mode and is unfortunately not supported by the AOT compiler.
 
 
 ## Idea 3: Using internal Angular Ivy APIs
@@ -212,6 +225,9 @@ export class BookStore {
 ```
 
 So this version is only suitable for services without constructor dependencies.
+However, Angular now provides a new function that also helps us in such cases.
+We will take a closer look at exactly how this works very soon!
+
 
 ### Gregor's version: Constructor injection with explicit dependencies
 
@@ -255,7 +271,7 @@ export class BookStore {
 
 What's happening here?
 
-* The code from Gregor not only defines `ɵprov` but also `ɵfac` (the factory), which is usually created automatically by the Angular compiler.
+* Gregor's code defines not only `ɵprov` but also explicitly `ɵfac` (the factory), which is usually created automatically by the Angular compiler.
   The code also prevents direct instantiation of the class with an early exception.
   If you're concerned about manual instantiation, keep this check.
 * Within the factory, the code injects each dependency explicitly using `ɵɵinject`.
@@ -266,7 +282,7 @@ What's happening here?
 
 The code can also be rewritten to match the previous example.
 Instead of assigning `((target as any).ɵprov)`, I'd rather use `Object.defineProperty()`.
-It's a littbe bit more verbose, but avoids casting to `any`.
+This style is a bit more verbose, but avoids bypassing the type system using a type assertion to `any`.
 I've also left out the error message:
 
 ```ts
@@ -300,7 +316,7 @@ export class BookStore {
 This approach is a clever technical solution, but it has one clear limitation:
 It isn't generic enough for all cases.
 Each service must list dependencies manually.
-Gregor's old solution still works great for specific cases with few or fixed dependencies.
+Gregor's old solution still works perfectly for special cases with few or always the same dependencies.
 
 
 ## Idea 4: Automatic dependency resolution with reflect-metadata
@@ -369,7 +385,7 @@ export class BookStore {
 }
 ```
 
-Sounds elegant - at least for our little experiment!
+Sounds elegant, at least for our little experiment!
 
 ### Conclusion and final thoughts
 
@@ -416,3 +432,7 @@ How do you like this experimental `@Service()` decorator?
 Would you try it anyway, or do you prefer to stick with good old `@Injectable()` like I do? …or should I switch everything to `@Service()`? 😅
 
 I'd love to hear your feedback on X or BlueSky! 😊
+
+<hr>
+
+<small>Thanks to Danny Koppenhagen for the review and valuable feedback!</small>
