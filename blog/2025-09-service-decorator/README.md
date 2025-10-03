@@ -431,7 +431,7 @@ The official API gives us stability, maintainability, and future-proofing.
 How do you like this experimental `@Service()` decorator?
 Would you try it anyway, or do you prefer to stick with good old `@Injectable()` like I do? …or should I switch everything to `@Service()`? 😅
 
-I'd love to hear your feedback on X or BlueSky! 😊
+I'd love to hear [your feedback on X](https://x.com/JohannesHoppe/status/1974062116966453741) or [on BlueSky](https://bsky.app/profile/johanneshoppe.de/post/3m2buzx76fk2a)! 😊
 
 <hr>
 
