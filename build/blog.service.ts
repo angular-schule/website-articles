@@ -20,6 +20,7 @@ export class BlogService {
     const folderContents = await readdir(this.config.blogPostsFolder, { withFileTypes: true });
     return folderContents
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !dirent.name.startsWith('_'))
       .map(dirent => dirent.name);
   }
 
