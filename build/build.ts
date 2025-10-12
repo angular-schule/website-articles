@@ -11,10 +11,8 @@ import { makeLightBlogList } from './utils';
   await remove(buildConfig.distFolder);
   await mkdirp(buildConfig.distFolder);
 
-  // copy static files (images, etc.) to dist folder
-  await copy(buildConfig.blogPostsFolder, buildConfig.distFolder);
+  // copy static index.html
   await copy('../index.html', buildConfig.distFolder + '/index.html');
-  console.log('Copied static files to dist');
 
   // generate light blog list
   const blogList = await blogService.getBlogList();
@@ -23,9 +21,14 @@ import { makeLightBlogList } from './utils';
 
   // replace README with entry.json for all blog posts
   blogList.forEach(async (entry) => {
-    const entryJsonPath = `${buildConfig.distFolder}/${entry.slug}/entry.json`;
+    const entryDistFolder = `${buildConfig.distFolder}/${entry.slug}`;
+
+    await mkdirp(entryDistFolder);
+    await copy(buildConfig.blogPostsFolder + '/' + entry.slug, entryDistFolder);
+    await remove(`${entryDistFolder}/README.md`);
+
+    const entryJsonPath = `${entryDistFolder}/entry.json`;
     await writeJson(entryJsonPath, entry);
-    await remove(`${buildConfig.distFolder}/${entry.slug}/README.md`);
     console.log('Generated post file:', entryJsonPath);
   });
 })();
