@@ -48,6 +48,7 @@ export interface BlogEntryLight {
     twitter2?: string;
 
     published: Date | string;
+    language: string;
     header: {
       url: string;
       width: number;
