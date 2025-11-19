@@ -191,9 +191,9 @@ The Angular CLI provides a schematic that automatically converts your Jasmine te
 **IMPORTANT:** The `refactor-jasmine-vitest` schematic is experimental and does not cover all patterns.
 Always review the changes manually.
 
-#### 1. Überblick
+#### 1. Overview
 
-Derzeit führt das Schematic folgende Umwandlungen in den `.spec.ts`‑Dateien durch:
+The schematic currently performs the following transformations in the `.spec.ts` files:
 
 * `fit`/`fdescribe` → `it.only`/`describe.only`
 * `xit`/`xdescribe` → `it.skip`/`describe.skip`
@@ -201,19 +201,19 @@ Derzeit führt das Schematic folgende Umwandlungen in den `.spec.ts`‑Dateien d
 * `jasmine.objectContaining` → `expect.objectContaining`
 * `jasmine.any` → `expect.any`
 * `jasmine.createSpy` → `vi.fn`
-* Umstellung der Lifecycle‑Hooks (`beforeAll`, `beforeEach`, etc.) auf Vitest‑Varianten
+* Conversion of lifecycle hooks (`beforeAll`, `beforeEach`, etc.) to their Vitest equivalents
 * `fail()` → `vi.fail()`
-* Anpassung von Matchern an die Vitest‑API
-* [TODO-Kommentare](https://github.com/angular/angular-cli/pull/31469) für nicht automatisch konvertierbare Stellen
-* Tests mit `done`-Callback werden in `async`/`await`-Tests umgeschrieben
-<!--(siehe PR https://github.com/angular/angular-cli/pull/31435 und folgende -->
+* Adjustment of matchers to the Vitest API
+* [TODO comments](https://github.com/angular/angular-cli/pull/31469) for parts that cannot be converted automatically
+* Tests with `done` callbacks are rewritten into `async`/`await` tests
+<!--(see PR https://github.com/angular/angular-cli/pull/31435 and following -->
 
-Das Schematic führt bestimmte Aufgaben bewusst nicht durch.
-Es installiert weder Vitest noch andere erforderliche Abhängigkeiten.
-Außerdem nimmt es keine Änderungen an der `angular.json` vor, um den Vitest‑Builder zu aktivieren.
-Ebenso entfernt es keine Karma‑Dateien aus dem Projekt.
-Schließlich konvertiert das Schematic auch keine komplexen Spy‑Szenarien, die daher weiterhin manuell überarbeitet werden müssen.
-Die manuelle Umstellung (wie oben beschrieben) bleibt uns leider nicht erspart.
+The schematic deliberately does not perform certain tasks.
+It does not install Vitest or any other required dependencies.
+It also does not modify the `angular.json` to enable the Vitest builder.
+Likewise, it does not remove Karma files from the project.
+Finally, the schematic does not convert complex spy scenarios, which must still be reviewed manually.
+The manual migration (as described above) therefore remains necessary.
 
 
 #### 2. Schematic ausführen
