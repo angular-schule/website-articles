@@ -122,19 +122,19 @@ If they already match `development`, no further step is necessary.
 > This gives you a clean template for the Vitest configuration automatically.
 
 
-#### 3. Eigene `karma.conf.js`‑Konfiguration berücksichtigen
+#### 3. Adopt a custom `karma.conf.js` configuration
 
-Eigene Einstellungen in `karma.conf.js` werden nicht automatisch migriert. 
-Prüfe diese Datei, bevor du sie löschst, und übertrage relevante Optionen manuell.
-Viele Karma‑Optionen besitzen Vitest‑Entsprechungen, die du in einer `vitest.config.ts` definieren kannst und dann über `runnerConfig` in der `angular.json` einbindest.
+Custom settings in `karma.conf.js` file are not migrated automatically.
+Check this file before deleting it, and transfer the relevant options manually.
+Many Karma options have Vitest equivalents that you can define in a `vitest.config.ts` and then include through `runnerConfig` in the `angular.json`.
 
-Typische Migrationspfade:
+Typical migration paths:
 
-* **Reporter:** Karma‑Reporter müssen durch Vitest‑kompatible Reporter ersetzt werden. Viele davon können direkt in `angular.json` unter `test.options.reporters` konfiguriert werden. Für komplexere Fälle nutze `vitest.config.ts`.
-* **Plugins:** Karma‑Plugins erfordern passende Vitest‑Alternativen. Beachte, dass Code‑Coverage in der Angular CLI bereits integriert ist und über `ng test --coverage` aktiviert werden kann.
-* **Eigene Browser‑Launcher:** Diese werden durch die Option `browsers` in der `angular.json` und die Installation eines Browser‑Providers wie `@vitest/browser-playwright` ersetzt.
+* **Reporters:** Karma reporters must be replaced with Vitest-compatible reporters. Many of them can be configured directly in `angular.json` under `test.options.reporters`. For more complex cases, use `vitest.config.ts`.
+* **Plugins:** Karma plugins require suitable Vitest alternatives. Note that code coverage is already integrated in the Angular CLI and can be enabled with `ng test --coverage`.
+* **Custom browser launchers:** These are replaced by the `browsers` option in `angular.json` and by installing a browser provider such as `@vitest/browser-playwright`.
 
-Weitere Einstellungen findest du in der offiziellen [Vitest‑Dokumentation](https://vitest.dev/config/).
+You can find more settings in the official [Vitest documentation](https://vitest.dev/config/).
 
 #### 4. Karma- und `test.ts`‑Dateien entfernen
 
