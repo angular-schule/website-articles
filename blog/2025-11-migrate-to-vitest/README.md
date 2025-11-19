@@ -277,32 +277,32 @@ This allows you to define shared settings centrally and reuse them easily.
 
 
 
-## Die neue Syntax und APIs
+## The new syntax and APIs
 
-Die meisten Specs laufen unverändert, denn **TestBed, ComponentFixture & Co.** bleiben bestehen.
-Bei der Migration von Jasmine zu Vitest bleiben viele Testmuster vertraut, gleichzeitig ändert sich an einigen Stellen die konkrete API.
-Neu lernen musst du vor allem Jasmine‑spezifische Stellen.
+Most specs run unchanged because **TestBed, ComponentFixture & Co.** remain available.
+When migrating from Jasmine to Vitest, many testing patterns stay familiar, but some parts of the API change.
+You mainly have to get familiar with the parts that are specific to Jasmine.
 
-### Globale Funktionen
+### Global functions
 
-Die bekannten globalen Testfunktionen wie `describe`, `it` bzw. `test`, `beforeEach`, `afterEach` und `expect` bleiben in Vitest unverändert erhalten. 
-Sie stehen ohne weitere Importe zur Verfügung, sofern in deiner `tsconfig.spec.json` der Eintrag `types: ["vitest/globals"]` gesetzt ist. 
-Trotzdem empfehlen wir, diese Funktionen explizit zu importieren.
-Dadurch vermeidest du mögliche Namenskollisionen, etwa mit gleichnamigen Funktionen aus Cypress, was in der Vergangenheit regelmäßig zu verwirrenden Problemen geführt hat.
+The well-known global test functions such as `describe`, `it` or `test`, `beforeEach`, `afterEach`, and `expect` remain available in Vitest without changes.
+They are available without additional imports as long as your `tsconfig.spec.json` contains `types: ["vitest/globals"]`.
+However, we still recommend importing these functions explicitly.
+This avoids possible name collisions, for example with functions from Cypress that have the same names, which has caused confusing problems in the past.
 
-### Matcher
+### Matchers
 
-Die üblichen Matcher wie `toBe`, `toEqual`, `toContain` oder `toHaveBeenCalledWith` stehen in Vitest weiterhin zur Verfügung. Wenn du in Jasmine `jasmine.any(...)` verwendet hast, nutzt du in Vitest `expect.any(...)`.
-Wichtig: Vitest hat nicht das Ziel, eine zu Jasmine kompatible API zu schaffen.
-Stattdessen bietet Vitest eine möglichst [**Jest‑kompatible** Expect-API](https://vitest.dev/api/expect.html) auf Basis von Chai an.
-Das Testframework Jest hat wiederum das Ziel, einigermaßen kompatibel zu Jasmine zu sein.
-Weil aber Vitest nur mit Jest kompatibel sein will, ergeben sich folgende Herausforderungen, da einige Matcher schlicht fehlen:
+The usual matchers like `toBe`, `toEqual`, `toContain`, or `toHaveBeenCalledWith` remain available in Vitest. If you used `jasmine.any(...)` in Jasmine, you now use `expect.any(...)` in Vitest.
+Important: Vitest does not aim to provide an API that is compatible with Jasmine.
+Instead, Vitest offers a [**Jest-compatible** expect API](https://vitest.dev/api/expect.html) based on Chai.
+The Jest test framework itself aims to be somewhat compatible with Jasmine.
+But since Vitest only wants to be compatible with Jest, some challenges arise because certain matchers simply do not exist.
 
-#### 1) `toBeTrue()` / `toBeFalse()` gibt es in Jest/Vitest nicht
+#### 1) `toBeTrue()` / `toBeFalse()` do not exist in Jest/Vitest
 
-Jasmine bringt die strikten Bool‑Matcher `toBeTrue()` und `toBeFalse()` mit.
-In Jest (und damit Vitest) existieren sie nicht.
-Du kannst stattdessen einfach den Matcher [`toBe(true)`](https://vitest.dev/api/expect.html#tobe) bzw. `toBe(false)` verwenden.
+Jasmine includes the strict boolean matchers `toBeTrue()` and `toBeFalse()`.
+They do not exist in Jest (and therefore not in Vitest).
+Instead, you can simply use the matcher [`toBe(true)`](https://vitest.dev/api/expect.html#tobe) or `toBe(false)`.
 
 ```ts
 // Jasmine
