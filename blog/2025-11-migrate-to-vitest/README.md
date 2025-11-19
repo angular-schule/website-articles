@@ -184,12 +184,12 @@ The browser name depends on the provider you use (for example `chromium` for Pla
 Der Headless‑Modus wird automatisch aktiviert, wenn die Umgebungsvariable `CI` gesetzt ist oder der Browsername "Headless" enthält (z. B. `ChromeHeadless`). 
 Andernfalls läuft der Browser sichtbar.
 
-### Automatisches Test‑Refactoring per Schematic
+### Automatic test refactoring using the schematic
 
-Das Angular CLI stellt ein Schematic bereit, das deine Jasmine‑Tests automatisch auf Vitest umstellt.
+The Angular CLI provides a schematic that automatically converts your Jasmine tests to Vitest.
 
-**WICHTIG:** Das Schematic `refactor-jasmine-vitest` ist experimentell und deckt nicht alle Patterns ab.
-Überprüfe die Änderungen immer manuell.
+**IMPORTANT:** The `refactor-jasmine-vitest` schematic is experimental and does not cover all patterns.
+Always review the changes manually.
 
 #### 1. Überblick
 
