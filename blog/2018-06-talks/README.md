@@ -3,7 +3,7 @@ title: Unsere Vorträge zur DWX und enterJS 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-06-16
-last-change: 2018-06-16
+lastModified: 2018-06-16
 keywords:
   - Angular
   - TypeScript

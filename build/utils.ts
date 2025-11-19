@@ -1,4 +1,4 @@
-import { BlogEntry, BlogEntryLight } from './types';
+import { BlogEntryFull, BlogEntry } from './types';
 
 export function extractFirstBigParagraph(html: string): string {
   if (!html) {
@@ -21,11 +21,11 @@ export function extractFirstBigParagraph(html: string): string {
   return result;
 }
 
-export function makeLightBlogList(fullList: BlogEntry[]): BlogEntryLight[] {
+export function makeLightBlogList(fullList: BlogEntryFull[]): BlogEntry[] {
   return fullList
     .filter(entry => !entry.meta.hidden)
     .map(entry => {
-      const result: BlogEntryLight = {
+      const result: BlogEntry = {
         slug: entry.slug,
         html: extractFirstBigParagraph(entry.html),
         meta: {
@@ -38,10 +38,8 @@ export function makeLightBlogList(fullList: BlogEntry[]): BlogEntryLight[] {
         },
       };
 
-      if (entry.meta.twitter) { result.meta.twitter = entry.meta.twitter; }
       if (entry.meta.author2) { result.meta.author2 = entry.meta.author2; }
       if (entry.meta.mail2) { result.meta.mail2 = entry.meta.mail2; }
-      if (entry.meta.twitter2) { result.meta.twitter2 = entry.meta.twitter2; }
 
       return result;
     });

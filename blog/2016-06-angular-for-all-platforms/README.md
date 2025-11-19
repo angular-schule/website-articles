@@ -3,7 +3,7 @@ title: Mobile Apps mit Angular entwickeln
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2016-06-15
-last-change: 2016-08-25
+lastModified: 2016-08-25
 keywords:
   - Angular
   - NativeScript

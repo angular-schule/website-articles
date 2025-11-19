@@ -3,7 +3,7 @@ title: "API von 0 auf 100: Angular und GraphQL"
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2019-06-25
-last-change: 2019-06-25
+lastModified: 2019-06-25
 keywords:
   - Angular
   - TypeScript

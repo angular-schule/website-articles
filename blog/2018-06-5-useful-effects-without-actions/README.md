@@ -3,7 +3,7 @@ title: "5 useful NgRx effects that don't rely on actions"
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-06-02
-last-change: 2018-06-03
+lastModified: 2018-06-03
 keywords:
   - Angular
   - NgRx

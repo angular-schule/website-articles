@@ -3,7 +3,7 @@ title: Build your own RxJS logging operator
 author: Ferdinand Malcher
 mail: mail@fmalcher.de
 published: 2018-02-19
-last-change: 2018-04-20
+lastModified: 2018-04-20
 keywords:
   - RxJS
   - Reactive Programming

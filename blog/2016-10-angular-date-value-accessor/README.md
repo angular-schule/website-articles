@@ -3,7 +3,7 @@ title: "DateValueAccessor: How to use date input controls with Angular Forms"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2016-10-12
-last-change: 2017-10-25
+lastModified: 2017-10-25
 keywords:
   - Angular
   - Forms

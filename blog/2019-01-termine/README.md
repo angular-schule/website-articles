@@ -3,7 +3,7 @@ title: Unsere Termine 2019
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2019-01-01
-last-change: 2019-01-03
+lastModified: 2019-01-03
 keywords:
   - Angular
 language: de

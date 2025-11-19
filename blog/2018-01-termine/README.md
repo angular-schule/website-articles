@@ -3,7 +3,7 @@ title: Unsere Termine 2018
 author: Angular.Schule Team
 mail: team@angular.schule
 published: 2018-01-15
-last-change: 2018-06-02
+lastModified: 2018-06-02
 keywords:
   - Angular
 language: de
