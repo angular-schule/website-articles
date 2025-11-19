@@ -216,23 +216,23 @@ Finally, the schematic does not convert complex spy scenarios, which must still 
 The manual migration (as described above) therefore remains necessary.
 
 
-#### 2. Schematic ausführen
+#### 2. Execute the schematic
 
-Wenn dein Projekt für Vitest konfiguriert ist, kannst du das automatische Refactoring starten:
+If your project is configured for Vitest, you can start the automatic refactoring:
 
 ```bash
 ng g @schematics/angular:refactor-jasmine-vitest
 ```
 
-Das Schematic bietet eine Reihe von zusätzlichen Optionen:
+The schematic provides several additional options:
 
-| Option             | Beschreibung                                                          |
-| ------------------ | --------------------------------------------------------------------- |
-| `--project <name>` | Wählt ein bestimmtes Projekt in einem Workspace aus.                  |
-| `--include <path>` | Beschränkt das Refactoring auf eine Datei oder ein Verzeichnis.       |
-| `--file-suffix`    | Legt eine andere Dateiendung für Testdateien fest.                    |
-| `--add-imports`    | Fügt explizite Vitest-Im­porte hinzu.                                  |
-| `--verbose`        | Aktiviert detailliertes Logging der durchgeführten Änderungen.        |
+| Option             | Description                                        |
+| ------------------ | -------------------------------------------------- |
+| `--project <name>` | Selects a specific project from the workspace.     |
+| `--include <path>` | Limits the refactoring to a file or a directory.   |
+| `--file-suffix`    | Defines a different file extension for test files. |
+| `--add-imports`    | Adds explicit Vitest imports.                      |
+| `--verbose`        | Enables detailed logging of the performed changes. |
 
 #### 3. Nach der Migration
 
