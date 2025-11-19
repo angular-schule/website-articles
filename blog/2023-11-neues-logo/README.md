@@ -1,6 +1,6 @@
 ---
 title: 'Angular hat ein neues Logo – wir auch!'
-author: Ferdinand Malcher und Johannes Hoppe
+author: Angular.Schule Team
 mail: team@angular.schule
 published: 2023-11-06
 lastModified: 2023-11-06
