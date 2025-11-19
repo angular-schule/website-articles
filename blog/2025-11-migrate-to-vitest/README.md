@@ -314,10 +314,10 @@ expect(result).toBe(true);
 expect(flag).toBe(false);
 ```
 
-#### 2) `toHaveBeenCalledOnceWith()` gibt es in Jest/Vitest nicht
+#### 2) `toHaveBeenCalledOnceWith()` does not exist in Jest/Vitest
 
-Jasmine hat einen praktischen Matcher für einen Spy mit der Prüfung auf "genau einmal und genau mit diesen Argumenten". 
-Als Ersatz verwendest du einfach [`toHaveBeenCalledExactlyOnceWith()`](https://vitest.dev/api/expect.html#tohavebeencalledexactlyoncewith):
+Jasmine has a convenient matcher for checking that a spy was called "exactly once and with exactly these arguments".
+As a replacement, you simply use [`toHaveBeenCalledExactlyOnceWith()`](https://vitest.dev/api/expect.html#tohavebeencalledexactlyoncewith):
 
 ```ts
 var book = {};
@@ -329,11 +329,11 @@ expect(spy).toHaveBeenCalledOnceWith(book);
 expect(spy).toHaveBeenCalledExactlyOnceWith(book);
 ```
 
-#### 3) Asynchrone Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)
+#### 3) Asynchronous Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)
 
-Jasmine hat eine [eigene Async-API](https://jasmine.github.io/api/5.12/async-matchers): `await expectAsync(promise).toBeResolved() / toBeRejectedWith(...)`. 
-Jest/Vitest nutzen stattdessen das Muster [`await expect(promise).resolves/...`](https://vitest.dev/api/expect.html#resolves) bzw. [`.rejects/...`](https://vitest.dev/api/expect.html#rejects). 
-Beim Umstieg müssen diese Expectations umgeschrieben werden.
+Jasmine has its [own async API](https://jasmine.github.io/api/5.12/async-matchers): `await expectAsync(promise).toBeResolved() / toBeRejectedWith(...)`.
+Jest/Vitest instead use the pattern [`await expect(promise).resolves/...`](https://vitest.dev/api/expect.html#resolves) or [`.rejects/...`](https://vitest.dev/api/expect.html#rejects).
+For the migration, you must rewrite these expectations. 
 
 ```ts
 // Jasmine
@@ -347,16 +347,15 @@ await expect(doWork()).resolves.toBe('OK');
 await expect(doWork()).rejects.toThrow('Boom');
 ```
 
-Vitest zielt also bei den Matchern auf Jest‑Kompatibilität ab. 
-Kompatibilität mit Jasmine steht hingegen überhaupt nicht im Fokus. 
-In der Praxis ist der Anpassungsaufwand meist gering (vor allem bei `toBeTrue`/`toBeFalse` und `toHaveBeenCalledOnceWith`), aber er existiert. 
-Bei asynchronen Erwartungen unterscheidet sich das Pattern sogar deutlich. Allerdings wurde `expectAsync` in der Angular-Dokumentation nie erwähnt; stattdessen wurden eigene Hilfsfunktionen gezeigt.
-Daher dürfte in den meisten Projekten hier wahrscheinlich gar keine zusätzliche Arbeit anfallen.
+Vitest therefore aims for Jest compatibility when it comes to matchers.
+Compatibility with Jasmine is not a goal at all.
+In practice, the amount of required changes is usually small (mainly for `toBeTrue`/`toBeFalse` and `toHaveBeenCalledOnceWith`), but it does exist.
+For asynchronous expectations, the pattern is even different. But don't worry: the chances that your project uses `expectAsync` are very low, because the Angular documentation always showed custom helper functions instead.
+Because of this, most projects will probably not need additional changes here.
 
+### Spies and mocks
 
-### Spys und Mocks
-
-Das Spying-Konzept funktioniert nahezu identisch wie bei Jasmine, wird jedoch über das [`vi`‑Objekt bereitgestellt](https://vitest.dev/api/vi.html#vi-spyon):
+The spying concept works almost the same as in Jasmine, but it is provided through the [`vi` object](https://vitest.dev/api/vi.html#vi-spyon):
 
 ```ts
 // Jasmine
@@ -366,7 +365,7 @@ spyOn(service, 'loadData').and.returnValue(of([]));
 vi.spyOn(service, 'loadData').mockReturnValue(of([]));
 ```
 
-Für Spys, die bei Jasmine mit `jasmine.createSpy()` erzeugt wurden, verwendest du in Vitest jetzt einfach [`vi.fn()`](https://vitest.dev/api/vi.html#vi-fn):
+For spies created in Jasmine using `jasmine.createSpy()`, you now simply use [`vi.fn()`](https://vitest.dev/api/vi.html#vi-fn) in Vitest:
 
 ```ts
 // Jasmine
@@ -376,15 +375,15 @@ const onItem = jasmine.createSpy().and.returnValue(true);
 const onItem = vi.fn().mockReturnValue(true);
 ```
 
-In Jasmine kann man mit den ersten Argument einen Namen für den Spy vergeben.
-Dies dient dazu, in Fehlermeldungen und Reports aussagekräftigere Texte anzuzeigen (siehe [Doku](https://jasmine.github.io/api/5.12/jasmine#.createSpy)).
-Falls du in Vitest ebenfalls einem einen sprechenden Namen geben möchtest, kannst du dies mit `.mockName('onItem')` tun.
+In Jasmine, you can pass a name for the spy as the first argument.
+This is used to show more descriptive text in error messages and reports (see the [documentation](https://jasmine.github.io/api/5.12/jasmine#.createSpy)).
+If you also want to give a descriptive name in Vitest, you can do so with `.mockName('onItem')`.
 
 ```ts
-// Jasmine - mit Name
+// Jasmine - with name
 const onItem = jasmine.createSpy('onItem').and.returnValue(true);
 
-// Vitest - mit Name
+// Vitest - with name
 const onItem = vi.fn().mockName('onItem').mockReturnValue(true);
 ```
 
