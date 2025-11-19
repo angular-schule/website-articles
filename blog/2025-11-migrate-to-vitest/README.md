@@ -234,13 +234,13 @@ The schematic provides several additional options:
 | `--add-imports`    | Adds explicit Vitest imports.                      |
 | `--verbose`        | Enables detailed logging of the performed changes. |
 
-#### 3. Nach der Migration
+#### 3. After the migration
 
-1. **Tests ausführen:** Nutze `ng test`, um sicherzustellen, dass alle Tests weiterhin funktionieren.
-2. **Änderungen prüfen:** Sieh dir die Anpassungen an, besonders bei komplexen Spys oder asynchronen Tests.
+1. **Execute the tests:** Use `ng test` to make sure all tests still work.
+2. **Review the changes:** Check the modifications, especially for complex spies or asynchronous tests.
 
-`ng test` führt Tests im **Watch‑Modus** aus, sofern das Terminal interaktiv ist.
-In CI-Umgebungen führt der Test-Runner die Tests automatisch im Single-Run-Modus aus.
+`ng test` runs tests in **watch mode** when the terminal is interactive.
+In CI environments, the test runner automatically runs the tests in single-run mode.
 
 #### 4. Benutzerdefinierte Konfiguration (optional)
 
