@@ -387,18 +387,18 @@ const onItem = jasmine.createSpy('onItem').and.returnValue(true);
 const onItem = vi.fn().mockName('onItem').mockReturnValue(true);
 ```
 
-### Asynchronität ohne Zone.js mit Vitest Timer
+### Asynchrony without Zone.js using Vitest timers
 
-Seit Angular 21 laufen Unit-Tests standardmäßig zoneless. 
-Das bedeutet: Die früheren Angular-Hilfsfunktionen `waitForAsync()` und `fakeAsync()`/`tick()` funktionieren nicht mehr automatisch, weil sie auf Zone.js basieren. 
-Entscheidend ist: Das hat erstmal nichts mit Vitest zu tun.
-Auch unter Jasmine hätte man in einer zonenlosen Umgebung auf diese Utilitys verzichten müssen.
+Since Angular 21, unit tests run zoneless by default.
+This means: The old Angular helpers `waitForAsync()` and `fakeAsync()`/`tick()` no longer work automatically, because they rely on Zone.js.
+First of all, this has nothing to do with Vitest.
+Even under Jasmine, these utilities would have had to be dispensed with in a zone-free environment.
 
-Für einfache asynchrone Tests ersetzt man `waitForAsync()` daher durch ganz normales `async/await`, das es seit vielen Jahren auch mit Jasmine möglich ist.
-Folgendes Update funktioniert also unabhängig vom Test-Runner:
+For simple asynchronous tests, you replace `waitForAsync()` with normal `async/await`, which has also been possible with Jasmine for many years.
+The following update therefore works independently of the test runner:
 
 ```ts
-// FRÜHER: waitsForAsync + Zone.js
+// BEFORE: waitForAsync + Zone.js
 it('should load data', waitForAsync(() => {
   service.getData().then(result => {
     expect(result.title).toContain('Hello');
@@ -410,18 +410,18 @@ it('should load data', async () => {
   const result = await service.getData();
   expect(result.title).toContain('Hello');
 });
-```
+````
 
-Ggf. muss der Service für dieses Beispiel "ausgemockt" werden, damit es funktioniert.
-Hier bleibt alles unverändert.
-Modern ist nur die Schreibweise, bei der es zwischen Jasmine und Vitest keinen Unterschied gibt.
+It may be necessary to “mock” the service to make this example work.
+Nothing else changes here.
+Only the syntax is modern, and there is no difference between Jasmine and Vitest.
 
-Der zweite Angular-Klassiker [`fakeAsync()`](https://angular.dev/api/core/testing/fakeAsync) und [`tick()`](https://angular.dev/api/core/testing/tick) braucht hingegen einen echten Ersatz.
-(Hinweis: Diese beiden Helfer sind nicht Bestandteil von Jasmine, sondern kommen aus `@angular/core/testing`.)
-Vitest bringt ein eigenes [Fake-Timer-System](https://vitest.dev/api/vi.html#fake-timers) mit.
-Die Nutzung erfordert etwas Einarbeitung, denn nicht alle Timer funktionieren gleich und nicht jeder Test braucht dieselben Werkzeuge. 
-Beginnen wir mit einem einfachen zeitbasierten Beispiel. 
-Die folgende Funktion erhöht einen Counter nach genau fünf Sekunden:
+The second Angular classic, [`fakeAsync()`](https://angular.dev/api/core/testing/fakeAsync) and [`tick()`](https://angular.dev/api/core/testing/tick), does need a real replacement.
+(Note: These helpers are not part of Jasmine, but come from `@angular/core/testing`.)
+Vitest provides its own [fake timer system](https://vitest.dev/api/vi.html#fake-timers).
+Using it requires some practice, because not all timers behave the same and not every test needs the same tools.
+Let’s start with a simple time-based example.
+The following function increases a counter after exactly five seconds:
 
 ```ts
 export function startFiveSecondTimer(counter: { value: number }) {
