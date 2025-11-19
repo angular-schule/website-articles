@@ -147,22 +147,22 @@ Your project may contain additional packages.
 npm uninstall karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter
 ```
 
-#### 5. Browser‑Modus konfigurieren (optional)
+#### 5. Configure browser mode (optional)
 
-Falls du Tests in einem echten Browser ausführen möchtest, musst du einen Browser-Provider installieren und die `angular.json` anpassen.
-Wähle je nach Bedarf:
+If you want to run tests in a real browser, you must install a browser provider and adjust the `angular.json`.
+Choose depending on your needs:
 
-* **Playwright:** `@vitest/browser-playwright` für Chromium, Firefox und WebKit
-* **WebdriverIO:** `@vitest/browser-webdriverio` für Chrome, Firefox, Safari und Edge
-* **Preview:** `@vitest/browser-preview` für Webcontainer-Umgebungen wie StackBlitz
+* **Playwright:** `@vitest/browser-playwright` for Chromium, Firefox, and WebKit
+* **WebdriverIO:** `@vitest/browser-webdriverio` for Chrome, Firefox, Safari, and Edge
+* **Preview:** `@vitest/browser-preview` for WebContainer environments like StackBlitz
 
 ```bash
 npm install --save-dev @vitest/browser-playwright
 ```
 
-Danach musst du noch die `angular.json` erweitern.
-Füge im `test`-Target die Option `browsers` hinzu.
-Der Browsername hängt vom verwendeten Provider ab (z. B. `chromium` bei Playwright).
+After that, you must extend the `angular.json`.
+Add the `browsers` option to the `test` target.
+The browser name depends on the provider you use (for example `chromium` for Playwright).
 
 ```json
 {
