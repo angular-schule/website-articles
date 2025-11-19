@@ -22,59 +22,59 @@ In this article, we'll show you what Vitest means for you, how to migrate existi
 
 ## Inhalt
 
-- [Warum Angular Karma und Jasmine ersetzt](/blog/2025-11-zu-vitest-migrieren#warum-angular-karma-und-jasmine-ersetzt)
-- [Migrationsleitfaden: Von Karma/Jasmine zu Vitest](/blog/2025-11-zu-vitest-migrieren#migrationsleitfaden-von-karmajasmine-zu-vitest)
-  - [Manuelle Migrationsschritte](/blog/2025-11-zu-vitest-migrieren#manuelle-migrationsschritte)
-    - [1. Abhängigkeiten installieren](/blog/2025-11-zu-vitest-migrieren#1-abhängigkeiten-installieren)
-    - [2. `angular.json` aktualisieren](/blog/2025-11-zu-vitest-migrieren#2-angularjson-aktualisieren)
-    - [3. Eigene `karma.conf.js`‑Konfiguration berücksichtigen](/blog/2025-11-zu-vitest-migrieren#3-eigene-karmaconfjskonfiguration-berücksichtigen)
-    - [4. Karma- und `test.ts`‑Dateien entfernen](/blog/2025-11-zu-vitest-migrieren#4-karma--und-testtsdateien-entfernen)
-    - [5. Browser‑Modus konfigurieren (optional)](/blog/2025-11-zu-vitest-migrieren#5-browsermodus-konfigurieren-optional)
-  - [Automatisches Test‑Refactoring per Schematic](/blog/2025-11-zu-vitest-migrieren#automatisches-testrefactoring-per-schematic)
-    - [1. Überblick](/blog/2025-11-zu-vitest-migrieren#1-überblick)
-    - [2. Schematic ausführen](/blog/2025-11-zu-vitest-migrieren#2-schematic-ausführen)
-    - [3. Nach der Migration](/blog/2025-11-zu-vitest-migrieren#3-nach-der-migration)
-    - [4. Benutzerdefinierte Konfiguration (optional)](/blog/2025-11-zu-vitest-migrieren#4-benutzerdefinierte-konfiguration-optional)
-- [Die neue Syntax und APIs](/blog/2025-11-zu-vitest-migrieren#die-neue-syntax-und-apis)
-  - [Globale Funktionen](/blog/2025-11-zu-vitest-migrieren#globale-funktionen)
-  - [Matcher](/blog/2025-11-zu-vitest-migrieren#matcher)
-  - [Spies und Mocks](/blog/2025-11-zu-vitest-migrieren#spies-und-mocks)
-  - [Asynchronität ohne Zone.js aber mit Vitest Timer](/blog/2025-11-zu-vitest-migrieren#asynchronität-ohne-zonejs-aber-mit-vitest-timer)
-  - [TestBed und ComponentFixture](/blog/2025-11-zu-vitest-migrieren#testbed-und-componentfixture)
-- [Bekannte Einschränkungen und Fallstricke](/blog/2025-11-zu-vitest-migrieren#bekannte-einschränkungen-und-fallstricke)
-- [Fazit](/blog/2025-11-zu-vitest-migrieren#fazit)
+TODO
 
 
-## Warum Angular Karma und Jasmine ersetzt
-
-_Karma und Jasmine_ haben für Angular lange Jahre gute Dienste geleistet, vor allem wegen der Ausführung in einem echten Browser.
-Es gab aber Nachteile: die Ausführungsgeschwindigkeit war nie optimal und das Ökosystem veraltet ([Karma ist seit 2023 deprecated](https://github.com/karma-runner/karma#karma-is-deprecated-and-is-not-accepting-new-features-or-general-bug-fixes)). 
-Über mehrere Jahre prüfte das Angular-Team Alternativen (Jest, Web Test Runner usw.), ohne einen klaren Gewinner zu finden.
-[Vitest](https://vitest.dev/) wurde inzwischen äußerst populär und erwies sich als passende Lösung.
-
-Vitest passte besonders gut, da es einen echten Browser-Modus bietet.
-Wie zuvor bei Karma können Tests in einem realen Browser mit "echtem" DOM und echten Ereignissen ausgeführt werden.
-Der Browser-Modus wurde erst kürzlich mit Vitest 4 im Oktober 2025 [als stabil deklariert](https://vitest.dev/blog/vitest-4.html#browser-mode-is-stable).
-Gleichzeitig ist Vitest schnell und modern: Es baut auf [Vite](https://vite.dev/) auf, ist ESM- und TypeScript-first und sorgt für äußerst kurze Start- und Wiederholungszeiten.
-Dazu kommt eine sehr mächtige API mit Snapshot-Tests, flexiblen [Fake-Timern](https://vitest.dev/guide/mocking/timers.html), dem wirklich nützlichen Helfer [`expect.poll`](https://vitest.dev/api/expect.html#poll), [Test-Fixtures](https://vitest.dev/guide/test-context) und Jest-kompatiblen Matchern.
-Nicht zuletzt ist Vitest im gesamten Frontend-Ökosystem weit verbreitet, wodurch vorhandenes Know-how gut übertragen werden kann.
-Kurz gesagt: Der Wechsel sorgt für Tempo, eine deutlich bessere Developer Experience und Zukunftssicherheit und hält dabei weiterhin die Möglichkeit echter Browser-Tests offen.
 
 
-## Migrationsleitfaden: Von Karma/Jasmine zu Vitest
 
-<!-- Quelle: https://github.com/angular/angular/blob/6178e3ebfbc69a2afa04dd19ea4d6d8b1bfb0649/adev/src/content/guide/testing/migrating-to-vitest.md -->
 
-Wenn du ein **neues Projekt** mit Angular 21 erzeugen möchtest, nutzt die Angular CLI standardmäßig den neuen Test-Runner Vitest.
-Die Wahl kannst du über die Option `--test-runner` beeinflussen:
-Mit `--test-runner=vitest` erhältst du die neue, schnellere und modernere Standardlösung. 
-Möchtest du dagegen weiterhin bei der bewährten Karma/Jasmine-Kombination bleiben, verwende die Option `--test-runner=karma`.
-Ohne explizite Angabe der Option wird automatisch Vitest verwendet.
 
-Um ein **bestehendes Projekt** auf Angular 21 und Vitest zu migrieren, musst du zunächst das Projekt mittels `ng update` auf Version 21 aktualisieren.
-Beachte dabei, dass die Migration bestehender Projekte zu Vitest aktuell noch **experimentell** ist.
-Außerdem setzt dieser Prozess das `application`-Buildsystem von Angular voraus, das bei neu erstellten Projekten standardmäßig aktiviert ist.
-Nachdem dein Projekt auf Version 21 aktualisiert wurde, kannst du mit den folgenden Schritten fortfahren.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Why Angular replaces Karma and Jasmine
+
+Karma and Jasmine served Angular well for many years, primarily because they ran in a real browser.
+However, there were disadvantages: the execution speed was never optimal and the ecosystem became outdated ([Karma has been deprecated since 2023](https://github.com/karma-runner/karma#karma-is-deprecated-and-is-not-accepting-new-features-or-general-bug-fixes)).
+Over several years, the Angular team evaluated alternatives (Jest, Web Test Runner, etc.) without finding a clear winner.
+[Vitest](https://vitest.dev/) has since become quite popular and proved to be a suitable solution.
+
+Vitest was particularly well-suited because it offers a real browser mode.
+As with Karma before, tests can be run in a real browser with a "real" DOM and real events.
+The browser mode was recently [declared stable](https://vitest.dev/blog/vitest-4.html#browser-mode-is-stable) with Vitest 4 in October 2025.
+At the same time, Vitest is fast and modern: it is built on [Vite](https://vite.dev/), is ESM- and TypeScript-first, and ensures extremely short start-up and repetition times.
+Additionally, Vitest provides a powerful API with snapshot testing, flexible [fake timers](https://vitest.dev/guide/mocking/timers.html), the extremely helpful helper [`expect.poll`](https://vitest.dev/api/expect.html#poll), [test fixtures](https://vitest.dev/guide/test-context), and Jest-compatible matchers.
+Last but not least, Vitest is widely adopted across the frontend ecosystem, allowing existing knowledge to transfer easily.
+In short: Switching ensures speed, a significantly better developer experience, and future-proofing, while still allowing real browser testing.
+
+
+## Migration guide: From Karma/Jasmine to Vitest
+
+<!-- Source: https://github.com/angular/angular/blob/6178e3ebfbc69a2afa04dd19ea4d6d8b1bfb0649/adev/src/content/guide/testing/migrating-to-vitest.md -->
+
+If you want to create a **new project** with Angular 21, the Angular CLI uses the new test runner Vitest by default.
+You can control this choice using the `--test-runner` option:
+With `--test-runner=vitest` you get the new, faster, and more modern default solution.
+If you want to keep the proven Karma/Jasmine combination, use the option `--test-runner=karma`.
+If you do not specify the option, Vitest is used automatically.
+
+To migrate an **existing project** to Angular 21 and Vitest, you must first update the project to version 21 using `ng update`.
+Note that migrating existing projects to Vitest is currently still **experimental**.
+This process also requires Angular’s `application` build system, which is enabled by default in newly created projects.
+Once your project has been updated to version 21, you can continue with the following steps.
 
 
 ### Manuelle Migrationsschritte
