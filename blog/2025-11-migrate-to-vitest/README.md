@@ -77,24 +77,25 @@ This process also requires Angular’s `application` build system, which is enab
 Once your project has been updated to version 21, you can continue with the following steps.
 
 
-### Manuelle Migrationsschritte
+### Manual migration steps
 
-Bevor du das automatische Refactoring‑Schematic verwendest, musst du dein Projekt manuell so anpassen, dass Vitest als Test‑Runner verwendet wird.
+Before you use the automatic refactoring schematic, you need to adjust your project manually so that Vitest is used as the test runner.
 
-#### 1. Abhängigkeiten installieren
+#### 1. Install dependencies
 
-Installiere `vitest` sowie eine DOM‑Emulationsbibliothek. 
-Obwohl Tests weiterhin im Browser ausgeführt werden können (siehe Schritt 5), verwendet Vitest standardmäßig eine DOM‑Emulation, um eine Browserumgebung in Node.js zu simulieren und Tests schneller auszuführen. 
-Die CLI erkennt automatisch `happy-dom`, falls es installiert ist; ansonsten greift sie auf `jsdom` zurück. 
-Eines der beiden Pakete muss vorhanden sein.
+Install `vitest` and a DOM emulation library.
+Although tests can still run in the browser (see step 5), Vitest uses a DOM emulation by default to simulate a browser environment in Node.js and to execute tests faster.
+The CLI automatically detects `happy-dom` if it is installed; otherwise it falls back to `jsdom`.
+One of these two packages must be present.
+
 
 ```bash
 npm install --save-dev vitest jsdom
 ```
 
-#### 2. `angular.json` aktualisieren
+#### 2. Update `angular.json`
 
-Suche in deiner `angular.json` den `test`-Target deines Projekts und setze den `builder` auf `@angular/build:unit-test`.
+Find the `test` target of your project in the `angular.json` file and set the `builder` to `@angular/build:unit-test`.
 
 ```json
 {
@@ -110,15 +111,15 @@ Suche in deiner `angular.json` den `test`-Target deines Projekts und setze den `
 }
 ```
 
-Der `unit-test`‑Builder verwendet standardmäßig `"tsConfig": "tsconfig.spec.json"` und `"buildTarget": "::development"`. 
-Falls dein Projekt andere Werte benötigt, etwa weil die `development`-Konfiguration fehlt oder spezielle Test‑Einstellungen nötig sind, kannst du eine eigene Build-Konfiguration anlegen und zuweisen, z. B. `testing`.
+The `unit-test` builder uses `"tsConfig": "tsconfig.spec.json"` and `"buildTarget": "::development"` by default.
+If your project needs different values, you can create your own build configuration. This is useful when the `development` configuration is missing or when you need special test settings, for example a configuration named `testing`.
 
-Der vorherige Builder `@angular/build:karma` erlaubte es, Build‑Optionen (wie `polyfills`, `assets`, `styles`) direkt im `test`-Target zu definieren. Der neue Builder `@angular/build:unit-test` unterstützt das nicht. 
-Falls sich deine Test‑Build‑Optionen von der `development`-Konfiguration unterscheiden, musst du diese Optionen in eine eigene Build-Konfiguration verschieben. 
-Stimmen sie bereits mit `development` überein, ist kein weiterer Schritt notwendig.
+The previous builder `@angular/build:karma` allowed you to define build options (such as `polyfills`, `assets`, `styles`) directly in the `test` target. The new builder `@angular/build:unit-test` does not support this.
+If your test build options differ from the `development` configuration, you must move these options into a separate build configuration.
+If they already match `development`, no further step is necessary.
 
-> **Tipp:** Alternativ kannst du einfach ein neues Projekt mittels `ng new` erzeugen und die relevanten Abschnitte aus der neu generierten `angular.json` in dein bestehendes Projekt übernehmen. 
-> So erhältst du automatisch eine saubere Vorlage für die Vitest-Konfiguration.
+> **Tip:** As an alternative, you can simply create a new project using `ng new` and copy the relevant parts of the newly generated `angular.json` into your existing project.
+> This gives you a clean template for the Vitest configuration automatically.
 
 
 #### 3. Eigene `karma.conf.js`‑Konfiguration berücksichtigen
