@@ -20,15 +20,19 @@ import { makeLightBlogList } from './utils';
   await writeJson(buildConfig.distFolder + '/bloglist.json', blogListLight);
 
   // replace README with entry.json for all blog posts
-  blogList.forEach(async (entry) => {
-    const entryDistFolder = `${buildConfig.distFolder}/${entry.slug}`;
+  await Promise.all(blogList.map(async (entry) => {
+    try {
+      const entryDistFolder = `${buildConfig.distFolder}/${entry.slug}`;
 
-    await mkdirp(entryDistFolder);
-    await copy(buildConfig.blogPostsFolder + '/' + entry.slug, entryDistFolder);
-    await remove(`${entryDistFolder}/README.md`);
+      await mkdirp(entryDistFolder);
+      await copy(buildConfig.blogPostsFolder + '/' + entry.slug, entryDistFolder);
+      await remove(`${entryDistFolder}/README.md`);
 
-    const entryJsonPath = `${entryDistFolder}/entry.json`;
-    await writeJson(entryJsonPath, entry);
-    console.log('Generated post file:', entryJsonPath);
-  });
+      const entryJsonPath = `${entryDistFolder}/entry.json`;
+      await writeJson(entryJsonPath, entry);
+      console.log('Generated post file:', entryJsonPath);
+    } catch (error: any) {
+      console.error(`Failed to process ${entry.slug}:`, error.message);
+    }
+  }));
 })();
