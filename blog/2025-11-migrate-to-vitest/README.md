@@ -1,5 +1,5 @@
 ---
-title: 'Vitest in Angular 21: Was ist neu und wie kann man migrieren?'
+title: "Vitest in Angular 21: What's new and how to migrate?"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2025-11-18
@@ -10,15 +10,15 @@ keywords:
   - Vitest
   - Karma
   - Jasmine
-language: de
+language: en
 header: angular-vitest.jpg
 ---
 
-Mit Angular 21 gibt es eine bedeutende Änderung beim Unit-Testing:
-Vitest ist jetzt der Standard, die bisherige Standardkombination aus Karma und Jasmine wird abgelöst.
-Beim Erzeugen eines neuen Projekts mit `ng new` verwendet Angular 21 nun standardmäßig **Vitest** als Test-Runner.
-Vitest verspricht deutlich kürzere Startzeiten, moderne Features und eine einfache Jest-kompatible API.
-In diesem Artikel zeigen wir, was Vitest für dich bedeutet, wie du bestehende Angular-Projekte migrieren kannst und welche Vorteile Vitest bietet.
+Angular 21 introduces a significant change to unit testing:
+Vitest is now the default, replacing the previous standard combination of Karma and Jasmine.
+When creating a new project with `ng new`, Angular 21 now uses **Vitest** as the default test runner.
+Vitest promises significantly faster startup times, modern features, and an easy-to-use Jest-compatible API.
+In this article, we'll show you what Vitest means for you, how to migrate existing Angular projects, and what benefits Vitest offers.
 
 ## Inhalt
 
