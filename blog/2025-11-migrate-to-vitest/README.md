@@ -242,16 +242,16 @@ The schematic provides several additional options:
 `ng test` runs tests in **watch mode** when the terminal is interactive.
 In CI environments, the test runner automatically runs the tests in single-run mode.
 
-#### 4. Benutzerdefinierte Konfiguration (optional)
+#### 4. Custom configuration (optional)
 
-Die Angular CLI erzeugt die Vitest‑Konfiguration im Hintergrund basierend auf den Optionen in `angular.json`.
+The Angular CLI generates the Vitest configuration behind the scenes based on the options in `angular.json`.
 
-Wem die vorgesehenen Optionen nicht ausreichen, der kann eine benutzerdefinierte Konfiguration verwenden.
-Damit werden zwar erweiterte Optionen verfügbar, das Angular-Team bietet jedoch keinen direkten Support für die spezifischen Inhalte der Konfigurationsdatei oder darin verwendete Plugins von Drittanbietern.
-Die CLI überschreibt außerdem bestimmte Eigenschaften (`test.projects`, `test.include`), um einen ordnungsgemäßen Betrieb sicherzustellen.
+If the provided options are not sufficient, you can use a custom configuration.
+This makes extended options available, but the Angular team does not provide direct support for the specific contents of the configuration file or for any third-party plugins used inside it.
+The CLI also overrides certain properties (`test.projects`, `test.include`) to ensure correct operation.
 
-Du kannst bei Bedarf eine eigene Vitest-Konfigurationsdatei (`vitest.config.ts`) einbinden, um weitergehende Anpassungen vorzunehmen, die über die Standardoptionen hinausgehen.
-Dabei gibt es zwei mögliche Wege: Entweder verweist du direkt auf eine bestimmte Konfigurationsdatei, indem du den exakten Pfad in der `angular.json` angibst:
+If needed, you can include your own Vitest configuration file (`vitest.config.ts`) to make adjustments that go beyond the standard options.
+There are two ways to do this: You can directly reference a specific configuration file by providing the exact path in the `angular.json`:
 
 ```json
 {
@@ -270,10 +270,10 @@ Dabei gibt es zwei mögliche Wege: Entweder verweist du direkt auf eine bestimmt
 }
 ```
 
-Alternativ kannst du die Angular CLI automatisch suchen lassen.
-Bei automatischer Suche setzt du `"runnerConfig": true` in der `angular.json`. 
-Der Builder sucht dann selbstständig nach einer Datei namens `vitest-base.config.*`, zunächst im Projektverzeichnis und anschließend im Workspace-Root. 
-So kannst du beispielsweise gemeinsame Einstellungen zentral definieren und bequem wiederverwenden.
+Alternatively, you can let the Angular CLI search automatically.
+For automatic discovery, set `"runnerConfig": true` in the `angular.json`.
+The builder will then search for a file named `vitest-base.config.*`, first in the project directory and then in the workspace root.
+This allows you to define shared settings centrally and reuse them easily.
 
 
 
