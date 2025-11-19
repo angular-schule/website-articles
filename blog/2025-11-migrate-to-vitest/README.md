@@ -136,11 +136,12 @@ Typical migration paths:
 
 You can find more settings in the official [Vitest documentation](https://vitest.dev/config/).
 
-#### 4. Karma- und `test.ts`‑Dateien entfernen
+#### 4. Remove Karma and `test.ts` files
 
-Du kannst nun `karma.conf.js` sowie `src/test.ts` löschen und alle Karma‑bezogenen Pakete deinstallieren. 
-Die folgenden Befehle entsprechen einem Standard‑Angular‑Projekt.
-In deinem Projekt können weitere Pakete vorhanden sein.
+You can now delete the files `karma.conf.js` and `src/test.ts` and uninstall all Karma-related packages.
+The following commands matches a standard Angular project.
+Your project may contain additional packages.
+
 
 ```bash
 npm uninstall karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter
