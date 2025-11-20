@@ -26,6 +26,8 @@ As always, you can find the official release information in the [Angular Blog](h
 You can migrate an existing project to Angular 21 using the command `ng update`.
 Detailed information about the steps is available in the [Angular Update Guide](https://angular.dev/update-guide).
 
+> 🇩🇪 This article is available in German language here: [Angular 21 ist da!](https://angular-buch.com/blog/2025-11-angular21
+
 
 ## Versions of TypeScript and Node.js
 
@@ -55,7 +57,7 @@ Additionally, Zone.js must be installed and listed under `polyfills` in `angular
 export const appConfig: ApplicationConfig = {
   providers: [
     // ...
-    // ENABLE the legacy change detection with Zone.js
+    // enable the LEGACY change detection with Zone.js
     provideZoneChangeDetection({ eventCoalescing: true }),
 };
 ```
