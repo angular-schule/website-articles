@@ -61,15 +61,15 @@ export const appConfig: ApplicationConfig = {
 
 
 
-## Signal-based Forms
+## Signal Forms
 
-Die aktuellen Ansätze für Formularverarbeitung in Angular sind nicht für das Zusammenspiel mit Signals ausgelegt.
-Nun wurde ein neuer experimenteller Ansatz vorgestellt: *Signal Forms*.
-Diese Variante integriert nicht nur breitflächig Signals, sondern soll die Erstellung und Verwaltung von Formularen grundlegend vereinfachen.
+The current approaches for form handling in Angular are not designed to work well with signals.
+Now a new experimental approach has been introduced: *Signal Forms*.
+This variant not only integrates signals extensively, but also aims to simplify how forms are created and managed.
 
-Die Grundidee: Die Daten liegen in einem einfachen Signal vor, das von uns verwaltet wird.
-Angular leitet aus den Daten die Struktur des Formulars ab.
-Die Regeln zur Validierung werden in Form eines Schemas definiert, das als Code notiert wird.
+The basic idea: The data lives inside a simple signal that we control.
+Angular derives the structure of the form from the data.
+The validation rules are defined as a schema, written directly in code.
 
 ```ts
 import { schema, form, Field } from '@angular/forms/signals';
@@ -95,7 +95,7 @@ export class MyForm {
 }
 ```
 
-Im Template erstellen wir die Datenbindungen mithilfe einer einzigen Direktive:
+In the template, we create the data bindings using a single directive:
 
 ```html
 <form>
@@ -104,15 +104,15 @@ Im Template erstellen wir die Datenbindungen mithilfe einer einzigen Direktive:
 </form>
 ```
 
-Wir haben ausführliche Blogposts in englischer Sprache zu Signal Forms veröffentlicht:
+We have published detailed blog posts on Signal Forms:
 
-- [**Part 1: Getting Started with the Basics**](https://angular-buch.com/blog/2025-10-signal-forms-part1)
-- [**Part 2: Advanced Validation and Schema Patterns**](https://angular-buch.com/blog/2025-10-signal-forms-part2)
-- [**Part 3: Child Forms and Custom UI Controls**](https://angular-buch.com/blog/2025-10-signal-forms-part3)
+* [**Part 1: Getting Started with the Basics**](https://angular-buch.com/blog/2025-10-signal-forms-part1)
+* [**Part 2: Advanced Validation and Schema Patterns**](https://angular-buch.com/blog/2025-10-signal-forms-part2)
+* [**Part 3: Child Forms and Custom UI Controls**](https://angular-buch.com/blog/2025-10-signal-forms-part3)
 
-Perspektivisch könnten mit dem neuen Ansatz die älteren Varianten *Reactive Forms* und *Template-Driven Forms* verdrängt werden.
-Das Angular-Team legt außerdem großen Wert auf Abwärtskompatibilität, sodass die Migration auf ein Signal-basiertes Formular kein großes Problem sein sollte.
-Noch ist der neue Ansatz aber experimentell, sodass sich die Schnittstellen und Konzepte noch ändern können.
+In the long run, this new approach may replace the older variants *Reactive Forms* and *Template-Driven Forms*.
+The Angular team also places great emphasis on backward compatibility, so migrating to a signal-based form should not be a major problem.
+However, the new approach is still experimental, meaning that the interfaces and concepts are subject to change.
 
 
 ## Vitest: der neue Test-Runner
