@@ -79,7 +79,7 @@ Over several years, the Angular team evaluated alternatives (Jest, Web Test Runn
 Vitest was particularly well-suited because it offers a real browser mode.
 As with Karma before, tests can be run in a real browser with a "real" DOM and real events.
 The browser mode was recently [declared stable](https://vitest.dev/blog/vitest-4.html#browser-mode-is-stable) with Vitest 4 in October 2025.
-At the same time, Vitest is fast and modern: it is built on [Vite](https://vite.dev/), is ESM- and TypeScript-first, and ensures extremely short start-up and repetition times.
+At the same time, Vitest is fast and modern: it is built on [Vite](https://vite.dev/), is ESM- and TypeScript-first, and ensures extremely short startup and repetition times.
 Additionally, Vitest provides a powerful API with snapshot testing, flexible [fake timers](https://vitest.dev/guide/mocking/timers.html), the extremely helpful helper [`expect.poll`](https://vitest.dev/api/expect.html#poll), [test fixtures](https://vitest.dev/guide/test-context), and Jest-compatible matchers.
 Last but not least, Vitest is widely adopted across the frontend ecosystem, allowing existing knowledge to transfer easily.
 In short: Switching ensures speed, a significantly better developer experience, and future-proofing, while still allowing real browser testing.
@@ -146,7 +146,7 @@ If they already match `development`, no further step is necessary.
 > This gives you a clean template for the Vitest configuration automatically.
 
 
-#### 3. Adopt a custom `karma.conf.js` configuration
+#### 3. Adapt a custom `karma.conf.js` configuration
 
 Custom settings from the file `karma.conf.js` are not migrated automatically.
 Check this file before deleting it, and transfer the relevant options manually.
@@ -205,7 +205,7 @@ The browser name depends on the provider you use (for example `chromium` for Pla
 }
 ```
 
-The headless mode is automatically activated if the environment variable `CI` is set or the browser name contains “Headless” (e.g., `ChromeHeadless`).
+The headless mode is automatically activated if the environment variable `CI` is set or the browser name contains "Headless" (e.g., `ChromeHeadless`).
 Otherwise, the browser runs visibly.
 
 ### Automatic test refactoring using the schematic
@@ -356,7 +356,7 @@ expect(spy).toHaveBeenCalledExactlyOnceWith(book);
 #### 3) Asynchronous Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)
 
 Jasmine has its [own async API](https://jasmine.github.io/api/5.12/async-matchers): `await expectAsync(promise).toBeResolved() / toBeRejectedWith(...)`.
-Jest/Vitest instead use the pattern [`await expect(promise).resolves/...`](https://vitest.dev/api/expect.html#resolves) or [`.rejects/...`](https://vitest.dev/api/expect.html#rejects).
+Jest/Vitest instead uses the pattern [`await expect(promise).resolves/...`](https://vitest.dev/api/expect.html#resolves) or [`.rejects/...`](https://vitest.dev/api/expect.html#rejects).
 For the migration, you must rewrite these expectations. 
 
 ```ts
@@ -435,7 +435,7 @@ it('should load data', async () => {
   const result = await service.getData();
   expect(result.title).toContain('Hello');
 });
-````
+```
 
 It may be necessary to "mock" the service to make this example work.
 Nothing else changes here.
@@ -561,7 +561,7 @@ describe('startAsyncJob', () => {
 });
 ```
 
-`runAllTimersAsync()` is therefore a good replacement for test where `fakeAsync()` and `tick()` were used together with microtask flushing.
+`runAllTimersAsync()` is therefore a good replacement for tests where `fakeAsync()` and `tick()` were used together with microtask flushing.
 
 ### TestBed and ComponentFixture
 
