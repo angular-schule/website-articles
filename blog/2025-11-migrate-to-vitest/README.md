@@ -466,7 +466,6 @@ But not all timers are this simple.
 Sometimes the code works only with timer-based actions, but without additional promises. The following example increments a counter multiple times using only timeouts and intervals:
 
 ```ts
-// timer-sync.ts
 export function startSyncSequence(counter: { value: number }) {
   setTimeout(() => { counter.value++; }, 300);
   const interval = setInterval(() => {
@@ -507,7 +506,6 @@ It becomes even more interesting when timer callbacks contain asynchronous work 
 In that case, `runAllTimers()` is no longer enough. The following example shows a typical pattern from real applications:
 
 ```ts
-// timer-async.ts
 export function startAsyncJob(): Promise<string> {
   return new Promise(resolve => {
     setTimeout(async () => {
