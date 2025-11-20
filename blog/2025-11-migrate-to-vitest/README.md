@@ -20,6 +20,8 @@ When creating a new project with `ng new`, Angular 21 now uses **Vitest** as the
 Vitest promises significantly faster startup times, modern features, and an easy-to-use Jest-compatible API.
 In this article, we'll show you what Vitest means for you, how to migrate existing Angular projects, and what benefits Vitest offers.
 
+> 🇩🇪 This article is available in German language here: [Vitest in Angular 21: Was ist neu und wie kann man migrieren?](https://angular-buch.com/blog/2025-11-zu-vitest-migrieren)
+
 ## Content
 
 - [Why Angular replaces Karma and Jasmine](/blog/2025-11-migrate-to-vitest#why-angular-replaces-karma-and-jasmine)
