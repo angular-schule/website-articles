@@ -48,27 +48,6 @@ In this article, we'll show you what Vitest means for you, how to migrate existi
 - [Conclusion](#conclusion)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Why Angular replaces Karma and Jasmine
 
 Karma and Jasmine served Angular well for many years, primarily because they ran in a real browser.
