@@ -1,8 +1,8 @@
 ---
-title: 'Angular 21 ist da!'
-author: Angular Buch Team
+title: 'Angular 20 is here!'
+author: Angular Book Team
 mail: team@angular-buch.com
-published: 2025-11-19
+published: 2025-11-20
 lastModified: 2025-11-20
 keywords:
   - Angular
@@ -13,50 +13,48 @@ keywords:
   - Signal Forms
   - Vitest
   - Karma
-language: de
+language: en
 header: angular21.jpg
-sticky: true
-isUpdatePost: true
 ---
 
-Bevor wir uns in den Trubel zum Jahresende stürzen, gibt es Neuigkeiten aus der Angular-Welt:
-Am **19. November 2025** wurde **Angular 21** veröffentlicht!
-Die wichtigsten Neuigkeiten: Signal Forms, Zoneless Apps, Testing mit Vitest und das neue Paket `@angular/aria`.
+Before we dive into the usual end-of-year rush, there is news from the Angular world:
+On **November 19, 2025**, **Angular 21** was released!
+The most important updates: Signal Forms, zoneless apps, testing with Vitest, and the new package `@angular/aria`.
 
-Die offiziellen Release-Informationen findest du wie immer im [Angular-Blog](https://blog.angular.dev/announcing-angular-v21-57946c34f14b).
-Die Migration eines bestehenden Projekts auf Angular 21 kann mit dem Befehl `ng update` durchgeführt werden.
-Detaillierte Infos zu den Schritten liefert der [Angular Update Guide](https://angular.dev/update-guide).
+As always, you can find the official release information in the [Angular Blog](https://blog.angular.dev/announcing-angular-v21-57946c34f14b).
+You can migrate an existing project to Angular 21 using the command `ng update`.
+Detailed information about the steps is available in the [Angular Update Guide](https://angular.dev/update-guide).
 
 
-## Versionen von TypeScript und Node.js
+## Versions of TypeScript and Node.js
 
-Die folgenden Versionen von TypeScript und Node.js sind für Angular 21 notwendig:
+The following versions of TypeScript and Node.js are required for Angular 21:
 
 - TypeScript: >=5.9.0 <6.0.0
 - Node.js: ^20.19.0 || ^22.12.0 || ^24.0.0
 
-Ausführliche Infos zu den unterstützten Versionen findest du in der [Angular-Dokumentation](https://angular.dev/reference/versions).
+You can find detailed information about supported versions in the [Angular documentation](https://angular.dev/reference/versions).
 
-## Zoneless Change Detection: der neue Standard
+## Zoneless change detection: the new default
 
-Schon seit einiger Zeit unterstützt Angular die zonenlose Change Detection.
-Früher wurde die Bibliothek Zone.js verwendet, um Änderungen an Daten zu ermitteln.
-Mit Signals als neuem Grundbaustein hat sich das Vorgehen deutlich geändert: Signals teilen explizit mit, dass sich ein Wert geändert hat.
-Wir haben darüber ausführlich im [Blogpost zu Angular 18](/blog/2024-05-angular18) berichtet.
+Angular has supported zoneless change detection for some time.
+In the past, the library Zone.js was used to detect changes to data.
+With signals as the new foundation, the approach has changed significantly: Signals explicitly announce when a value has changed.
+<!-- We covered this in detail in the [blog post about Angular 18](/blog/2024-05-angular18). -->
 
-Nun gibt es zu dem Thema großartige Neuigkeiten: Zoneless Change Detection ist der neue Standard!
-Neue Anwendungen mit Angular 21 setzen also per Default auf den neuen Mechanismus.
-Beim Anlegen einer Anwendung mit `ng new` müssen wir nicht mehr die Option `--zoneless` verwenden.
-Es ist auch nicht mehr notwendig, die Funktion `provideZonelessChangeDetection()` in der `app.config.ts` aufzurufen.
+Now there is great news about this topic: Zoneless change detection is the new default!
+New applications created with Angular 21 use the new mechanism by default.
+When creating an application with `ng new`, we no longer need the `--zoneless` option.
+It is also no longer necessary to call the function `provideZonelessChangeDetection()` in `app.config.ts`.
 
-Möchte man aus Kompatibilitätsgründen doch noch die alte Umsetzung mit Zone.js verwenden, lässt sich die Change Detection in der `app.config.ts` konfigurieren.
-Zusätzlich muss Zone.js installiert sein und unter `polyfills` in der `angular.json` eingetragen werden – so wie es früher in allen Anwendungen der Fall war.
+If you still want to use the old Zone.js-based implementation for compatibility reasons, you can configure change detection in `app.config.ts`.
+Additionally, Zone.js must be installed and listed under `polyfills` in `angular.json` – just like it was in all applications in the past.
 
 ```ts
 export const appConfig: ApplicationConfig = {
   providers: [
     // ...
-    // VERALTETE Change Detection mit Zone.js aktivieren
+    // ENABLE the legacy change detection with Zone.js
     provideZoneChangeDetection({ eventCoalescing: true }),
 };
 ```
