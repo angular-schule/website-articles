@@ -15,6 +15,7 @@ keywords:
   - Karma
 language: en
 header: angular21.jpg
+sticky: true
 ---
 
 Before we dive into the usual end-of-year rush, there is news from the Angular world:
@@ -152,41 +153,41 @@ We have put together a detailed migration guide, including practical examples fo
 
 
 
-## @angular/aria: barrierefreie Komponenten leicht gemacht
+## @angular/aria: accessible components made easy
 
-Mit Angular 21 wurde das neue Package [`@angular/aria`](https://angular.dev/guide/aria/overview) eingeführt: eine Sammlung von Direktiven, die gängige [WAI-ARIA-Patterns](https://www.w3.org/WAI/ARIA/apg/patterns/) implementieren.
-Das Package übernimmt die komplexe Arbeit der Barrierefreiheit, insbesondere für komplexere, häufig verwendete Patterns, die über die Standard-HTML-Elemente hinausgehen.
-Tastaturinteraktionen, ARIA-Attribute, Fokus-Management und Screen-Reader-Unterstützung werden unter der Haube der Direktiven berücksichtigt.
+With Angular 21, the new package [`@angular/aria`](https://angular.dev/guide/aria/overview) was introduced: a collection of directives that implement common [WAI-ARIA patterns](https://www.w3.org/WAI/ARIA/apg/patterns/).
+The package handles the complex work of accessibility, especially for more complex, frequently used patterns that go beyond standard HTML elements.s.
+Keyboard interactions, ARIA attributes, focus management, and screen reader support are all taken into account under the hood of the directives.
 
-Die Installation des neuen Pakets erfolgt wie gewohnt über die Angular CLI:
+You install the new package as usual via the Angular CLI:
 
 ```bash
 ng add @angular/aria
 ```
 
-In der ersten Version bietet `@angular/aria` Direktiven für die folgenden interaktiven Patterns:
+In its first version, `@angular/aria` provides directives for the following interactive patterns:
 
-| Komponente       | Beschreibung                                                                    |
-|------------------|---------------------------------------------------------------------------------|
-| **Accordion**    | Aufklappbereiche (Akkordeon), die einzeln oder exklusiv erweitert werden können |
-| **Autocomplete** | Texteingabe mit gefilterten Vorschlägen während der Eingabe                     |
-| **Combobox**     | Kombination aus Textfeld und Popup mit Suchergebnissen                          |
-| **Grid**         | Zweidimensionale Datenanzeige mit zellenweiser Tastaturnavigation               |
-| **Listbox**      | Ein- oder Mehrfachauswahl-Optionslisten mit Tastaturnavigation                  |
-| **Menu**         | Dropdown-Menüs mit verschachtelten Untermenüs und Tastaturkürzeln               |
-| **Multiselect**  | Mehrfachauswahl-Dropdown-Pattern mit kompakter Anzeige                          |
-| **Select**       | Einfachauswahl-Dropdown-Pattern mit Tastaturnavigation                          |
-| **Tabs**         | Tab-Interfaces mit automatischen oder manuellen Aktivierungsmodi                |
-| **Toolbar**      | Gruppierte Steuerelemente mit logischer Tastaturnavigation                      |
-| **Tree**         | Hierarchische Listen mit Erweitern/Einklappen-Funktionalität                    |
+| Component        | Description                                                                      |
+| ---------------- | -------------------------------------------------------------------------------- |
+| **Accordion**    | Expandable sections (accordion), which can be opened individually or exclusively |
+| **Autocomplete** | Text input with filtered suggestions while typing                                |
+| **Combobox**     | Combination of text input and popup with search results                          |
+| **Grid**         | Two-dimensional data display with cell-by-cell keyboard navigation               |
+| **Listbox**      | Single or multi-select option lists with keyboard navigation                     |
+| **Menu**         | Dropdown menus with nested submenus and keyboard shortcuts                       |
+| **Multiselect**  | Multi-select dropdown pattern with compact display                               |
+| **Select**       | Single-select dropdown pattern with keyboard navigation                          |
+| **Tabs**         | Tab interfaces with automatic or manual activation modes                         |
+| **Toolbar**      | Grouped controls with logical keyboard navigation                                |
+| **Tree**         | Hierarchical lists with expand/collapse functionality                            |
 
-Das neue Package eignet sich insbesondere dann, wenn wir komplexe Komponenten entwickeln und nicht auf bestehende barrierefreie Komponentenbibliotheken zurückgreifen können, z. B. weil sich diese zum Beispiel hinsichtlich ihres Stylings nicht anpassen lassen.
-Die Direktiven bringen keinerlei Visualität mit sich, sorgen aber für ein konsistentes Verhalten sowie eine barrierefreie Tastaturnavigation, Fokus-Handling und Screenreader-Optimierung.
+The new package is especially useful when developing complex components and when existing accessible component libraries cannot be used, for example because their styling cannot be adapted.
+The directives do not involve any visual elements, but ensure consistent behavior as well as barrier-free keyboard navigation, focus handling, and screen reader optimization.
 
-In der Angular-Dokumentation findest du weitere Infos zu den neuen Direktiven: [Angular Aria Guide](https://angular.dev/guide/aria/overview)
+You can find more information about the new directives in the Angular documentation: [Angular Aria Guide](https://angular.dev/guide/aria/overview)
 
-> Einige der Bausteine gab es schon zuvor in ähnlicher Form im [Component Development Kit (CDK)](https://material.angular.dev/cdk/dialog/overview) von Angular. Das CDK war der Unterbau der Komponentenbibliothek Angular Material.
-> Mit `@angular/aria` bringt das Angular-Team den Kern dieser Sammlung ein Stück näher an die Angular-Basis und stärkt das Thema Barrierefreiheit.
+> Some of these building blocks previously existed in similar form in the [Component Development Kit (CDK)](https://material.angular.dev/cdk/dialog/overview) of Angular. The CDK was the foundation of the Angular Material component library.
+> With `@angular/aria`, the Angular team brings the core of this collection closer to the Angular platform and strengthens the focus on accessibility.
 
 
 ## Providers für `HttpClient`
