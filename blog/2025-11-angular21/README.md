@@ -210,10 +210,10 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## Angulars Unterstützung für AI-Assistenten
+## Angular’s support for AI assistants
 
-Beim Anlegen einer neuen Anwendung (`ng new`) fragt der interaktive Prompt jetzt nach, ob du eine Config für ein bestimmtes KI-Werkzeug generieren möchtest (Kommandozeilenoption `--ai-config`). 
-Dadurch wird eine Datei erzeugt, die als _Custom Prompt_ automatisch in AI-Assistenten wie Claude Code, GitHub Copilot, Cursor und vielen weiteren eingelesen wird und diese mit aktuellen Angular Best Practices versorgt:
+When creating a new application (`ng new`), the interactive prompt now asks whether you want to generate a config file for a specific AI tool (command-line option `--ai-config`).
+This creates a file that is automatically read as a _custom prompt_ by AI assistants such as Claude Code, GitHub Copilot, Cursor, and many others, supplying them with up-to-date Angular best practices:
 
 ```bash
 ? Which AI tools do you want to configure with Angular best practices? https://angular.dev/ai/develop-with-ai
@@ -228,26 +228,26 @@ Dadurch wird eine Datei erzeugt, die als _Custom Prompt_ automatisch in AI-Assis
 ↑↓ navigate • space select • a all • i invert • ⏎ submit
 ```
 
-Je nach ausgewähltem Tool variiert der Dateiname und der Speicherort, etwa `.claude/CLAUDE.md` für Claude, `.gemini/GEMINI.md` für Gemini oder `AGENTS.md` nach dem [neuen Standard](https://agents.md/) sowie optional ein Frontmatter.
-Der eigentliche Inhalt mit den Angular Best Practices bleibt identisch.
+Depending on the selected tool, the file name and location differ, for example `.claude/CLAUDE.md` for Claude, `.gemini/GEMINI.md` for Gemini, or `AGENTS.md` following the [new standard](https://agents.md/), optionally with a frontmatter header.
+The actual content with Angular best practices remains identical.
 
-Allerdings gibt es auch Herausforderungen: Custom Prompts werden bei längeren Sessions häufig vergessen, und das begrenzte Kontextfenster führt zu inkonsistenten Ergebnissen.
-Um dieses Problem besser zu beherrschen, bietet Angular zusätzlich einen eigenen MCP-Server an, der mit Angular 21 nun stabil ist. 
-Der Server ermöglicht AI-Agenten strukturierten Zugriff auf sieben Tools.
-Damit wird die "Wissenslücke" zwischen dem trainierten Modell und den aktuellen Best Practices geschlossen: 
-LLMs können so auch brandneue Features wie Signal Forms und Angular Aria nutzen, obwohl sie zum Zeitpunkt des Trainings noch nicht existierten.
+There are, however, challenges: custom prompts are often forgotten during long sessions, and the limited context window can lead to inconsistent results.
+To address this issue, Angular additionally offers its own MCP server, which is now stable with Angular 21.
+The server gives AI agents structured access to seven tools.
+This closes the “knowledge gap” between the trained model and current best practices:
+LLMs can use brand-new features such as Signal Forms and Angular Aria, even though these did not exist at training time.
 
-Der MCP-Server bietet aktuell sieben Tools an:
+The MCP server currently provides seven tools:
 
-1. Mit einem interaktiven KI-Tutor Angular kennenlernen (`ai_tutor`). Siehe auch die Dokumentation unter ["Angular AI Tutor"](https://angular.dev/ai/ai-tutor).
-2. Moderne Angular-Pattern-Beispiele finden (`find_examples`).
-3. Best Practices bereitstellen (`get_best_practices`).
-4. Alle Projekte im Workspace auflisten (`list_projects`).
-5. Die Anwendung auf Zoneless Change Detection migrieren (`onpush_zoneless_migration`).
-6. Die Dokumentation durchsuchen (`search_documentation`).
-7. Code-Migrationen mit Schematics durchführen (`modernize`, **experimentell**).
+1. Learn Angular with an interactive AI tutor (`ai_tutor`). See the documentation under ["Angular AI Tutor"](https://angular.dev/ai/ai-tutor).
+2. Find modern Angular pattern examples (`find_examples`).
+3. Provide best practices (`get_best_practices`).
+4. List all projects in the workspace (`list_projects`).
+5. Migrate the application to zoneless change detection (`onpush_zoneless_migration`).
+6. Search the documentation (`search_documentation`).
+7. Perform code migrations with schematics (`modernize`, **experimental**).
 
-<!-- Mehr Details zu `AGENTS.md`, MCP und praktischen Erfahrungen findest du in unserem ausführlichen Artikel über [Vibe-Coding mit Angular](/blog/2025-11-ai-mcp-vibe-coding). -->
+<!-- More details about `AGENTS.md`, MCP, and practical experience can be found in our detailed article about [Vibe Coding with Angular](/blog/2025-11-ai-mcp-vibe-coding). -->
 
 
 ## Migrationsskripte
