@@ -20,9 +20,33 @@ When creating a new project with `ng new`, Angular 21 now uses **Vitest** as the
 Vitest promises significantly faster startup times, modern features, and an easy-to-use Jest-compatible API.
 In this article, we'll show you what Vitest means for you, how to migrate existing Angular projects, and what benefits Vitest offers.
 
-## Inhalt
+## Content
 
-TODO
+- [Why Angular replaces Karma and Jasmine](#why-angular-replaces-karma-and-jasmine)
+- [Migration guide: From Karma/Jasmine to Vitest](#migration-guide-from-karmajasmine-to-vitest)
+  - [Manual migration steps](#manual-migration-steps)
+    - [1. Install dependencies](#1-install-dependencies)
+    - [2. Update `angular.json`](#2-update-angularjson)
+    - [3. Adopt a custom `karma.conf.js` configuration](#3-adopt-a-custom-karmaconfjs-configuration)
+    - [4. Remove Karma and `test.ts` files](#4-remove-karma-and-testts-files)
+    - [5. Configure browser mode (optional)](#5-configure-browser-mode-optional)
+  - [Automatic test refactoring using the schematic](#automatic-test-refactoring-using-the-schematic)
+    - [1. Overview](#1-overview)
+    - [2. Execute the schematic](#2-execute-the-schematic)
+    - [3. After the migration](#3-after-the-migration)
+    - [4. Custom configuration (optional)](#4-custom-configuration-optional)
+- [The new syntax and APIs](#the-new-syntax-and-apis)
+  - [Global functions](#global-functions)
+  - [Matchers](#matchers)
+    - [1) `toBeTrue()` / `toBeFalse()` do not exist in Jest/Vitest](#1-tobetrue--tobefalse-do-not-exist-in-jestvitest)
+    - [2) `toHaveBeenCalledOnceWith()` does not exist in Jest/Vitest](#2-tohavebeencalledoncewith-does-not-exist-in-jestvitest)
+    - [3) Asynchronous Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)](#3-asynchronous-matchers-expectasync-jasmine-vs-resolvesrejects-jestvitest)
+  - [Spies and mocks](#spies-and-mocks)
+  - [Asynchrony without Zone.js using Vitest timers](#asynchrony-without-zonejs-using-vitest-timers)
+  - [TestBed and ComponentFixture](#testbed-and-componentfixture)
+- [Known limitations and pitfalls](#known-limitations-and-pitfalls)
+- [Conclusion](#conclusion)
+
 
 
 
@@ -73,7 +97,7 @@ If you do not specify the option, Vitest is used automatically.
 
 To migrate an **existing project** to Angular 21 and Vitest, you must first update the project to version 21 using `ng update`.
 Note that migrating existing projects to Vitest is currently still **experimental**.
-This process also requires Angular’s `application` build system, which is enabled by default in newly created projects.
+This process also requires Angular's `application` build system, which is enabled by default in newly created projects.
 Once your project has been updated to version 21, you can continue with the following steps.
 
 
@@ -181,8 +205,8 @@ The browser name depends on the provider you use (for example `chromium` for Pla
 }
 ```
 
-Der Headless‑Modus wird automatisch aktiviert, wenn die Umgebungsvariable `CI` gesetzt ist oder der Browsername "Headless" enthält (z. B. `ChromeHeadless`). 
-Andernfalls läuft der Browser sichtbar.
+The headless mode is automatically activated if the environment variable `CI` is set or the browser name contains “Headless” (e.g., `ChromeHeadless`).
+Otherwise, the browser runs visibly.
 
 ### Automatic test refactoring using the schematic
 
@@ -413,7 +437,7 @@ it('should load data', async () => {
 });
 ````
 
-It may be necessary to “mock” the service to make this example work.
+It may be necessary to "mock" the service to make this example work.
 Nothing else changes here.
 Only the syntax is modern, and there is no difference between Jasmine and Vitest.
 
@@ -421,7 +445,7 @@ The second Angular classic, [`fakeAsync()`](https://angular.dev/api/core/testing
 (Note: These helpers are not part of Jasmine, but come from `@angular/core/testing`.)
 Vitest provides its own [fake timer system](https://vitest.dev/api/vi.html#fake-timers).
 Using it requires some practice, because not all timers behave the same and not every test needs the same tools.
-Let’s start with a simple time-based example.
+Let's start with a simple time-based example.
 The following function increases a counter after exactly five seconds:
 
 ```ts
@@ -537,33 +561,33 @@ describe('startAsyncJob', () => {
 });
 ```
 
-`runAllTimersAsync()` is therefore a good replacement for Jasmine scenarios where `fakeAsync()` and `tick()` were used together with microtask flushing.
+`runAllTimersAsync()` is therefore a good replacement for test where `fakeAsync()` and `tick()` were used together with microtask flushing.
 
-### TestBed und ComponentFixture
+### TestBed and ComponentFixture
 
-Nach all den kleinen, aber subtilen Unterschieden zwischen Jasmine und Vitest gibt es hier gute Nachrichten: 
-Die Verwendung von `TestBed` und `ComponentFixture` bleibt vollständig unverändert, da dies kein Thema ist, das Vitest berührt. 
-Du erzeugst weiterhin deine Komponenten oder Services mithilfe von `TestBed`.
-Auch der explizite Aufruf von `fixture.detectChanges()` ist unverändert notwendig, um die Change Detection manuell anzustoßen.
-
-
-## Bekannte Einschränkungen und Fallstricke
-
-Spezielle Karma-Anwendungsfälle wie eigene Karma-Plugins oder individuelle Browser‑Launcher lassen sich erwartungsgemäß nicht direkt auf Vitest übertragen.
-Du wirst im Vitest-Ökosystem nach Alternativen suchen müssen.
-
-Bei der Umstellung auf Vitest kann eine kurze Gewöhnungsphase im Team nötig sein, da bestimmte neue API-Konzepte wie `vi.spyOn`, `vi.fn` oder Strategien zum Zurücksetzen von Mocks zwar leicht zu erlernen sind, sich aber dennoch von Jasmine unterscheiden. 
-Achte deshalb darauf, dass deine Tests mögliche Manipulationen an globalen Objekten vollständig aufräumen und verwende dafür idealerweise Methoden wie [`afterEach`](https://vitest.dev/api/#aftereach) mit [`vi.restoreAllMocks()`](https://vitest.dev/api/vi.html#vi-restoreallmocks).
+After all the small but subtle differences between Jasmine and Vitest, there is good news here:
+The use of `TestBed` and `ComponentFixture` remains completely unchanged, because Vitest does not affect this area.
+You still create your components or services using `TestBed`.
+An explicit call to `fixture.detectChanges()` is still necessary to manually trigger the change detection.
 
 
-## Fazit
+## Known limitations and pitfalls
 
-Mit Vitest als Standard in Angular 21 wird das Testen deutlich moderner und schneller. 
-Die Umstellung ist meist unkompliziert, die Migrations‑Schematics helfen beim Einstieg. 
-Wo früher `fakeAsync` und Zone.js‑Magie nötig waren, reichen heute `async/await` und flexible Fake‑Timer. 
-Und wenn es realistisch sein muss, steht dir der Browser‑Modus zur Verfügung.
-Insgesamt bedeutet das: kürzere Feedback‑Schleifen, robustere Tests und weniger Reibung im Alltag. Viel Spaß beim Testen!
+Special Karma use cases such as custom Karma plugins or custom browser launchers cannot be transferred directly to Vitest, as expected.
+You will need to look for alternatives in the Vitest ecosystem.
+
+When switching to Vitest, your team may need a short adjustment phase, because some new API concepts like `vi.spyOn`, `vi.fn`, or strategies for resetting mocks are easy to learn but still different from Jasmine.
+Make sure your tests clean up any changes to global objects completely, and ideally use methods like [`afterEach`](https://vitest.dev/api/#aftereach) together with [`vi.restoreAllMocks()`](https://vitest.dev/api/vi.html#vi-restoreallmocks).
+
+## Conclusion
+
+With Vitest as the default in Angular 21, testing becomes much more modern and faster.
+The migration is usually straightforward, and the migration schematics help you get started.
+In the past, `fakeAsync` and Zone.js magic were necessary, but today `async/await` and flexible fake timers are sufficient. 
+And if you need realistic behaviour, the browser mode is available.
+Overall, this means shorter feedback loops, more robust tests, and less friction in daily work. Have fun testing!
+
 
 <hr>
 
-<small>Vielen Dank an Ferdinand Malcher und Danny Koppenhagen für das Review und das wertvolle Feedback!</small>
+<small>Many thanks to Ferdinand Malcher and Danny Koppenhagen for the review and the valuable feedback!</small>
