@@ -2,8 +2,8 @@
 title: "Vitest in Angular 21: What's new and how to migrate?"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-published: 2025-11-18
-lastModified: 2025-11-18
+published: 2025-11-20
+lastModified: 2025-11-20
 keywords:
   - Angular
   - Angular 21
@@ -124,7 +124,7 @@ If they already match `development`, no further step is necessary.
 
 #### 3. Adopt a custom `karma.conf.js` configuration
 
-Custom settings in `karma.conf.js` file are not migrated automatically.
+Custom settings from the file `karma.conf.js` are not migrated automatically.
 Check this file before deleting it, and transfer the relevant options manually.
 Many Karma options have Vitest equivalents that you can define in a `vitest.config.ts` and then include through `runnerConfig` in the `angular.json`.
 
@@ -193,7 +193,7 @@ Always review the changes manually.
 
 #### 1. Overview
 
-The schematic currently performs the following transformations in the `.spec.ts` files:
+The schematic currently performs the following transformations in files with the suffix `.spec.ts`:
 
 * `fit`/`fdescribe` → `it.only`/`describe.only`
 * `xit`/`xdescribe` → `it.skip`/`describe.skip`
@@ -350,7 +350,8 @@ await expect(doWork()).rejects.toThrow('Boom');
 Vitest therefore aims for Jest compatibility when it comes to matchers.
 Compatibility with Jasmine is not a goal at all.
 In practice, the amount of required changes is usually small (mainly for `toBeTrue`/`toBeFalse` and `toHaveBeenCalledOnceWith`), but it does exist.
-For asynchronous expectations, the pattern is even different. But don't worry: the chances that your project uses `expectAsync` are very low, because the Angular documentation always showed custom helper functions instead.
+For asynchronous expectations, the pattern is even different. 
+But don't worry: the chances that your project uses `expectAsync` are very low, because the Angular documentation always showed Angular-specific helper functions instead.
 Because of this, most projects will probably not need additional changes here.
 
 ### Spies and mocks
@@ -431,20 +432,20 @@ export function startFiveSecondTimer(counter: { value: number }) {
 }
 ```
 
-Für solche Fälle ist `vi.advanceTimersByTime()` ideal, denn man kann gezielt simulieren, dass exakt eine bestimmte Zeit verstrichen ist. Ganz ähnlich wie früher `tick(5000)`, aber ohne fakeAsync-Zone:
+In such cases, `vi.advanceTimersByTime()` is ideal because you can simulate that exactly a certain amount of time has elapsed. It works very similarly to the old `tick(5000)`, but without the `fakeAsync()` zone:
 
 ```ts
 import { describe, it, expect, vi } from 'vitest';
 import { startFiveSecondTimer } from './timer-basic';
 
 describe('startFiveSecondTimer', () => {
-  it('erhöht den Counter nach exakt 5 Sekunden', () => {
+  it('increases the counter after exactly 5 seconds', () => {
     vi.useFakeTimers();
 
     const counter = { value: 0 };
     startFiveSecondTimer(counter);
 
-    // simuliert das Vergehen von 5 Sekunden
+    // simulate the passing of 5 seconds
     vi.advanceTimersByTime(5000);
 
     expect(counter.value).toBe(1);
@@ -454,12 +455,12 @@ describe('startFiveSecondTimer', () => {
 });
 ```
 
-`advanceTimersByTime()` ist damit der unmittelbare Ersatz für `tick()`.
-Es eignet sich besonders gut, wenn du eine ganz bestimmte Zeitspanne simulieren oder mehrere Timer in korrekt getakteter Reihenfolge ablaufen lassen möchtest.
+`advanceTimersByTime()` is therefore the direct replacement for `tick()`.
+It works especially well when you want to simulate a specific time period or run multiple timers in the correct order.
 
 
-Doch nicht alle Timer sind so einfach. 
-Manchmal besteht der Code nur aus timerbasierten Aktionen, aber ohne zusätzliche Promises. Das folgende Beispiel inkrementiert einen Counter mehrfach, indem es ausschließlich Timeouts und Intervals nutzt:
+But not all timers are this simple.
+Sometimes the code works only with timer-based actions, but without additional promises. The following example increments a counter multiple times using only timeouts and intervals:
 
 ```ts
 // timer-sync.ts
@@ -474,20 +475,20 @@ export function startSyncSequence(counter: { value: number }) {
 }
 ```
 
-In Fällen, in denen du *alle* Timer der Reihe nach abarbeiten willst, ohne manuell Zeit vorzuspulen, nutzt du `vi.runAllTimers()`:
+In cases where you want to run *all* timers one after another without manually moving time forward, you use `vi.runAllTimers()`:
 
 ```ts
 import { describe, it, expect, vi } from 'vitest';
 import { startSyncSequence } from './timer-sync';
 
 describe('startSyncSequence', () => {
-  it('führt alle synchronen Timer vollständig aus', () => {
+  it('runs all synchronous timers completely', () => {
     vi.useFakeTimers();
 
     const counter = { value: 0 };
     startSyncSequence(counter);
 
-    // führt alle Timer und Intervals aus, bis die Timer-Queue leer ist
+    // runs all timers and intervals until the timer queue is empty
     vi.runAllTimers();
 
     expect(counter.value).toBe(3);
@@ -497,36 +498,36 @@ describe('startSyncSequence', () => {
 });
 ```
 
-Hier wäre `advanceTimersByTime()` zwar möglich, aber unnötig kompliziert. `runAllTimers()` löst einfach jedes Timeout und jedes Interval aus, bis nichts mehr übrig ist.
+Here, `advanceTimersByTime()` would be possible, but needlessly complicated. `runAllTimers()` simply executes every timeout and every interval until nothing is left.
 
-Noch interessanter wird es, wenn Timer-Callbacks selbst wieder asynchron arbeiten, beispielsweise durch ein `await` oder Promise-Ketten.
-Dann reicht `runAllTimers()` nicht mehr aus. Das folgende Beispiel zeigt ein typisches Muster aus realen Anwendungen:
+It becomes even more interesting when timer callbacks contain asynchronous work themselves, for example through an `await` or promise chains.
+In that case, `runAllTimers()` is no longer enough. The following example shows a typical pattern from real applications:
 
 ```ts
 // timer-async.ts
 export function startAsyncJob(): Promise<string> {
   return new Promise(resolve => {
     setTimeout(async () => {
-      const data = await Promise.resolve('done'); // asynchroner Schritt im Callback
+      const data = await Promise.resolve('done'); // asynchronous step in the callback
       resolve(data);
     }, 100);
   });
 }
 ```
 
-Damit der Test nicht nur den Timeout, sondern auch das `await` im Callback vollständig abarbeitet, bietet Vitest `runAllTimersAsync()` an:
+To ensure the test handles both the timeout and the `await` inside the callback, Vitest provides `runAllTimersAsync()`:
 
 ```ts
 import { describe, it, expect, vi } from 'vitest';
 import { startAsyncJob } from './timer-async';
 
 describe('startAsyncJob', () => {
-  it('führt Timer und async-Callbacks vollständig aus', async () => {
+  it('runs timers and async callbacks completely', async () => {
     vi.useFakeTimers();
 
     const promise = startAsyncJob();
 
-    // führt Timer UND asynchrone Logik innerhalb der Timer-Callbacks aus
+    // runs timers AND asynchronous logic inside the timer callbacks
     await vi.runAllTimersAsync();
 
     await expect(promise).resolves.toBe('done');
@@ -536,7 +537,7 @@ describe('startAsyncJob', () => {
 });
 ```
 
-`runAllTimersAsync()` ist damit ein guter Ersatz für Jasmine-Szenarien, bei denen `fakeAsync()` und `tick()` in Kombination mit Microtask-Flushing verwendet wurden. 
+`runAllTimersAsync()` is therefore a good replacement for Jasmine scenarios where `fakeAsync()` and `tick()` were used together with microtask flushing.
 
 ### TestBed und ComponentFixture
 
