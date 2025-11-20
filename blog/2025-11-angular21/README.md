@@ -26,7 +26,7 @@ As always, you can find the official release information in the [Angular Blog](h
 You can migrate an existing project to Angular 21 using the command `ng update`.
 Detailed information about the steps is available in the [Angular Update Guide](https://angular.dev/update-guide).
 
-> 🇩🇪 This article is available in German language here: [Angular 21 ist da!](https://angular-buch.com/blog/2025-11-angular21
+> 🇩🇪 This article is available in German language here: [Angular 21 ist da!](https://angular-buch.com/blog/2025-11-angular21)
 
 
 ## Versions of TypeScript and Node.js
