@@ -1,5 +1,5 @@
 ---
-title: 'Angular 20 is here!'
+title: 'Angular 21 is here!'
 author: Angular Book Team
 mail: team@angular-buch.com
 published: 2025-11-20
@@ -18,9 +18,9 @@ header: angular21.jpg
 sticky: true
 ---
 
-Before we dive into the usual end-of-year rush, there is news from the Angular world:
+<!-- Before we dive into the usual end-of-year rush, there is news from the Angular world: -->
 On **November 19, 2025**, **Angular 21** was released!
-The most important updates: Signal Forms, zoneless apps, testing with Vitest, and the new package `@angular/aria`.
+The most important updates: Signal Forms, zoneless apps, testing with Vitest, the new package `@angular/aria`, and more support for AI assistants.
 
 As always, you can find the official release information in the [Angular Blog](https://blog.angular.dev/announcing-angular-v21-57946c34f14b).
 You can migrate an existing project to Angular 21 using the command `ng update`.
@@ -136,7 +136,7 @@ ng new my-project --test-runner=karma
 
 Vitest offers significant advantages: much faster test execution, modern APIs, a Jest-like expect syntax, flexible fake timers, and even a real browser mode if needed.
 The browser mode works similarly to how it did under Karma and is ideal for realistic UI tests.
-Most specs should continue to work unchanged, because Angular’s `TestBed` and `ComponentFixture` remain exactly the same.
+Most specs should continue to work unchanged, because Angular's `TestBed` and `ComponentFixture` remain exactly the same.
 The main changes are to Jasmine-specific matchers or spies.
 
 The actual migration starts by using the new `unit-test` builder in `angular.json`.
@@ -156,7 +156,7 @@ We have put together a detailed migration guide, including practical examples fo
 ## @angular/aria: accessible components made easy
 
 With Angular 21, the new package [`@angular/aria`](https://angular.dev/guide/aria/overview) was introduced: a collection of directives that implement common [WAI-ARIA patterns](https://www.w3.org/WAI/ARIA/apg/patterns/).
-The package handles the complex work of accessibility, especially for more complex, frequently used patterns that go beyond standard HTML elements.s.
+The package handles the complex work of accessibility, especially for more complex, frequently used patterns that go beyond standard HTML elements.
 Keyboard interactions, ARIA attributes, focus management, and screen reader support are all taken into account under the hood of the directives.
 
 You install the new package as usual via the Angular CLI:
@@ -210,7 +210,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## Angular’s support for AI assistants
+## Angular's support for AI assistants
 
 When creating a new application (`ng new`), the interactive prompt now asks whether you want to generate a config file for a specific AI tool (command-line option `--ai-config`).
 This creates a file that is automatically read as a _custom prompt_ by AI assistants such as Claude Code, GitHub Copilot, Cursor, and many others, supplying them with up-to-date Angular best practices:
@@ -234,7 +234,7 @@ The actual content with Angular best practices remains identical.
 There are, however, challenges: custom prompts are often forgotten during long sessions, and the limited context window can lead to inconsistent results.
 To address this issue, Angular additionally offers its own MCP server, which is now stable with Angular 21.
 The server gives AI agents structured access to seven tools.
-This closes the “knowledge gap” between the trained model and current best practices:
+This closes the "knowledge gap" between the trained model and current best practices:
 LLMs can use brand-new features such as Signal Forms and Angular Aria, even though these did not exist at training time.
 
 The MCP server currently provides seven tools:
