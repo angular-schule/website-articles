@@ -190,12 +190,12 @@ You can find more information about the new directives in the Angular documentat
 > With `@angular/aria`, the Angular team brings the core of this collection closer to the Angular platform and strengthens the focus on accessibility.
 
 
-## Providers für `HttpClient`
+## Providers for `HttpClient`
 
-Mit Angular 21 werden die Providers für den `HttpClient` automatisch eingebunden.
-Es ist also nicht mehr zwingend notwendig, in der `app.config.ts` die Funktion `provideHttpClient()` aufzurufen.
+With Angular 21, the providers for `HttpClient` are included automatically.
+This means it is no longer necessary to call the function `provideHttpClient()` in the file `app.config.ts`.
 
-Wollen wir die HTTP-Integration konfigurieren, z. B. mit Interceptors oder der Funktion `withFetch()`, müssen wir die Funktion allerdings weiterhin verwenden:
+If we want to configure the HTTP integration, for example by adding interceptors or using the function `withFetch()`, we still need to call the function:
 
 ```ts
 // app.config.ts
