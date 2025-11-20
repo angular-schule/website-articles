@@ -250,42 +250,40 @@ The MCP server currently provides seven tools:
 <!-- More details about `AGENTS.md`, MCP, and practical experience can be found in our detailed article about [Vibe Coding with Angular](/blog/2025-11-ai-mcp-vibe-coding). -->
 
 
-## Migrationsskripte
+## Migration scripts
 
-Es wird nicht mehr empfohlen, die Direktive `ngClass` zu verwenden. 
-Wir haben darüber schon vor einem Jahr [in einem Blogpost berichtet](https://angular.schule/blog/2024-11-ngclass-ngstyle).
-Zur Umstellung auf direkte Class Bindings mit `[class]` bietet Angular ein Migrationsskript an:
+It is no longer recommended to use the `ngClass` directive.
+<!-- We already wrote about this one year ago [in a blog post](https://angular.schule/blog/2024-11-ngclass-ngstyle). -->
+To migrate to direct class bindings with `[class]`, Angular provides a migration script:
 
 ```bash
 ng generate @angular/core:ngclass-to-class
 ```
 
-Das `RouterTestingModule` für Unit-Tests wird ebenfalls nicht mehr unterstützt.
-Ein Migrationsskript kann die Tests auf das neuere `provideRouterTesting()` umstellen, siehe [Commit](https://github.com/angular/angular/commit/861cee34e0e9b5562cfe70d245f30b7ddea7d8fd).
+The `RouterTestingModule` for unit tests is also no longer supported.
+A migration script can update the tests to the newer `provideRouterTesting()`, see the [commit](https://github.com/angular/angular/commit/861cee34e0e9b5562cfe70d245f30b7ddea7d8fd).
 
 ```bash
 ng generate @angular/core:router-testing-module-migration
 ```
 
+## Other updates
 
-## Sonstiges
+You can always find all the details about new features in the changelogs of [Angular](https://github.com/angular/angular/releases) and the [Angular CLI](https://github.com/angular/angular-cli/releases).
+We have collected some interesting highlights here:
 
-Alle Details zu den Neuerungen findest du immer im Changelog von [Angular](https://github.com/angular/angular/releases) und der [Angular CLI](https://github.com/angular/angular-cli/releases).
-Einige interessante Aspekte haben wir hier zusammengetragen:
-
-- **Bindings für ARIA-Attribute:** Bisher mussten wir für ARIA-Attribute immer ein Attribute Binding verwenden: `[attr.aria-label]="myLabel"`. Die Attribute können nun auch direkt gebunden werden: `[aria-label]="myLabel"`.
-- **Reguläre Ausdrücke in Templates:** Angular unterstützt jetzt reguläre Ausdrücke direkt in Templates (siehe [PR](https://github.com/angular/angular/pull/63857)).
-- **Tailwind-Support für `ng new`:** Angular unterstützt schon länger direkt TailwindCSS. Nun kann das Framework auch direkt beim Anlegen einer Anwendung konfiguriert werden: `ng new --style=tailwind` (siehe [Commit](https://github.com/angular/angular-cli/commit/4912f39906b11a3212f11d5a00d577e2a0bacab4)).
-
-<hr>
-
-
-Wir wünschen dir viel Spaß beim Entwickeln mit Angular 21!
-Hast du Fragen zur neuen Version von Angular oder zu unserem Buch? Schreibe uns!
-
-**Viel Spaß wünschen
-Ferdinand, Danny und Johannes**
+* **Bindings for ARIA attributes:** Until now, we always had to use an attribute binding for ARIA attributes: `[attr.aria-label]="myLabel"`. These attributes can now be bound directly: `[aria-label]="myLabel"`.
+* **Regular expressions in templates:** Angular now supports regular expressions directly in templates (see [PR](https://github.com/angular/angular/pull/63857)).
+* **Tailwind support for `ng new`:** Angular has supported TailwindCSS for a while. Now the framework can also be configured directly when creating a new application: `ng new --style=tailwind` (see [commit](https://github.com/angular/angular-cli/commit/4912f39906b11a3212f11d5a00d577e2a0bacab4)).
 
 <hr>
 
-<small>**Titelbild:** Drei Zinnen, Dolomiten, Italien. Foto von Ferdinand Malcher</small>
+We wish you lots of fun developing with Angular 21!
+Do you have questions about the new version of Angular or about our book? Write to us!
+
+**Have fun!
+Ferdinand, Danny and Johannes**
+
+<hr>
+
+<small>**Cover image:** Tre Cime di Lavaredo, Dolomites, Italy. Photo by Ferdinand Malcher</small>
