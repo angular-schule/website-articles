@@ -115,39 +115,40 @@ The Angular team also places great emphasis on backward compatibility, so migrat
 However, the new approach is still experimental, meaning that the interfaces and concepts are subject to change.
 
 
-## Vitest: der neue Test-Runner
+## Vitest: the new test runner
 
-Mit Angular 21 gibt es einen der größten Umbrüche im Testing seit vielen Jahren: 
-[Vitest](https://vitest.dev) ersetzt "offiziell" Karma und Jasmine als Standard-Test-Runner. 
-Vitest wurde bereits mit [Angular 20 (Mai 2025) als experimenteller Test-Runner eingeführt](https://angular-buch.com/blog/2025-05-angular20#experimenteller-test-builder-f%C3%BCr-vitest).
-Mit Angular 21 ist Vitest nun offiziell stabil und nicht mehr als experimentell gekennzeichnet.
+Angular 21 brings one of the biggest changes in testing we've seen in years:
+[Vitest](https://vitest.dev) "officially" replaces Karma and Jasmine as the standard test runner.
+Vitest was already introduced as an experimental test runner in [Angular 20 (May 2025)](https://angular-buch.com/blog/2025-05-angular20#experimenteller-test-builder-f%C3%BCr-vitest).
+With Angular 21, Vitest is now officially stable and no longer marked as experimental.
 
-Vitest wurde damit gleichzeitig für neue Projekte mit `ng new` zur Voreinstellung.
-Für neue Projekte führt der Weg also klar zu Vitest, du kannst auf Wunsch aber weiterhin Karma/Jasmine wählen:
+Vitest then became the default for new projects with `ng new`.
+So for new projects, the path clearly leads to Vitest, but you can still choose Karma/Jasmine if you prefer:
 
 ```bash
-# Projekt mit Vitest als Testrunner anlegen
+# Create a project with Vitest as the test runner
 ng new my-project
 
-# Projekt mit Karma als Testrunner anlegen
+# Create a project with Karma as the test runner
 ng new my-project --test-runner=karma
 ```
 
-Vitest bringt spürbare Vorteile: deutlich schnellere Testausführung, moderne APIs, eine Jest‑ähnliche Expect‑Syntax, flexible Fake‑Timer, und bei Bedarf sogar einen echten Browser-Modus.
-Der Browser-Modus ist ähnlich wie zuvor unter Karma und ideal für realitätsnahe UI-Tests.
-Die meisten Specs sollten weiterhin unverändert funktionieren, da Angulars `TestBed` und `ComponentFixture` vollständig gleich bleiben.
-Anpassungen betreffen hauptsächlich Jasmine-spezifische Matcher oder Spys.
+Vitest offers significant advantages: much faster test execution, modern APIs, a Jest-like expect syntax, flexible fake timers, and even a real browser mode if needed.
+The browser mode works similarly to how it did under Karma and is ideal for realistic UI tests.
+Most specs should continue to work unchanged, because Angular’s `TestBed` and `ComponentFixture` remain exactly the same.
+The main changes are to Jasmine-specific matchers or spies.
 
-Die eigentliche Umstellung erfolgt zunächst über den neuen Builder `unit-test` in der `angular.json`.
-Danach kannst du für bestehende Tests ein experimentelles Schematic verwenden, das viele Jasmine-Patterns automatisch nach Vitest überführt:
+The actual migration starts by using the new `unit-test` builder in `angular.json`.
+After that, you can use an experimental schematic for existing tests that automatically transfers many Jasmine patterns to Vitest:
 
 ```bash
 ng g @schematics/angular:refactor-jasmine-vitest
 ```
 
-Gleichzeitig hat das Angular-Team die Unterstützung für die Test-Runner Jest und Web Test Runner als **deprecated** markiert.
-Eine ausführliche Anleitung zur Migration, inklusive praktischer Beispiele zu Fake-Timern, Matchern und async/await, haben wir hier zusammengestellt:
-- **[Vitest in Angular 21: Was ist neu und wie kann man migrieren?](/blog/2025-11-zu-vitest-migrieren)**
+At the same time, the Angular team has marked support for the test runners Jest and Web Test Runner as **deprecated**.
+We have put together a detailed migration guide, including practical examples for fake timers, matchers, and async/await:
+
+* **[Vitest in Angular 21: What's new and how to migrate?](/blog/2025-11-migrate-to-vitest)**
 
 
 
