@@ -396,7 +396,7 @@ const onItem = vi.fn().mockName('onItem').mockReturnValue(true);
 Since Angular 21, unit tests run zoneless by default.
 This means: The old Angular helpers `waitForAsync()` and `fakeAsync()`/`tick()` no longer work automatically, because they rely on Zone.js.
 First of all, this has nothing to do with Vitest.
-Even under Jasmine, these utilities would have had to be dispensed with in a zone-free environment.
+Even under Jasmine, these utilities would have had to be replaced in a zone-free environment.
 
 For simple asynchronous tests, you replace `waitForAsync()` with normal `async/await`, which has also been possible with Jasmine for many years.
 The following update therefore works independently of the test runner:
