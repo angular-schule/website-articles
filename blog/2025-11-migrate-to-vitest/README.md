@@ -441,6 +441,9 @@ afterEach(() => {
 
 Alternatively, you can set the option `test.restoreMocks: true` in `vitest.config.ts`, and Vitest will handle the cleanup automatically.
 
+Unfortunately, this setting is not the default.
+The Angular team has [deliberately chosen the standard Vitest behavior](https://github.com/angular/angular-cli/issues/30478), forgoing maximum Jasmine compatibility.
+
 ### Asynchrony without Zone.js using Vitest timers
 
 Since Angular 21, unit tests run zoneless by default.
