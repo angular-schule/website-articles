@@ -330,13 +330,22 @@ This is the pattern used in `rxResourceFixed` (see below).
 
 
 
-### Bug #2: HttpErrorResponse Gets Wrapped in ResourceWrappedError (resource/rxResource)
+> **✅ Edit (January 2025):** Great news! The Angular team listened to community feedback and **fixed this issue** in [PR #62111](https://github.com/angular/angular/pull/62111), merged into Angular 21.0.x.
+> The fix introduces an `isErrorLike()` check that recognizes objects implementing the `Error` interface (like `HttpErrorResponse`), not just classes that inherit from `Error`.
+> `HttpErrorResponse` now passes through unwrapped, making error handling consistent across all Resource APIs.
+> Thank you, Matthieu Riegler and the Angular team! 🎉
+>
+> The section below is kept for historical context and for developers on older Angular versions.
+
+### ~~Bug #2: HttpErrorResponse Gets Wrapped in ResourceWrappedError (resource/rxResource)~~
 
 **Affects**: `resource()` and `rxResource()`. `httpResource()` is typically not affected.
 
 **GitHub Issue**: [#61861](https://github.com/angular/angular/issues/61861)
 
 **Regression**: Introduced in [PR #61441](https://github.com/angular/angular/pull/61441) ([Commit 9045e22](https://github.com/angular/angular/commit/9045e229c2899ee910ff6ce41fa822f2af5f88bf))
+
+**Fix**: [PR #62111](https://github.com/angular/angular/pull/62111) (merged December 2025, available in Angular 21.0.x)
 
 **What Should Happen**:
 
@@ -441,6 +450,8 @@ if (err2 instanceof HttpErrorResponse) {
 }
 ```
 It's easy to see how this becomes confusing.
+
+> **✅ Edit (January 2025):** With Angular 21.0.x and later, this confusion is resolved! All Resource APIs now return `HttpErrorResponse` directly unwrapped. The code example above showing `.cause` access is only needed for Angular versions before 21.0.x. Note: The `rethrowHttpResourceError()` operator in `rxResourceFixed` is still useful if you want to customize the error message (e.g., "HTTP Error 404: Not Found" instead of the raw `HttpErrorResponse`).
 
 ### Bug #3: reload() Doesn't Clear Error State Immediately
 
