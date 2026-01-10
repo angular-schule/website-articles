@@ -3,7 +3,7 @@ title: "Angular's Resource APIs Are Broken - Let's Fix Them!"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 published: 2025-10-31
-lastModified: 2025-10-31
+lastModified: 2025-01-10
 keywords:
   - Angular
   - Angular
