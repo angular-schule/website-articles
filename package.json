@@ -25,6 +25,10 @@
     "marked-highlight": "^2.2.3",
     "node-emoji": "^2.1.3"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.57.1",
+    "@rollup/rollup-linux-x64-gnu": "^4.57.1"
+  },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/js-yaml": "^4.0.9",
