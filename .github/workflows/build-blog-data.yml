@@ -6,6 +6,7 @@ on:
       - main
 
 env:
+  MARKDOWN_BASE_URL: https://angular-schule.github.io/website-articles/
   GITHUB_NAME: The Buildbot
   GITHUB_EMAIL: buildbot@angular2buch.de
   BRANCH: gh-pages
