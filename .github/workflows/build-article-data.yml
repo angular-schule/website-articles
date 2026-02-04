@@ -1,10 +1,9 @@
-name: Build blog data
+name: Build article data
 
 on:
   push:
     branches:
       - main
-
 env:
   GITHUB_NAME: The Buildbot
   GITHUB_EMAIL: buildbot@angular2buch.de
