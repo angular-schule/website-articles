@@ -33,7 +33,7 @@ Die bekannte Schildform bleibt erhalten, aber statt einer einfachen Farbfläche 
 > **Das neue Angular-Portal finden Sie unter [//angular.dev](https://angular.dev).**
 
 <div style="margin: auto">
-  <img src="https://angular-schule.github.io/website-articles/2023-11-neues-logo/logo-history.png" alt="Geschichte des Logos">
+  <img src="logo-history.png" alt="Geschichte des Logos">
   <p><small>Das Angular-Logo im Wandel der Zeiten: AngularJS (2012), Angular (2016), Angular (2023)</small></p>
 </div>
 

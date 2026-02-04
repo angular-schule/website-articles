@@ -20,7 +20,7 @@ Whenever I sit in a car, I'm impressed by how the electronics work. Wouldn't it 
 I want to take you on a car ride into how we can implement a turn indicator with RxJS!
 
 <div style="max-width: 300px; margin: auto">
-  <img src="https://angular-schule.github.io/website-articles/2021-12-rxjs-turn-signal/car.gif" alt="Animation of a blinking car">
+  <img src="car.gif" alt="Animation of a blinking car">
 </div>
 
 ## How the car circuit works

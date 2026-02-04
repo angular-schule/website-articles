@@ -13,13 +13,41 @@ export class JekyllMarkdownParser {
   constructor(private baseUrl: string) {}
 
   private _imageRenderer(href: string, title: string, text: string) {
-    let out = `<img src="${this.baseUrl + href}" alt="${text}"`;
+    let src = href;
+
+    // Skip: absolute URLs (https://), data URIs, protocol-relative URLs, website assets, absolute paths
+    const isAbsolute = href.startsWith('https://') || href.startsWith('http://') ||
+                       href.startsWith('data:') || href.startsWith('//') ||
+                       href.startsWith('assets/') || href.startsWith('/');
+
+    if (!isAbsolute) {
+      // Normalize: strip ./ prefix
+      const normalizedHref = href.startsWith('./') ? href.slice(2) : href;
+      src = this.baseUrl + normalizedHref;
+    }
+
+    let out = `<img src="${src}" alt="${text}"`;
     if (title) {
       out += ' title="' + title + '"';
     }
     out += '>';
     return out;
-  };
+  }
+
+  // Transform relative paths in raw HTML <img> tags to absolute URLs
+  private _transformRelativeImagePaths(html: string): string {
+    return html.replace(/<img([^>]*)\ssrc="([^"]+)"/g, (match, attrs, src) => {
+      // Skip: absolute URLs (https://), data URIs, protocol-relative URLs, website assets, absolute paths
+      if (src.startsWith('https://') || src.startsWith('http://') ||
+          src.startsWith('data:') || src.startsWith('//') ||
+          src.startsWith('assets/') || src.startsWith('/')) {
+        return match;
+      }
+      // Normalize: strip ./ prefix
+      const normalizedSrc = src.startsWith('./') ? src.slice(2) : src;
+      return `<img${attrs} src="${this.baseUrl}${normalizedSrc}"`;
+    });
+  }
 
   private getMarkdownRenderer() {
     const renderer = new marked.Renderer();
@@ -52,7 +80,8 @@ export class JekyllMarkdownParser {
 
   private compileMarkdown(markdown: string): string {
     const renderer = this.getMarkdownRenderer();
-    return marked(markdown, { renderer: renderer });
+    const html = marked(markdown, { renderer: renderer });
+    return this._transformRelativeImagePaths(html);
   }
 
   private parseYaml(yaml: string): any {
