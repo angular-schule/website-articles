@@ -30,16 +30,9 @@ jobs:
           npm install
           npm run build
 
-      - name: Debug dist folder
-        run: |
-          echo "PWD: $(pwd)"
-          echo "dist contents:"
-          ls -la dist/
-          ls dist/blog/ | head -5
-
       - name: Deploy to branch
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm install angular-cli-ghpages
-          npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
+          npx angular-cli-ghpages --no-notfound --no-history --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
