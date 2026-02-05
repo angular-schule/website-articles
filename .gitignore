@@ -2,3 +2,4 @@
 Thumbs.db
 _site
 dist
+.claude/settings.local.json

@@ -11,7 +11,7 @@ keywords:
   - DATE_VALUE_ACCESSOR
 language: en
 header: img/screenshot.png
-darken-header: true
+darkenHeader: true
 ---
 
 ## The problem
