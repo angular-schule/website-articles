@@ -34,10 +34,23 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "PWD: $(pwd)"
-          echo "Contents of current dir:"
+          echo "=== DEBUG: PWD ==="
+          pwd
+          echo "=== DEBUG: Current dir contents ==="
           ls -la
-          echo "Contents of dist:"
+          echo "=== DEBUG: dist/ contents ==="
           ls -la dist/
+          echo "=== DEBUG: dist/blog/ first entries ==="
+          ls dist/blog/ | head -5
+
+          echo "=== Installing angular-cli-ghpages ==="
           npm install angular-cli-ghpages
-          npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
+
+          echo "=== DEBUG: Checking if dist is absolute path ==="
+          realpath dist
+
+          echo "=== Running angular-cli-ghpages with verbose output ==="
+          DEBUG=gh-pages npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
+
+          echo "=== DEBUG: Cache dir contents after deploy ==="
+          ls -la node_modules/.cache/gh-pages/ 2>/dev/null || echo "No cache dir found"
