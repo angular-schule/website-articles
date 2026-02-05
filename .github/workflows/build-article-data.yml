@@ -34,5 +34,10 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "PWD: $(pwd)"
+          echo "Contents of current dir:"
+          ls -la
+          echo "Contents of dist:"
+          ls -la dist/
           npm install angular-cli-ghpages
           npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
