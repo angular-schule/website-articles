@@ -1,0 +1,17 @@
+name: Trigger website rebuild
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+
+jobs:
+  trigger:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger angular-buch-website rebuild
+        run: gh workflow run build.yml --repo angular-buch/angular-buch-website
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
