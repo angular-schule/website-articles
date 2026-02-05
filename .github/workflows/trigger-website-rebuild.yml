@@ -11,7 +11,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger angular-buch-website rebuild
-        run: gh workflow run build.yml --repo angular-buch/angular-buch-website
+      - name: Trigger angular-schule-website rebuild
+        run: gh workflow run build.yml --repo angular-schule/angular-schule-website
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
