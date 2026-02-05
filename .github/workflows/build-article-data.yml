@@ -43,14 +43,8 @@ jobs:
           echo "=== DEBUG: dist/blog/ first entries ==="
           ls dist/blog/ | head -5
 
-          echo "=== Installing angular-cli-ghpages ==="
-          npm install angular-cli-ghpages
+          echo "=== Installing angular-cli-ghpages@2 ==="
+          npm install angular-cli-ghpages@2
 
-          echo "=== DEBUG: Checking if dist is absolute path ==="
-          realpath dist
-
-          echo "=== Running angular-cli-ghpages with verbose output ==="
-          DEBUG=gh-pages npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
-
-          echo "=== DEBUG: Cache dir contents after deploy ==="
-          ls -la node_modules/.cache/gh-pages/ 2>/dev/null || echo "No cache dir found"
+          echo "=== Running angular-cli-ghpages v2 ==="
+          npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
