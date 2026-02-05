@@ -14,4 +14,4 @@ jobs:
       - name: Trigger angular-schule-website rebuild
         run: gh workflow run build.yml --repo angular-schule/angular-schule-website
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.WEBSITE_DISPATCH_TOKEN }}
