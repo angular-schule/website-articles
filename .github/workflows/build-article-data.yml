@@ -33,4 +33,6 @@ jobs:
       - name: Deploy to branch
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
+        run: |
+          cd build
+          npx angular-cli-ghpages --no-notfound --dir=../dist --repo="https://github.com/${{ github.repository }}.git" --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
