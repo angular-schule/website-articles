@@ -34,17 +34,5 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "=== DEBUG: PWD ==="
-          pwd
-          echo "=== DEBUG: Current dir contents ==="
-          ls -la
-          echo "=== DEBUG: dist/ contents ==="
-          ls -la dist/
-          echo "=== DEBUG: dist/blog/ first entries ==="
-          ls dist/blog/ | head -5
-
-          echo "=== Installing angular-cli-ghpages@2 ==="
           npm install angular-cli-ghpages@2
-
-          echo "=== Running angular-cli-ghpages v2 ==="
           npx angular-cli-ghpages --no-notfound --dir=dist --branch="$BRANCH" --name="$GITHUB_NAME" --email="$GITHUB_EMAIL"
