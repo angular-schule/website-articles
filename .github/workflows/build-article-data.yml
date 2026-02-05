@@ -30,6 +30,13 @@ jobs:
           npm install
           npm run build
 
+      - name: Debug dist folder
+        run: |
+          echo "PWD: $(pwd)"
+          echo "dist contents:"
+          ls -la dist/
+          ls dist/blog/ | head -5
+
       - name: Deploy to branch
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
