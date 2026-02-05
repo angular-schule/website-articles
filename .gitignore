@@ -1,5 +1,6 @@
+/node_modules/
+/.DS_Store
 .DS_Store
-Thumbs.db
-_site
-dist
+*.psd
 .claude/settings.local.json
+dist
