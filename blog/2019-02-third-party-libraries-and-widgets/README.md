@@ -22,14 +22,14 @@ We will discuss a few possible strategies that depend on which technology to int
 
 Table of contents:
 
-* [General Considerations](/blog/2019-02-third-party-libraries-and-widgets#general-considerations)
-* [Integrating a pure ES6 JavaScript Library](/blog/2019-02-third-party-libraries-and-widgets#integrating-a-pure-es6-javascript-library) (lodash)
-* [Integrating JavaScript Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-javascript-widgets) (plotly.js)
-* [Integrating old jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-old-jquery-widgets) (jquery-datetimepicker)
-* [Integrating modern jQuery Widgets](/blog/2019-02-third-party-libraries-and-widgets#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
-* [Improving performance](/blog/2019-02-third-party-libraries-and-widgets#improving-performance) (NgZone)
-* [Don't reinvent the wheel](/blog/2019-02-third-party-libraries-and-widgets#don-t-reinvent-the-wheel)
-* [Conclusion](/blog/2019-02-third-party-libraries-and-widgets#conclusion)
+* [General Considerations](#general-considerations)
+* [Integrating a pure ES6 JavaScript Library](#integrating-a-pure-es6-javascript-library) (lodash)
+* [Integrating JavaScript Widgets](#integrating-javascript-widgets) (plotly.js)
+* [Integrating old jQuery Widgets](#integrating-old-jquery-widgets) (jquery-datetimepicker)
+* [Integrating modern jQuery Widgets](#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
+* [Improving performance](#improving-performance) (NgZone)
+* [Don't reinvent the wheel](#don-t-reinvent-the-wheel)
+* [Conclusion](#conclusion)
 
 
 ## General Considerations

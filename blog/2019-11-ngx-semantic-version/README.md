@@ -29,15 +29,15 @@ It will help you to keep your `CHANGELOG.md` file up to date and to release new 
 
 Table of contents:
 
-- [TL;DR](/blog/2019-11-ngx-semantic-version#tl-dr)
-- [Introduction](/blog/2019-11-ngx-semantic-version#introduction)
-- [What does it do?](/blog/2019-11-ngx-semantic-version#what)
-  - [commitlint: Enforcing conventional commit messages](/blog/2019-11-ngx-semantic-version#commitlint)
-  - [husky: Hook into the git lifecycle](/blog/2019-11-ngx-semantic-version#husky)
-  - [commitizen: Easily write conventional commit messages](/blog/2019-11-ngx-semantic-version#commitizen)
-  - [standard-version: Generate changelogs from the git history](/blog/2019-11-ngx-semantic-version#standard-version)
-- [How to use ngx-semantic-version](/blog/2019-11-ngx-semantic-version#how-to)
-- [Conclusion](/blog/2019-11-ngx-semantic-version#conclusion)
+- [TL;DR](#tl-dr)
+- [Introduction](#introduction)
+- [What does it do?](#what)
+  - [commitlint: Enforcing conventional commit messages](#commitlint)
+  - [husky: Hook into the git lifecycle](#husky)
+  - [commitizen: Easily write conventional commit messages](#commitizen)
+  - [standard-version: Generate changelogs from the git history](#standard-version)
+- [How to use ngx-semantic-version](#how-to)
+- [Conclusion](#conclusion)
 
 ## TL;DR
 
