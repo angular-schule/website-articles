@@ -29,14 +29,14 @@ It will help you to keep your `CHANGELOG.md` file up to date and to release new 
 
 Table of contents:
 
-- [TL;DR](#tl-dr)
+- [TL;DR](#tldr)
 - [Introduction](#introduction)
-- [What does it do?](#what)
-  - [commitlint: Enforcing conventional commit messages](#commitlint)
-  - [husky: Hook into the git lifecycle](#husky)
-  - [commitizen: Easily write conventional commit messages](#commitizen)
-  - [standard-version: Generate changelogs from the git history](#standard-version)
-- [How to use ngx-semantic-version](#how-to)
+- [What does it do?](#what-does-it-do)
+  - [commitlint: Enforcing conventional commit messages](#commitlint-enforcing-conventional-commit-messages)
+  - [husky: Hook into the git lifecycle](#husky-hook-into-the-git-lifecycle)
+  - [commitizen: Easily write conventional commit messages](#commitizen-easily-write-conventional-commit-messages)
+  - [standard-version: Generate changelogs from the git history](#standard-version-generate-changelogs-from-the-git-history)
+- [How to use ngx-semantic-version](#how-to-use-ngx-semantic-version)
 - [Conclusion](#conclusion)
 
 ## TL;DR

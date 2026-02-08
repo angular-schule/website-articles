@@ -172,7 +172,7 @@ Since this decision, the Angular team has been working on integrating alternativ
 Two years ago, experimental builders for [Jest and Web Test Runner](https://blog.angular.dev/moving-angular-cli-to-jest-and-web-test-runner-ef85ef69ceca) were released.
 With Angular 20, another experimental integration is added for [Vitest](https://vitest.dev):
 Vitest has already become a staple in other web frameworks based on the [Vite](https://vite.dev) bundler.
-Angular's build process has already [used ESBuild with Vite since version 16](/blog/2023-05-angular16#esbuild).
+Angular's build process has already used ESBuild with Vite since version 16.
 With this gradual switch, we can now also use Vitest for unit and integration tests.
 
 Which of the experimental test runners will become Angular's new standard is not yet decided!

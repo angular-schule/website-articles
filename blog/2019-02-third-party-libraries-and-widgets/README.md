@@ -28,7 +28,7 @@ Table of contents:
 * [Integrating old jQuery Widgets](#integrating-old-jquery-widgets) (jquery-datetimepicker)
 * [Integrating modern jQuery Widgets](#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
 * [Improving performance](#improving-performance) (NgZone)
-* [Don't reinvent the wheel](#don-t-reinvent-the-wheel)
+* [Don't reinvent the wheel](#dont-reinvent-the-wheel)
 * [Conclusion](#conclusion)
 
 
