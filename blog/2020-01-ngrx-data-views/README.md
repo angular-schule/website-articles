@@ -21,18 +21,7 @@ header: data-views-header.jpg
 
 **As soon as a NgRx project gets bigger, we have to ask ourselves how we should ideally arrange the entities in the store. In this article we are going to have a look at inter-connected data and its implications when trying to elevate store output to old fashioned business objects, ready to use in all components. By tackling normalized APIs we will show you some of the most common pitfalls you might encounter along the way.**
 
-Table of contents:
-
-- [Data Clustering in Enterprise Applications](#data-clustering-in-enterprise-applications)
-- [Clustered data for Books](#clustered-data-for-books)
-- [Using parameterized selectors](#using-parameterized-selectors)
-- [The Problem](#the-problem)
-- [Using Data-Views for De-Normalization](#using-data-views-for-de-normalization)
-- [The new problem with Memoization](#the-new-problem-with-memoization)
-- [Tackling Memoization](#tackling-memoization)
-- [Enriched Data Views](#enriched-data-views)
-- [Memoized Data View Methods](#memoized-data-view-methods)
-- [Conclusion](#conclusion)
+[[toc]]
 
 <hr>
 

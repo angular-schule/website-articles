@@ -25,19 +25,7 @@ header: ngx-semantic-version-header.jpg
 This new Angular Schematic allows you to set up all necessary tooling for consistent git commit messages and publishing new versions.
 It will help you to keep your `CHANGELOG.md` file up to date and to release new tagged versions. All this is done by leveraging great existing tools like `commitizen`, `commitlint` and `standard-version`.**
 
-<hr>
-
-Table of contents:
-
-- [TL;DR](#tldr)
-- [Introduction](#introduction)
-- [What does it do?](#what-does-it-do)
-  - [commitlint: Enforcing conventional commit messages](#commitlint-enforcing-conventional-commit-messages)
-  - [husky: Hook into the git lifecycle](#husky-hook-into-the-git-lifecycle)
-  - [commitizen: Easily write conventional commit messages](#commitizen-easily-write-conventional-commit-messages)
-  - [standard-version: Generate changelogs from the git history](#standard-version-generate-changelogs-from-the-git-history)
-- [How to use ngx-semantic-version](#how-to-use-ngx-semantic-version)
-- [Conclusion](#conclusion)
+[[toc]]
 
 ## TL;DR
 

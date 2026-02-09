@@ -16,19 +16,7 @@ hidden: false
 
 **With version 8.3 of the Angular CLI a new command has been released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.** 
 
-<hr>
-
-Table of contents:
-
-- [Introduction](#introduction)
-- [Background](#background)
-- [Command Line Call](#command-line-call)
-- [Existing providers](#existing-providers)
-- [Deploy to multiple targets](#deploy-to-multiple-targets)
-- [How to make your own deployment builder](#how-to-make-your-own-deployment-builder)
-- [Summary](#summary)
-
-
+[[toc]]
 
 ## Introduction
 

@@ -18,19 +18,7 @@ We will discuss a few possible strategies that depend on which technology to int
 
 > Note: The whole article is based on the assumption that you are using the [Angular CLI](https://cli.angular.io/).
 
-<hr>
-
-Table of contents:
-
-* [General Considerations](#general-considerations)
-* [Integrating a pure ES6 JavaScript Library](#integrating-a-pure-es6-javascript-library) (lodash)
-* [Integrating JavaScript Widgets](#integrating-javascript-widgets) (plotly.js)
-* [Integrating old jQuery Widgets](#integrating-old-jquery-widgets) (jquery-datetimepicker)
-* [Integrating modern jQuery Widgets](#integrating-modern-jquery-widgets) (Kendo UI for jQuery)
-* [Improving performance](#improving-performance) (NgZone)
-* [Don't reinvent the wheel](#dont-reinvent-the-wheel)
-* [Conclusion](#conclusion)
-
+[[toc]]
 
 ## General Considerations
    

@@ -22,33 +22,7 @@ In this article, we'll show you what Vitest means for you, how to migrate existi
 
 > 🇩🇪 This article is available in German language here: [Vitest in Angular 21: Was ist neu und wie kann man migrieren?](https://angular-buch.com/blog/2025-11-zu-vitest-migrieren)
 
-## Content
-
-- [Why Angular replaces Karma and Jasmine](#why-angular-replaces-karma-and-jasmine)
-- [Migration guide: From Karma/Jasmine to Vitest](#migration-guide-from-karmajasmine-to-vitest)
-  - [Manual migration steps](#manual-migration-steps)
-    - [1. Install dependencies](#1-install-dependencies)
-    - [2. Update `angular.json`](#2-update-angularjson)
-    - [3. Adapt a custom `karma.conf.js` configuration](#3-adapt-a-custom-karmaconfjs-configuration)
-    - [4. Remove Karma and `test.ts` files](#4-remove-karma-and-testts-files)
-    - [5. Configure browser mode (optional)](#5-configure-browser-mode-optional)
-  - [Automatic test refactoring using the schematic](#automatic-test-refactoring-using-the-schematic)
-    - [1. Overview](#1-overview)
-    - [2. Execute the schematic](#2-execute-the-schematic)
-    - [3. After the migration](#3-after-the-migration)
-    - [4. Custom configuration (optional)](#4-custom-configuration-optional)
-- [The new syntax and APIs](#the-new-syntax-and-apis)
-  - [Global functions](#global-functions)
-  - [Matchers](#matchers)
-    - [1) `toBeTrue()` / `toBeFalse()` do not exist in Jest/Vitest](#1-tobetrue--tobefalse-do-not-exist-in-jestvitest)
-    - [2) `toHaveBeenCalledOnceWith()` does not exist in Jest/Vitest](#2-tohavebeencalledoncewith-does-not-exist-in-jestvitest)
-    - [3) Asynchronous Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)](#3-asynchronous-matchers-expectasync-jasmine-vs-resolvesrejects-jestvitest)
-  - [Spies and mocks](#spies-and-mocks)
-  - [Asynchrony without Zone.js using Vitest timers](#asynchrony-without-zonejs-using-vitest-timers)
-  - [TestBed and ComponentFixture](#testbed-and-componentfixture)
-- [Known limitations and pitfalls](#known-limitations-and-pitfalls)
-- [Conclusion](#conclusion)
-
+[[toc]]
 
 ## Why Angular replaces Karma and Jasmine
 
