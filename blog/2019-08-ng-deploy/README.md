@@ -14,7 +14,11 @@ header: space-shuttle.jpg
 hidden: false
 ---
 
-**With version 8.3 of the Angular CLI a new command has been released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.** 
+**With version 8.3 of the Angular CLI a new command has been released which has the potential to be a game changer. Now, deployments to any target (Firebase, Azure, GitHub pages...) are potentially only one CLI command away. In this article we will show you everything you need to know.**
+
+<hr>
+
+Table of contents:
 
 [[toc]]
 

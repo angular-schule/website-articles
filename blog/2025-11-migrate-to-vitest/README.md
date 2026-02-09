@@ -22,6 +22,8 @@ In this article, we'll show you what Vitest means for you, how to migrate existi
 
 > 🇩🇪 This article is available in German language here: [Vitest in Angular 21: Was ist neu und wie kann man migrieren?](https://angular-buch.com/blog/2025-11-zu-vitest-migrieren)
 
+## Content
+
 [[toc]]
 
 ## Why Angular replaces Karma and Jasmine

@@ -25,6 +25,10 @@ header: ngx-semantic-version-header.jpg
 This new Angular Schematic allows you to set up all necessary tooling for consistent git commit messages and publishing new versions.
 It will help you to keep your `CHANGELOG.md` file up to date and to release new tagged versions. All this is done by leveraging great existing tools like `commitizen`, `commitlint` and `standard-version`.**
 
+<hr>
+
+Table of contents:
+
 [[toc]]
 
 ## TL;DR

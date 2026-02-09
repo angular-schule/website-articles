@@ -29,6 +29,10 @@ header: everything-github.png
 We will establish a professional pipeline, including version management, continuous deployment and web hosting.
 Best of all, for public repositories, this will not cost you a single cent!**
 
+<hr>
+
+Table of contents:
+
 [[toc]]
 
 ## Introduction

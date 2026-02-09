@@ -21,6 +21,8 @@ header: data-views-header.jpg
 
 **As soon as a NgRx project gets bigger, we have to ask ourselves how we should ideally arrange the entities in the store. In this article we are going to have a look at inter-connected data and its implications when trying to elevate store output to old fashioned business objects, ready to use in all components. By tackling normalized APIs we will show you some of the most common pitfalls you might encounter along the way.**
 
+Table of contents:
+
 [[toc]]
 
 <hr>

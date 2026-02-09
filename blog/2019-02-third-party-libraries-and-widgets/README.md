@@ -18,6 +18,10 @@ We will discuss a few possible strategies that depend on which technology to int
 
 > Note: The whole article is based on the assumption that you are using the [Angular CLI](https://cli.angular.io/).
 
+<hr>
+
+Table of contents:
+
 [[toc]]
 
 ## General Considerations
