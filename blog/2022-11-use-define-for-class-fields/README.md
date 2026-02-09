@@ -29,10 +29,7 @@ We will show you in detail what the problem is and how you should write your cod
 
 ## Contents
 
-* [Property initialisation in TypeScript](#property-initialisation-in-typescript)
-* [The proprietary behaviour of TypeScript](#the-proprietary-behaviour-of-typescript)
-* [Future-proof property initialisation](#future-proof-property-initialisation)
-* [Implications for existing Angular code](#implications-for-existing-angular-code)
+[[toc]]
 
 > **🇩🇪 This article is available in German language here: [TypeScript: useDefineForClassFields – zukünftige Breaking Changes vermeiden](https://angular-buch.com/blog/2022-11-use-define-for-class-fields)**
 

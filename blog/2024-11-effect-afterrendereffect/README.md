@@ -25,20 +25,7 @@ In this article, we'll explore how these two APIs compare, when to use each, and
 
 ## Contents
 
-* [Angular 19 vs. Previous Versions: What's Different?](#angular-19-vs-previous-versions-whats-different)
-* [Core Differences Between `effect()` and `afterRenderEffect()`](#core-differences-between-effect-and-afterrendereffect)
-* [Introducing `effect()`](#introducing-effect)
-  * [Example for `effect()`: setting multiple things at once](#example-for-effect-setting-multiple-things-at-once)
-  * [When to choose `effect()` over `computed()`](#when-to-choose-effect-over-computed)
-* [Introducing `afterRenderEffect()`](#introducing-afterrendereffect)
-  * [Understanding the Phases](#understanding-the-phases)
-  * [Phases Only Run Again When "Dirty" Through Signal Dependencies](#phases-only-run-again-when-dirty-through-signal-dependencies)
-  * [Example of `afterRenderEffect()`: Dynamically Resizing a Textarea](#example-of-afterrendereffect-dynamically-resizing-a-textarea)
-* [Migration Guide: From Angular's Lifecycle Hooks to Signal-Based Reactivity](#migration-guide-from-angulars-lifecycle-hooks-to-signal-based-reactivity)
-* [Reminder: `afterRenderEffect()` shouldn't be used in line-of-business code](#reminder-afterrendereffect-shouldnt-be-used-in-line-of-business-code)
-* [Best Practices for Using `effect()` and `afterRenderEffect()`](#best-practices-for-using-effect-and-afterrendereffect)
-* [Demo Application](#demo-application)
-* [Conclusion](#conclusion)
+[[toc]]
 
 
 ## Angular 19 vs. Previous Versions: What's Different?

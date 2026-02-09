@@ -27,13 +27,7 @@ Here's a look at what the Linked Signal is, how it works, and some common use ca
 
 ## Contents
 
-* [What is a Linked Signal?](#what-is-a-linked-signal)
-* [Basic Usage of Linked Signal](#basic-usage-of-linked-signal)
-* [Advanced Scenarios for Linked Signals](#advanced-scenarios-for-linked-signals)
-* [Linked Signal vs. Other Signals](#linked-signal-vs-other-signals)
-* [Best Practices for Using Linked Signal](#best-practices-for-using-linked-signal)
-* [Demo Application](#demo-application)
-* [Conclusion](#conclusion)
+[[toc]]
 
 
 > **🇩🇪 This article is available in German language here: [Neu in Angular 19: LinkedSignal für reaktive Zustandsverwaltung](https://angular-buch.com/blog/2024-11-linked-signal)**
