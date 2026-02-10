@@ -24,31 +24,7 @@ In this article, we'll show you what Vitest means for you, how to migrate existi
 
 ## Content
 
-- [Why Angular replaces Karma and Jasmine](/blog/2025-11-migrate-to-vitest#why-angular-replaces-karma-and-jasmine)
-- [Migration guide: From Karma/Jasmine to Vitest](/blog/2025-11-migrate-to-vitest#migration-guide-from-karmajasmine-to-vitest)
-  - [Manual migration steps](/blog/2025-11-migrate-to-vitest#manual-migration-steps)
-    - [1. Install dependencies](/blog/2025-11-migrate-to-vitest#1-install-dependencies)
-    - [2. Update `angular.json`](/blog/2025-11-migrate-to-vitest#2-update-angularjson)
-    - [3. Adapt a custom `karma.conf.js` configuration](/blog/2025-11-migrate-to-vitest#3-adapt-a-custom-karmaconfjs-configuration)
-    - [4. Remove Karma and `test.ts` files](/blog/2025-11-migrate-to-vitest#4-remove-karma-and-testts-files)
-    - [5. Configure browser mode (optional)](/blog/2025-11-migrate-to-vitest#5-configure-browser-mode-optional)
-  - [Automatic test refactoring using the schematic](/blog/2025-11-migrate-to-vitest#automatic-test-refactoring-using-the-schematic)
-    - [1. Overview](/blog/2025-11-migrate-to-vitest#1-overview)
-    - [2. Execute the schematic](/blog/2025-11-migrate-to-vitest#2-execute-the-schematic)
-    - [3. After the migration](/blog/2025-11-migrate-to-vitest#3-after-the-migration)
-    - [4. Custom configuration (optional)](/blog/2025-11-migrate-to-vitest#4-custom-configuration-optional)
-- [The new syntax and APIs](/blog/2025-11-migrate-to-vitest#the-new-syntax-and-apis)
-  - [Global functions](/blog/2025-11-migrate-to-vitest#global-functions)
-  - [Matchers](/blog/2025-11-migrate-to-vitest#matchers)
-    - [1) `toBeTrue()` / `toBeFalse()` do not exist in Jest/Vitest](/blog/2025-11-migrate-to-vitest#1-tobetrue--tobefalse-do-not-exist-in-jestvitest)
-    - [2) `toHaveBeenCalledOnceWith()` does not exist in Jest/Vitest](/blog/2025-11-migrate-to-vitest#2-tohavebeencalledoncewith-does-not-exist-in-jestvitest)
-    - [3) Asynchronous Matchers: `expectAsync(...)` (Jasmine) vs. `.resolves/.rejects` (Jest/Vitest)](/blog/2025-11-migrate-to-vitest#3-asynchronous-matchers-expectasync-jasmine-vs-resolvesrejects-jestvitest)
-  - [Spies and mocks](/blog/2025-11-migrate-to-vitest#spies-and-mocks)
-  - [Asynchrony without Zone.js using Vitest timers](/blog/2025-11-migrate-to-vitest#asynchrony-without-zonejs-using-vitest-timers)
-  - [TestBed and ComponentFixture](/blog/2025-11-migrate-to-vitest#testbed-and-componentfixture)
-- [Known limitations and pitfalls](/blog/2025-11-migrate-to-vitest#known-limitations-and-pitfalls)
-- [Conclusion](/blog/2025-11-migrate-to-vitest#conclusion)
-
+[[toc]]
 
 ## Why Angular replaces Karma and Jasmine
 

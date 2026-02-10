@@ -23,16 +23,7 @@ header: data-views-header.jpg
 
 Table of contents:
 
-- [Data Clustering in Enterprise Applications](/blog/2020-01-ngrx-data-views#data-clustering-in-enterprise-applications)
-- [Clustered data for Books](/blog/2020-01-ngrx-data-views#clustered-data-for-books)
-- [Using parameterized selectors](/blog/2020-01-ngrx-data-views#using-parameterized-selectors)
-- [The Problem](/blog/2020-01-ngrx-data-views#the-problem)
-- [Using Data-Views for De-Normalization](/blog/2020-01-ngrx-data-views#using-data-views-for-de-normalization)
-- [The new problem with Memoization](/blog/2020-01-ngrx-data-views#the-new-problem-with-memoization)
-- [Tackling Memoization](/blog/2020-01-ngrx-data-views#tackling-memoization)
-- [Enriched Data Views](/blog/2020-01-ngrx-data-views#enriched-data-views)
-- [Memoized Data View Methods](/blog/2020-01-ngrx-data-views#memoized-data-view-methods)
-- [Conclusion](/blog/2020-01-ngrx-data-views#conclusion)
+[[toc]]
 
 <hr>
 
