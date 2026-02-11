@@ -290,7 +290,7 @@ AI agents are powerful tools that support us in developing with Angular.
 With configuration files and the Angular CLI's MCP server, you bridge the gap between outdated training data and current best practices.
 But AI does not replace expertise.
 Those who don't understand Angular's concepts cannot judge whether the generated code is correct.
-Therefore: Use AI as an accelerator, but invest in your own understanding – for example with [our book](https://angular-buch.com/kaufen).
+Therefore: Use AI as an accelerator, but invest in your own understanding – for example in [our Angular workshops](https://angular.schule).
 
 <br>
 <hr>
