@@ -6,7 +6,7 @@ bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/asse
 bioHeading: About the Angular book
 author2: Angular.Schule Team
 mail2: team@angular.schule
-bio2: 'Want to try AI-powered Angular development hands-on? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including modern AI tools for more efficient development. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
+bio2: '<a href="https://angular.schule"><img src="/img/logo-angular-schule-gradient-550.png" alt="Angular.Schule Logo" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>Want to try AI-powered Angular development hands-on? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including modern AI tools for more efficient development. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
 bio2Heading: About our Angular workshops
 published: 2026-02-11
 keywords:
