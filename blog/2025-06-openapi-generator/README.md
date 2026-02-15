@@ -2,7 +2,14 @@
 title: "Generating Angular API clients with OpenAPI Generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
+bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/assets/img/book-cover-v1m.png" alt="Angular-Buch Cover" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>This article complements the HTTP chapter of our new <b>Angular book</b> (in German language) by Ferdinand Malcher, Danny Koppenhagen and Johannes Hoppe, where we cover everything you need to know about HTTP communication with Angular. After four successful editions, we have rewritten the book from scratch – with modern syntax, compact and covering many new topics. The new book will be released in May 2026. More info at <a href="https://angular-buch.com" style="text-decoration: underline;"><b>angular-buch.com</b></a>'
+bioHeading: About the Angular book
+author2: Angular.Schule Team
+mail2: team@angular.schule
+bio2: '<a href="https://angular.schule"><img src="/img/logo-angular-schule-gradient-550.png" alt="Angular.Schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 250px;"></a>Want to integrate OpenAPI into your Angular workflow? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including API integration with OpenAPI Generator. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
+bio2Heading: About our Angular workshops
 published: 2025-06-18
+lastModified: 2026-02-15
 keywords:
   - OpenAPI
   - OpenAPI Generator
@@ -75,16 +82,16 @@ That's exactly what we want for a clean and reliable workflow.
 ### Switching Code Generator Versions
 
 To ensure consistent output across your team and avoid accidental diffs, it's a good idea to lock your project to a specific version of the OpenAPI Generator.
-Suppose you want to lock your project to version `7.13.0`. 
+Suppose you want to lock your project to version `7.19.0`.
 You can do this by running:
 
 ```bash
-npx openapi-generator-cli version-manager set 7.13.0
+npx openapi-generator-cli version-manager set 7.19.0
 ```
 
 This will:
 
-1. Download the `openapi-generator-cli-7.13.0.jar` file into your `node_modules` folder – so it shouldn't be under version control, since typically the local NPM files are never checked in.
+1. Download the `openapi-generator-cli-7.19.0.jar` file into your `node_modules` folder – so it shouldn't be under version control, since typically the local NPM files are never checked in.
 2. Record the version into the `openapitools.json` file.
 
 To verify which version is currently active, run:
@@ -99,22 +106,19 @@ You can also use this mechanism to test new versions or roll back safely.
 
 ## Generating Your First Angular API Client
 
-Before we take a look at the code, take a moment to explore [api6.angular-buch.com](https://api6.angular-buch.com/).
+Before we take a look at the code, take a moment to explore [api1.angular-buch.com](https://api1.angular-buch.com/).
 
-This public REST API is part of the **BookMonkey 6** demo application, the updated companion project for the upcoming **5th edition** of our German Angular book.
-
-
-> 📘 Save the date!
-> The new edition is scheduled for **early 2026**.
-> Follow us on [angular.schule](https://www.angular.schule/) and our social media channels for updates!
+This public REST API is part of the **BookManager 1** demo application, the companion project for our new **Angular book** (in German language).
+After four successful editions, we have rewritten the book from scratch – with modern syntax, compact and covering many new topics.
+The new book will be released in **May 2026**. More info at [angular-buch.com](https://angular-buch.com).
 
 To explore the API definition, simply open:
 
-→ [OpenAPI Spec Viewer (Swagger UI)](https://api6.angular-buch.com/swagger-ui/)
+→ [OpenAPI Spec Viewer (Swagger UI)](https://api1.angular-buch.com/swagger-ui/)
 
 This graphical interface is fully generated from the OpenAPI specification, located at:
 
-→ `https://api6.angular-buch.com/openapi.json`
+→ `https://api1.angular-buch.com/openapi.json`
 
 If this metadata is rich enough to render a complete admin UI, then it's clearly powerful enough to generate a fully functional Angular API client.
 
@@ -128,9 +132,9 @@ We start with the most minimal setup:
 
 ```bash
 npx openapi-generator-cli generate \
-  -i https://api6.angular-buch.com/openapi.json \
+  -i https://api1.angular-buch.com/openapi.json \
   -g typescript-angular \
-  -o ./src/app/shared/book-monkey-api
+  -o ./src/app/shared/book-manager-api
 ```
 
 **Hint:** 💡 On Windows (Command Prompt), remove the backslashes and write the command in a single line.
@@ -150,11 +154,10 @@ These are the bare minimum arguments required.
 With this, you'll get:
 
 - Typed Angular services for each REST resource
-- A full NgModule (`ApiModule`)
 - Models for all schemas (for example `book`, `author`, etc...)
 - `HttpClient`-based methods for every endpoint
 
-> 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing. We suggest a path like `src/app/shared/book-monkey-api/`.
+> 🛠️ Pro Tip: Place the output directory somewhere inside your app's structure, but outside of actual components or routing. We suggest a path like `src/app/shared/book-manager-api/`.
 
 
 The CLI supports many more options.
@@ -176,25 +179,15 @@ This setup is fully compatible with Angular's standalone application structure:
 ```ts
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideApi } from './shared/book-monkey-api';
+import { provideApi } from './shared/book-manager-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     // [...]
-    provideHttpClient(),
     provideApi()
   ]
 };
 ```
-
-Don't forget to include `provideHttpClient()` to register Angular's `HttpClient` for injection.
-This is required, because the generated client uses `HttpClient` internally for every request.
-
-> **IMPORTANT:** The `provideApi()` function is currently available only in the latest snapshot builds of OpenAPI Generator. 
-  It will become officially available with version **7.14.0**.
-
-<!-- merken: https://raw.githubusercontent.com/jase88/openapi-generator/907ac1297454541107bc5e02442567eae3adee2b/modules/openapi-generator/src/main/resources/typescript-angular/README.mustache -->
 
 
 ### Custom Base Path
@@ -203,7 +196,7 @@ If your API lives under a different domain or base path, you can pass a custom s
 This is very helpful if you have different domains or paths for different development stages.
 
 ```ts
-provideApi('https://api6.angular-buch.com')
+provideApi('https://api1.angular-buch.com')
 ```
 
 ### Full Configuration
@@ -223,17 +216,16 @@ provideApi({
 For dynamic configuration (e.g. based on an injected service), use Angular's `useFactory` syntax:
 
 ```ts
-import { Configuration } from './shared/book-monkey-api';
+import { Configuration } from './shared/book-manager-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
     {
       provide: Configuration,
       useFactory: () => {
         const authService = inject(AuthService);
         return new Configuration({
-          basePath: 'https://api6.angular-buch.com',
+          basePath: 'https://api1.angular-buch.com',
           username: authService.getUsername(),
           password: authService.getPassword()
         });
@@ -256,7 +248,7 @@ However, that approach is outside the scope of this article.
 If your project hasn't migrated to standalone yet, you can still use the traditional approach by importing the generated `ApiModule`:
 
 ```ts
-import { ApiModule } from './shared/book-monkey-api';
+import { ApiModule } from './shared/book-manager-api';
 
 @NgModule({
   imports: [ApiModule.forRoot(() => new Configuration())]
@@ -266,27 +258,6 @@ export class AppModule {}
 
 That said, we highly recommend switching to `provideApi()` for all modern Angular projects.
 
-
-### Using the stable API until the next release
-
-If you feel uncomfortable relying on a snapshot version, you can use the current stable API until version `7.14.0` is released.
-The function `importProvidersFrom()` extracts providers from an NgModule declaration so that we can pass them into our `providers` array.
-
-```ts
-providers: [
-  importProvidersFrom(
-    ApiModule.forRoot(() =>
-      new Configuration({
-        basePath: 'https://api6.angular-buch.com' 
-      })
-    )
-  ),
-  // ...
-]
-```
-
-This approach works reliably and only requires a one-time configuration in your `app.config.ts`.
-It can easily be replaced later on by `provideApi()`.
 
 
 ## Integrating the generated service in your component
@@ -299,7 +270,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { BooksService } from './shared/book-monkey-api';
+import { BooksService } from './shared/book-manager-api';
 
 @Component({
   selector: 'app-root',
@@ -328,7 +299,7 @@ This modern pattern keeps your components fully reactive and simplifies state ha
 
 ## Modern Data Loading with `rxResource()`
 
-Angular 19 introduced a new reactive primitive: `rxResource()` (still marked as *experimental* as of Angular 20).
+Angular 19 introduced a new reactive primitive: `rxResource()` (still marked as *experimental* as of Angular 21).
 It's designed to simplify the way we work with asynchronous data streams, especially when fetching data from an API.
 
 Instead of manual subscription handling or conversion to signals (via `toSignal()` for example), `rxResource()` wraps our observable-based data source into a signal-friendly API.
@@ -343,11 +314,10 @@ import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { BooksService } from './shared/book-monkey-api';
+import { BooksService } from './shared/book-manager-api';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [JsonPipe],
   template: `<pre>{{ booksResource.value() | json }}</pre>`
 })
@@ -400,7 +370,7 @@ You've seen how to:
 
 * install and lock the OpenAPI Generator for consistent output
 * generate TypeScript code directly from your OpenAPI spec,
-* set up the application using the new `provideApi()` syntax,
+* set up the application using the `provideApi()` syntax,
 * and consume your API with powerful Angular features like `toSignal()` and `rxResource()`.
 
 With this setup, your API becomes a living contract, which automatically produces the client-side code you need.
