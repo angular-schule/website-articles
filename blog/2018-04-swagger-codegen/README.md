@@ -13,6 +13,8 @@ header: swagger-banner.png
 
 **In this article, we will take a look at swagger codegen. It will save you a ton of work and pain by generating HTTP services automatically from your swagger API description.**
 
+> **Note:** There is a newer version of this article available: [Generating Angular API clients with OpenAPI Generator](/blog/2025-06-openapi-generator)
+
 <hr>
 
 Swagger is the world’s largest framework of tools for the [OpenAPI Specification (OAS)](https://github.com/OAI/OpenAPI-Specification).
