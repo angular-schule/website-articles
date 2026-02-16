@@ -25,6 +25,8 @@ header: logo_header.png
 
 **In this article, we'll show how to use OpenAPI Generator to automatically generate Angular HTTP services from your OpenAPI spec.**
 
+## Contents
+
 [[toc]]
 
 ## Why you need a code generator for your Angular API clients
