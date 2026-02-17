@@ -1,0 +1,44 @@
+<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui,-apple-system,sans-serif">
+  <!-- Browser path -->
+  <text x="360" y="12" text-anchor="middle" fill="#64748b" font-size="12">Browser</text>
+  <rect x="10" y="20" width="130" height="40" rx="6" fill="#2563eb" />
+  <text x="75" y="45" text-anchor="middle" fill="white" font-size="13" font-weight="bold">React</text>
+  <line x1="140" y1="40" x2="180" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#a-b)" />
+  <rect x="180" y="20" width="130" height="40" rx="6" fill="#2563eb" />
+  <text x="245" y="45" text-anchor="middle" fill="white" font-size="13" font-weight="bold">DOM Diffing</text>
+  <line x1="310" y1="40" x2="350" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#a-b)" />
+  <rect x="350" y="20" width="130" height="40" rx="6" fill="#2563eb" />
+  <text x="415" y="45" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Compositor</text>
+  <line x1="480" y1="40" x2="560" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#a-b)" />
+  <rect x="560" y="20" width="130" height="40" rx="6" fill="#16a34a" />
+  <text x="625" y="45" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Clean Display ✓</text>
+  <!-- Divider -->
+  <line x1="10" y1="80" x2="710" y2="80" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4" />
+  <!-- Terminal path -->
+  <text x="360" y="105" text-anchor="middle" fill="#64748b" font-size="12">Terminal</text>
+  <!-- React/Ink -->
+  <rect x="10" y="115" width="140" height="150" rx="6" fill="#7c3aed" />
+  <text x="80" y="140" text-anchor="middle" fill="white" font-size="13" font-weight="bold">React/Ink</text>
+  <line x1="20" y1="150" x2="140" y2="150" stroke="#9f7aea" stroke-width="0.5" />
+  <text x="80" y="172" text-anchor="middle" fill="#ddd6fe" font-size="10">Streaming Response</text>
+  <text x="80" y="192" text-anchor="middle" fill="#ddd6fe" font-size="10">Status Line</text>
+  <text x="80" y="212" text-anchor="middle" fill="#ddd6fe" font-size="10">Spinner</text>
+  <text x="80" y="232" text-anchor="middle" fill="#ddd6fe" font-size="10">Input Field</text>
+  <!-- Arrow with ANSI label -->
+  <line x1="150" y1="190" x2="280" y2="190" stroke="#7c3aed" stroke-width="2" marker-end="url(#a-p)" />
+  <text x="215" y="183" text-anchor="middle" fill="#7c3aed" font-size="9">ANSI</text>
+  <!-- no Compositor -->
+  <rect x="280" y="165" width="210" height="50" rx="6" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6" />
+  <text x="385" y="187" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="bold">no Compositor</text>
+  <!-- Arrow -->
+  <line x1="490" y1="190" x2="560" y2="190" stroke="#ef4444" stroke-width="2" marker-end="url(#a-r)" />
+  <!-- Your Terminal (broken) -->
+  <rect x="560" y="165" width="130" height="50" rx="6" fill="#ef4444" />
+  <text x="625" y="187" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Your Terminal</text>
+  <text x="625" y="203" text-anchor="middle" fill="white" font-size="13" font-weight="bold">✗</text>
+  <defs>
+    <marker id="a-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+    <marker id="a-p" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#7c3aed"/></marker>
+    <marker id="a-r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#ef4444"/></marker>
+  </defs>
+</svg>
