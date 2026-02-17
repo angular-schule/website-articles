@@ -50,7 +50,7 @@ Then you think it's stable again, and the very next moment it starts all over.
 It makes you genuinely angry, and you get nothing done because you're just sitting there, furious.
 
 <video src="https://github.com/user-attachments/assets/647a822f-6247-458a-b861-0f203b310571" controls loop muted playsinline width="100%"></video>
-<small><em>Flickering during Johannes' work session, recorded in iTerm2</em></small>
+<small><em>⚠️ Flashing video. Flickering during Johannes' work session, recorded in iTerm2</em></small>
 
 This isn't a rare edge case.
 It is the **most reported and most frustrating UX problem** with Claude Code.
@@ -72,7 +72,7 @@ On GitHub, there are dozens of issues describing the same symptom under differen
 In issue [#9935](https://github.com/anthropics/claude-code/issues/9935), someone measured: **4,000 to 6,700 scroll events per second**.
 
 <video src="https://github.com/user-attachments/assets/cf147ecb-d5e3-428d-a538-38c8cab7bef3" controls loop muted playsinline width="100%"></video>
-<small><em>Source: <a href="https://github.com/anthropics/claude-code/issues/7216">GitHub Issue #7216</a> – massive scrolling in Cursor</em></small>
+<small><em>⚠️ Flashing video. Source: <a href="https://github.com/anthropics/claude-code/issues/7216">GitHub Issue #7216</a> – massive scrolling in Cursor</em></small>
 
 It gets significantly worse with **parallel agents**.
 When Claude Code spawns multiple agents at once, each one constantly pushes status updates back to the screen.
@@ -107,7 +107,7 @@ Holding back helps, but who wants to adapt their behavior to a bug?
 ## Which Terminals Are Affected?
 
 <video src="https://github.com/user-attachments/assets/86040c0c-1388-4ced-9905-be8df81c9048" controls loop muted playsinline width="100%"></video>
-<small><em>Source: <a href="https://github.com/anthropics/claude-code/issues/832">GitHub Issue #832</a> – endless scrolling on Windows</em></small>
+<small><em>⚠️ Flashing video. Source: <a href="https://github.com/anthropics/claude-code/issues/832">GitHub Issue #832</a> – endless scrolling on Windows</em></small>
 
 The following table summarizes reports from the various GitHub issues.
 The frequency ratings are partly based on measurable data and partly on subjective experience reported by affected users.
