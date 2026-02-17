@@ -34,6 +34,8 @@ Since March 2025, GitHub issues have been piling up with thousands of upvotes, a
 It is the single most reported UX problem with Claude Code, and a real fix from Anthropic is still nowhere in sight.
 **In this article, I explain why the bug exists, why the common workarounds don't help, and how to fix it for good with an open-source tool.**
 
+> 🇩🇪 This article is available in German language here: [Claude Code: Wie man den Endless-Scrolling-Bug wirklich löst](https://angular-buch.com/blog/2026-02-claude-code-scrolling)
+
 ## Table of Contents
 
 [[toc]]
