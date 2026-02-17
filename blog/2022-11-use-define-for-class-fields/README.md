@@ -31,7 +31,7 @@ We will show you in detail what the problem is and how you should write your cod
 
 [[toc]]
 
-> **🇩🇪 This article is available in German language here: [TypeScript: useDefineForClassFields – zukünftige Breaking Changes vermeiden](https://angular-buch.com/blog/2022-11-use-define-for-class-fields)**
+> 🇩🇪 This article is available in German language here: [TypeScript: useDefineForClassFields – zukünftige Breaking Changes vermeiden](https://angular-buch.com/blog/2022-11-use-define-for-class-fields)
 
 ## Property initialisation in TypeScript
 

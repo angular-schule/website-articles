@@ -30,7 +30,7 @@ Here's a look at what the Linked Signal is, how it works, and some common use ca
 [[toc]]
 
 
-> **🇩🇪 This article is available in German language here: [Neu in Angular 19: LinkedSignal für reaktive Zustandsverwaltung](https://angular-buch.com/blog/2024-11-linked-signal)**
+> 🇩🇪 This article is available in German language here: [Neu in Angular 19: LinkedSignal für reaktive Zustandsverwaltung](https://angular-buch.com/blog/2024-11-linked-signal)
 
 
 ## What is a Linked Signal?
