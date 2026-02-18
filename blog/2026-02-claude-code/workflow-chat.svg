@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 414" fill="none">
+  <!-- Terminal background -->
+  <rect width="720" height="414" rx="8" fill="#173449"/>
+
+  <!-- Title bar -->
+  <path d="M0 8C0 3.58 3.58 0 8 0h704c4.42 0 8 3.58 8 8v28H0V8z" fill="#1F4460"/>
+
+  <!-- Traffic light dots -->
+  <circle cx="20" cy="18" r="5.5" fill="#F38BA8"/>
+  <circle cx="38" cy="18" r="5.5" fill="#F9E2AF"/>
+  <circle cx="56" cy="18" r="5.5" fill="#A6E3A1"/>
+
+  <!-- User prompt -->
+  <text x="20" y="60" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#F5A97F">&gt; </tspan><tspan fill="#CDD6F4">Erstelle einen BookService, der Bücher über HTTP lädt.</tspan>
+  </text>
+  <text x="36" y="79" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#CDD6F4">Verwende die Resource API und typisiere alles strikt.</text>
+
+  <!-- Claude text response -->
+  <circle cx="26" cy="106" r="4" fill="#CDD6F4"/>
+  <text x="36" y="110" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#CDD6F4">Ich analysiere die Projektstruktur.</text>
+
+  <!-- Read operations -->
+  <circle cx="26" cy="135" r="4" fill="#A6E3A1"/>
+  <text x="36" y="139" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#A6E3A1">Read </tspan><tspan fill="#BAC2DE">src/app/app.config.ts</tspan>
+  </text>
+  <circle cx="26" cy="154" r="4" fill="#A6E3A1"/>
+  <text x="36" y="158" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#A6E3A1">Read </tspan><tspan fill="#BAC2DE">src/app/shared/book.ts</tspan>
+  </text>
+
+  <!-- Write operation -->
+  <circle cx="26" cy="183" r="4" fill="#A6E3A1"/>
+  <text x="36" y="187" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#A6E3A1">Write</tspan><tspan fill="#BAC2DE">(src/app/books/book.service.ts)</tspan>
+  </text>
+
+  <!-- Diff lines with line numbers and green tint -->
+  <rect x="36" y="195" width="664" height="17" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="208" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="42" fill="#6C7086">1 </tspan><tspan fill="#A6E3A1">+import { Injectable, resource } from '@angular/core';</tspan>
+  </text>
+
+  <rect x="36" y="212" width="664" height="17" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="225" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="42" fill="#6C7086">2 </tspan><tspan fill="#A6E3A1">+import { Book } from '../shared/book';</tspan>
+  </text>
+
+  <rect x="36" y="229" width="664" height="17" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="242" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="42" fill="#6C7086">3 </tspan><tspan fill="#A6E3A1">+...</tspan>
+  </text>
+
+  <!-- Permission dialog -->
+  <text x="36" y="268" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#CDD6F4">Do you want to make this edit to book.service.ts?</text>
+  <text y="286" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="36" fill="#F5A97F">❯ </tspan><tspan fill="#CDD6F4">1. Yes</tspan>
+  </text>
+  <text x="50" y="303" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#6C7086">2. Yes, allow all edits during this session</text>
+
+  <!-- User response -->
+  <text x="20" y="336" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#F5A97F">&gt; </tspan><tspan fill="#CDD6F4">Ja, mit Vitest bitte auch Tests.</tspan>
+  </text>
+
+  <!-- Claude follow-up -->
+  <circle cx="26" cy="362" r="4" fill="#CDD6F4"/>
+  <text x="36" y="366" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#CDD6F4">Datei erstellt. Ich generiere die Tests.</text>
+
+  <!-- Write test file -->
+  <circle cx="26" cy="391" r="4" fill="#A6E3A1"/>
+  <text x="36" y="395" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13">
+    <tspan fill="#A6E3A1">Write</tspan><tspan fill="#BAC2DE">(src/app/books/book.service.spec.ts)</tspan>
+  </text>
+</svg>

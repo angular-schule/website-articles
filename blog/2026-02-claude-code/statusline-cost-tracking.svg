@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 520 100" fill="none">
+  <rect width="520" height="100" rx="8" fill="#173449"/>
+
+  <!-- Prompt line -->
+  <text x="28" y="32" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="15" fill="#CDD6F4">&gt;</text>
+  <!-- Block cursor -->
+  <rect x="44" y="17" width="10" height="20" rx="2" fill="#CDD6F4" fill-opacity="0.8"/>
+
+  <!-- Separator -->
+  <line x1="0" y1="48" x2="520" y2="48" stroke="#2A4A62" stroke-width="1"/>
+
+  <!-- Status line -->
+  <text y="78" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="14">
+    <tspan x="40" fill="#9399B2">[Sonnet]</tspan>
+    <tspan dx="12" fill="#CDD6F4">💰</tspan>
+    <tspan dx="6" fill="#9399B2">$0.08</tspan>
+    <tspan dx="14" fill="#585B70">|</tspan>
+    <tspan dx="14" fill="#CDD6F4">⏱</tspan>
+    <tspan dx="6" fill="#9399B2">7m 3s</tspan>
+  </text>
+</svg>
