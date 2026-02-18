@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 196" fill="none">
+  <rect width="720" height="196" rx="8" fill="#173449"/>
+
+  <!-- Terminal tab bar -->
+  <path d="M0 8C0 3.58 3.58 0 8 0h704c4.42 0 8 3.58 8 8v20H0V8z" fill="#1F4460"/>
+  <!-- Tab dots -->
+  <circle cx="16" cy="14" r="5" fill="#F38BA8"/>
+  <circle cx="34" cy="14" r="5" fill="#F9E2AF"/>
+  <!-- Path breadcrumb -->
+  <text y="18" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11">
+    <tspan x="50" fill="#F5A97F">…ork/angular-buch/buch</tspan>
+    <tspan dx="8" fill="#6C7086">❯</tspan>
+    <tspan dx="8" fill="#CDD6F4">claude</tspan>
+  </text>
+
+  <!-- Orange dotted border box -->
+  <rect x="16" y="38" width="688" height="130" rx="6" fill="none" stroke="#F5A97F" stroke-width="1.5" stroke-dasharray="5 3"/>
+
+  <!-- Yellow heading -->
+  <text x="30" y="60" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#F9E2AF">New MCP server found in .mcp.json: angular-buch</text>
+
+  <!-- Description -->
+  <text x="30" y="84" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11" fill="#CDD6F4">MCP servers may execute code or access system resources. All tool</text>
+  <text x="30" y="98" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11">
+    <tspan fill="#CDD6F4">calls require approval. Learn more in the </tspan>
+    <tspan fill="#89B4FA" text-decoration="underline">MCP documentation</tspan>
+    <tspan fill="#CDD6F4">.</tspan>
+  </text>
+
+  <!-- Options -->
+  <text y="122" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="30" fill="#F5A97F">❯ </tspan><tspan fill="#CDD6F4">1. Use this and all future MCP servers in this project</tspan>
+  </text>
+  <text x="44" y="140" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#6C7086">2. Use this MCP server</text>
+  <text x="44" y="158" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#6C7086">3. Continue without using this MCP server</text>
+
+  <!-- Footer -->
+  <text x="30" y="182" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11" fill="#585B70">Enter to confirm · Esc to reject</text>
+</svg>
