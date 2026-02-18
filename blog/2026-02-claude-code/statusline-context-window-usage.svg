@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 420 76" fill="none">
+  <rect width="420" height="76" rx="8" fill="#173449"/>
+
+  <!-- Prompt line -->
+  <text x="20" y="22" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#CDD6F4">&gt;</text>
+  <!-- Block cursor -->
+  <rect x="32" y="10" width="8" height="16" rx="2" fill="#CDD6F4" fill-opacity="0.8"/>
+
+  <!-- Separator -->
+  <line x1="0" y1="34" x2="420" y2="34" stroke="#2A4A62" stroke-width="1"/>
+
+  <!-- Status line: [Sonnet] ████████░░░░░░░░░░░ 42% -->
+  <text y="58" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="30" fill="#9399B2">[Sonnet]</tspan>
+    <tspan dx="8" fill="#CDD6F4">████████</tspan><tspan fill="#45475A">░░░░░░░░░░░</tspan>
+    <tspan dx="6" fill="#9399B2">42%</tspan>
+  </text>
+</svg>

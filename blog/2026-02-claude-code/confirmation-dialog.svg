@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 720 724" fill="none">
+  <rect width="720" height="724" rx="8" fill="#173449"/>
+
+  <!-- Mac title bar -->
+  <path d="M0 8C0 3.58 3.58 0 8 0h704c4.42 0 8 3.58 8 8v24H0V8z" fill="#1F4460"/>
+  <circle cx="20" cy="18" r="5.5" fill="#F38BA8"/>
+  <circle cx="38" cy="18" r="5.5" fill="#F9E2AF"/>
+  <circle cx="56" cy="18" r="5.5" fill="#A6E3A1"/>
+
+  <!-- ● Update heading -->
+  <circle cx="24" cy="52" r="5" fill="#A6E3A1"/>
+  <text x="36" y="56" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#CDD6F4">Update</text>
+  <text x="90" y="56" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#BAC2DE">(~/Work/unicorn-startup/src/app/app.ts)</text>
+
+  <!-- Solid red separator line -->
+  <line x1="10" y1="72" x2="710" y2="72" stroke="#6C7086" stroke-width="1.5"/>
+
+  <!-- Edit file header -->
+  <text x="16" y="98" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#9399B2">Edit file ../../unicorn-startup/src/app/app.ts</text>
+
+  <!-- Dotted separator above diff -->
+  <line x1="10" y1="110" x2="710" y2="110" stroke="#6C7086" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- === DIFF CONTENT (16px line height) === -->
+
+  <!-- Line 1: removed -->
+  <rect x="12" y="118" width="696" height="16" rx="1" fill="#F38BA8" fill-opacity="0.12"/>
+  <text y="130" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 1 </tspan><tspan fill="#F38BA8">-import { Component, signal } from '@angular/core';</tspan>
+  </text>
+
+  <!-- Line 1: added (with highlight on ", computed") -->
+  <rect x="12" y="134" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <rect x="214" y="134" width="76" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.25"/>
+  <text y="146" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 1 </tspan><tspan fill="#A6E3A1">+import { Component, signal, computed } from '@angular/core';</tspan>
+  </text>
+
+  <!-- Line 2: unchanged -->
+  <text y="162" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 2 </tspan><tspan fill="#CDD6F4">   import { RouterOutlet } from '@angular/router';</tspan>
+  </text>
+
+  <!-- Line 3: empty -->
+  <text y="178" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 3</tspan>
+  </text>
+
+  <!-- Line 4 -->
+  <text y="194" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 4 </tspan><tspan fill="#CDD6F4">   @Component({</tspan>
+  </text>
+
+  <!-- Line 5 -->
+  <text y="210" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 5 </tspan><tspan fill="#CDD6F4">     selector: 'app-root',</tspan>
+  </text>
+
+  <!-- Line 6 -->
+  <text y="226" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 6 </tspan><tspan fill="#CDD6F4">     imports: [RouterOutlet],</tspan>
+  </text>
+
+  <!-- Line 7 -->
+  <text y="242" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 7 </tspan><tspan fill="#CDD6F4">     template: `</tspan>
+  </text>
+
+  <!-- Line 8: removed -->
+  <rect x="12" y="248" width="696" height="16" rx="1" fill="#F38BA8" fill-opacity="0.12"/>
+  <text y="260" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 8 </tspan><tspan fill="#F38BA8">-      &lt;h1&gt;Hello, {{ title() }}&lt;/h1&gt;</tspan>
+  </text>
+
+  <!-- Line 8: added -->
+  <rect x="12" y="264" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="276" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 8 </tspan><tspan fill="#A6E3A1">+      &lt;h1&gt;{{ greeting() }}&lt;/h1&gt;</tspan>
+  </text>
+
+  <!-- Line 9: added -->
+  <rect x="12" y="280" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="292" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086"> 9 </tspan><tspan fill="#A6E3A1">+        &lt;p&gt;Willkommen bei {{ title() }}!&lt;/p&gt;</tspan>
+  </text>
+
+  <!-- Line 10: added -->
+  <rect x="12" y="296" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="308" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">10 </tspan><tspan fill="#A6E3A1">+        &lt;button (click)="incrementCounter()"&gt;Klicks: {{ counter() }}&lt;/button&gt;</tspan>
+  </text>
+
+  <!-- Line 11: empty -->
+  <text y="324" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">11</tspan>
+  </text>
+
+  <!-- Line 12 -->
+  <text y="340" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">12 </tspan><tspan fill="#CDD6F4">       &lt;router-outlet /&gt;</tspan>
+  </text>
+
+  <!-- Line 13 -->
+  <text y="356" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">13 </tspan><tspan fill="#CDD6F4">     `,</tspan>
+  </text>
+
+  <!-- Line 14 -->
+  <text y="372" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">14 </tspan><tspan fill="#CDD6F4">   styles: [],</tspan>
+  </text>
+
+  <!-- Line 15 -->
+  <text y="388" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">15 </tspan><tspan fill="#CDD6F4"> })</tspan>
+  </text>
+
+  <!-- Line 16 -->
+  <text y="404" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">16 </tspan><tspan fill="#CDD6F4"> export class App {</tspan>
+  </text>
+
+  <!-- Line 17: removed (with highlight on 'unicorn-startup') -->
+  <rect x="12" y="410" width="696" height="16" rx="1" fill="#F38BA8" fill-opacity="0.12"/>
+  <rect x="290" y="410" width="108" height="16" rx="1" fill="#F38BA8" fill-opacity="0.25"/>
+  <text y="422" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">17 </tspan><tspan fill="#F38BA8">-    protected readonly title = signal('unicorn-startup');</tspan>
+  </text>
+
+  <!-- Line 17: added (with highlight on 'Unicorn Startup') -->
+  <rect x="12" y="426" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <rect x="290" y="426" width="108" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.25"/>
+  <text y="438" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">17 </tspan><tspan fill="#A6E3A1">+    protected readonly title = signal('Unicorn Startup');</tspan>
+  </text>
+
+  <!-- Line 18: added -->
+  <rect x="12" y="442" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="454" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">18 </tspan><tspan fill="#A6E3A1">+    protected readonly counter = signal(0);</tspan>
+  </text>
+
+  <!-- Line 19: added -->
+  <rect x="12" y="458" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="470" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">19 </tspan><tspan fill="#A6E3A1">+    protected readonly greeting = computed(() =&gt;</tspan>
+  </text>
+
+  <!-- Line 20: added -->
+  <rect x="12" y="474" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="486" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">20 </tspan><tspan fill="#A6E3A1">+        `Hallo, ${this.title()}! 🦄`</tspan>
+  </text>
+
+  <!-- Line 21: added -->
+  <rect x="12" y="490" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="502" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">21 </tspan><tspan fill="#A6E3A1">+      );</tspan>
+  </text>
+
+  <!-- Line 22: added (empty) -->
+  <rect x="12" y="506" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="518" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">22 </tspan><tspan fill="#A6E3A1">+</tspan>
+  </text>
+
+  <!-- Line 23: added -->
+  <rect x="12" y="522" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="534" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">23 </tspan><tspan fill="#A6E3A1">+    incrementCounter(): void {</tspan>
+  </text>
+
+  <!-- Line 24: added -->
+  <rect x="12" y="538" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="550" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">24 </tspan><tspan fill="#A6E3A1">+      this.counter.update(c =&gt; c + 1);</tspan>
+  </text>
+
+  <!-- Line 25: added -->
+  <rect x="12" y="554" width="696" height="16" rx="1" fill="#A6E3A1" fill-opacity="0.08"/>
+  <text y="566" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">25 </tspan><tspan fill="#A6E3A1">+    }</tspan>
+  </text>
+
+  <!-- Line 26: unchanged -->
+  <text y="582" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11.5">
+    <tspan x="16" fill="#6C7086">26 </tspan><tspan fill="#CDD6F4"> }</tspan>
+  </text>
+
+  <!-- Dotted separator below diff -->
+  <line x1="10" y1="596" x2="710" y2="596" stroke="#6C7086" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- === PERMISSION DIALOG === -->
+
+  <text x="16" y="622" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="13" fill="#CDD6F4">Do you want to make this edit to <tspan font-weight="bold">app.ts</tspan>?</text>
+
+  <text y="644" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12">
+    <tspan x="16" fill="#F5A97F">❯ </tspan><tspan fill="#CDD6F4">1. Yes</tspan>
+  </text>
+
+  <text x="30" y="662" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#6C7086">2. Yes, allow all edits in <tspan fill="#9399B2" font-weight="bold">app/</tspan> during this session <tspan fill="#9399B2">(shift+tab)</tspan></text>
+
+  <text x="30" y="680" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="12" fill="#6C7086">3. Type here to tell Claude what to do differently</text>
+
+  <text x="16" y="710" font-family="'SF Mono', Menlo, Consolas, 'Courier New', monospace" font-size="11" fill="#585B70">Esc to cancel</text>
+</svg>
