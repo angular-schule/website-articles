@@ -284,7 +284,7 @@ I read the entire source code (a compact Rust project with 12 source files).
 Result: the code is clean (audited at version 0.1.4, commit [`2595cf7`](https://github.com/davidbeesley/claude-chill/tree/2595cf7f89e33381453cb4fba2b8bf8eb26921df)).
 No network access, no filesystem writes (except optional debug logging), no sensitive environment variables read.
 The dependencies are well-established Rust crates: `nix` for POSIX APIs, `vt100` as a terminal emulator, `termwiz` (from the WezTerm developer) for escape sequence parsing.
-The code is well-structured, thoroughly tested, and uses an explicit whitelist/blacklist for every terminal escape sequence.
+The code is well-structured, thoroughly tested, and uses an explicit allowlist/blocklist for every terminal escape sequence.
 
 **A big thank you to [David Beesley](https://github.com/davidbeesley) for this project!**
 
