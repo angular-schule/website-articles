@@ -6,7 +6,7 @@ bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/asse
 bioHeading: About Johannes Hoppe
 author2: Angular.Schule Team
 mail2: team@angular.schule
-bio2: '<a href="https://angular.schule"><img src="/img/logo-angular-schule-gradient-550.png" alt="Angular.Schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 250px;"></a>Want to try AI-powered Angular development hands-on? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including modern AI tools for more efficient development. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
+bio2: '<a href="https://angular.schule"><img src="/img/logo-angular-schule-gradient-550.png" alt="Angular.Schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 250px;"></a>Want to write clean, well-structured code with best practices in mind? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including modern tools for more efficient development. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
 bio2Heading: About our Angular workshops
 published: 2026-03-14
 keywords:
@@ -20,14 +20,25 @@ keywords:
   - Mini TypeScript Hero
 header: mini-typescript-hero.png
 language: en
+hidden: true
 ---
 
-**Nope, long live Mini TypeScript Hero!** 🦸‍♂️
+I use TypeScript Hero every single day. Multiple times per hour, actually. One keyboard shortcut (`Ctrl+Alt+O`) and my messy imports transform into a well organized, alphabetically sorted list. Unused imports? Gone. Proper grouping? Done. Consistent formatting? Check. Then one day, VSCode hit me with a warning I couldn't ignore: **"This extension is deprecated as it is no longer being maintained."** My heart sank. Not another one!
 
-I use TypeScript Hero every single day. Multiple times per hour, actually. One keyboard shortcut (`Ctrl+Alt+O`) and my messy imports transform into a well organized, alphabetically sorted list. Unused imports? Gone. Proper grouping? Done. Consistent formatting? Check.
+<p align="center" style="margin-top: 30px">
+So, is TypeScript Hero dead? <b>Yes!</b><br>
+But there's a new hero in town! 🦸‍♂️
+</p>
 
-Then one day, VSCode hit me with a warning I couldn't ignore: **"This extension is deprecated as it is no longer being maintained."**
-My heart sank. Not another one.
+<div align="center">
+  <img src="logo.png" alt="Mini TypeScript Hero" width="40%">
+</div>
+
+<h1 align="center">Mini TypeScript Hero – Small hero. Big cleanup!</h1>
+
+## Contents
+
+[[toc]]
 
 ## The Problem
 
@@ -56,7 +67,7 @@ import { BookList } from './components/book-list';
 import { UserDetail } from './components/user-detail';
 ```
 
-Angular libraries grouped together and automatically merged into one import. RxJS separate. Then local imports. Unused imports removed. Everything sorted. Consistent quotes and semicolons. One blank line after imports.
+As you can see, the Angular libraries are grouped together and automatically merged into one import. Then the local imports follow, separated by a blank line. Unused imports are removed. Everything is sorted with consistent quotes and semicolons. And if you want, you could even go further and separate the RxJS operators into their own group. Beautiful.
 
 **This really helps keep the code clean.**
 
@@ -89,7 +100,7 @@ The extension intelligently skips `node_modules`, `dist`, `build`, and other art
 
 **⚠️ Conflict detection**
 
-Using Prettier or ESLint plugins that also sort imports? Run "Check for configuration conflicts" to detect if multiple tools are fighting over your imports.
+Using Prettier or ESLint plugins that also sort imports? Run "Check for configuration conflicts" to detect if multiple tools are fighting over your imports. This would have saved me a lot of fiddling in the past.
 
 ## Wait, Doesn't VS Code Already Have This?
 
@@ -97,7 +108,7 @@ Using Prettier or ESLint plugins that also sort imports? Run "Check for configur
 
 **VS Code's approach:** You type blank lines between imports to create groups. VS Code sees these blank lines and treats them as group separators, sorting within each group while preserving the blank lines. If you want external (node_modules) imports separated from internal (local files) imports, you manually add a blank line between them and maintain it yourself every time you add new imports.
 
-**Mini TypeScript Hero's approach:** The extension automatically separates external (node_modules) from internal (local files) imports with blank lines between them—covering 90% of use cases without any configuration. Want more? Optionally add specific patterns like `["/^@angular/", "/rxjs/", "Workspace"]` to group framework or library imports separately. No manual maintenance required.
+**Mini TypeScript Hero's approach:** The extension automatically separates external (node_modules) from internal (local files) imports with blank lines between them. This will cover most use cases without any configuration. Want more? Optionally add specific patterns like `["/^@angular/", "/rxjs/", "Workspace"]` to group framework or library imports separately. No manual maintenance required.
 
 **What VS Code cannot do:**
 
@@ -127,7 +138,7 @@ For a tool I rely on daily, that was a ticking time bomb.
 **Other improvements:**
 - **Smart blank line handling**: Choose how many blank lines you want after imports (1, 2, or preserve existing). The old behavior where blank lines would sometimes "move" unpredictably is now configurable.
 - **Configurable import merging**: Combine multiple imports from the same module into one clean statement. Migrated users keep their original behavior; new users get modern best practices.
-- **Modern TypeScript support**: Full support for `import type` syntax and import attributes (`with { type: 'json' }`).
+- **Modern TypeScript support**: Full support for `import type` syntax and import attributes<br>(`with { type: 'json' }`).
 
 The goal was simple: **Future-proof**. Make sure this tool keeps working for years to come, without depending on abandoned libraries.
 
@@ -144,11 +155,9 @@ All your custom configurations transfer automatically — quote style, semicolon
 
 ## A Quick Thank You
 
-This extension is **MIT licensed and free for everyone**.
-
 Thanks to Christoph Bühler for creating TypeScript Hero in the first place. The original code, the design decisions, the thoughtful features: all of that came from Christoph.
 
-I'm committed to keeping this tool maintained and working for the community.
+I'm committed to keeping this tool maintained and working for the community. This extension is **MIT licensed and free for everyone**.
 
 ## Install Mini TypeScript Hero Now
 
@@ -167,8 +176,18 @@ Ready to organize your imports with a single keystroke?
 * **Found a bug or have a feature request?**
     👉 [github.com/angular-schule/mini-typescript-hero](https://github.com/angular-schule/mini-typescript-hero)
 
+## What's Next? (Your call to action!)
+
+Here's a genuine question: **Does nicely formatted code still matter in the age of AI?**
+
+With AI generating more and more code, the temptation is to just let it write whatever and move on. But I still believe that clean, well-organized imports make a real difference. For readability, for code reviews, for the next person who opens your file.
+
+So if you still care about this stuff, tell me. I'm considering a standalone CLI tool for CI pipelines, or an MCP server that formats all that AI-generated slop before it lands in your codebase. But only if someone actually wants it.
+
+Please reach out! 🙏 [Give it a star on GitHub](https://github.com/angular-schule/mini-typescript-hero), [give me feedback via an issue](https://github.com/angular-schule/mini-typescript-hero/issues) or just drop me a nice message.
+
 ---
 
-**TL;DR:** TypeScript Hero isn't dead. I picked it up and modernized it as Mini TypeScript Hero. VS Code has basic organize imports, but Mini TypeScript Hero gives you custom grouping patterns, formatting control, and import organization that can match your team's style guide.
+**TL;DR:** TypeScript Hero isn't really dead. I picked it up and modernized it as Mini TypeScript Hero. VS Code has basic organize imports, but Mini TypeScript Hero gives you custom grouping patterns, formatting control, and import organization that can match your team's style guide.
 
 Happy coding! ✨
