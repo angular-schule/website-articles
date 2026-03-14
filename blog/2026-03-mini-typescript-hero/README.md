@@ -20,7 +20,6 @@ keywords:
   - Mini TypeScript Hero
 header: mini-typescript-hero.png
 language: en
-hidden: true
 ---
 
 I use TypeScript Hero every single day. Multiple times per hour, actually. One keyboard shortcut (`Ctrl+Alt+O`) and my messy imports transform into a well organized, alphabetically sorted list. Unused imports? Gone. Proper grouping? Done. Consistent formatting? Check. Then one day, VSCode hit me with a warning I couldn't ignore: **"This extension is deprecated as it is no longer being maintained."** My heart sank. Not another one!
