@@ -172,6 +172,9 @@ Ready to organize your imports with a single keystroke?
 * **Works with:**
     TypeScript, JavaScript, TSX, JSX
 
+* **Also available on Open VSX** for Cursor, Windsurf, VSCodium and other VS Code forks:
+    👉 [open-vsx.org/extension/angular-schule/mini-typescript-hero](https://open-vsx.org/extension/angular-schule/mini-typescript-hero)
+
 * **Found a bug or have a feature request?**
     👉 [github.com/angular-schule/mini-typescript-hero](https://github.com/angular-schule/mini-typescript-hero)
 
