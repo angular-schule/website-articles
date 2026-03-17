@@ -82,6 +82,8 @@ His response was incredibly kind and supportive. He gave me his blessing, shared
 
 **My mission was simple**: Preserve this feature for myself. And hopefully, other people will like it too.
 
+The [Angular style guide](https://v7.angular.io/guide/styleguide#import-line-spacing) used to recommend exactly this: separate third-party imports from application imports with a blank line, and alphabetize them. The rule was removed in v8, but it's still a good practice. I'm committed to keeping it alive.
+
 ## Cool New Features
 
 While modernizing, I added some features that the original never had:
