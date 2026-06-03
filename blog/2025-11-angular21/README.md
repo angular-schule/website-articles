@@ -59,6 +59,7 @@ export const appConfig: ApplicationConfig = {
     // ...
     // enable the LEGACY change detection with Zone.js
     provideZoneChangeDetection({ eventCoalescing: true }),
+  ]
 };
 ```
 
