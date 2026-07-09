@@ -1,7 +1,7 @@
 ---
 title: "RxJS in the real world: Building a car turn indicator"
 author: Ferdinand Malcher
-mail: mail@fmalcher.de
+mail: ferdinand@malcher.media
 published: 2021-12-14
 lastModified: 2021-12-14
 keywords:

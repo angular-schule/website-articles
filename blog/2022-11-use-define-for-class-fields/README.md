@@ -3,7 +3,7 @@ title: 'TypeScript: useDefineForClassFields – How to avoid future Breaking Cha
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 author2: Ferdinand Malcher
-mail2: mail@fmalcher.de
+mail2: ferdinand@malcher.media
 published: 2022-11-29
 lastModified: 2026-01-15
 keywords:

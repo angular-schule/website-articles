@@ -1,7 +1,7 @@
 ---
 title: Build your own RxJS logging operator
 author: Ferdinand Malcher
-mail: mail@fmalcher.de
+mail: ferdinand@malcher.media
 published: 2018-02-19
 lastModified: 2018-04-20
 keywords:

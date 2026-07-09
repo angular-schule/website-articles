@@ -1,7 +1,7 @@
 ---
 title: "A word on Angular route resolvers – and a praise for Reactive Programming"
 author: Ferdinand Malcher
-mail: mail@fmalcher.de
+mail: ferdinand@malcher.media
 published: 2019-07-29
 lastModified: 2019-07-29
 keywords:

@@ -1,7 +1,7 @@
 ---
 title: 'Standalone Components – neu ab Angular 14'
 author: Ferdinand Malcher
-mail: mail@fmalcher.de
+mail: ferdinand@malcher.media
 published: 2022-05-29
 lastModified: 2022-06-02
 keywords:

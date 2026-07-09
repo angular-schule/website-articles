@@ -1,7 +1,7 @@
 ---
 title: "Watching through a window: Building a moving window with RxJS"
 author: Ferdinand Malcher
-mail: mail@fmalcher.de
+mail: ferdinand@malcher.media
 published: 2020-02-04
 lastModified: 2020-02-04
 keywords:
