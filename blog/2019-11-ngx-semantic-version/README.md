@@ -1,7 +1,7 @@
 ---
 title: 'ngx-semantic-version: enhance your git and release workflow'
 author: Danny Koppenhagen
-mail: mail@d-koppenhagen.de
+mail: mail@k9n.dev
 published: 2019-11-06
 keywords:
   - Angular
