@@ -25,6 +25,15 @@ jobs:
           node-version: 22.x
 
       - name: Build
+        env:
+          # standard.site publisher (see build/STANDARD-SITE.md).
+          # The step is a no-op unless BSKY_APP_PASSWORD is set.
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          BSKY_HANDLE: angular.schule
+          STANDARD_SITE_URL: https://angular.schule
+          STANDARD_SITE_NAME: Angular.Schule
+          STANDARD_SITE_DESCRIPTION: Der Blog der Angular.Schule – Tutorials und Neuigkeiten rund um Angular.
+          STANDARD_SITE_EXPECTED_DID: did:plc:zfvlnrdh7cotokow5hx7czxi
         run: |
           cd build
           npm install
