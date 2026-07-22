@@ -34,6 +34,7 @@ jobs:
           STANDARD_SITE_NAME: Angular.Schule
           STANDARD_SITE_DESCRIPTION: Der Blog der Angular.Schule – Tutorials und Neuigkeiten rund um Angular.
           STANDARD_SITE_EXPECTED_DID: did:plc:zfvlnrdh7cotokow5hx7czxi
+          STANDARD_SITE_ICON: https://angular.schule/standard-site-icon.png
         run: |
           cd build
           npm install
