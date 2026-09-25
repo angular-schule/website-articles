@@ -174,8 +174,9 @@ So I wrote the pull request myself: **[angular/angular-cli#34180](https://github
 ```
 
 Once it lands, you only switch the builder name back to `@angular/build:application`.
+That's the plan.
 
-**If you want this in Angular, please give the [issue](https://github.com/angular/angular-cli/issues/29173) and the [pull request](https://github.com/angular/angular-cli/pull/34180) a 👍.**
+**If you want this in Angular, please give the [issue](https://github.com/angular/angular-cli/issues/29173) a 👍. Upvoting the [pull request](https://github.com/angular/angular-cli/pull/34180) could be helpful, too! :-)**
 The Angular team decides based on community votes.
 
 ## Two things to watch out for
