@@ -30,7 +30,7 @@
   <text x="590" y="98" text-anchor="middle" fill="#475569" font-size="10">address bar: /blog</text>
 
   <!-- With prerenderFormat: 'file' -->
-  <text x="10" y="162" fill="#16a34a" font-size="13" font-weight="bold">With prerenderFormat: 'file': prerendered as blog.html</text>
+  <text x="10" y="162" fill="#16a34a" font-size="13" font-weight="bold">Prerendered as blog.html</text>
 
   <rect x="10" y="180" width="110" height="70" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
   <text x="65" y="210" text-anchor="middle" fill="#475569" font-size="12" font-weight="bold">Browser</text>

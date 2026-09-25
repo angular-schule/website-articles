@@ -82,8 +82,6 @@ This layout works on every web server, which makes it a good default.
 But many static hosts can do better: they serve `blog.html` under `/blog`, directly, without a redirect.
 Angular just never writes `blog.html`.
 
-![Two request flows. Today: the browser requests /blog, the static host finds the folder blog/ and redirects to /blog/, then serves blog/index.html, and the Angular router removes the trailing slash again. With prerenderFormat 'file': the browser requests /blog and the static host answers directly from blog.html, without a redirect.](diagram-requests.svg "Today, every direct visit takes a detour via the trailing slash. With prerenderFormat 'file', the host answers directly.")
-
 ## How do other frameworks handle this?
 
 Static site generators have offered this choice for a long time.
@@ -104,7 +102,10 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 ## With `@angular-schule/prerender-format`: nice URLs and good SEO, we deserve both!
 
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
+
 Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) does it for Angular 22.
+
+![Two request flows. Today: the browser requests /blog, the static host finds the folder blog/ and redirects to /blog/, then serves blog/index.html, and the Angular router removes the trailing slash again. Prerendered as blog.html: the browser requests /blog and the static host answers directly from blog.html, without a redirect.](diagram-requests.svg "Today, every direct visit takes a detour via the trailing slash. With blog.html, the host answers directly.")
 
 In fact, you are looking at it right now.
 The Angular.Schule website is built with it, and this article is served from `blog/2026-09-static-angular-ssr-trailing-slash.html`.
