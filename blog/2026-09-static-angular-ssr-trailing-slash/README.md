@@ -33,7 +33,7 @@ But when it comes to prerendered static sites, the current situation is embarras
 Astro, Next.js, SvelteKit: they all let you choose how your pages are written to disk.
 Angular doesn't.
 
-And static sites are great: no server to run, no server to patch, hosting is literally free, and a CDN serves your pages to the whole world and scales like a beast.
+And static sites are great: hosting is literally free, and a CDN serves your pages to the whole world and scales like a beast.
 That's why the websites of Angular.Schule and the Angular book are prerendered static sites.
 
 Prerender your app, deploy it to a static host (for example GitHub Pages, Cloudflare Pages or Firebase Hosting), and take a look at the network tab: every direct visit starts with a redirect to the same URL with a trailing slash, and a moment later the Angular router quietly removes the slash again.
@@ -50,7 +50,7 @@ Angular's prerendering (SSG) writes every route into its own folder.
 Take the article you are reading right now: with Angular's default, the route `blog/2026-09-static-angular-ssr-trailing-slash` becomes `blog/2026-09-static-angular-ssr-trailing-slash/index.html`.
 For the rest of this article, let's call it `blog/my-article`.
 
-A static host like GitHub Pages or Cloudflare Pages sees a request for `/blog/my-article`, finds a folder with that name, and does what web servers have always done with folders: it redirects to `/blog/my-article/`.
+A static host like GitHub Pages or Cloudflare Pages sees a request for `/blog/my-article`, finds a folder with that name and redirects to `/blog/my-article/`.
 
 ```bash
 $ curl -I https://example.com/blog/my-article
@@ -63,9 +63,6 @@ So you have to choose:
 
 - **Nice URLs, but redirects:** Your links use `/blog/my-article`. Every direct visit (a search engine, a bookmark, a link shared on social media) starts with a redirect to `/blog/my-article/`, and the Angular router then removes the trailing slash again. The URL in your links is never the URL that actually answers.
 - **No redirects, but trailing slashes everywhere:** Your links have to use `/blog/my-article/`. Pages answer directly, but every URL ends with a slash, and Angular needs an extra provider to keep it in the address bar: `{ provide: LocationStrategy, useClass: TrailingSlashPathLocationStrategy }` (see [`TrailingSlashPathLocationStrategy`](https://angular.dev/api/common/TrailingSlashPathLocationStrategy)).
-
-Neither option feels right.
-I tried both on our websites, and both made me unhappy.
 
 ## Why does Angular do this?
 
@@ -81,7 +78,7 @@ function getRouteOutPath(route: string, baseHrefPathname: string): string {
 
 Every route ends up as `<route>/index.html`.
 There is no option to change that.
-This layout works on every web server in the world, which is a good default.
+This layout works on every web server, which makes it a good default.
 But many static hosts can do better: they serve `blog.html` under `/blog`, directly, without a redirect.
 Angular just never writes `blog.html`.
 
@@ -102,7 +99,7 @@ Angular is the odd one out:
 | **Angular** | – | always | – |
 
 Next.js and SvelteKit even write `about.html` by default.
-And the [Astro documentation](https://docs.astro.build/en/reference/configuration-reference/#buildformat) recommends `build.format: 'file'` together with `trailingSlash: 'never'`, which is exactly the combination Angular can't produce today.
+And the [Astro documentation](https://docs.astro.build/en/reference/configuration-reference/#buildformat) recommends `build.format: 'file'` together with `trailingSlash: 'never'`, which is the combination Angular can't produce today.
 
 ## With `prerenderFormat: 'file'`: nice URLs and good SEO, we deserve both!
 
@@ -120,7 +117,7 @@ Parent and child routes live side by side: `blog.html` next to the folder `blog/
 Both GitHub Pages and Cloudflare Pages serve `/blog` from `blog.html` in this situation, and `/blog/my-article` from the folder.
 The start page stays `index.html`, and so does the start page of each locale (for example `en/index.html` with the base href `/en/`).
 
-One difference between the two hosts is worth knowing: GitHub Pages answers an old address with a trailing slash like `/blog/my-article/` with its `404.html`.
+GitHub Pages answers an old address with a trailing slash like `/blog/my-article/` with its `404.html`.
 For a prerendered Angular app, that's usually your app shell, so visitors still see the right page, but crawlers get a 404 status.
 As long as you never linked your pages with a trailing slash, that's nothing to worry about.
 
@@ -143,14 +140,14 @@ So we wrote the pull request ourselves: **[angular/angular-cli#34180](https://gi
 }
 ```
 
-- `"directory"` (default): `/foo/bar` is written to `foo/bar/index.html`, exactly as today.
+- `"directory"` (default): `/foo/bar` is written to `foo/bar/index.html`, as today.
 - `"file"`: `/foo/bar` is written to `foo/bar.html`.
 
 The option is meant for static builds only, by design.
 With `outputMode: "server"`, there is nothing to fix: the Node.js server generated by Angular serves static files with `redirect: false`, so `/blog` is never redirected to `/blog/` in the first place.
 
 **If you want this in Angular, please give the [issue](https://github.com/angular/angular-cli/issues/29173) and the [pull request](https://github.com/angular/angular-cli/pull/34180) a 👍.**
-The Angular team decides based on community interest, so every vote counts.
+The Angular team decides based on community votes.
 
 ## Can't wait? `@angular-schule/prerender-format`
 
@@ -173,14 +170,14 @@ ng build
 }
 ```
 
-All other options stay exactly as they are, the builder passes them on to `@angular/build:application`.
+All other options stay as they are, the builder passes them on to `@angular/build:application`.
 Once the option is part of Angular, you only switch the builder name back.
 
 A static build is required.
 An `ssr` entry is fine as long as `outputMode` is `"static"`: Angular then uses it only during `ng build` to prerender the pages, and no server is deployed.
 If your build deploys a server (`"outputMode": "server"`, or `ssr` without `outputMode`), `ng add` and `ng build` stop with a clear error.
 
-Let me be honest about how it works: the builder calls `buildApplication()` from `@angular/build` and replaces the internal function `prerenderPages()` at runtime, to rename the files before they are written.
+How it works: the builder calls `buildApplication()` from `@angular/build` and replaces the internal function `prerenderPages()` at runtime, to rename the files before they are written.
 That's a hack.
 It relies on internal APIs, which is why it supports Angular 22 only, and why a built-in option is the real solution.
 But it's a well-tested hack: it writes the same files as our Angular CLI patch, and it runs on the websites of [Angular.Schule](https://angular.schule) and the [Angular book](https://angular-buch.com).
@@ -262,7 +259,7 @@ Today, you have to choose between nice URLs and a site without redirects.
 
 **We deserve both.**
 Write `<route>.html` instead of `<route>/index.html`, and static hosts serve your pages directly under clean URLs.
-Until Angular supports this natively, two commands do the trick:
+Until Angular supports this natively, two commands are enough:
 
 ```bash
 ng add @angular-schule/prerender-format
