@@ -106,7 +106,7 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
 
 In fact, you are looking at it right now.
-The Angular.Schule website is built exactly like this, and this article is served from `blog/2026-09-static-angular-ssr-trailing-slash.html`.
+The Angular.Schule website is built like this, and this article is served from `blog/2026-09-static-angular-ssr-trailing-slash.html`.
 Open the network tab and reload: no redirect, just a clean URL.
 
 - **Nice URLs:** `/blog/my-article`, without a trailing slash, in your links, in the address bar and in the server response alike.
@@ -125,7 +125,7 @@ We borrowed the terminology from Astro: `build.format` with `'directory'` and `'
 
 ## The real fix: an option in the Angular CLI
 
-My colleague Ferdinand Malcher opened an issue for exactly this back in 2024: [angular/angular-cli#29173](https://github.com/angular/angular-cli/issues/29173), *"SSG/Prerendering: Allow generating foo.html instead of foo/index.html"*.
+My colleague Ferdinand Malcher opened an issue for this back in 2024: [angular/angular-cli#29173](https://github.com/angular/angular-cli/issues/29173), *"SSG/Prerendering: Allow generating foo.html instead of foo/index.html"*.
 It didn't collect enough votes in the community voting process back then.
 
 So we wrote the pull request ourselves: **[angular/angular-cli#34180](https://github.com/angular/angular-cli/pull/34180)** adds the option `prerenderFormat` to the application builder:
