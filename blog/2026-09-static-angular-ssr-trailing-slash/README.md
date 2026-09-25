@@ -111,15 +111,10 @@ Open the network tab and reload: no redirect, just a clean URL.
 
 - **Nice URLs:** `/blog/my-article`, without a trailing slash, in your links, in the address bar and in the server response alike.
 - **Good SEO:** every page answers directly. Search engines see no redirect, and the URL they crawl is the same one your links point to.
-- **Old links keep working:** on Cloudflare Pages, `/blog/my-article/` and `/blog/my-article.html` redirect to `/blog/my-article`.
 
 Parent and child routes live side by side: `blog.html` next to the folder `blog/`, which contains `my-article.html`.
 Both GitHub Pages and Cloudflare Pages serve `/blog` from `blog.html` in this situation, and `/blog/my-article` from the folder.
 The start page stays `index.html`, and so does the start page of each locale (for example `en/index.html` with the base href `/en/`).
-
-GitHub Pages answers an old address with a trailing slash like `/blog/my-article/` with its `404.html`.
-For a prerendered Angular app, that's usually your app shell, so visitors still see the right page, but crawlers get a 404 status.
-As long as you never linked your pages with a trailing slash, that's nothing to worry about.
 
 We borrowed the terminology from Astro: `build.format` with `'directory'` and `'file'` became `prerenderFormat` with the same values.
 
