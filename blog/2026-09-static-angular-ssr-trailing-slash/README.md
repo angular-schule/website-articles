@@ -105,7 +105,7 @@ The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-
 
 Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) can do the job for us.
 
-![Two request flows. Today: the browser requests /blog, the static host finds the folder blog/ and redirects to /blog/, then serves blog/index.html, and the Angular router removes the trailing slash again. Prerendered as blog.html: the browser requests /blog and the static host answers directly from blog.html, without a redirect.](diagram-requests.svg "Today, every direct visit takes a detour via the trailing slash. With blog.html, the host answers directly.")
+![Sequence diagram between browser and static host. Today: 1. GET /blog, the host answers 301 with Location /blog/. 2. GET /blog/, the host answers 200 with blog/index.html. 3. In the browser, the Angular router changes the address bar back to /blog. With blog.html: GET /blog, the host answers 200 with blog.html, done.](diagram-requests.svg "Today, every direct visit needs two requests, and the Angular router hides the trailing slash afterwards. With blog.html, one request is enough.")
 
 In fact, you are looking at it right now.
 The Angular.Schule website is built with it, and this article is served from `blog/2026-09-static-angular-ssr-trailing-slash.html`.
