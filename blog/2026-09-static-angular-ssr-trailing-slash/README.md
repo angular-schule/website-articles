@@ -190,7 +190,8 @@ Both builder and pull request stop with an error in this case.
 ### Your local preview server
 
 If you preview the build locally with `express.static`, watch out: with `blog.html` next to the folder `blog/`, `express.static` finds the folder first and redirects `/blog` to `/blog/`.
-Serve `<path>.html` before the static middleware:
+To fix that, add a small middleware in front of `express.static`: for a request like `/blog`, it checks whether `blog.html` exists and sends that file directly.
+Only if there is no such file does the request go on to `express.static`:
 
 ```typescript
 app.use((req, res, next) => {
