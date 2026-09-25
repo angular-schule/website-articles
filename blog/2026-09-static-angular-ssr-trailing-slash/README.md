@@ -182,55 +182,7 @@ That's a hack.
 It relies on internal APIs, which is why it supports Angular 22 only, and why a built-in option is the real solution.
 But it's a well-tested hack: it writes the same files as our Angular CLI patch, and it runs on the websites of [Angular.Schule](https://angular.schule) and the [Angular book](https://angular-buch.com).
 
-## Things we learned along the way
-
-Switching our sites to `.html` files revealed a few things that had been broken for a long time.
-The redirect to the trailing slash had hidden them.
-
-### Your `redirectTo` routes are probably 404s
-
-On [angular-buch.com](https://angular-buch.com), we have short URLs that are printed in the book, like `/errata`:
-
-```typescript
-export const routes: Routes = [
-  { path: 'errata', redirectTo: '/material/errata-4a' },
-  // ...
-];
-```
-
-These redirects only worked in the browser.
-The server routes rendered everything that wasn't explicitly listed on the client (`{ path: '**', renderMode: RenderMode.Client }`), so there was no file for `/errata`.
-The static host answered with its `404.html`, the app shell booted, and the Angular router redirected.
-Visitors didn't notice, because the Angular router redirected them in the browser.
-But the server answered with a 404 status, and that's what search engines, link checkers and link previews saw.
-
-The fix: prerender every redirect route.
-Angular then writes a small static page with a `<meta http-equiv="refresh">` for each of them, which works without JavaScript:
-
-```typescript
-// app.routes.server.ts
-import { routes } from './app.routes';
-
-export const serverRoutes: ServerRoute[] = [
-  // ... your other server routes
-
-  // Short URLs and old paths (redirectTo) as static redirect pages
-  ...routes.flatMap((route): ServerRoute[] =>
-    route.redirectTo && route.path && route.path !== '**'
-      ? [{ path: route.path, renderMode: RenderMode.Prerender }]
-      : []
-  ),
-
-  { path: '**', renderMode: RenderMode.Client }
-];
-```
-
-### Pages missing from `getPrerenderParams()`
-
-The same happened to our errata pages themselves.
-They are marked as hidden in our content list, and `getPrerenderParams()` only returned the visible entries.
-So the pages were never prerendered, and again the app shell rendered them from a 404.
-If you hide content from a list, make sure it still ends up in `getPrerenderParams()`.
+## Two things to watch out for
 
 ### A route called `index`
 
