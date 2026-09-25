@@ -156,7 +156,7 @@ I hope I don't have to maintain this package longer than necessary, because I ha
 
 ## The real fix: an option in the Angular CLI
 
-A built-in option is the clean solution.
+A built-in option for the Angular CLI is the clean solution.
 My colleague Ferdinand Malcher opened an issue for this back in 2024: [angular/angular-cli#29173](https://github.com/angular/angular-cli/issues/29173), *"SSG/Prerendering: Allow generating foo.html instead of foo/index.html"*.
 It didn't collect enough votes in the community voting process back then.
 
