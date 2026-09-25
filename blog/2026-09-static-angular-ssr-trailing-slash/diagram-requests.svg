@@ -46,6 +46,6 @@
   <text x="335" y="226" text-anchor="middle" fill="#dcfce7" font-size="10">serves blog.html</text>
 
   <text x="420" y="212" fill="#16a34a" font-size="12" font-weight="bold">No redirect. Clean URL.</text>
-  <text x="420" y="230" fill="#475569" font-size="10">Same URL in links, canonical tag, sitemap</text>
-  <text x="420" y="244" fill="#475569" font-size="10">and address bar.</text>
+  <text x="420" y="230" fill="#475569" font-size="10">Same URL in your links</text>
+  <text x="420" y="244" fill="#475569" font-size="10">and in the address bar.</text>
 </svg>

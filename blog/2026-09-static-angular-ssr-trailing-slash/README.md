@@ -20,7 +20,6 @@ keywords:
   - Trailing Slash
   - Redirect
   - SEO
-  - Canonical URL
   - GitHub Pages
   - Cloudflare Pages
   - Astro build.format
@@ -30,7 +29,7 @@ language: en
 ---
 
 You prerender your Angular app, deploy it to a static host, and everything looks fine.
-But take a closer look at the network tab: every direct visit starts with a redirect from `/blog` to `/blog/`, and a moment later the Angular router quietly removes the slash again.
+But take a closer look at the network tab: every direct visit starts with a redirect to the same URL with a trailing slash, and a moment later the Angular router quietly removes the slash again.
 You can get rid of the redirect, but only by putting trailing slashes on every URL of your site.
 **Nice URLs or good SEO: with Angular's prerendering, you can't have both. In this article, I explain why, and how to get both today.**
 
@@ -54,8 +53,8 @@ location: https://example.com/blog/my-article/
 The browser follows the redirect, gets the `index.html`, Angular starts, and the router normalizes the URL back to `/blog/my-article`.
 So you have to choose:
 
-- **Nice URLs, but redirects:** Your links, canonical tags and sitemap use `/blog/my-article`. Every direct visit (a search engine, a bookmark, a link shared on social media) starts with a redirect to `/blog/my-article/`, and the Angular router then removes the trailing slash again. The URL you tell Google about is never the URL that actually answers.
-- **No redirects, but trailing slashes everywhere:** Your links, canonical tags and sitemap have to use `/blog/my-article/`. Pages answer directly, but every URL ends with a slash, and Angular needs an extra provider to keep it in the address bar: `{ provide: LocationStrategy, useClass: TrailingSlashPathLocationStrategy }` (see [`TrailingSlashPathLocationStrategy`](https://angular.dev/api/common/TrailingSlashPathLocationStrategy)).
+- **Nice URLs, but redirects:** Your links use `/blog/my-article`. Every direct visit (a search engine, a bookmark, a link shared on social media) starts with a redirect to `/blog/my-article/`, and the Angular router then removes the trailing slash again. The URL in your links is never the URL that actually answers.
+- **No redirects, but trailing slashes everywhere:** Your links have to use `/blog/my-article/`. Pages answer directly, but every URL ends with a slash, and Angular needs an extra provider to keep it in the address bar: `{ provide: LocationStrategy, useClass: TrailingSlashPathLocationStrategy }` (see [`TrailingSlashPathLocationStrategy`](https://angular.dev/api/common/TrailingSlashPathLocationStrategy)).
 
 Neither option feels right.
 I tried both on our websites, and both made me unhappy.
@@ -102,7 +101,7 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
 
 - **Nice URLs:** `/blog/my-article`, without a trailing slash, in your links, in the address bar and in the server response alike.
-- **Good SEO:** every page answers directly. Search engines see no redirect, and the URL they crawl is the same one your canonical tag, hreflang links and sitemap point to.
+- **Good SEO:** every page answers directly. Search engines see no redirect, and the URL they crawl is the same one your links point to.
 - **Old links keep working:** on Cloudflare Pages, `/blog/my-article/` and `/blog/my-article.html` redirect to `/blog/my-article`.
 
 Parent and child routes live side by side: `blog.html` next to the folder `blog/`, which contains `my-article.html`.
