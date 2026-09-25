@@ -159,6 +159,7 @@ I hope I don't have to maintain this package longer than necessary, because I ha
 A built-in option for the Angular CLI is the clean solution.
 My colleague Ferdinand Malcher opened an issue for this back in 2024: [angular/angular-cli#29173](https://github.com/angular/angular-cli/issues/29173), *"SSG/Prerendering: Allow generating foo.html instead of foo/index.html"*.
 It didn't collect enough votes in the community voting process back then.
+That's a pity. Let's hope the problem gets more attention now.
 
 So I wrote the pull request myself: **[angular/angular-cli#34180](https://github.com/angular/angular-cli/pull/34180)** adds the same option `prerenderFormat` to Angular's own application builder:
 
