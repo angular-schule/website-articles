@@ -116,7 +116,7 @@ Parent and child routes live side by side: `blog.html` next to the folder `blog/
 Both GitHub Pages and Cloudflare Pages serve `/blog` from `blog.html` in this situation, and `/blog/my-article` from the folder.
 The start page stays `index.html`, and so does the start page of each locale (for example `en/index.html` with the base href `/en/`).
 
-We borrowed the terminology from Astro: `build.format` with `'directory'` and `'file'` became `prerenderFormat` with the same values.
+I borrowed the terminology from Astro: `build.format` with `'directory'` and `'file'` became `prerenderFormat` with the same values.
 
 ## The real fix: an option in the Angular CLI
 
