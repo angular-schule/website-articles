@@ -82,7 +82,7 @@ This layout works on every web server, which makes it a good default.
 But many static hosts can do better: they serve `blog.html` under `/blog`, directly, without a redirect.
 Angular just never writes `blog.html`.
 
-<img src="diagram-requests.svg" alt="Today: GET /blog is redirected to /blog/ because blog/ is a folder. With prerenderFormat 'file': GET /blog is answered directly from blog.html." width="720">
+![Two request flows. Today: the browser requests /blog, the static host finds the folder blog/ and redirects to /blog/, then serves blog/index.html, and the Angular router removes the trailing slash again. With prerenderFormat 'file': the browser requests /blog and the static host answers directly from blog.html, without a redirect.](diagram-requests.svg "Today, every direct visit takes a detour via the trailing slash. With prerenderFormat 'file', the host answers directly.")
 
 ## How do other frameworks handle this?
 
