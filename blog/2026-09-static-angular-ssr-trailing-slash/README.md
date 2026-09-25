@@ -201,7 +201,8 @@ export const routes: Routes = [
 These redirects only worked in the browser.
 The server routes rendered everything that wasn't explicitly listed on the client (`{ path: '**', renderMode: RenderMode.Client }`), so there was no file for `/errata`.
 The static host answered with its `404.html`, the app shell booted, and the Angular router redirected.
-Visitors didn't notice, but search engines, link checkers and link previews saw a 404.
+Visitors didn't notice, because the Angular router redirected them in the browser.
+But the server answered with a 404 status, and that's what search engines, link checkers and link previews saw.
 
 The fix: prerender every redirect route.
 Angular then writes a small static page with a `<meta http-equiv="refresh">` for each of them, which works without JavaScript:
