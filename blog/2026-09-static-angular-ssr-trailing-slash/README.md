@@ -103,7 +103,7 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
 
-Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) does it for Angular 22.
+Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) can do the job for us.
 
 ![Two request flows. Today: the browser requests /blog, the static host finds the folder blog/ and redirects to /blog/, then serves blog/index.html, and the Angular router removes the trailing slash again. Prerendered as blog.html: the browser requests /blog and the static host answers directly from blog.html, without a redirect.](diagram-requests.svg "Today, every direct visit takes a detour via the trailing slash. With blog.html, the host answers directly.")
 
