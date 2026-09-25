@@ -44,7 +44,8 @@ You can get rid of the redirect, but only by putting a trailing slash on every U
 ## Today: nice URLs or good SEO, you can't have both
 
 Angular's prerendering (SSG) writes every route into its own folder.
-The route `blog/my-article` becomes `blog/my-article/index.html`.
+Take the article you are reading right now: with Angular's default, the route `blog/2026-09-static-angular-ssr-trailing-slash` becomes `blog/2026-09-static-angular-ssr-trailing-slash/index.html`.
+For the rest of this article, let's call it `blog/my-article`.
 
 A static host like GitHub Pages or Cloudflare Pages sees a request for `/blog/my-article`, finds a folder with that name, and does what web servers have always done with folders: it redirects to `/blog/my-article/`.
 
@@ -103,6 +104,10 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 ## With `prerenderFormat: 'file'`: nice URLs and good SEO, we deserve both!
 
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
+
+In fact, you are looking at it right now.
+The Angular.Schule website is built exactly like this, and this article is served from `blog/2026-09-static-angular-ssr-trailing-slash.html`.
+Open the network tab and reload: no redirect, just a clean URL.
 
 - **Nice URLs:** `/blog/my-article`, without a trailing slash, in your links, in the address bar and in the server response alike.
 - **Good SEO:** every page answers directly. Search engines see no redirect, and the URL they crawl is the same one your links point to.
