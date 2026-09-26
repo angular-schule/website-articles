@@ -192,22 +192,6 @@ In this case, builder and pull request keep `index/index.html` for that route an
 The same happens when a route would take over a file the build itself uses, such as `index.csr.html`, or a file name that another route already uses.
 The option never makes your build fail.
 
-### Your local preview server
-
-If you preview the build locally with `express.static`, watch out: with `blog.html` next to the folder `blog/`, `express.static` finds the folder first and redirects `/blog` to `/blog/`.
-To fix that, add a small middleware in front of `express.static`: for a request like `/blog`, it checks whether `blog.html` exists and sends that file directly.
-Only if there is no such file does the request go on to `express.static`:
-
-```typescript
-app.use((req, res, next) => {
-  if (req.path.endsWith('/') || path.extname(req.path)) { return next(); }
-  const file = path.join(distFolder, decodeURIComponent(req.path) + '.html');
-  if (file.startsWith(distFolder) && fs.existsSync(file)) { return res.sendFile(file); }
-  next();
-});
-app.use(express.static(distFolder));
-```
-
 ## Conclusion
 
 Angular's prerendering writes every route into a folder, and static hosts answer that with a redirect to a trailing slash.
@@ -215,7 +199,7 @@ Today, you have to choose between nice URLs and a site without redirects.
 
 **We deserve both.**
 Write `<route>.html` instead of `<route>/index.html`, and static hosts serve your pages directly under clean URLs.
-Until Angular supports this natively, two commands are enough:
+Until Angular supports this natively, two commands are enough. `ng add` updates your `angular.json` (new builder, `prerenderFormat: "file"`), and `ng build` writes the files:
 
 ```bash
 ng add @angular-schule/prerender-format
