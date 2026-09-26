@@ -30,7 +30,7 @@ header: header.jpg
 ---
 
 I love Angular.
-But when it comes to prerendered static sites, Angular falls behind other major frameworks.
+But when it comes to prerendered static sites, Angular is surprisingly far behind other major frameworks.
 Astro, Next.js, SvelteKit: they all let you choose how your pages are written to disk.
 Angular doesn't.
 
