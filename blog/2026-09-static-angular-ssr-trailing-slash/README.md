@@ -188,6 +188,23 @@ In this case, builder and pull request keep `index/index.html` for that route an
 The same happens when a route would take over a file the build itself uses, such as `index.csr.html`, or a file name that another route already uses.
 The option never makes your build fail.
 
+### Previewing the build locally
+
+`ng serve` renders your pages on the fly and never reads the files in `dist/`.
+To see exactly what your static host will serve (for example several locales under one origin), you need a small server for the `dist` folder.
+If you write it with Express, watch out: with `blog.html` next to the folder `blog/`, `express.static` finds the folder first and redirects `/blog` to `/blog/`.
+Add a small middleware in front of it that sends `blog.html` directly:
+
+```typescript
+app.use((req, res, next) => {
+  if (req.path.endsWith('/') || path.extname(req.path)) { return next(); }
+  const file = path.join(distFolder, decodeURIComponent(req.path) + '.html');
+  if (file.startsWith(distFolder) && fs.existsSync(file)) { return res.sendFile(file); }
+  next();
+});
+app.use(express.static(distFolder));
+```
+
 ## Conclusion
 
 Angular's prerendering writes every route into a folder, and static hosts answer that with a redirect to a trailing slash.
