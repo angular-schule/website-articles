@@ -4,10 +4,6 @@ author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/assets/img/book-cover-v1m.png" alt="Angular-Buch Cover" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>Johannes Hoppe is a trainer, consultant and developer specializing in Angular. He is a co-author of the <b>Angular book</b> (in German language), together with Ferdinand Malcher and Danny Koppenhagen. After four successful editions, they have rewritten the book from scratch – with modern syntax, compact and covering many new topics. The new book is out now. More info at <a href="https://angular-buch.com" style="text-decoration: underline;"><b>angular-buch.com</b></a>'
 bioHeading: About Johannes Hoppe
-author2: Angular.Schule Team
-mail2: team@angular.schule
-bio2: '<a href="https://angular.schule"><img src="/img/logo-angular-schule-gradient-550.png" alt="Angular.Schule Logo" style="float: right; margin-left: 30px; margin-top: -10px; margin-right: 30px; max-width: 250px;"></a>Want to write clean, well-structured code with best practices in mind? Join Ferdinand Malcher and Johannes Hoppe in our workshops, where you learn Angular the practical way – including modern tools for more efficient development. More at <a href="https://angular.schule" style="text-decoration: underline;"><b>angular.schule</b></a>'
-bio2Heading: About our Angular workshops
 published: 2026-09-25
 keywords:
   - Angular
@@ -106,7 +102,7 @@ And the [Astro documentation](https://docs.astro.build/en/reference/configuratio
 
 The fix is surprisingly small: write `blog/my-article.html` instead of `blog/my-article/index.html`.
 
-Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) can do the job for us.
+Until Angular can do this on its own, the builder [`@angular-schule/prerender-format`](https://www.npmjs.com/package/@angular-schule/prerender-format) can do the job.
 
 ![Sequence diagram between browser and static host. Today: 1. GET /blog/my-article, the host answers 301 with Location /blog/my-article/. 2. GET /blog/my-article/, the host answers 200 with blog/my-article/index.html. 3. In the browser, the Angular router changes the address bar back to /blog/my-article. With blog/my-article.html: GET /blog/my-article, the host answers 200 with blog/my-article.html, done.](diagram-requests.svg "Today, every direct visit needs two requests, and the Angular router hides the trailing slash afterwards. With blog/my-article.html, one request is enough.")
 
