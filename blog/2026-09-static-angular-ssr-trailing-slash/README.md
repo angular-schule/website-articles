@@ -39,6 +39,7 @@ That's why the websites of Angular.Schule and the Angular book are prerendered s
 
 But here comes the catch!
 Prerender your app, deploy it to a static host (for example GitHub Pages, Cloudflare Pages or Firebase Hosting), and take a look at the network tab: every direct visit starts with a redirect to the same URL with a trailing slash, and a moment later the Angular router quietly removes the slash again.
+It looks great in the address bar, but internally this is completely broken when it comes to search engine optimization.
 You can get rid of the redirect, but only by putting a trailing slash on every URL of your site.
 **Nice URLs or good SEO: with Angular's prerendering, you can't have both. In this article, I explain why, and how to get both today.**
 
