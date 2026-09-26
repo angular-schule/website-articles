@@ -26,6 +26,7 @@ keywords:
   - prerenderFormat
   - TrailingSlashPathLocationStrategy
 language: en
+header: header.jpg
 ---
 
 I love Angular.
@@ -229,3 +230,5 @@ And if you'd like to see this in Angular itself, please vote for the [issue](htt
 - [Astro: `build.format`](https://docs.astro.build/en/reference/configuration-reference/#buildformat)
 - [Angular: Server-side and hybrid rendering](https://angular.dev/guide/ssr)
 - [Angular: `TrailingSlashPathLocationStrategy`](https://angular.dev/api/common/TrailingSlashPathLocationStrategy)
+
+<small><em>Header image: photo from <a href="https://pxhere.com/en/photo/593969">pxhere</a> (CC0), Angular logo by Google (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>).</em></small>
