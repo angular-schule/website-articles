@@ -2,7 +2,7 @@
 title: "Generating Angular API clients with OpenAPI Generator"
 author: Johannes Hoppe
 mail: johannes.hoppe@haushoppe-its.de
-bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/assets/img/book-cover-v1m.png" alt="Angular-Buch Cover" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>This article complements the HTTP chapter of our new <b>Angular book</b> (in German language) by Ferdinand Malcher, Danny Koppenhagen and Johannes Hoppe, where we cover everything you need to know about HTTP communication with Angular. After four successful editions, we have rewritten the book from scratch – with modern syntax, compact and covering many new topics. The new book will be released in May 2026. More info at <a href="https://angular-buch.com" style="text-decoration: underline;"><b>angular-buch.com</b></a>'
+bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/assets/img/book-cover-v1m.png" alt="Angular-Buch Cover" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>This article complements the HTTP chapter of our new <b>Angular book</b> (in German language) by Ferdinand Malcher, Danny Koppenhagen and Johannes Hoppe, where we cover everything you need to know about HTTP communication with Angular. After four successful editions, we have rewritten the book from scratch – with modern syntax, compact and covering many new topics. The new book is out now. More info at <a href="https://angular-buch.com" style="text-decoration: underline;"><b>angular-buch.com</b></a>'
 bioHeading: About the Angular book
 author2: Angular.Schule Team
 mail2: team@angular.schule
