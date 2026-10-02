@@ -384,7 +384,7 @@ By the way, the Resource also ensures that an active request is stopped when the
 
 Unsubscribing from an Observable created from an already-started Promise stops delivery to that subscriber, but does not cancel the Promise's underlying work. Likewise, aborting a browser request cannot roll back server-side changes that have already happened.
 
-For a practice companion, [HTTP cancellation scenarios](https://frontendatlas.com/angular/trivia/angular-http-what-actually-cancels-request) compares these boundaries using local RxJS examples and test assertions.
+The [HTTP cancellation practice guide](https://frontendatlas.com/angular/trivia/angular-http-what-actually-cancels-request) compares these boundaries using local RxJS examples and test assertions.
 
 
 ## httpResource: Resource for HTTP Requests
