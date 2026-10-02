@@ -353,7 +353,7 @@ booksResource = rxResource({
 The Resource provides a way to cancel a running request when a new one is started.
 Especially for loaders with parameters (like the ISBN on the detail page), it's important that only the most recently requested data is processed.
 
-The `rxResource` manages this mechanism internally, because an Observable provides a direct way to cancel the request.
+`rxResource` unsubscribes from the previous stream when its parameters change. With Angular's `HttpClient`, this also aborts an in-flight request. For other Observable sources, stopping the underlying operation depends on their teardown logic.
 
 For loaders based on Promises, cancelling is a bit more complicated.
 The loader also receives a so-called `AbortSignal` in its parameter object.
@@ -370,7 +370,7 @@ export class BookDetails {
 
   bookResource = resource({
     params: this.isbn,
-    loader: ({ abortSignal, aprams }) => fetch(
+    loader: ({ abortSignal, params }) => fetch(
       detailsUrl + '/' + params,
       { signal: abortSignal }
     )
@@ -381,6 +381,10 @@ export class BookDetails {
 If we're using Angular's `HttpClient` and `firstValueFrom`, cancellation becomes very cumbersome – we would need to convert the `AbortSignal` into an Observable to use the `takeUntil` operator to stop the stream. In this case, we strongly recommend using `rxResource`.
 
 By the way, the Resource also ensures that an active request is stopped when the component is destroyed.
+
+Unsubscribing from an Observable created from an already-started Promise stops delivery to that subscriber, but does not cancel the Promise's underlying work. Likewise, aborting a browser request cannot roll back server-side changes that have already happened.
+
+For a practice companion, [HTTP cancellation scenarios](https://frontendatlas.com/angular/trivia/angular-http-what-actually-cancels-request) compares these boundaries using local RxJS examples and test assertions.
 
 
 ## httpResource: Resource for HTTP Requests
