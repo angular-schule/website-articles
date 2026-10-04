@@ -3,7 +3,7 @@ title: 'Reactive Angular: Loading Data with the Resource API'
 author: Ferdinand Malcher
 mail: ferdinand@malcher.media
 published: 2025-05-13
-lastModified: 2025-06-18
+lastModified: 2026-10-04
 keywords:
   - Resource API
   - Promise
