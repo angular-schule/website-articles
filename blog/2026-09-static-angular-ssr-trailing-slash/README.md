@@ -5,6 +5,7 @@ mail: johannes.hoppe@haushoppe-its.de
 bio: '<a href="https://angular-buch.com"><img src="https://angular-buch.com/assets/img/book-cover-v1m.png" alt="Angular-Buch Cover" style="float: right; margin-top: -60px; margin-right: 30px; max-width: 250px;"></a>Johannes Hoppe is a trainer, consultant and developer specializing in Angular. He is a co-author of the <b>Angular book</b> (in German language), together with Ferdinand Malcher and Danny Koppenhagen. After four successful editions, they have rewritten the book from scratch – with modern syntax, compact and covering many new topics. The new book is out now. More info at <a href="https://angular-buch.com" style="text-decoration: underline;"><b>angular-buch.com</b></a>'
 bioHeading: About Johannes Hoppe
 published: 2026-09-25
+lastModified: 2026-10-27
 keywords:
   - Angular
   - Angular 22
@@ -38,6 +39,11 @@ Prerender your app, deploy it to a static host (for example GitHub Pages, Cloudf
 It looks great in the address bar, but technically, for search engine optimization, it's a nightmare.
 You can get rid of the redirect, but only by putting a trailing slash on every URL of your site.
 **Nice URLs or good SEO: with Angular's prerendering, you can't have both. In this article, I explain why, and how to get both today.**
+
+> **Update, October 2026:** My pull request has been merged! 🎉
+> After three review rounds with Alan Agius from the Angular CLI team, `prerender.format` is now part of Angular itself and is scheduled for Angular CLI 22.3.
+> I have to admit, I'm a little proud: a community request from 2024 that never collected enough votes is now an official option of the Angular CLI.
+> Until 22.3 is released, the builder described below does the job.
 
 ## Contents
 
@@ -153,16 +159,16 @@ The builder calls `buildApplication()` from `@angular/build` and replaces the in
 That's a hack.
 It relies on internal APIs, which is why I narrowed it down to Angular 22 only.
 But it's a well-tested hack: it writes the same files as my patch for the Angular CLI, and it runs on the websites of [Angular.Schule](https://angular.schule) and the [Angular book](https://angular-buch.com).
-I hope I don't have to maintain this package longer than necessary, because I have also prepared a sustainable fix.
+I hope I don't have to maintain this package longer than necessary, and it looks good: the sustainable fix has landed in Angular.
 
 ## The real fix: an option in the Angular CLI
 
 A built-in option for the Angular CLI is the clean solution.
 My colleague Ferdinand Malcher opened an issue for this back in 2024: [angular/angular-cli#29173](https://github.com/angular/angular-cli/issues/29173), *"SSG/Prerendering: Allow generating foo.html instead of foo/index.html"*.
 It didn't collect enough votes in the community voting process back then.
-That's a pity. Let's hope the problem gets more attention now.
+That's a pity.
 
-So I wrote the pull request myself: **[angular/angular-cli#34180](https://github.com/angular/angular-cli/pull/34180)** adds the same option `prerender.format` to Angular's own application builder:
+So I wrote the pull request myself: **[angular/angular-cli#34180](https://github.com/angular/angular-cli/pull/34180)** adds the same option `prerender.format` to Angular's own application builder, and it has been merged:
 
 ```json
 "build": {
@@ -176,11 +182,14 @@ So I wrote the pull request myself: **[angular/angular-cli#34180](https://github
 }
 ```
 
-Once it lands, you only switch the builder name back to `@angular/build:application`.
-That's the plan.
+The review took three rounds with Alan Agius from the Angular CLI team.
+The biggest change: `format` became an object of its own in the `prerender` option, so it can't be combined with `routesFile` and `discoverRoutes`, which only apply to builds without `outputMode`.
+On October 20, 2026, Alan approved and merged it, and the issue from 2024 is closed.
+Thank you, Alan, for the thorough reviews and your patience!
 
-**If you want this in Angular, please give the [issue](https://github.com/angular/angular-cli/issues/29173) a 👍. Upvoting the [pull request](https://github.com/angular/angular-cli/pull/34180) could be helpful, too! :-)**
-The Angular team decides based on community votes.
+The option is scheduled for Angular CLI 22.3.
+Once your project is on that version, switch the builder name back to `@angular/build:application` and remove the package.
+Sometimes a pull request is the best way to vote for an issue. 😉
 
 ## Two things to watch out for
 
@@ -210,18 +219,18 @@ app.use(express.static(distFolder));
 ## Conclusion
 
 Angular's prerendering writes every route into a folder, and static hosts answer that with a redirect to a trailing slash.
-Today, you have to choose between nice URLs and a site without redirects.
+Until now, you had to choose between nice URLs and a site without redirects.
 
 **We deserve both.**
 Write `<route>.html` instead of `<route>/index.html`, and static hosts serve your pages directly under clean URLs.
-Until Angular supports this natively, two commands are enough. `ng add` updates your `angular.json` (new builder, `prerender.format: "file"`), and `ng build` writes the files:
+Until Angular CLI 22.3 is released, two commands are enough. `ng add` updates your `angular.json` (new builder, `prerender.format: "file"`), and `ng build` writes the files:
 
 ```bash
 ng add @angular-schule/prerender-format
 ng build
 ```
 
-And if you'd like to see this in Angular itself, please vote for the [issue](https://github.com/angular/angular-cli/issues/29173) and the [pull request](https://github.com/angular/angular-cli/pull/34180). 🚀
+From Angular CLI 22.3 on, it's just one option in your `angular.json`: `"prerender": { "format": "file" }`. 🚀
 
 <hr>
 
