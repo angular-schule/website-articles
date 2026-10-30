@@ -16,6 +16,8 @@ keywords:
   - Generative UI
   - CopilotKit
   - AG-UI
+  - A2UI
+  - MCP
   - Mastra
   - Agentic Analytics
   - Data Protection
@@ -24,6 +26,7 @@ keywords:
   - Drizzle
   - SQL Server
   - PostgreSQL
+  - OpenAPI
 language: en
 header: agentic-analytics.jpg
 ---
@@ -36,6 +39,7 @@ No SQL, no report designer, no ticket for the BI team.
 
 That is the promise of **agentic analytics**.
 In this article, I build such an app with Angular, piece by piece, from the database up to the chat.
+If you have never built an app with an AI agent before, that is fine: the article explains every term on the way, introduces the protocols you will keep hearing about (AG-UI, A2UI, MCP, A2A), and names an alternative for every library we use.
 And because this is a German blog at heart, we take a close look at the question that comes first in every real project here: **what happens to personal data?**
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
@@ -49,7 +53,7 @@ And because this is a German blog at heart, we take a close look at the question
 
 The idea for this article comes from a workshop I enjoyed a lot.
 On October 23, 2026, [Manfred Steyer](https://www.angulararchitects.io/) gave a free online live-coding workshop for AI Poland: *Build an Agentic Analytics App with Angular*.
-In about two hours, he built a sales analytics app with Angular, [CopilotKit](https://www.copilotkit.ai/) (chat and UI components for agents), the *AG-UI* protocol (*Agent-User Interaction*, a streaming protocol between an agent and the frontend) and the agent framework [Mastra](https://mastra.ai/).
+In about two hours, he built a sales analytics app with Angular, [CopilotKit](https://www.copilotkit.ai/), the AG-UI protocol and the agent framework [Mastra](https://mastra.ai/).
 The [recording](https://ai-poland.pl/free-workshops/recordings) and his [code](https://github.com/manfredsteyer/agentic-sales) are public, and I can only recommend both.
 
 Two of his thoughts stuck with me.
@@ -59,59 +63,190 @@ Second: when the model gets something wrong, the engineers have to improve the *
 Manfred's demo works with an obfuscated Google Analytics sample dataset from BigQuery, loaded into DuckDB.
 I wanted to see how the architecture holds up in a setting that looks more like our customer projects:
 
-- a **real relational database** with a classic data warehouse schema,
+- a **relational database** with a classic data warehouse schema,
 - **two typical backend stacks** that are interchangeable: ASP.NET Core with Entity Framework Core and SQL Server, or NestJS with Drizzle and PostgreSQL,
 - and **data that contains people**, so we have to decide what the language model may see.
 
 So this article does not repeat Manfred's code.
 It retells the idea with its own demo, its own data, and a few decisions of its own.
+The building blocks are the same as his: CopilotKit in Angular, AG-UI in between, Mastra on the server.
 
 ## What We Build
 
 ![The finished app: chat on the left, the pinned dashboard on the right](screenshot.png "Chat on the left, dashboard on the right. The dashboard tiles run without the language model.")
 
 On the left, the user chats with an agent.
-The agent answers with **real Angular components**: line and bar charts, stat tiles, tables, and product cards with photos.
+The agent answers with **Angular components**: line and bar charts, stat tiles, tables, and product cards with photos.
 Every chart can be pinned to the dashboard on the right.
 A pinned tile stores only the *query*, not the numbers, and asks the database again on every visit, **without the language model**.
 That is fast, deterministic, and costs no tokens.
 
-Before we build it, let's look at what the app is made of.
+Before we build it, let's sort out the vocabulary.
+
+## The Vocabulary in Five Minutes
+
+If you already know what a tool call is, skip ahead to [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a).
+
+**Language model (LLM).**
+A large language model such as Claude, GPT or Gemini reads text and writes text.
+It runs at a provider (Anthropic, OpenAI, Google) or on your own hardware, and you talk to it over an HTTP API.
+On its own, it knows nothing about your database, and it cannot run code.
+
+**Tool and tool call.**
+A *tool* is a function you describe to the model: a name, a description, and a JSON schema for the parameters.
+When the model decides that a tool helps, it does not answer with prose, but with a *tool call*: "call `querySales` with these arguments".
+Your code runs the function and sends the result back to the model, which then continues writing.
+The model never touches the database itself; it can only ask for the tools you offer.
+Providers call this *function calling* or *tool use*.
+
+**Agent.**
+An agent is a language model in a loop: the model writes, calls a tool, reads the result, maybe calls the next tool, and finally answers.
+In our app, the agent has a system prompt (its standing instructions), two tools, and access to a model.
+Everything around the model that keeps it on track (prompt, tool schemas, validation, limits) is what Manfred calls the *harness*.
+
+**Agent framework.**
+You can write that loop yourself, but you will soon want streaming, retries, validation of tool arguments, switching providers, and logs.
+An agent framework provides these building blocks.
+We use **Mastra**.
+
+**Generative UI.**
+The agent's answer is more than text: it is user interface.
+In our app, a question produces a chart, a table, or product cards.
+CopilotKit, which also maintains the AG-UI protocol, sorts generative UI into [three kinds](https://github.com/CopilotKit/generative-ui), from "the app decides everything" to "the agent decides everything":
+
+| Kind | Who builds the UI? | Example |
+| --- | --- | --- |
+| **Controlled** | The app has finished components. The agent picks one and supplies the data. | Our charts and product cards |
+| **Declarative** | The agent sends a description of the UI (cards, lists, forms) from a catalogue the app knows. The app renders it with its own components. | A2UI, Open-JSON-UI |
+| **Open-ended** | The agent delivers a complete piece of UI, often HTML in a sandboxed iframe. The app only provides the frame. | MCP Apps |
+
+The further down the table, the more freedom the agent has, and the less control the app keeps over layout, design and security.
+For analytics, where numbers have to be correct and charts have to look like the rest of the product, controlled generative UI is a good fit.
+This demo uses only that kind.
+
+**Server-sent events (SSE).**
+A plain HTTP response that stays open and delivers one message after another.
+The browser can show the first words of an answer while the model is still writing the rest.
+
+**Semantic layer.**
+A fixed list of business terms (measures such as "revenue", dimensions such as "country") that a query may use, mapped to the database by the backend.
+We will spend a whole section on it, because it decides what the model can and cannot ask for.
+
+## The Protocols: AG-UI, A2UI, MCP and A2A
+
+When you start reading about agents, you will meet four protocols with confusingly similar names.
+They do different jobs, and an app can use several of them at once.
+
+![AG-UI connects app and agent, MCP connects agent and tools, A2A connects agents, A2UI is a UI format](protocols.svg "Where the agent protocols sit")
+
+### AG-UI: Agent ↔ User
+
+[AG-UI](https://docs.ag-ui.com/) (*Agent-User Interaction Protocol*) connects an agent with the app in front of the user.
+CopilotKit [announced it in May 2025](https://www.copilotkit.ai/blog/introducing-ag-ui-the-protocol-where-agents-meet-users); it grew out of CopilotKit's work with LangChain and CrewAI, and it is [MIT-licensed on GitHub](https://github.com/ag-ui-protocol/ag-ui).
+
+The idea is simple.
+The app sends the agent a request with the conversation so far, the tools that the frontend offers, and optionally a shared state.
+The agent answers with a stream of typed **events**:
+
+- **Lifecycle:** `RUN_STARTED`, `RUN_FINISHED`, `RUN_ERROR`, steps in between.
+- **Text:** `TEXT_MESSAGE_START`, `TEXT_MESSAGE_CONTENT` (one piece of text at a time), `TEXT_MESSAGE_END`.
+- **Tool calls:** `TOOL_CALL_START`, `TOOL_CALL_ARGS` (the arguments, streamed in pieces), `TOOL_CALL_END`, `TOOL_CALL_RESULT`.
+- **State:** `STATE_SNAPSHOT` and `STATE_DELTA` (a JSON Patch) for state that the agent and the app share.
+- And a few more for reasoning, activities, sub-agents and custom events.
+
+AG-UI does not prescribe a transport. Server-sent events are the common choice, and the one we use.
+The protocol is supported by [many agent frameworks](https://docs.ag-ui.com/integrations), among them Mastra, LangGraph, CrewAI, Google ADK, Microsoft Agent Framework, AWS Strands Agents and Pydantic AI.
+That is the main benefit for us: the Angular side does not care which framework runs on the server.
+
+### A2UI: a Format for Generated UI
+
+[A2UI](https://github.com/a2ui-project/a2ui) is a different kind of thing.
+Google [introduced it in December 2025](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) as an Apache 2.0 project; at the time of writing, it is an early public preview with v0.9 as the stable release.
+A2UI is **a format, not a connection**: the agent sends a declarative JSON description of a UI ("a card with a heading, a list and a button"), and the client renders it with its own native components.
+The client keeps a catalogue of trusted components, and the agent can only request components from that catalogue.
+Because the description is data and not code, there is no script to inject.
+There are renderers for Angular (`@a2ui/angular`), Lit and React, and Flutter uses A2UI under the hood of its GenUI SDK.
+
+So what is the difference to AG-UI?
+The AG-UI docs say it clearly: [AG-UI is not a generative UI specification](https://docs.ag-ui.com/concepts/generative-ui-specs), it is the runtime connection between agent and app.
+A2UI describes *what* to show; AG-UI (or A2A) is *how* it gets there.
+The two work together, and CopilotKit supported A2UI from the first day.
+
+In our demo, the agent cannot invent new UI. It can only choose between our chart, table and product card components.
+That is controlled generative UI, so we do not need A2UI.
+It becomes interesting when the agent should assemble forms or layouts that nobody built in advance.
+
+### MCP: Agent ↔ Tools
+
+The [Model Context Protocol](https://modelcontextprotocol.io/) connects an agent with tools and data sources.
+Anthropic [published it in November 2024](https://www.anthropic.com/news/model-context-protocol) and [donated it in December 2025](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation) to the Agentic AI Foundation under the Linux Foundation.
+An MCP server offers tools in a standard way, so every MCP-capable agent or chat client can use them without custom code.
+The extension [MCP Apps](https://blog.modelcontextprotocol.io/posts/2025-11-21-mcp-apps/) lets an MCP server also deliver interactive UI, which the host shows in a sandboxed iframe: that is the open-ended kind of generative UI.
+
+Our two tools are tailored to this one app, and they call the data backend directly over HTTP.
+An MCP server would make sense if other agents, or a chat client such as Claude, should use the same sales tools.
+
+### A2A: Agent ↔ Agent
+
+[Agent2Agent (A2A)](https://a2a-protocol.org/) lets agents from different teams or vendors work together: one agent hands a task to another and gets the result back.
+Google [launched it in April 2025](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/), and since June 2025 it is a [Linux Foundation project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents).
+Our app has a single agent, so A2A plays no role here.
+
+### At a Glance
+
+| | Connects | Started by | Our demo |
+| --- | --- | --- | --- |
+| **AG-UI** | agent ↔ app (user) | CopilotKit | yes, between Angular and Mastra |
+| **A2UI** | a UI format, travels over AG-UI or A2A | Google | no, our components are fixed |
+| **MCP** | agent ↔ tools and data | Anthropic, now Linux Foundation | no, the tools call the backend over HTTP |
+| **A2A** | agent ↔ agent | Google, now Linux Foundation | no, there is one agent |
 
 ## The Stack from Bottom to Top
 
-Here is every layer at a glance, with the vendor, the license, and the alternatives.
+Now to the app itself. Here are all layers in one picture:
 
-| Layer | In this demo | Vendor | License | Alternatives |
-| --- | --- | --- | --- | --- |
-| Data | AdventureWorksDW | Microsoft | MIT | Northwind, Contoso, your own data |
-| Database | SQL Server 2025 **or** PostgreSQL 17 | Microsoft / PostgreSQL Global Development Group | Developer edition (free for development, not for production) / PostgreSQL License | MySQL, DuckDB, any warehouse |
-| Data access | EF Core **or** Drizzle with postgres.js | Microsoft (.NET Foundation) / Drizzle Team / Pavel Porsager | MIT / Apache 2.0 / Unlicense | Dapper, Prisma, Kysely, TypeORM |
-| Backend | ASP.NET Core **or** NestJS | Microsoft / NestJS team | MIT / MIT | Spring Boot, Express, Fastify |
-| Agent | Mastra | Kepler Software, Inc. | Apache 2.0 (except the `ee/` folders) | LangGraph, Vercel AI SDK, OpenAI Agents SDK, Google ADK, Microsoft Agent Framework |
-| Protocol | AG-UI | CopilotKit | MIT | your own server-sent events (SSE) format |
-| Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT | Hashbrown (MIT), your own AG-UI client |
-| Model | Claude, GPT or Gemini | Anthropic, OpenAI, Google | commercial API | local models via Ollama or vLLM |
+![The layers of the demo: Angular with CopilotKit, AG-UI, the Mastra agent and the language model, the HTTP contract, two interchangeable backends, the database](stack.svg "The layers of the demo. Dashboard tiles and photos skip the agent.")
 
-A few remarks on this table:
+And here they are as a table, with vendor and license:
 
-- **CopilotKit** is a startup from Seattle, not a Microsoft product; "Copilot" is a generic word here. The core is open source; the company earns money with a commercial product for conversation history and analytics. CopilotKit also created the **AG-UI** protocol, which [many agent frameworks support](https://docs.ag-ui.com/introduction), among them Google ADK, AWS Strands, the Microsoft Agent Framework and Oracle Agent Spec.
-- **Mastra** is Apache 2.0, with one exception: everything in folders named `ee/` (enterprise features such as parts of the authentication) is under a separate license. Our demo does not use those parts.
-- **Hashbrown** by LiveLoveApp is an alternative from the Angular world. It runs the agent loop in the browser and talks to the model through a thin backend. CopilotKit, on the other hand, connects the Angular app to an agent that runs on the server. That is the right choice when tools need database access that must never reach the browser.
+| Layer | In this demo | Vendor | License |
+| --- | --- | --- | --- |
+| Data | AdventureWorksDW | Microsoft | MIT |
+| Database | SQL Server 2025 **or** PostgreSQL 17 | Microsoft / PostgreSQL Global Development Group | Developer edition (free for development, not for production) / PostgreSQL License |
+| Data access | EF Core **or** Drizzle with postgres.js | Microsoft (.NET Foundation) / Drizzle Team / Rasmus Porsager | MIT / Apache 2.0 / Unlicense |
+| Backend | ASP.NET Core **or** NestJS | Microsoft / NestJS team | MIT / MIT |
+| Agent | Mastra | Kepler Software, Inc. | Apache 2.0 (except the `ee/` folders) |
+| Protocol | AG-UI | started by CopilotKit, open source | MIT |
+| Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT |
+| Model | Claude, GPT or Gemini | Anthropic, OpenAI, Google | commercial API |
 
-Let's go through the layers one by one.
+In each of the following sections, a small table says what the layer is, who makes it, why we need it, and what you could use instead.
 
 ## Layer 1: Data and What It Must Not Contain
 
+| Data | AdventureWorksDW |
+| --- | --- |
+| What it is | Microsoft's sample data warehouse of a fictitious bicycle manufacturer |
+| Made by | Microsoft, in the [sql-server-samples](https://github.com/microsoft/sql-server-samples) repository, MIT license |
+| Why we need it | Realistic sales data with two channels, products, regions and companies, and with people in it, so data protection is a real question |
+| Alternatives | Northwind or Contoso as sample data, or your own data warehouse |
+
 ### AdventureWorks
 
-[AdventureWorks](https://github.com/microsoft/sql-server-samples) is Microsoft's classic sample database: a fictitious bicycle manufacturer that sells online to consumers and through resellers to bike shops, between December 2010 and January 2014.
+AdventureWorks sells bicycles online to consumers and through resellers to bike shops, between December 2010 and January 2014.
 The data warehouse variant **AdventureWorksDW** has exactly what an analytics demo needs: fact tables for both sales channels, plus dimensions for time, products, territories, resellers, customers and employees.
 It is MIT-licensed, so we can use and redistribute it freely.
 
 For SQL Server, the Docker image restores Microsoft's original backup.
 For PostgreSQL, it imports the CSV files of the same release.
 Both downloads are pinned to a commit and come with SHA-256 checksums that the image build compares, so both databases contain **identical data**.
+
+| Database | SQL Server 2025 or PostgreSQL 17 |
+| --- | --- |
+| What it is | The relational database that stores the data warehouse and the views the app may read |
+| Made by | Microsoft (SQL Server, the Developer edition is free for development) / the PostgreSQL Global Development Group (PostgreSQL License) |
+| Why we need it | It enforces the data protection rules: views, a read-only account, a data scope per connection |
+| Alternatives | MySQL, MariaDB, DuckDB for local analytics, or a cloud warehouse such as BigQuery or Snowflake |
 
 ### Company Names: Yes. People: No.
 
@@ -157,6 +292,13 @@ Secure views protect the data. But they do not yet stop a model from writing arb
 
 ## Layer 2: A Semantic Layer Instead of Text-to-SQL
 
+| Backend | ASP.NET Core with EF Core, or NestJS with Drizzle |
+| --- | --- |
+| What it is | A small HTTP API that turns a JSON query into safe, parameterized SQL |
+| Made by | Microsoft (ASP.NET Core, Entity Framework Core, MIT) / the NestJS team (MIT), the Drizzle Team (Apache 2.0) and Rasmus Porsager (postgres.js, Unlicense) |
+| Why we need it | The model never writes SQL. The backend decides which measures and dimensions exist and checks every request |
+| Alternatives | Any backend you know: Spring Boot, Express, Fastify, Go. For data access: Dapper, Prisma, Kysely, TypeORM. Dedicated semantic layers such as Cube or dbt's MetricFlow do the same job as a product |
+
 The obvious idea would be to let the language model write SQL.
 Please don't.
 A model that writes SQL can read every column the database account can read, can write queries that run for minutes, and can be talked into almost anything by a cleverly worded question.
@@ -184,28 +326,34 @@ There is no dimension `salesRep`.
 
 ### .NET: Expression Trees with Entity Framework Core
 
-In ASP.NET Core, the semantic layer maps every dimension to a typed lambda expression:
+In ASP.NET Core, the semantic layer maps every dimension to a typed lambda expression, and every measure to an aggregate over one group of order lines:
 
 ```csharp
-Numeric("year", "Order year", "Calendar year of the order date.", s => s.OrderYear),
+Time("year", "Order year", "Calendar year of the order date.", s => s.OrderYear),
 Text("country", "Country", "Country of the sales territory.", s => s.SalesTerritoryCountry, listValues: true),
 Text("reseller", "Reseller", "Name of the reseller company. Empty for online sales.", s => s.ResellerName, listValues: false),
+
+new("revenue", "Revenue", "Sum of the sales amount.", "USD",
+    g => Math.Round(g.Sum(s => s.SalesAmount) ?? 0m, 2)),
 ```
 
 At runtime, the requested dimensions are combined into one `GroupBy` key with the `System.Linq.Expressions` API, and Entity Framework Core translates the result into parameterized SQL:
 
 ```csharp
+// s => new GroupKey { I0 = s.OrderYear, S1 = s.SalesTerritoryCountry, ... }
 var sale = Expression.Parameter(typeof(Sale), "s");
 var bindings = dimensions.Select((dimension, index) =>
 {
     var value = Rebind(dimension.Selector, sale);
-    return dimension.IsNumeric
-        ? Expression.Bind(KeyProperty("I", index), Expression.Convert(value, typeof(int?)))
-        : Expression.Bind(KeyProperty("S", index), value);
+    return Expression.Bind(
+        DimensionSlot(dimension, index).Property,
+        dimension.IsNumeric ? Expression.Convert(value, typeof(int?)) : value);
 });
 return Expression.Lambda<Func<Sale, GroupKey>>(
     Expression.MemberInit(Expression.New(typeof(GroupKey)), bindings), sale);
 ```
+
+The measures go the same way: only the requested aggregates are bound into the result row, so a request for revenue does not count distinct orders as well.
 
 If you know [Dynamic LINQ](https://dynamic-linq.net/), this looks familiar: both build expression trees at runtime.
 The difference matters here: Dynamic LINQ *parses strings* such as `"new(OrderYear, Country)"`.
@@ -219,26 +367,30 @@ In NestJS, [Drizzle](https://orm.drizzle.team/) plays the same role.
 The views are declared as existing views, and the dimensions point to Drizzle columns:
 
 ```ts
-{ name: 'country', label: 'Country', description: 'Country of the sales territory.', isNumeric: false, listValues: true, column: sales.salesTerritoryCountry },
+{ name: 'country', label: 'Country', description: 'Country of the sales territory.', isNumeric: false, isTime: false, listValues: true, column: sales.salesTerritoryCountry },
 ```
 
-Measures are SQL fragments built with Drizzle's `sql` template tag, so columns are interpolated by Drizzle and nothing is concatenated as text:
+Each measure carries its SQL fragment, built with Drizzle's `sql` template tag, so columns are interpolated by Drizzle and nothing is concatenated as text:
 
 ```ts
-const MEASURE_SQL: Record<MeasureName, SQL<number>> = {
-  revenue: sql<number>`round(coalesce(sum(${sales.salesAmount}), 0), 2)`.mapWith(Number),
-  margin: sql<number>`round(coalesce(sum(${sales.salesAmount}), 0) - coalesce(sum(${sales.totalProductCost}), 0), 2)`.mapWith(Number),
-  orders: countDistinct(sales.salesOrderNumber),
-  // ...
-};
+{
+  name: 'margin', label: 'Gross margin', description: 'Revenue minus product cost.', unit: 'USD',
+  sql: sql<number>`round(coalesce(sum(${sales.salesAmount}), 0) - coalesce(sum(${sales.totalProductCost}), 0), 2)`.mapWith(Number),
+},
 ```
 
-### Two Backends, One Answer
+### Two Backends, One Contract
 
 Both backends serve the same HTTP contract: `GET /api/schema`, `POST /api/sales/aggregate`, plus a small product catalogue with photos.
 Errors are [RFC 9457 problem details](https://www.rfc-editor.org/rfc/rfc9457) in both.
 
-"The same contract" is easy to claim, so the repository contains contract tests that send the same requests to both backends and compare the answers.
+Each backend generates an [OpenAPI](https://www.openapis.org/) 3.1 document from its own code: ASP.NET Core from its endpoints and records, NestJS from its controllers and DTO classes.
+Open a backend's port in the browser, and you land in Swagger UI: <http://localhost:8081> for .NET, <http://localhost:8082> for Node.
+Start both, and the two pages show the same endpoints, the same schemas and the same types.
+
+"The same contract" is easy to claim, so the repository contains contract tests.
+One test compares the two OpenAPI documents: paths, parameters, request and response schemas with their types, required fields and enums; only descriptions and examples may differ.
+The other tests send the same requests to both backends and compare the answers.
 They found two differences that would otherwise have been subtle bugs:
 
 - **Sorting of NULL values.** SQL Server puts NULLs first in ascending order, PostgreSQL puts them last. The Node backend says `nulls first` / `nulls last` explicitly.
@@ -248,13 +400,55 @@ With a safe and stable data API in place, the agent can use it.
 
 ## Layer 3: The Agent with Mastra
 
-The agent is a small Node.js service built with [Mastra](https://mastra.ai/).
+| Agent | Mastra |
+| --- | --- |
+| What it is | A TypeScript framework for agents: tools with schemas, the agent loop, a model router for many providers, plus workflows, memory, evals and observability that this demo does not need |
+| Made by | Kepler Software, Inc. in San Francisco, founded by people from the Gatsby team, Y Combinator Winter 2025; version 1.0 since January 2026. Apache 2.0, except the `ee/` folders |
+| Why we need it | It runs the loop between model and tools, validates the tool arguments, and speaks AG-UI through the adapter `@ag-ui/mastra` |
+| Alternatives | Vercel AI SDK, LangGraph (Python and JavaScript), OpenAI Agents SDK, Google ADK, AWS Strands Agents. On .NET: Microsoft Agent Framework. In Python: Pydantic AI, CrewAI |
+
+### Why Mastra?
+
+[Mastra](https://mastra.ai/) is made by Kepler Software, Inc., a company from San Francisco.
+Its founders [built Gatsby](https://www.ycombinator.com/companies/mastra), the React web framework, before they started on Mastra in October 2024.
+Mastra went through Y Combinator in Winter 2025 and [released version 1.0 in January 2026](https://mastra.ai/blog/announcing-mastra-1).
+Manfred uses Mastra in his workshop, too.
+
+For a TypeScript developer, Mastra feels familiar: tools are objects with a [Zod](https://zod.dev/) schema, agents are objects with instructions, tools and a model, and everything is plain TypeScript.
+The framework is Apache 2.0, with one exception: everything in folders named `ee/` (enterprise features such as parts of the authentication) is under a separate, source-available license that does not allow production use without a contract. Our demo does not use those parts.
+
+Which alternative fits depends mostly on your language and on whether the framework speaks AG-UI, because then the Angular side stays the same:
+
+| Framework | Maker | Languages | AG-UI |
+| --- | --- | --- | --- |
+| [Mastra](https://mastra.ai/) | Kepler Software | TypeScript | yes, `@ag-ui/mastra` |
+| [LangGraph](https://www.langchain.com/langgraph) | LangChain | Python, TypeScript | yes |
+| [Vercel AI SDK](https://ai-sdk.dev/) | Vercel | TypeScript | yes, via `@ag-ui/vercel-ai-sdk` |
+| [Google ADK](https://google.github.io/adk-docs/) | Google | Python, TypeScript, Go, Java | yes |
+| [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/overview/) | Microsoft | .NET, Python | yes |
+| [AWS Strands Agents](https://strandsagents.com/) | AWS | Python, TypeScript | yes |
+| [OpenAI Agents SDK](https://openai.github.io/openai-agents-js/) | OpenAI | TypeScript, Python | in progress |
+| [Pydantic AI](https://ai.pydantic.dev/) | Pydantic | Python | yes |
+
+### Does the Agent Need Its Own Service?
+
+In the demo, the agent is a separate Node.js service next to the data backend.
+The demo needs it that way: one agent serves both interchangeable backends, so it cannot live inside either of them.
+In a customer project with one backend, you would usually put the agent into that backend:
+
+- **NestJS:** Mastra is a TypeScript library. The agent and `@ag-ui/mastra` run in a NestJS controller that streams the AG-UI events, and the tools call the aggregation service directly instead of going over HTTP.
+- **ASP.NET Core:** Mastra needs Node.js, so here the agent framework changes. The [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/overview/) (MIT, the successor of Semantic Kernel and AutoGen) brings an AG-UI endpoint for ASP.NET Core (`MapAGUI()` in the package `Microsoft.Agents.AI.Hosting.AGUI.AspNetCore`), and the tools are C# methods that call the semantic layer.
+
+The Angular app does not notice the difference: it speaks AG-UI either way, only the URL of the `HttpAgent` changes.
+A separate agent service still has its advantages: the API key of the model provider and the database credentials live in different processes, the agent only sees the HTTP API, and you can scale or switch off the agent on its own.
+
+The agent in our demo is a small Node.js service.
 It has two server tools: `querySales` for the semantic layer, and `findProducts` for the product catalogue. The frontend adds a third one later.
 
 ### Tools Generated from the Semantic Layer
 
 At startup, the agent asks the data backend for `/api/schema` and builds the tool schemas from it.
-Dimension and measure names become enums in [Zod](https://zod.dev/), the TypeScript schema library that Mastra uses to describe tool parameters. The model sees exactly the names that exist:
+Dimension and measure names become enums in Zod. The model sees exactly the names that exist, and Mastra rejects any other name before the tool runs:
 
 ```ts
 const dimensionNames = schema.dimensions.map((d) => d.name) as [string, ...string[]];
@@ -276,18 +470,12 @@ const querySales = createTool({
       // filters, orderBy, limit ...
     }),
   }),
-  execute: async ({ query }) => {
-    try {
-      return await dataApi.aggregate(query);
-    } catch (error) {
-      return { error: describeError(error) };
-    }
-  },
+  execute: ({ query }) => orError(() => dataApi.aggregate(query)),
 });
 ```
 
-Every failure becomes a tool result instead of an exception.
-The model can correct a rejected request or tell the user that the database is not reachable, and the chat never hangs.
+`orError()` turns every failure into a tool result instead of an exception: `{ error: 'Unknown dimension …' }` or `{ error: 'The data backend is not reachable.' }`.
+The model can correct a rejected request or tell the user what went wrong, and the chat never hangs.
 
 The system prompt contains the dataset description, all dimensions with their allowed values, and a few rules.
 The most important one:
@@ -302,13 +490,24 @@ Note the order: the database guarantees that the data is not there, the prompt o
 
 ### Switching the Model
 
+| Model | Claude, GPT or Gemini |
+| --- | --- |
+| What it is | The language model that reads the conversation and decides which tool to call |
+| Made by | Anthropic, OpenAI, Google, each with a commercial API |
+| Why we need it | It turns a question in plain language into a structured query and comments on the result |
+| Alternatives | Any provider that Mastra's model router knows, or an open-weight model on your own hardware via Ollama or vLLM |
+
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
 In the demo, it is one line in `agent/.env`.
+How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
+Try your questions with two or three models before you decide.
 
 ### Serving AG-UI with a Plain Node Server
 
-[AG-UI](https://docs.ag-ui.com/) is the protocol between the agent and the frontend.
-The browser posts the conversation; the agent answers with a stream of events as server-sent events: run started, text deltas, tool call started, tool call arguments, tool result, run finished.
+The browser posts the conversation, and the agent answers with AG-UI events as server-sent events.
+This is what happens for one question:
+
+![Sequence of one question: browser, agent, language model, data backend](request-flow.svg "One question, step by step")
 
 The package `@ag-ui/mastra` translates a Mastra agent into an AG-UI agent.
 Around it, a plain `node:http` server is enough:
@@ -329,17 +528,29 @@ await agent.runAgent(input, {
 response.end();
 ```
 
+`input` is the request body, checked against the AG-UI schema `RunAgentInputSchema` from `@ag-ui/core` before the run starts.
 The agent keeps no memory: CopilotKit sends the whole thread with every request.
 For a demo, that is ideal: no conversation ends up in a database on the server.
 
 ### Pitfalls: Telemetry and Peer Dependencies
 
 - **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The agent switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss.
-- `@ag-ui/mastra` declares `@copilotkit/runtime` as a peer dependency, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. Our agent does not need it, so the demo installs peers explicitly instead (`legacy-peer-deps=true` in the agent's `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
+- `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as peer dependencies, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. Our agent needs neither, so the demo installs peers explicitly instead (`legacy-peer-deps=true` in the agent's `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
 
 The server side is complete. Now to the part where Angular developers feel at home.
 
 ## Layer 4: Angular with CopilotKit
+
+| Frontend | CopilotKit for Angular |
+| --- | --- |
+| What it is | Chat components and APIs that connect an Angular app to an AG-UI agent and render tool calls as Angular components |
+| Made by | CopilotKit (Tawkit, Inc.), a startup from Seattle founded in 2023 by Atai and Uli Barkai. MIT license. The Angular package `@copilotkit/angular` lives in the main repository and is at version 0.6, for Angular 22 |
+| Why we need it | We get the chat, the streaming, and the binding between tool calls and our components, without writing an AG-UI client ourselves |
+| Alternatives | Hashbrown, the Vercel AI SDK for Angular, an A2UI renderer, or your own AG-UI client. More on these below |
+
+[CopilotKit](https://www.copilotkit.ai/) is not a Microsoft product; "Copilot" is a generic word here.
+The libraries are open source under MIT. The company earns money with a commercial platform on top, which our demo does not use.
+CopilotKit also started the AG-UI protocol, and its [Angular frontend](https://docs.copilotkit.ai/angular) is described as the "first-party, signal-based Angular frontend for AG-UI agents".
 
 ### Connecting the Agent
 
@@ -373,6 +584,8 @@ Manfred summed up the difference nicely: with `registerComponent()` and `registe
 | `registerFrontendTool()` | the frontend | The model calls the tool, the handler runs in the browser (and may render a component). |
 | `registerRenderToolCall()` | the agent | A server tool runs; the frontend only *draws* its arguments and result. |
 
+All three are controlled generative UI in the sense of the table above: the components are ours, the agent only chooses and fills them.
+
 Our charts use `registerRenderToolCall()`.
 The tool runs on the server, and the component receives the arguments (title, chart type, query) and the result (the rows).
 The model does not have to repeat the numbers as component arguments, which saves tokens and avoids transcription errors.
@@ -382,19 +595,22 @@ The model does not have to repeat the numbers as component arguments, which save
   selector: 'app-sales-view-renderer',
   imports: [SalesChart],
   template: `
+    @let call = toolCall();
     @if (result(); as result) {
       @if (view(); as view) {
         <app-sales-chart [title]="view.title" [kind]="view.chart" [result]="result" />
-        <button type="button" [disabled]="pinned()" (click)="pin(view)">Pin to dashboard</button>
+        <button type="button" [disabled]="pinned()" (click)="dashboard.pin(view)">Pin to dashboard</button>
       }
+    } @else if (error(); as error) {
+      <p class="error"><strong>No result.</strong> {{ error }}</p>
     } @else {
-      <p class="loading">{{ toolCall().args.title ?? 'Querying sales' }} …</p>
+      <p class="loading">{{ call.args.title ?? 'Querying sales' }} …</p>
     }
   `,
 })
 export class SalesViewRenderer implements ToolRenderer<SalesView> {
   readonly toolCall = input.required<AngularToolCall<SalesView>>();
-  // view(), result(), pinned() are computed signals over toolCall()
+  // view(), result(), error(), pinned() are computed signals over toolCall()
 }
 
 export const salesViewRenderer: RenderToolCallConfig<SalesView> = {
@@ -407,9 +623,11 @@ export const salesViewRenderer: RenderToolCallConfig<SalesView> = {
 `toolCall` is a signal input.
 While the model is still streaming the arguments, `status` is `in-progress` and `args` is partial, so the title appears before the query is complete.
 That is why every field is treated as optional until the call is complete.
+When the call is complete, `result` holds the tool's answer as a JSON string: either the rows, or an error message from `orError()` or from Mastra's schema check, which the card shows instead of the chart.
 
 Pinning works both ways: by button, and by asking the agent ("Please pin that chart to the dashboard").
-For the second, the frontend registers a tool that runs in the browser:
+For the second, the frontend registers a tool that runs in the browser.
+CopilotKit sends its name and schema to the agent with every request. When the model calls it, CopilotKit runs the handler in the browser and starts a follow-up run with the handler's answer, so the model can confirm it:
 
 ```ts
 registerFrontendTool({
@@ -420,8 +638,9 @@ registerFrontendTool({
     // CopilotKit passes the model's arguments as parsed JSON, without checking them against the schema.
     const parsed = salesViewSchema.safeParse(view);
     if (!parsed.success) return `Not pinned, the view is invalid: ${parsed.error.message}`;
-    dashboard.pin(parsed.data);
-    return `Pinned "${parsed.data.title}" to the dashboard.`;
+    return dashboard.pin(parsed.data)
+      ? `Pinned "${parsed.data.title}" to the dashboard.`
+      : 'This view is already on the dashboard.';
   },
 });
 ```
@@ -456,6 +675,27 @@ protected readonly data = httpResource<AggregateResponse>(() => ({
 
 Manfred calls this the difference between *design mode* and *runtime mode*: the agent helps to design the view once, and from then on it runs like any other report.
 
+### Alternatives to CopilotKit
+
+CopilotKit is not the only way to bring an agent into an Angular app.
+These are the options I would look at:
+
+| Library | Maker, license | Frameworks | How it works |
+| --- | --- | --- | --- |
+| [CopilotKit](https://docs.copilotkit.ai/angular) | CopilotKit, MIT | Angular, React, Vue | Chat and tool rendering for an agent on the server, over AG-UI |
+| [Hashbrown](https://hashbrown.dev/) | LiveLoveApp, MIT | Angular, React | Headless: the model renders your registered components and calls tools that run in the browser. A thin server adapter keeps the API key and streams AG-UI events |
+| [Vercel AI SDK UI](https://ai-sdk.dev/docs/getting-started/angular) | Vercel, Apache 2.0 | React, Vue, Svelte, Angular (`@ai-sdk/angular`) | Chat state and streaming for a backend built with the AI SDK; no ready-made chat components for Angular |
+| [A2UI renderer](https://github.com/a2ui-project/a2ui) | started by Google, Apache 2.0 | Angular, Lit, React, Flutter | Renders declarative UI descriptions from the agent with your component catalogue; needs a transport such as AG-UI |
+| [assistant-ui](https://www.assistant-ui.com/) | AgentbaseAI, MIT | React | Chat components for React with an AG-UI adapter; for Angular teams only relevant in a React micro-frontend |
+| Your own AG-UI client | you | any | `@ag-ui/client` plus a few signals; you write the chat UI yourself |
+
+The main difference is where the agent lives.
+Hashbrown runs the agent loop in the browser: tools have direct access to your services and state, and the server only holds the API key.
+CopilotKit connects the Angular app to an agent on the server.
+That is the right choice when tools need database access that must never reach the browser, as in our demo.
+
+The Angular team itself does not offer a chat or generative UI library; [angular.dev/ai](https://angular.dev/ai) points to Genkit, Firebase AI Logic and the Gemini API for AI features.
+
 ## Test: Who Is the Key Account Manager?
 
 Time for the question the whole data layer was built for.
@@ -468,6 +708,10 @@ That is exactly the line we drew: **company names yes, people no.**
 And if the model had tried anyway, there would have been nothing to find.
 
 ## What Goes to the Model Provider?
+
+Here are all the protections in one picture, from the database at the bottom to the prompt at the top:
+
+![Six layers keep personal data out: database account, views, data scope, semantic layer, tool schema, system prompt](protection.svg "Only the top layer depends on the model.")
 
 The protection has limits, and you should know them.
 
@@ -488,8 +732,8 @@ In my opinion, that is fine for an internal analytics tool, but not for a public
 
 Manfred's workshop goes further in a few directions that I deliberately skipped:
 
-- **Shared agent state** (AG-UI state management), where the agent itself edits the dashboard, e.g. "change every tile to a bar chart".
-- **A2UI**, Google's format for UIs that the agent assembles from a catalogue of components at runtime.
+- **Shared agent state** (AG-UI's `STATE_SNAPSHOT` and `STATE_DELTA`), where the agent itself edits the dashboard, e.g. "change every tile to a bar chart".
+- **A2UI**, so the agent can assemble UI from a catalogue of components at runtime.
 - **JSONata** as a sandbox in which the model can compute derived figures.
 - **Human-in-the-loop** approvals for large queries.
 
@@ -498,7 +742,10 @@ If you want to see these, watch his recording and read his code. In my opinion, 
 ## Conclusion
 
 Agentic analytics with Angular works today, and it works with the stacks we already use.
-Five architectural decisions make it work:
+The technology choice looks confusing at first, but each piece has one job: the model decides, Mastra runs the loop and the tools, AG-UI carries the events, CopilotKit draws them as Angular components, and the backend and the database decide what data exists at all.
+Every piece can be replaced on its own.
+
+Five architectural decisions make the app work:
 
 1. **Keep personal data out of the views**, enforced by the database, not by the prompt.
 2. **Give the model a semantic layer instead of SQL.** Typed in C# or TypeScript, validated on the server.

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 640" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">One question, step by step</title>
+  <desc id="desc">Sequence of one question. The browser sends the conversation and its tools to the agent. The agent asks the language model, which answers with a call of the tool querySales. While the arguments stream in, the browser already shows the title. The agent asks the data backend, sends the rows to the browser, where the chart appears, and to the model, which writes a short comment that streams into the chat.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="880" height="640" rx="16" fill="#ffffff"/>
+
+  <!-- Participants -->
+  <rect x="30" y="24" width="170" height="52" rx="10" fill="#e8f0fe" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="115" y="47" font-size="15" font-weight="700" fill="#1e3a8a" text-anchor="middle">Browser</text>
+  <text x="115" y="66" font-size="12" fill="#1e3a8a" text-anchor="middle">Angular + CopilotKit</text>
+  <rect x="250" y="24" width="170" height="52" rx="10" fill="#fff4e5" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="335" y="47" font-size="15" font-weight="700" fill="#7c2d12" text-anchor="middle">Agent</text>
+  <text x="335" y="66" font-size="12" fill="#7c2d12" text-anchor="middle">Mastra</text>
+  <rect x="470" y="24" width="170" height="52" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <text x="555" y="47" font-size="15" font-weight="700" fill="#581c87" text-anchor="middle">Language model</text>
+  <text x="555" y="66" font-size="12" fill="#581c87" text-anchor="middle">provider API</text>
+  <rect x="690" y="24" width="170" height="52" rx="10" fill="#e7f6ec" stroke="#15803d" stroke-width="1.5"/>
+  <text x="775" y="47" font-size="15" font-weight="700" fill="#14532d" text-anchor="middle">Data backend</text>
+  <text x="775" y="66" font-size="12" fill="#14532d" text-anchor="middle">.NET or NestJS</text>
+
+  <!-- Lifelines -->
+  <g stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 5">
+    <line x1="115" y1="78" x2="115" y2="620"/>
+    <line x1="335" y1="78" x2="335" y2="620"/>
+    <line x1="555" y1="78" x2="555" y2="620"/>
+    <line x1="775" y1="78" x2="775" y2="620"/>
+  </g>
+
+  <g font-size="13" fill="#111827">
+    <!-- 1 -->
+    <circle cx="16" cy="112" r="10" fill="#111827"/><text x="16" y="116.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+    <line x1="117" y1="118" x2="331" y2="118" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="126" y="108">POST: messages + frontend tools</text>
+
+    <!-- 2 -->
+    <circle cx="16" cy="162" r="10" fill="#111827"/><text x="16" y="166.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+    <line x1="337" y1="168" x2="551" y2="168" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="346" y="158">prompt + tool schemas</text>
+
+    <!-- 3 -->
+    <circle cx="16" cy="212" r="10" fill="#111827"/><text x="16" y="216.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+    <line x1="553" y1="218" x2="339" y2="218" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="346" y="208">tool call querySales(title, chart, query)</text>
+
+    <!-- 4 -->
+    <circle cx="16" cy="262" r="10" fill="#111827"/><text x="16" y="266.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+    <line x1="333" y1="268" x2="119" y2="268" stroke="#c2410c" stroke-width="2" marker-end="url(#a)"/>
+    <text x="126" y="258" fill="#9a3412">TOOL_CALL_START, TOOL_CALL_ARGS</text>
+    <rect x="30" y="278" width="200" height="28" rx="6" fill="#e8f0fe"/>
+    <text x="40" y="297" font-size="12" fill="#1e3a8a">card shows "Revenue per year …"</text>
+
+    <!-- 5 -->
+    <circle cx="16" cy="332" r="10" fill="#111827"/><text x="16" y="336.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+    <line x1="337" y1="338" x2="771" y2="338" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="566" y="328">POST /api/sales/aggregate</text>
+    <line x1="773" y1="378" x2="339" y2="378" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="566" y="368">columns + rows</text>
+
+    <!-- 6 -->
+    <circle cx="16" cy="412" r="10" fill="#111827"/><text x="16" y="416.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+    <line x1="333" y1="418" x2="119" y2="418" stroke="#c2410c" stroke-width="2" marker-end="url(#a)"/>
+    <text x="126" y="408" fill="#9a3412">TOOL_CALL_RESULT</text>
+    <rect x="30" y="428" width="200" height="28" rx="6" fill="#e8f0fe"/>
+    <text x="40" y="447" font-size="12" fill="#1e3a8a">Angular draws the chart</text>
+    <line x1="337" y1="448" x2="551" y2="448" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="346" y="438">tool result (the same rows)</text>
+
+    <!-- 7 -->
+    <circle cx="16" cy="492" r="10" fill="#111827"/><text x="16" y="496.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">7</text>
+    <line x1="553" y1="498" x2="339" y2="498" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+    <text x="346" y="488">text: what stands out</text>
+    <line x1="333" y1="528" x2="119" y2="528" stroke="#c2410c" stroke-width="2" marker-end="url(#a)"/>
+    <text x="126" y="518" fill="#9a3412">TEXT_MESSAGE_CONTENT …</text>
+
+    <!-- 8 -->
+    <circle cx="16" cy="572" r="10" fill="#111827"/><text x="16" y="576.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">8</text>
+    <line x1="333" y1="578" x2="119" y2="578" stroke="#c2410c" stroke-width="2" marker-end="url(#a)"/>
+    <text x="126" y="568" fill="#9a3412">RUN_FINISHED</text>
+  </g>
+
+  <text x="440" y="612" font-size="12" fill="#6b7280">Orange arrows: AG-UI events, sent as server-sent events</text>
+</svg>
