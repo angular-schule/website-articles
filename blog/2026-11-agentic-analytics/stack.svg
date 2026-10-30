@@ -1,80 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 700" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 640" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
   <title id="title">The layers of the demo</title>
-  <desc id="desc">From top to bottom: the Angular app with CopilotKit in the browser, AG-UI events over server-sent events, the Mastra agent with its tools next to the language model provider, the HTTP contract described with OpenAPI, the two interchangeable data backends, the analytics views in SQL Server or PostgreSQL, and the AdventureWorks data. Dashboard tiles and product photos go from the browser to the data backend without the agent.</desc>
+  <desc id="desc">From top to bottom: the Angular app with CopilotKit in the browser; AG-UI under /agent and the HTTP contract under /api; one of two data backends, each with the agent in the same process: ASP.NET Core with the Microsoft Agent Framework and EF Core, or NestJS with Mastra and Drizzle; next to it the language model provider; below the analytics views in SQL Server or PostgreSQL.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/>
     </marker>
-    <marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/>
-    </marker>
   </defs>
-  <rect width="880" height="700" rx="16" fill="#ffffff"/>
+  <rect width="880" height="640" rx="16" fill="#ffffff"/>
 
   <!-- Browser -->
-  <text x="150" y="38" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">BROWSER</text>
-  <rect x="150" y="48" width="560" height="112" rx="12" fill="#e8f0fe" stroke="#1d4ed8" stroke-width="1.5"/>
-  <text x="170" y="76" font-size="18" font-weight="700" fill="#1e3a8a">Angular app</text>
-  <text x="170" y="97" font-size="14" fill="#1f2937">Charts, tables and product cards as Angular components,</text>
-  <text x="170" y="115" font-size="14" fill="#1f2937">dashboard with pinned views</text>
-  <rect x="170" y="125" width="250" height="26" rx="6" fill="#ffffff" stroke="#93c5fd"/>
-  <text x="182" y="143" font-size="13" fill="#1e3a8a">CopilotKit for Angular: chat, renderers</text>
-  <rect x="430" y="125" width="260" height="26" rx="6" fill="#ffffff" stroke="#93c5fd"/>
-  <text x="442" y="143" font-size="13" fill="#1e3a8a">@ag-ui/client: HttpAgent (AG-UI client)</text>
+  <text x="40" y="38" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">BROWSER</text>
+  <rect x="40" y="48" width="560" height="112" rx="12" fill="#e8f0fe" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="60" y="76" font-size="18" font-weight="700" fill="#1e3a8a">Angular app</text>
+  <text x="60" y="97" font-size="14" fill="#1f2937">Charts, tables and product cards as Angular components,</text>
+  <text x="60" y="115" font-size="14" fill="#1f2937">dashboard with pinned views</text>
+  <rect x="60" y="125" width="250" height="26" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="72" y="143" font-size="13" fill="#1e3a8a">CopilotKit for Angular: chat, renderers</text>
+  <rect x="320" y="125" width="260" height="26" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="332" y="143" font-size="13" fill="#1e3a8a">@ag-ui/client: HttpAgent (AG-UI client)</text>
 
-  <!-- AG-UI connector -->
-  <line x1="330" y1="162" x2="330" y2="222" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="344" y="188" font-size="14" font-weight="700" fill="#111827">AG-UI</text>
-  <text x="344" y="206" font-size="13" fill="#4b5563">messages and tools up, events back as server-sent events</text>
-
-  <!-- Agent -->
-  <text x="150" y="240" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">AGENT SERVICE (NODE.JS)</text>
-  <rect x="150" y="250" width="420" height="112" rx="12" fill="#fff4e5" stroke="#c2410c" stroke-width="1.5"/>
-  <text x="170" y="278" font-size="18" font-weight="700" fill="#7c2d12">Mastra agent</text>
-  <text x="170" y="299" font-size="14" fill="#1f2937">System prompt, tools querySales and findProducts,</text>
-  <text x="170" y="317" font-size="14" fill="#1f2937">model router</text>
-  <rect x="170" y="327" width="380" height="26" rx="6" fill="#ffffff" stroke="#fdba74"/>
-  <text x="182" y="345" font-size="13" fill="#7c2d12">@ag-ui/mastra: translates the agent into AG-UI events</text>
-
-  <!-- Model -->
-  <line x1="572" y1="306" x2="646" y2="306" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="609" y="296" font-size="12" fill="#4b5563" text-anchor="middle">HTTPS</text>
-  <rect x="650" y="250" width="200" height="112" rx="12" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
-  <text x="670" y="278" font-size="18" font-weight="700" fill="#581c87">Language model</text>
-  <text x="670" y="299" font-size="14" fill="#1f2937">Claude, GPT, Gemini</text>
-  <text x="670" y="317" font-size="14" fill="#1f2937">or a model you host</text>
-  <text x="670" y="345" font-size="13" fill="#6b21a8">sees prompt and tool results</text>
-
-  <!-- HTTP contract connector -->
-  <line x1="330" y1="364" x2="330" y2="424" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="344" y="390" font-size="14" font-weight="700" fill="#111827">HTTP + JSON</text>
-  <text x="344" y="408" font-size="13" fill="#4b5563">one contract, described with OpenAPI</text>
+  <!-- Connector browser to backend -->
+  <line x1="200" y1="162" x2="200" y2="244" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="214" y="190" font-size="14" font-weight="700" fill="#111827">/agent: AG-UI events as server-sent events</text>
+  <text x="214" y="210" font-size="14" font-weight="700" fill="#111827">/api: HTTP + JSON, described with OpenAPI</text>
+  <text x="214" y="229" font-size="13" fill="#4b5563">dashboard tiles and photos use /api only, without the model</text>
 
   <!-- Backends -->
-  <text x="150" y="442" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATA BACKEND (ONE OF TWO)</text>
-  <rect x="150" y="452" width="275" height="96" rx="12" fill="#e7f6ec" stroke="#15803d" stroke-width="1.5"/>
-  <text x="170" y="480" font-size="18" font-weight="700" fill="#14532d">ASP.NET Core</text>
-  <text x="170" y="501" font-size="14" fill="#1f2937">EF Core, expression trees</text>
-  <text x="170" y="520" font-size="14" fill="#1f2937">semantic layer in C#</text>
-  <text x="170" y="539" font-size="13" fill="#15803d">Swagger UI on port 8081</text>
-  <text x="437" y="505" font-size="14" font-weight="700" fill="#6b7280" text-anchor="middle">or</text>
-  <rect x="450" y="452" width="260" height="96" rx="12" fill="#e7f6ec" stroke="#15803d" stroke-width="1.5"/>
-  <text x="470" y="480" font-size="18" font-weight="700" fill="#14532d">NestJS</text>
-  <text x="470" y="501" font-size="14" fill="#1f2937">Drizzle, postgres.js</text>
-  <text x="470" y="520" font-size="14" fill="#1f2937">semantic layer in TypeScript</text>
-  <text x="470" y="539" font-size="13" fill="#15803d">Swagger UI on port 8082</text>
+  <text x="40" y="262" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATA BACKEND WITH AGENT (ONE OF TWO)</text>
+  <rect x="40" y="272" width="270" height="172" rx="12" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="58" y="299" font-size="18" font-weight="700" fill="#0f172a">ASP.NET Core</text>
+  <rect x="56" y="310" width="238" height="44" rx="8" fill="#fff4e5" stroke="#c2410c"/>
+  <text x="68" y="329" font-size="13" font-weight="700" fill="#7c2d12">Agent</text>
+  <text x="68" y="346" font-size="13" fill="#7c2d12">Microsoft Agent Framework</text>
+  <rect x="56" y="362" width="238" height="44" rx="8" fill="#e7f6ec" stroke="#15803d"/>
+  <text x="68" y="381" font-size="13" font-weight="700" fill="#14532d">Semantic layer</text>
+  <text x="68" y="398" font-size="13" fill="#14532d">C#, EF Core, expression trees</text>
+  <text x="58" y="430" font-size="13" fill="#475569">Swagger UI on port 8081</text>
+
+  <text x="320" y="363" font-size="14" font-weight="700" fill="#6b7280" text-anchor="middle">or</text>
+
+  <rect x="330" y="272" width="270" height="172" rx="12" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="348" y="299" font-size="18" font-weight="700" fill="#0f172a">NestJS</text>
+  <rect x="346" y="310" width="238" height="44" rx="8" fill="#fff4e5" stroke="#c2410c"/>
+  <text x="358" y="329" font-size="13" font-weight="700" fill="#7c2d12">Agent</text>
+  <text x="358" y="346" font-size="13" fill="#7c2d12">Mastra</text>
+  <rect x="346" y="362" width="238" height="44" rx="8" fill="#e7f6ec" stroke="#15803d"/>
+  <text x="358" y="381" font-size="13" font-weight="700" fill="#14532d">Semantic layer</text>
+  <text x="358" y="398" font-size="13" fill="#14532d">TypeScript, Drizzle, postgres.js</text>
+  <text x="348" y="430" font-size="13" fill="#475569">Swagger UI on port 8082</text>
+
+  <!-- Model -->
+  <line x1="602" y1="332" x2="646" y2="332" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="624" y="322" font-size="12" fill="#4b5563" text-anchor="middle">HTTPS</text>
+  <rect x="650" y="276" width="200" height="112" rx="12" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <text x="670" y="304" font-size="18" font-weight="700" fill="#581c87">Language model</text>
+  <text x="670" y="325" font-size="14" fill="#1f2937">Claude, GPT, Gemini</text>
+  <text x="670" y="343" font-size="14" fill="#1f2937">or a model you host</text>
+  <text x="670" y="371" font-size="13" fill="#6b21a8">sees prompt and tool results</text>
 
   <!-- SQL connector -->
-  <line x1="330" y1="550" x2="330" y2="596" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="344" y="578" font-size="13" fill="#4b5563">SQL with parameters, read-only account, data scope per connection</text>
+  <line x1="200" y1="446" x2="200" y2="494" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="214" y="474" font-size="13" fill="#4b5563">SQL with parameters, read-only account, data scope per connection</text>
 
   <!-- Database -->
-  <text x="150" y="614" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATABASE</text>
-  <rect x="150" y="622" width="560" height="62" rx="12" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
-  <text x="170" y="648" font-size="17" font-weight="700" fill="#1e293b">SQL Server or PostgreSQL: views in schema analytics</text>
-  <text x="170" y="670" font-size="14" fill="#1f2937">over AdventureWorksDW, without any column about people</text>
+  <text x="40" y="512" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATABASE</text>
+  <rect x="40" y="520" width="560" height="62" rx="12" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="60" y="546" font-size="17" font-weight="700" fill="#1e293b">SQL Server or PostgreSQL: views in schema analytics</text>
+  <text x="60" y="568" font-size="14" fill="#1f2937">over AdventureWorksDW, without any column about people</text>
 
-  <!-- Direct path for dashboard and photos -->
-  <path d="M150,110 L70,110 L70,500 L146,500" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-teal)"/>
-  <text x="58" y="305" font-size="13" fill="#0f766e" text-anchor="middle" transform="rotate(-90 58 305)">dashboard tiles and photos, without the model</text>
+  <text x="40" y="616" font-size="13" fill="#6b7280">Path B puts the agent into a separate Mastra service between browser and backend.</text>
 </svg>

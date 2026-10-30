@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Path A or path B</title>
+  <desc id="desc">Path A: the browser talks to one data backend, which contains the agent and the semantic layer and talks to the database. One process. Path B: the browser talks to a separate agent service for the chat and to the data backend for the dashboard; the agent service calls the data backend over HTTP. Two processes.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="880" height="460" rx="16" fill="#ffffff"/>
+
+  <!-- Path A -->
+  <text x="40" y="44" font-size="18" font-weight="700" fill="#111827">A: agent in the backend</text>
+  <text x="40" y="66" font-size="13" fill="#4b5563">one process, one deployment (default in this article)</text>
+
+  <rect x="40" y="86" width="340" height="52" rx="10" fill="#e8f0fe" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="210" y="117" font-size="15" font-weight="700" fill="#1e3a8a" text-anchor="middle">Browser: Angular + CopilotKit</text>
+
+  <line x1="210" y1="140" x2="210" y2="180" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <text x="222" y="165" font-size="12" fill="#4b5563">/agent and /api</text>
+
+  <rect x="40" y="184" width="340" height="164" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="58" y="208" font-size="15" font-weight="700" fill="#0f172a">Data backend (.NET or NestJS)</text>
+  <rect x="58" y="220" width="304" height="40" rx="8" fill="#fff4e5" stroke="#c2410c"/>
+  <text x="72" y="245" font-size="13" fill="#7c2d12"><tspan font-weight="700">Agent</tspan>: Agent Framework or Mastra</text>
+  <line x1="210" y1="262" x2="210" y2="282" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <text x="222" y="276" font-size="12" fill="#4b5563">method call</text>
+  <rect x="58" y="286" width="304" height="40" rx="8" fill="#e7f6ec" stroke="#15803d"/>
+  <text x="72" y="311" font-size="13" fill="#14532d"><tspan font-weight="700">Semantic layer</tspan>: EF Core or Drizzle</text>
+
+  <line x1="210" y1="350" x2="210" y2="384" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="40" y="388" width="340" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="210" y="415" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">Database</text>
+
+  <!-- Divider -->
+  <line x1="440" y1="30" x2="440" y2="432" stroke="#e2e8f0" stroke-width="2"/>
+
+  <!-- Path B -->
+  <text x="500" y="44" font-size="18" font-weight="700" fill="#111827">B: agent as a separate service</text>
+  <text x="500" y="66" font-size="13" fill="#4b5563">two processes, any backend language</text>
+
+  <rect x="500" y="86" width="340" height="52" rx="10" fill="#e8f0fe" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="670" y="117" font-size="15" font-weight="700" fill="#1e3a8a" text-anchor="middle">Browser: Angular + CopilotKit</text>
+
+  <line x1="590" y1="140" x2="590" y2="180" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <text x="578" y="165" font-size="12" fill="#4b5563" text-anchor="end">/agent</text>
+  <rect x="500" y="184" width="180" height="70" rx="10" fill="#fff4e5" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="590" y="212" font-size="14" font-weight="700" fill="#7c2d12" text-anchor="middle">Agent service</text>
+  <text x="590" y="232" font-size="13" fill="#7c2d12" text-anchor="middle">Mastra, Node.js</text>
+
+  <path d="M800,140 L800,282" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <text x="812" y="200" font-size="12" fill="#4b5563">/api</text>
+  <line x1="590" y1="256" x2="590" y2="282" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <text x="602" y="274" font-size="12" fill="#4b5563">HTTP /api</text>
+
+  <rect x="500" y="286" width="340" height="62" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="518" y="310" font-size="15" font-weight="700" fill="#0f172a">Data backend (.NET or NestJS)</text>
+  <text x="518" y="332" font-size="13" fill="#14532d"><tspan font-weight="700">Semantic layer</tspan>: EF Core or Drizzle</text>
+
+  <line x1="670" y1="350" x2="670" y2="384" stroke="#374151" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="500" y="388" width="340" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="670" y="415" font-size="14" font-weight="700" fill="#1e293b" text-anchor="middle">Database</text>
+</svg>

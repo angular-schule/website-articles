@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
   <title id="title">Where the agent protocols sit</title>
-  <desc id="desc">AG-UI connects the user's app with the agent. MCP connects the agent with tools and data. A2A connects the agent with other agents. A2UI is no connection but a format for UI descriptions, which travel over AG-UI or A2A. The demo uses AG-UI; its tools call the data backend over plain HTTP.</desc>
+  <desc id="desc">AG-UI connects the user's app with the agent. MCP connects the agent with tools and data. A2A connects the agent with other agents. A2UI is no connection but a format for UI descriptions, which travel over AG-UI or A2A. The demo uses AG-UI; its tools call the semantic layer directly.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
@@ -56,5 +56,5 @@
 
   <!-- Demo note -->
   <rect x="30" y="374" width="820" height="38" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
-  <text x="46" y="398" font-size="13" fill="#1f2937">This demo uses AG-UI between Angular and Mastra. Its tools call the data backend over plain HTTP.</text>
+  <text x="46" y="398" font-size="13" fill="#1f2937">This demo uses AG-UI between Angular and the agent. Its tools call the semantic layer directly.</text>
 </svg>
