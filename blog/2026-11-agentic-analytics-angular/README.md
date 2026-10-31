@@ -95,7 +95,7 @@ In the template, the chat is one element:
 ### Three Ways to Generate UI
 
 CopilotKit offers three ways to connect an Angular component to the agent.
-Manfred summed up the difference nicely: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a backend tool.
+Manfred Steyer, whose [workshop](https://ai-poland.pl/free-workshops/recordings) inspired this series, summed up the difference nicely: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a backend tool.
 
 | API | Who defines the tool? | What happens? |
 | --- | --- | --- |
@@ -103,7 +103,7 @@ Manfred summed up the difference nicely: with `registerComponent()` and `registe
 | `registerFrontendTool()` | the frontend | The model calls the tool, the handler runs in the browser (and may render a component). |
 | `registerRenderToolCall()` | the agent | A backend tool runs; the frontend only *draws* its arguments and result. |
 
-All three are controlled generative UI in the sense of the table above: the components are ours, the agent only chooses and fills them.
+All three are *controlled* generative UI in the sense of [part 1](/blog/2026-11-agentic-analytics#the-vocabulary-in-five-minutes): the components are ours, the agent only chooses and fills them.
 
 Our charts use `registerRenderToolCall()`.
 The tool runs on the server, and the component receives the arguments (title, chart type, query) and the result (the rows).
@@ -139,10 +139,11 @@ export const salesViewRenderer: RenderToolCallConfig<SalesView> = {
 };
 ```
 
+`salesViewSchema` is a [Zod](https://zod.dev/) schema (Zod is a TypeScript validation library) for title, chart type and query.
 `toolCall` is a signal input.
 While the model is still streaming the arguments, `status` is `in-progress` and `args` is partial, so the title appears before the query is complete.
 That is why every field is treated as optional until the call is complete.
-When the call is complete, `result` holds the tool's answer as a JSON string: either the rows, or an error message from `orError()` or from Mastra's schema check, which the card shows instead of the chart.
+When the call is complete, `result` holds the tool's answer as a JSON string: either the rows, or an error message (the backend returns failures as a tool result instead of throwing), which the card shows instead of the chart.
 
 Pinning works both ways: by button, and by asking the agent ("Please pin that chart to the dashboard").
 For the second, the frontend registers a tool that runs in the browser.
@@ -223,7 +224,7 @@ In my opinion, that is fine for an internal analytics tool, but not for a public
 
 ## Test: Who Is the Key Account Manager?
 
-Time for the question the whole data layer was built for.
+Time for the question that the data layer from part 1 was built for.
 The chat offers a few example questions above the input field. One of them is "Who is the key account manager of our biggest reseller?":
 
 ![The agent declines to name the key account manager and offers to look up the biggest reseller instead](key-account-manager.png "Company names yes, people no: the polite refusal from the system prompt.")
@@ -236,7 +237,7 @@ And if the model had tried anyway, there would have been nothing to find.
 ## How the Series Continues
 
 With that, the app is complete: a chat that answers with Angular components, a dashboard that keeps them, and a data layer that keeps people out.
-[Part 4](/blog/2026-11-agentic-analytics-in-practice) takes a step back and looks at the app in practice. Are Mastra and the Microsoft Agent Framework really equivalent? A traffic window shows every message between browser, agent and LLM provider, and with it, the defaults that each framework sends without asking. One of them, together with a single well-meant sentence in the prompt, made every third or fourth answer come back in German. Part 4 shows how I tracked it down, and how to test an agent without paying for a single token.
+[Part 4](/blog/2026-11-agentic-analytics-in-practice) takes a step back and looks at the app in practice. Are Mastra and the Microsoft Agent Framework really equivalent? A traffic window shows every message between browser, agent and LLM provider, and with it, the defaults that each framework sends without asking. Together with a single well-meant sentence in the prompt, those defaults made every third or fourth answer of the .NET agent come back in German. Part 4 shows how I tracked it down, and how to test an agent without paying for a single token.
 
 ## Glossary
 
@@ -258,4 +259,7 @@ The terms of this part. The full glossary of the series, including the names tha
 | **A2UI** | Format for a declarative UI description | started by Google |
 | **SSE** (server-sent events) | An HTTP response that stays open and delivers one event after another | Web standard (`EventSource`); AG-UI's HTTP client receives its events this way |
 | **Measure** | A number that is aggregated with a fixed formula, e.g. revenue | The same in dbt, Cube, Looker and Power BI; dbt builds *metrics* on top of measures |
-| **View** | A stored `SELECT` that the database offers like a table | SQL standard |
+| **Frontend tool** | A tool that the browser offers and runs, e.g. `pinToDashboard` | Client tool, client-side tool |
+| **Semantic layer** | Fixed business vocabulary of measures and dimensions, translated into SQL by the backend | dbt: Semantic Layer, powered by MetricFlow. Cube: data model with cubes and views. Looker: LookML. Power BI: semantic model |
+| **Dimension** | An attribute to group or filter by, e.g. year or country | The same in dbt, Cube and Looker; from dimensional modelling in data warehousing |
+| **View (dashboard)** | A saved chart definition (`SalesView`): title, chart type and query | – |

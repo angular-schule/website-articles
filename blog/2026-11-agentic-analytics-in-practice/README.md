@@ -38,7 +38,7 @@ header: agentic-analytics.jpg
 The first three parts built the app: the data layer, the backend with the agent, and the Angular UI.
 This last part looks at it in practice: how the two frameworks compare, how to choose another framework or model, how to watch every message, why you should not settle for the first result, and how to test an agent without a model.
 
-**What you get from this article:** a comparison of two agent frameworks that goes beyond feature lists, a technique to see exactly what your agent sends to the model, a real case in which one sentence in the prompt changed the answer language, and a way to test agents without cost and without chance.
+**What you get from this article:** a comparison of two agent frameworks that goes beyond feature lists, a technique to see exactly what your agent sends to the model, a real case in which one sentence in the prompt changed the answer language, and a way to test agents without cost and with repeatable results.
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
 > Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
@@ -54,7 +54,7 @@ The demo app is a chat in Angular in which questions about sales data become cha
 - **Two agents, one app:** the same agent exists twice, with the [Microsoft Agent Framework in ASP.NET Core](/blog/2026-11-agentic-analytics-dotnet) and with [Mastra in NestJS](/blog/2026-11-agentic-analytics-node). Both get the same system prompt and the same tools, `querySales` for the sales data and `findProducts` for the product catalogue. The tool schemas are generated from the *semantic layer*, a fixed list of measures and dimensions, so the model only knows names that exist.
 - **AG-UI:** the agent streams events to the Angular app, which draws tool calls as components with CopilotKit ([part 3](/blog/2026-11-agentic-analytics-angular)). The browser adds its own *frontend tool*, `pinToDashboard`.
 - **The model:** Claude Sonnet 5.5 by default, set with `MODEL` and the provider's API key in `agent/.env`.
-- **Path A and path B:** the agent runs inside the backend, or as a separate Mastra service in front of either backend.
+- **Path A and path B:** the agent runs inside the backend, or as a separate Mastra service in front of either backend ([path B](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service)).
 - **No personal data:** the database views contain no column about people, which [part 1](/blog/2026-11-agentic-analytics) explains in detail. Whatever a tool returns goes to the LLM provider.
 
 You can read this article on its own; the links lead to the details.
@@ -67,7 +67,7 @@ Are the two equivalent? For this app, yes.
 The Angular app does not know which framework answers; only the status line in the header shows it.
 With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions above the chat's input field in the same way.
 The quarterly revenue per channel became a line chart, the Mountain-200 (a mountain bike in the AdventureWorks catalogue) became product cards, and the question about the key account manager got the polite refusal that [the test in part 3](/blog/2026-11-agentic-analytics-angular#test-who-is-the-key-account-manager) looks at in detail.
-Pinning a chart by chat (a frontend tool, see part 3) works with both, including the confirmation after the frontend tool has run.
+Pinning a chart by chat (a frontend tool, see [part 3](/blog/2026-11-agentic-analytics-angular#three-ways-to-generate-ui)) works with both, including the confirmation after the frontend tool has run.
 The texts differ from run to run, as they do with the same framework, too.
 
 That is no coincidence: both frameworks are built from the same parts.
@@ -82,7 +82,7 @@ What differs is the work around it:
 | Model access | a model router: one string per model, e.g. `anthropic/claude-sonnet-5-5` | an `IChatClient` from Microsoft.Extensions.AI, created by the provider's SDK |
 | Tool schema | written by hand in Zod | derived from C# types, adjusted in a callback (enums, optional without `null`) |
 | Validation of tool arguments | Mastra checks against the Zod schema | deserialization into the C# types; names are checked by the semantic layer |
-| AG-UI | adapter package plus a few lines of streaming | `MapAGUIServer()`, still a preview package |
+| AG-UI | adapter package plus a few lines of streaming | `MapAGUIServer()`, a preview package (`1.27.0-preview`) at the time of writing |
 | Trying agents locally | Mastra Studio, a local web UI | DevUI, a preview package |
 | Origin | Kepler Software, 1.0 in January 2026 | Microsoft, direct successor of Semantic Kernel and AutoGen |
 | License | Apache 2.0, except the source-available `ee/` folders | MIT |
@@ -91,7 +91,6 @@ So the choice follows your backend: a Node.js team takes Mastra, a .NET team the
 The differences that matter most are invisible at first: the defaults with which each framework talks to the model. The section [Fine-Tuning: Do Not Settle for the First Result](#fine-tuning-do-not-settle-for-the-first-result) shows how much they can change.
 None of these differences is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
 
-On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at the time of writing, while the rest of the framework is stable.
 
 ### Choosing Another Agent Framework
 
@@ -110,10 +109,10 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 ### Switching the Model
 
-| Model | Claude, GPT or Gemini |
+| Model | Claude, GPT, Gemini or Mistral |
 | --- | --- |
 | What it is | The LLM that reads the conversation and decides which tool to call |
-| Made by | Anthropic, OpenAI, Google, each with a commercial API |
+| Made by | Anthropic, OpenAI, Google, Mistral AI, each with a commercial API |
 | Why we need it | It turns a question in plain language into a structured query and comments on the result |
 | Alternatives | Any provider with an SDK for your agent framework, or an open-weight model on your own hardware via Ollama or vLLM |
 
@@ -149,7 +148,7 @@ The window pays off quickly.
 In every answer from Anthropic, the `usage` block contains `"inference_geo": "global"`.
 According to [Anthropic's documentation](https://platform.claude.com/docs/en/manage-claude/data-residency), that is the default, and it means that "inference may run in any available geography".
 The only alternative is `"us"`; there is no EU option on Anthropic's own API at the time of writing.
-That is exactly the kind of detail your data protection officer will ask about, and one you would never see in the chat. [What Goes to the LLM Provider?](/blog/2026-11-agentic-analytics#what-goes-to-the-llm-provider) shows the way out.
+That is exactly the kind of detail your data protection officer will ask about, and one you would never see in the chat. Part 1's section [What Goes to the LLM Provider?](/blog/2026-11-agentic-analytics#what-goes-to-the-llm-provider) shows the way out.
 
 ## Fine-Tuning: Do Not Settle for the First Result
 
@@ -245,7 +244,7 @@ The fake LLM also made a few differences between the frameworks visible that you
 
 ## What This Demo Leaves Out
 
-Manfred's workshop goes further in a few directions that I deliberately skipped:
+The workshop by Manfred Steyer that inspired this series ([recording](https://ai-poland.pl/free-workshops/recordings)) goes further in a few directions that I deliberately skipped:
 
 - **Shared agent state** (AG-UI's `STATE_SNAPSHOT` and `STATE_DELTA`), where the agent itself edits the dashboard, e.g. "change every tile to a bar chart".
 - **A2UI**, so the agent can assemble UI from a catalogue of components at runtime.
@@ -277,9 +276,7 @@ How do you keep personal data away from your agents? I'm curious about your appr
 
 ## Glossary
 
-The full glossary with every term of the series is in [part 1](/blog/2026-11-agentic-analytics#glossary). Here are the names that the frameworks use for the same concepts:
-
-The same idea often has a different name in each framework, and sometimes the same name means different things.
+The full glossary with every term of the series is in [part 1](/blog/2026-11-agentic-analytics#glossary). The same idea often has a different name in each framework, and sometimes the same name means different things.
 A dash means that the framework has no name of its own for it or that this series does not use it.
 
 | Concept | Mastra | Microsoft Agent Framework (.NET) | AG-UI | CopilotKit | Vercel AI SDK |

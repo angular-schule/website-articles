@@ -186,7 +186,7 @@ The client keeps a catalogue of trusted components, and the agent can only reque
 Because the description is data and not code, there is no script to inject.
 There are renderers for Angular (`@a2ui/angular`), Lit and React, and Flutter uses A2UI under the hood of its GenUI SDK.
 
-So what is the difference to AG-UI?
+So how does it differ from AG-UI?
 The AG-UI docs say it clearly: [AG-UI is not a generative UI specification](https://docs.ag-ui.com/concepts/generative-ui-specs), it is the runtime connection between agent and app.
 A2UI describes *what* to show; AG-UI (or A2A) is *how* it gets there.
 The two work together, and CopilotKit supported A2UI from the first day.
@@ -208,7 +208,7 @@ An MCP server would make sense if other agents, or a chat client such as Claude,
 ### A2A: Agent ↔ Agent
 
 [Agent2Agent (A2A)](https://a2a-protocol.org/) lets agents from different teams or vendors work together: one agent hands a task to another and gets the result back.
-Google [launched it in April 2025](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/), and since June 2025 it is a [Linux Foundation project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents).
+Google [launched it in April 2025](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/), and since June 2025 it has been a [Linux Foundation project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents).
 Our app has a single agent, so A2A plays no role here.
 
 ### The Protocols at a Glance
@@ -272,9 +272,9 @@ And here they are as a table, with vendor and license:
 | Agent | Microsoft Agent Framework (.NET) **or** Mastra (Node.js) | Microsoft / Kepler Software, Inc. | MIT / Apache 2.0 (except the enterprise `ee/` folders, see layer 3) |
 | Protocol | AG-UI | started by CopilotKit, open source | MIT |
 | Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT |
-| Model | Claude, GPT or Gemini | Anthropic, OpenAI, Google | commercial API |
+| Model | Claude, GPT, Gemini or Mistral (Gemini and Mistral on the Node.js track only) | Anthropic, OpenAI, Google, Mistral AI | commercial API |
 
-In each of the following sections, a small table says what the layer is, who makes it, why we need it, and what you could use instead.
+Throughout the series, a small table for each layer says what it is, who makes it, why we need it, and what you could use instead.
 
 ## Layer 1: Data and What It Must Not Contain
 
@@ -398,7 +398,7 @@ They found two differences that would otherwise have been subtle bugs:
 - **Sorting of NULL values.** SQL Server puts NULLs first in ascending order, PostgreSQL puts them last. The Node backend says `nulls first` / `nulls last` explicitly.
 - **Rounding.** SQL Server's `money` type has four decimal places. Both backends round amounts to cents.
 
-With a safe and stable data API in place, the agent can use it. Part 2 shows how each backend builds the semantic layer in detail.
+With a safe and stable data API in place, the agent can use it. Part 2 shows in detail how your backend of choice builds the semantic layer.
 
 ## Layer 3: The Agent, with Mastra or the Microsoft Agent Framework
 
@@ -433,6 +433,7 @@ The protection has limits, and you should know them.
 - **Everything a tool returns goes to the LLM.** The aggregated rows, the product names, the reseller names. The semantic layer and the views decide what that is. That is why personal data must be kept out *before* the model instead of being filtered *after* it.
 - **Product photos do not.** The product cards load the images directly from the backend; the model only sees product keys and names.
 - **The dashboard does not.** Pinned tiles never touch the model.
+- **The traffic window is a debug feature.** It shows the whole conversation and every tool result to whoever opens the app. It is on by default for learning; switch it off with `DEBUG_TRAFFIC=off` in `agent/.env`.
 - **The browser talks to one origin only.** The app loads no fonts, scripts or telemetry from third parties, and the CopilotKit Inspector (which [reports usage](https://github.com/CopilotKit/CopilotKit/blob/main/packages/web-inspector/src/lib/telemetry.ts) when opened) is disabled.
 - **Removing a column does not prevent every inference.** In AdventureWorks, only two to six sales representatives sold in each region, and in Germany only two. Anyone who knows who looks after the German bike shops gets very close to their figures with "revenue per country", although the system knows nothing about them. In a real project, agree on the granularity with your data protection officer and the works council: suppress small groups, use coarser regions, or leave a dimension out entirely. Technically, that is the same principle as the views: what is not in the semantic layer cannot be asked for. Only this time it applies to the dimensions instead of the columns.
 

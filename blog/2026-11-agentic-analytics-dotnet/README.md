@@ -58,20 +58,20 @@ If your team works with Node.js, read [part 2 for Node.js](/blog/2026-11-agentic
 - **The data:** AdventureWorksDW, read through views in the schema `analytics` that contain no column about people, with a read-only account. Row-level security (`DATA_SCOPE`) limits each connection to one territory group and shows nothing if the value is missing.
 - **The contract:** both backends serve the same HTTP API under `/api`, described with OpenAPI.
 - **AG-UI:** the protocol between the Angular app and the agent, events streamed as server-sent events.
-- **Path A and path B:** the agent runs inside the existing backend (path A, as in this article) or as a separate service (path B, in the Node.js article).
+- **Path A and path B:** the agent runs inside the existing backend (path A, as in this article) or as a separate service (path B, in the [Node.js article](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service)).
+
+The layer numbers in the headings follow [the stack in part 1](/blog/2026-11-agentic-analytics#the-stack-from-bottom-to-top): data (1), semantic layer (2), agent (3), Angular (4).
 
 If any of these is new to you, part 1 and its glossary are worth the detour; this article builds on them without repeating the reasons.
 
 ## Layer 2: The Semantic Layer with Entity Framework Core
 
-| Backend | ASP.NET Core with EF Core, or NestJS with Drizzle |
+| Backend | ASP.NET Core with EF Core |
 | --- | --- |
 | What it is | A small HTTP API that turns a JSON query into safe, parameterized SQL |
-| Made by | Microsoft (ASP.NET Core, Entity Framework Core, MIT) / the NestJS team (MIT), the Drizzle Team (Apache 2.0) and Rasmus Porsager (postgres.js, Unlicense) |
+| Made by | Microsoft (ASP.NET Core, Entity Framework Core, MIT) |
 | Why we need it | The model never writes SQL. The backend decides which measures and dimensions exist and checks every request |
 | Alternatives | Any backend you know: Spring Boot, Express, Fastify, Go. For data access: Dapper, Prisma, Kysely, TypeORM. Dedicated semantic layers such as Cube or dbt's MetricFlow do the same job as a product |
-
-### .NET: Expression Trees with Entity Framework Core
 
 In ASP.NET Core, the semantic layer maps every dimension to a typed lambda expression, and every measure to an aggregate over one group of order lines:
 
@@ -113,8 +113,8 @@ The price is a little more code.
 ## Layer 3: The Agent with the Microsoft Agent Framework
 
 The agent is the part that talks to the model.
-It has a system prompt, two backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the frontend adds a third one later.
-On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framework in ASP.NET Core.
+It has a system prompt, two backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the Angular app adds a third, `pinToDashboard` ([part 3](/blog/2026-11-agentic-analytics-angular#three-ways-to-generate-ui)).
+On path A, it lives in the backend, here in ASP.NET Core.
 
 | Agent (.NET track) | Microsoft Agent Framework |
 | --- | --- |
@@ -149,10 +149,11 @@ AIAgent analyst = new AnthropicClient { ApiKey = apiKey }
     .AsAIAgent(name: "analyst", instructions: Instructions(schema), tools: tools);
 ```
 
+`OrError()` turns every failure into a tool result such as `{ error: "Unknown dimension …" }` instead of an exception, so the model can correct its request and the chat never hangs.
 The model comes in as an `IChatClient`, here from Anthropic's official .NET SDK; other providers bring their own.
-The system prompt is the same text as for Mastra, built from the same schema.
+The system prompt is built from the same schema; the Node.js track uses the identical text.
 
-The enums are added while the JSON schema is generated: a callback sees every property and can change its schema node, much like the OpenAPI transformer that the backend already has.
+The enums are added while the JSON schema is generated: a callback sees every property and can change its schema node, much like an OpenAPI schema transformer in ASP.NET Core.
 
 ```csharp
 switch (context.DeclaringType?.Name, context.PropertyInfo?.Name)
@@ -170,9 +171,9 @@ switch (context.DeclaringType?.Name, context.PropertyInfo?.Name)
 Two details are easy to get wrong, and both show how much the model depends on the schema:
 
 - **Enums need a string converter.** Without `[JsonConverter(typeof(JsonStringEnumConverter<ChartKind>))]`, the schema describes `ChartKind` as a number, and the model sends `"chart": 1` instead of `"chart": "line"`.
-- **Optional is not nullable.** C# records with `string?` and `int?` become schema types like `["array", "null"]`. The model then sends `"filters": null`, and the Angular app, which checks every chart request against its own Zod schema (shown in part 3) where `filters` is optional, rejects it. The callback therefore removes `null` from optional fields, so both agents describe exactly the same tool.
+- **Optional is not nullable.** C# records with `string?` and `int?` become schema types like `["array", "null"]`. The model then sends `"filters": null`, and the Angular app, which checks every chart request against its own schema (written with the TypeScript library Zod, see [part 3](/blog/2026-11-agentic-analytics-angular)) where `filters` is optional, rejects it. The callback therefore removes `null` from optional fields, so the .NET tool matches the Mastra tool of the Node.js track exactly.
 
-Like the Mastra agent, the .NET agent gets a system prompt with the dataset description, all dimensions with their allowed values, and a few rules.
+The agent gets a system prompt with the dataset description, all dimensions with their allowed values, and a few rules.
 The most important one:
 
 ```text
@@ -206,6 +207,8 @@ On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at t
 ### Switching the Model
 
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
+Set `MODEL` and the provider's API key in `agent/.env`. The .NET track supports Anthropic and OpenAI models; Google and Mistral run on the Node.js track only.
+One trap: Anthropic's `IChatClient` adapter limits answers to 1,024 tokens unless the request sets `MaxOutputTokens`; [part 4](/blog/2026-11-agentic-analytics-in-practice#example-the-answer-language) shows the fix.
 
 [Part 4](/blog/2026-11-agentic-analytics-in-practice#switching-the-model) compares the providers, and [part 1](/blog/2026-11-agentic-analytics#what-goes-to-the-llm-provider) explains which of them can process data in Europe.
 
