@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 640" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
   <title id="title">The layers of the demo</title>
-  <desc id="desc">From top to bottom: the Angular app with CopilotKit in the browser; AG-UI under /agent and the HTTP contract under /api; one of two data backends, each with the agent in the same process: ASP.NET Core with the Microsoft Agent Framework and EF Core, or NestJS with Mastra and Drizzle; next to it the language model provider; below the analytics views in SQL Server or PostgreSQL.</desc>
+  <desc id="desc">From top to bottom: the Angular app with CopilotKit in the browser; AG-UI under /agent and the HTTP contract under /api; one of two backends, each with the agent in the same process: ASP.NET Core with the Microsoft Agent Framework and EF Core, or NestJS with Mastra and Drizzle; next to it the LLM provider; below the analytics views in SQL Server or PostgreSQL.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/>
@@ -26,7 +26,7 @@
   <text x="214" y="229" font-size="13" fill="#4b5563">dashboard tiles and photos use /api only, without the model</text>
 
   <!-- Backends -->
-  <text x="40" y="262" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATA BACKEND WITH AGENT (ONE OF TWO)</text>
+  <text x="40" y="262" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">BACKEND WITH AGENT (ONE OF TWO)</text>
   <rect x="40" y="272" width="270" height="172" rx="12" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
   <text x="58" y="299" font-size="18" font-weight="700" fill="#0f172a">ASP.NET Core</text>
   <rect x="56" y="310" width="238" height="44" rx="8" fill="#fff4e5" stroke="#c2410c"/>
@@ -53,14 +53,14 @@
   <line x1="602" y1="332" x2="646" y2="332" stroke="#4b5563" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="624" y="322" font-size="12" fill="#4b5563" text-anchor="middle">HTTPS</text>
   <rect x="650" y="276" width="200" height="112" rx="12" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
-  <text x="670" y="304" font-size="18" font-weight="700" fill="#581c87">Language model</text>
+  <text x="670" y="304" font-size="18" font-weight="700" fill="#581c87">LLM</text>
   <text x="670" y="325" font-size="14" fill="#1f2937">Claude, GPT, Gemini</text>
   <text x="670" y="343" font-size="14" fill="#1f2937">or a model you host</text>
   <text x="670" y="371" font-size="13" fill="#6b21a8">sees prompt and tool results</text>
 
   <!-- SQL connector -->
   <line x1="200" y1="446" x2="200" y2="494" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="214" y="474" font-size="13" fill="#4b5563">SQL with parameters, read-only account, data scope per connection</text>
+  <text x="214" y="474" font-size="13" fill="#4b5563">SQL with parameters, read-only account, row-level security per connection</text>
 
   <!-- Database -->
   <text x="40" y="512" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">DATABASE</text>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 640" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
   <title id="title">One question, step by step</title>
-  <desc id="desc">Sequence of one question. The browser sends the conversation and its tools to the agent. The agent asks the language model, which answers with a call of the tool querySales. While the arguments stream in, the browser already shows the title. The agent asks the semantic layer, sends the rows to the browser, where the chart appears, and to the model, which writes a short comment that streams into the chat.</desc>
+  <desc id="desc">Sequence of one question. The browser sends the conversation and its tools to the agent. The agent asks the LLM, which answers with a call of the tool querySales. While the arguments stream in, the browser already shows the title. The agent asks the semantic layer, sends the rows to the browser, where the chart appears, and to the model, which writes a short comment that streams into the chat.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
@@ -16,7 +16,7 @@
   <text x="335" y="47" font-size="15" font-weight="700" fill="#7c2d12" text-anchor="middle">Agent</text>
   <text x="335" y="66" font-size="12" fill="#7c2d12" text-anchor="middle">Mastra or Agent Framework</text>
   <rect x="470" y="24" width="170" height="52" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
-  <text x="555" y="47" font-size="15" font-weight="700" fill="#581c87" text-anchor="middle">Language model</text>
+  <text x="555" y="47" font-size="15" font-weight="700" fill="#581c87" text-anchor="middle">LLM</text>
   <text x="555" y="66" font-size="12" fill="#581c87" text-anchor="middle">provider API</text>
   <rect x="690" y="24" width="170" height="52" rx="10" fill="#e7f6ec" stroke="#15803d" stroke-width="1.5"/>
   <text x="775" y="47" font-size="15" font-weight="700" fill="#14532d" text-anchor="middle">Semantic layer</text>

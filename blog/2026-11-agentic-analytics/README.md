@@ -32,7 +32,7 @@ language: en
 header: agentic-analytics.jpg
 ---
 
-**Agentic analytics works with Angular today: you ask your sales data a question and get a chart back. And you can keep personal data away from the language model, as long as the database enforces it rather than the prompt.**
+**Agentic analytics works with Angular today: you ask your sales data a question and get a chart back. And you can keep personal data away from the LLM, as long as the database enforces it rather than the prompt.**
 
 You type a question, and a chart appears.
 "How did revenue develop per quarter, split by sales channel?" The app answers with a line chart, a short analysis, and a button to pin the chart to a dashboard.
@@ -66,7 +66,7 @@ I wanted to see how the architecture holds up in a setting that looks more like 
 
 - a **relational database** with a classic data warehouse schema,
 - **two typical backend stacks** that are interchangeable: ASP.NET Core with Entity Framework Core and SQL Server, or NestJS with Drizzle and PostgreSQL,
-- and **data that contains people**, so we have to decide what the language model may see.
+- and **data that contains people**, so we have to decide what the LLM may see.
 
 So this article does not repeat Manfred's code.
 It retells the idea with its own demo, its own data, and a few decisions of its own.
@@ -74,12 +74,12 @@ The building blocks are the same as his: CopilotKit in Angular, AG-UI in between
 
 ## What We Build
 
-![The finished app: chat on the left, the pinned dashboard on the right](screenshot.png "Chat on the left, dashboard on the right. The dashboard tiles run without the language model.")
+![The finished app: chat on the left, the pinned dashboard on the right](screenshot.png "Chat on the left, dashboard on the right. The dashboard tiles run without the LLM.")
 
 On the left, the user chats with an agent.
 The agent answers with **Angular components**: line and bar charts, stat tiles, tables, and product cards with photos.
 Every chart can be pinned to the dashboard on the right.
-A pinned tile stores only the *query*, not the numbers, and asks the database again on every visit, **without the language model**.
+A pinned tile stores only the *query*, not the numbers, and asks the database again on every visit, **without the LLM**.
 That is fast, deterministic, and costs no tokens.
 
 Before we build it, let's sort out the vocabulary.
@@ -88,8 +88,8 @@ Before we build it, let's sort out the vocabulary.
 
 If you already know what a tool call is, skip ahead to [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a).
 
-**Language model (LLM).**
-A large language model such as Claude, GPT or Gemini reads text and writes text.
+**Large language model (LLM).**
+An LLM such as Claude, GPT or Gemini reads text and writes text.
 It runs at a provider (Anthropic, OpenAI, Google) or on your own hardware, and you talk to it over an HTTP API.
 On its own, it knows nothing about your database, and it cannot run code.
 
@@ -99,9 +99,12 @@ When the model decides that a tool helps, it does not answer with prose, but wit
 Your code runs the function and sends the result back to the model, which then continues writing.
 The model never touches the database itself; it can only ask for the tools you offer.
 Providers call this *function calling* or *tool use*.
+A tool runs either on the server (a *backend tool*) or in the browser (a *frontend tool*).
+The names vary between frameworks: Mastra calls browser tools *client tools*, the Vercel AI SDK says *server-side* and *client-side tools*, and at Anthropic, *server tools* are tools that Anthropic itself runs, such as web search.
+The [glossary](#glossary) at the end lists the names per framework.
 
 **Agent.**
-An agent is a language model in a loop: the model writes, calls a tool, reads the result, maybe calls the next tool, and finally answers.
+An agent is an LLM in a loop: the model writes, calls a tool, reads the result, maybe calls the next tool, and finally answers.
 In our app, the agent has a system prompt (its standing instructions), two tools, and access to a model.
 Everything around the model that keeps it on track (prompt, tool schemas, validation, limits) is what Manfred calls the *harness*.
 
@@ -214,7 +217,7 @@ Our app has a single agent, so A2A plays no role here.
 
 Before we look at the layers, one question shapes everything else: does the agent get its own server, or does it move into the backend you already have?
 
-![Path A: the agent runs inside the data backend. Path B: the agent is a separate service in front of it.](paths.svg "Path A or path B")
+![Path A: the agent runs inside the backend. Path B: the agent is a separate service in front of it.](paths.svg "Path A or path B")
 
 **Path A: the agent in the backend.**
 The agent is a module of your existing backend.
@@ -249,7 +252,7 @@ Path B has [its own section](#path-b-the-agent-as-a-separate-service) further do
 
 Now to the app itself. Here are all layers in one picture:
 
-![The layers of the demo: Angular with CopilotKit, AG-UI, the Mastra agent and the language model, the HTTP contract, two interchangeable backends, the database](stack.svg "The layers of the demo. Dashboard tiles and photos skip the agent.")
+![The layers of the demo: Angular with CopilotKit, AG-UI and the HTTP contract, two interchangeable backends with the agent inside, the LLM, the database](stack.svg "The layers of the demo. Dashboard tiles and photos skip the agent.")
 
 And here they are as a table, with vendor and license:
 
@@ -289,7 +292,7 @@ Both downloads are pinned to a commit and come with SHA-256 checksums that the i
 | --- | --- |
 | What it is | The relational database that stores the data warehouse and the views the app may read |
 | Made by | Microsoft (SQL Server, the Developer edition is free for development) / the PostgreSQL Global Development Group (PostgreSQL License) |
-| Why we need it | It enforces the data protection rules: views, a read-only account, a data scope per connection |
+| Why we need it | It enforces the data protection rules: views, a read-only account, row-level security per connection |
 | Alternatives | MySQL, MariaDB, DuckDB for local analytics, or a cloud warehouse such as BigQuery or Snowflake |
 
 ### Company Names: Yes. People: No.
@@ -323,13 +326,15 @@ WHERE CAST(SESSION_CONTEXT(N'TerritoryGroup') AS nvarchar(50)) IN (N'*', t.Sales
 The backends connect with a dedicated read-only account that may read the `analytics` schema and nothing else.
 Even with a bug in the backend, there is no way to reach `DimEmployee`.
 
-### A Data Scope That Fails Closed
+### Row-Level Security That Fails Closed
 
 The `WHERE` clause above shows a second protection.
 Each backend may be restricted to one territory group, e.g. `Europe`.
 The backend states its scope for every database connection: in SQL Server as a read-only session context, in PostgreSQL as a connection parameter.
 **Without that value, the views return no rows.**
 A forgotten configuration therefore shows nothing instead of everything.
+This principle is called *row-level security*: the database decides per connection which rows exist.
+The demo writes the filter into the views themselves; SQL Server (security policies) and PostgreSQL (row security policies) also offer it as a built-in feature on the tables.
 The scope belongs to the deployment, not to a logged-in user; the demo has no login. With authentication, the backend would write the user's scope into the same session value.
 
 Secure views protect the data. But they do not yet stop a model from writing arbitrary SQL against them.
@@ -343,7 +348,7 @@ Secure views protect the data. But they do not yet stop a model from writing arb
 | Why we need it | The model never writes SQL. The backend decides which measures and dimensions exist and checks every request |
 | Alternatives | Any backend you know: Spring Boot, Express, Fastify, Go. For data access: Dapper, Prisma, Kysely, TypeORM. Dedicated semantic layers such as Cube or dbt's MetricFlow do the same job as a product |
 
-The obvious idea would be to let the language model write SQL.
+The obvious idea would be to let the LLM write SQL.
 Please don't.
 A model that writes SQL can read every column the database account can read, can write queries that run for minutes, and can be talked into almost anything by a cleverly worded question.
 
@@ -401,7 +406,7 @@ The measures go the same way: only the requested aggregates are bound into the r
 
 If you know [Dynamic LINQ](https://dynamic-linq.net/), this looks familiar: both build expression trees at runtime.
 The difference matters here: Dynamic LINQ *parses strings* such as `"new(OrderYear, Country)"`.
-That is convenient, but it puts an expression parser into the path between the language model and the database, and versions before 1.3.0 had a [remote code execution vulnerability](https://github.com/advisories/GHSA-w65q-jcmv-28gj) (CVE-2023-32571) in exactly that parser.
+That is convenient, but it puts an expression parser into the path between the LLM and the database, and versions before 1.3.0 had a [remote code execution vulnerability](https://github.com/advisories/GHSA-w65q-jcmv-28gj) (CVE-2023-32571) in exactly that parser.
 Our approach only combines lambdas that were compiled together with the backend. There is nothing to parse.
 The price is a little more code.
 
@@ -445,8 +450,8 @@ With a safe and stable data API in place, the agent can use it.
 ## Layer 3: The Agent, with Mastra or the Microsoft Agent Framework
 
 The agent is the part that talks to the model.
-It has a system prompt, two server tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the frontend adds a third one later.
-On path A, it lives in the data backend: Mastra in NestJS, the Microsoft Agent Framework in ASP.NET Core.
+It has a system prompt, two backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the frontend adds a third one later.
+On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framework in ASP.NET Core.
 
 | Agent (Node.js track) | Mastra |
 | --- | --- |
@@ -570,7 +575,7 @@ Two details cost me some time, and both show how much the model depends on the s
 The browser posts the conversation, and the agent answers with AG-UI events as server-sent events.
 This is what happens for one question:
 
-![Sequence of one question: browser, agent, language model, semantic layer](request-flow.svg "One question, step by step")
+![Sequence of one question: browser, agent, LLM, semantic layer](request-flow.svg "One question, step by step")
 
 In **ASP.NET Core**, the AG-UI endpoint is one line, from the package `Microsoft.Agents.AI.Hosting.AGUI.AspNetCore`:
 
@@ -612,20 +617,31 @@ For a demo, that is ideal: no conversation ends up in a database on the server.
 
 ### Mastra and the Agent Framework Side by Side
 
+Are the two equivalent? For this app, yes.
 The Angular app does not know which framework answers; only the status line in the header shows it.
 With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions with the same kind of charts: a line chart for the quarterly revenue per channel, product cards for the Mountain-200, and the polite refusal for the key account manager.
 Pinning a chart by chat works with both, including the confirmation after the frontend tool has run.
 The texts differ from run to run, as they do with the same framework, too.
 
+That is no coincidence: both frameworks are built from the same parts.
+An agent has instructions, tools and a model, a loop calls tools until the answer is complete, and the result streams to the browser over AG-UI.
+Beyond what this demo uses, both also offer workflows with explicit steps, memory for conversations, MCP clients and telemetry.
+
 What differs is the work around it:
 
 | | Mastra | Microsoft Agent Framework |
 | --- | --- | --- |
-| Language | TypeScript | C# (also Python) |
+| Languages | TypeScript | C#, Python, Go (preview) |
+| Model access | a model router: one string per model, e.g. `anthropic/claude-sonnet-5-5` | an `IChatClient` from Microsoft.Extensions.AI, created by the provider's SDK |
 | Tool schema | written by hand in Zod | derived from C# types, adjusted in a callback |
 | Validation of tool arguments | Mastra checks against the Zod schema | deserialization into the C# types; names are checked by the semantic layer |
-| Models | model router with one string per provider | one `IChatClient` per provider SDK |
 | AG-UI | adapter package plus a few lines of streaming | `MapAGUIServer()`, still a preview package |
+| Trying agents locally | Mastra Studio, a local web UI | DevUI, a preview package |
+| Origin | Kepler Software, 1.0 in January 2026 | Microsoft, direct successor of Semantic Kernel and AutoGen |
+| License | Apache 2.0, except the source-available `ee/` folders | MIT |
+
+So the choice follows your backend: a Node.js team takes Mastra, a .NET team the Agent Framework.
+Neither is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
 
 On the .NET side, the AG-UI hosting package is a preview (`1.25.0-preview`) at the time of writing, while the rest of the framework is stable.
 The browser console also shows compatibility warnings from the AG-UI client about fields that the .NET server sends as `null`; they do not affect the app.
@@ -649,7 +665,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 | Model | Claude, GPT or Gemini |
 | --- | --- |
-| What it is | The language model that reads the conversation and decides which tool to call |
+| What it is | The LLM that reads the conversation and decides which tool to call |
 | Made by | Anthropic, OpenAI, Google, each with a commercial API |
 | Why we need it | It turns a question in plain language into a structured query and comments on the result |
 | Alternatives | Any provider with an SDK for your agent framework, or an open-weight model on your own hardware via Ollama or vLLM |
@@ -704,13 +720,13 @@ In the template, the chat is one element:
 ### Three Ways to Generate UI
 
 CopilotKit offers three ways to connect an Angular component to the agent.
-Manfred summed up the difference nicely: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a server tool.
+Manfred summed up the difference nicely: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a backend tool.
 
 | API | Who defines the tool? | What happens? |
 | --- | --- | --- |
 | `registerComponent()` | the frontend | The model calls the tool *to show* the component and passes the data as arguments. |
 | `registerFrontendTool()` | the frontend | The model calls the tool, the handler runs in the browser (and may render a component). |
-| `registerRenderToolCall()` | the agent | A server tool runs; the frontend only *draws* its arguments and result. |
+| `registerRenderToolCall()` | the agent | A backend tool runs; the frontend only *draws* its arguments and result. |
 
 All three are controlled generative UI in the sense of the table above: the components are ours, the agent only chooses and fills them.
 
@@ -791,7 +807,7 @@ Measures with the same unit are drawn side by side, and the chart always says wh
 ### Dashboard: Running Without the Model
 
 A pinned tile is a `SalesView`: title, chart type, query.
-It is stored in `localStorage` and loaded with `httpResource()` directly from the data backend:
+It is stored in `localStorage` and loaded with `httpResource()` directly from the backend:
 
 ```ts
 protected readonly data = httpResource<AggregateResponse>(() => ({
@@ -862,21 +878,21 @@ Then it called `querySales`, showed the top 10 resellers as a bar chart, and nam
 That is exactly the line we drew: **company names yes, people no.**
 And if the model had tried anyway, there would have been nothing to find.
 
-## What Goes to the Model Provider?
+## What Goes to the LLM Provider?
 
 Here are all the protections in one picture, from the database at the bottom to the prompt at the top:
 
-![Six layers keep personal data out: database account, views, data scope, semantic layer, tool schema, system prompt](protection.svg "Only the top layer depends on the model.")
+![Six layers keep personal data out: database account, views, row-level security, semantic layer, tool schema, system prompt](protection.svg "Only the top layer depends on the model.")
 
 The protection has limits, and you should know them.
 
-- **Everything a tool returns goes to the language model.** The aggregated rows, the product names, the reseller names. The semantic layer and the views decide what that is. That is why personal data must be kept out *before* the model instead of being filtered *after* it.
-- **Product photos do not.** The product cards load the images directly from the data backend; the model only sees product keys and names.
+- **Everything a tool returns goes to the LLM.** The aggregated rows, the product names, the reseller names. The semantic layer and the views decide what that is. That is why personal data must be kept out *before* the model instead of being filtered *after* it.
+- **Product photos do not.** The product cards load the images directly from the backend; the model only sees product keys and names.
 - **The dashboard does not.** Pinned tiles never touch the model.
 - **The browser talks to one origin only.** The app loads no fonts, scripts or telemetry from third parties, and the CopilotKit Inspector (which [reports usage](https://github.com/CopilotKit/CopilotKit/blob/main/packages/web-inspector/src/lib/telemetry.ts) when opened) is disabled.
 - **Removing a column does not prevent every inference.** In AdventureWorks, only two to six sales representatives sold in each region, and in Germany only two. Anyone who knows who looks after the German bike shops gets very close to their figures with "revenue per country", although the system knows nothing about them. In a real project, agree on the granularity with your data protection officer and the works council: suppress small groups, use coarser regions, or leave a dimension out entirely. Technically, that is the same principle as the views: what is not in the semantic layer cannot be asked for. Only this time it applies to the dimensions instead of the columns.
 
-For real customer data, you also need a data processing agreement with the model provider, ideally with EU data residency, or a model you host yourself.
+For real customer data, you also need a data processing agreement with the LLM provider, ideally with EU data residency, or a model you host yourself.
 In both agent frameworks, switching the provider is a small change.
 
 One more number for your planning: CopilotKit is not small.
@@ -914,3 +930,41 @@ Clone it, run `docker compose --profile node up` or `docker compose --profile do
 Many thanks to Manfred Steyer for the inspiring workshop!
 
 How do you keep personal data away from your agents? I'm curious about your approaches, so let me know.
+
+## Glossary
+
+Many of these concepts have different names in different frameworks.
+The first column is the term used in this article.
+
+| Term | Meaning | Names in the frameworks and products |
+| --- | --- | --- |
+| **LLM** (large language model) | The model that reads the conversation and writes the answer or a tool call | Mastra: `model`, a string such as `anthropic/claude-sonnet-5-5`. .NET (Microsoft.Extensions.AI): `IChatClient`, a "chat client". Microsoft Agent Framework: a `ChatClientAgent` is backed by an `IChatClient` |
+| **LLM provider** | The company whose API runs the model | Anthropic, OpenAI, Google; or your own hardware via Ollama or vLLM |
+| **System prompt** | Standing instructions that apply to the whole conversation | Mastra and Agent Framework: `instructions`. .NET: a message with `ChatRole.System`. OpenAI: `instructions` and *developer* messages. Anthropic: system prompt |
+| **Tool** | A function described to the model by name, description and JSON schema | Mastra: tool (`createTool`). .NET: `AIFunction`, created with `AIFunctionFactory`. OpenAI: function tool. Anthropic: tool use, "also called function calling" |
+| **Tool call** | The model's request to run a tool with certain arguments | OpenAI: function call. AG-UI: the events `TOOL_CALL_START`, `TOOL_CALL_ARGS`, `TOOL_CALL_END`, `TOOL_CALL_RESULT` |
+| **Backend tool** | A tool that runs on the server, next to the agent | AG-UI and Agent Framework: backend tools. CopilotKit: *server tools* for its own built-in agent, *backend tool calls* for an external agent. Vercel AI SDK: server-side tools. Mastra: a tool with an `execute` function. Not to be confused with Anthropic's *server tools* (see below) |
+| **Frontend tool** | A tool that the browser offers and runs, e.g. `pinToDashboard` | CopilotKit, AG-UI and Agent Framework: frontend tools (`registerFrontendTool()` in Angular). AG-UI also: client-defined tools. Mastra: client tools (`clientTools`). Vercel AI SDK: client-side tools |
+| **Provider-run tool** | A tool that the LLM provider runs on its own infrastructure, e.g. web search | Anthropic: server tools, as opposed to *client tools*, which run in your application (backend included). Vercel AI SDK: provider-executed tools |
+| **Tool rendering** | The frontend draws a tool call and its result as a component | CopilotKit: tool call rendering, `registerRenderToolCall()`. AG-UI and Agent Framework: backend tool rendering |
+| **Agent** | An LLM in a loop with tools and instructions | Mastra: `Agent`. Agent Framework: `AIAgent`, concretely `ChatClientAgent` (.NET) or `Agent` (Python). Vercel AI SDK: `ToolLoopAgent` |
+| **Agent framework** | A library that runs the loop, the tools, streaming and the model connection | Mastra, Microsoft Agent Framework, LangGraph, Vercel AI SDK, Google ADK and others |
+| **Harness** | Everything around the model that keeps it on track: prompt, tool schemas, validation, limits | Manfred Steyer's term. The Agent Framework also ships a *Harness Agent*, an agent with planning, context compaction and tool approval built in |
+| **Generative UI** | User interface that the agent's answer produces, beyond text | CopilotKit: controlled, declarative and open-ended generative UI. AG-UI: static and declarative generative UI. Agent Framework: tool-based and agentic generative UI. Vercel AI SDK: connecting the result of a tool call to a component |
+| **Shared state** | A data structure that agent and app both read and write | AG-UI: state with `STATE_SNAPSHOT` and `STATE_DELTA`. CopilotKit: shared state or agent state |
+| **Human-in-the-loop** | The agent pauses until a person approves or answers | AG-UI: interrupts. Agent Framework: `ApprovalRequiredAIFunction`. Mastra: `requireApproval`. CopilotKit: `registerHumanInTheLoop()` |
+| **AG-UI** | Protocol between app and agent: events over HTTP | CopilotKit, see [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a) |
+| **A2UI** | Format for a declarative UI description | Google |
+| **MCP** | Protocol between agent and external tools or data | Model Context Protocol, from Anthropic, now at the Linux Foundation |
+| **A2A** | Protocol between agents | Agent2Agent, from Google, now at the Linux Foundation |
+| **SSE** (server-sent events) | An HTTP response that stays open and delivers one event after another | Web standard (`EventSource`); AG-UI's HTTP client receives its events this way |
+| **Semantic layer** | Fixed business vocabulary of measures and dimensions, translated into SQL by the backend | dbt: Semantic Layer, powered by MetricFlow. Cube: data model with cubes and views. Looker: LookML. Power BI: semantic model |
+| **Measure** | A number that is aggregated with a fixed formula, e.g. revenue | The same in dbt, Cube, Looker and Power BI; dbt builds *metrics* on top of measures |
+| **Dimension** | An attribute to group or filter by, e.g. year or country | The same in dbt, Cube and Looker; from dimensional modelling in data warehousing |
+| **Text-to-SQL** | The LLM writes SQL itself | Also NL2SQL. This demo avoids it on purpose |
+| **View** | A stored `SELECT` that the database offers like a table | SQL standard |
+| **Row-level security** | The database decides per connection or user which rows exist | SQL Server: Row-Level Security with security policies (`CREATE SECURITY POLICY`). PostgreSQL: row security policies (`CREATE POLICY`). The demo filters inside the views instead |
+| **Fail closed** | On a missing or broken configuration, the system denies access instead of allowing everything | Security term; the opposite is *fail open* |
+| **API contract** | The machine-readable description of an HTTP API that both backends implement | OpenAPI |
+| **Path A / path B** | Agent in the existing backend, or as a separate service | Terms of this article |
+
