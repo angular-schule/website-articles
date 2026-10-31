@@ -867,12 +867,12 @@ For learning, the most useful part of the demo is a debug feature: below the cha
 Each part is built in the language of its layer:
 
 - **Angular:** `HttpAgent` accepts a `fetch` function. The demo's version passes the request through unchanged and reads a copy of the event stream (`ReadableStream.tee()`).
-- **Node.js:** a small proxy on a free port of 127.0.0.1, in the same process. The provider SDKs read their address from `ANTHROPIC_BASE_URL` and `OPENAI_BASE_URL`, so pointing these at the proxy is enough, and the agent code stays unchanged. The proxy forwards each request to the address that was configured before, so the EU endpoint of OpenAI works with the window, too.
+- **Node.js:** a small proxy on a free port of 127.0.0.1, in the same process. Mastra's model router reads each provider's address from an environment variable (`ANTHROPIC_BASE_URL`, `OPENAI_BASE_URL`, `GOOGLE_BASE_URL`, `MISTRAL_BASE_URL`), so pointing these at the proxy is enough, and the agent code stays unchanged. The proxy forwards each request to the address that was configured before, so the EU endpoints work with the window, too.
 - **.NET:** the Anthropic SDK accepts `DelegatingHandler`s for its HTTP pipeline (`Handlers` on the client), and OpenAI's SDK accepts an `HttpClient` as its transport. The same handler sits in both: it records the request body and the streamed answer while passing both through.
 
 Headers, and with them the API key, are never recorded.
 
-> **Debug feature, not for production.** The window shows the system prompt, every tool result and the whole conversation to whoever opens the app. It is on by default because the demo is meant for learning. Switch it off with `DEBUG_TRAFFIC=off`, and remove everything marked `DEBUG ONLY` from a production application.
+> **Debug feature, not for production.** The window shows the system prompt, every tool result and the whole conversation to whoever opens the app. It is on by default because the demo is meant for learning. Switch it off with `DEBUG_TRAFFIC=off` in `agent/.env`, and remove everything marked `DEBUG ONLY` from a production application.
 
 The window pays off quickly.
 In every answer from Anthropic, the `usage` block contains `"inference_geo": "global"`.
@@ -918,7 +918,7 @@ Without it, in my runs both agents answered every English question in English an
 Current models do this by themselves, and the rule only added a way to get it wrong.
 
 The .NET agent keeps two of the changes anyway.
-Tool results go to the model as compact JSON, which saves tokens, and the agent sets its own output limit, because 1,024 tokens can cut off a longer answer:
+Tool results go to the model as compact JSON, which saves tokens, and the Anthropic client gets its own output limit, because 1,024 tokens can cut off a longer answer:
 
 ```csharp
 AIFunctionFactoryOptions Tool(string name) => new()
@@ -929,11 +929,11 @@ AIFunctionFactoryOptions Tool(string name) => new()
     MarshalResult = (result, type, _) => new(JsonSerializer.Serialize(result, type ?? typeof(object), Json)),
 };
 
-return model
+new AnthropicClient { ApiKey = model.ApiKey }
+    .AsIChatClient(model.Name)
     .AsBuilder()
     .ConfigureOptions(options => options.MaxOutputTokens ??= 8192)
-    .Build()
-    .AsAIAgent(name: Id, instructions: Instructions(schema), tools: tools);
+    .Build();
 ```
 
 What I take from this:
@@ -1022,7 +1022,7 @@ The safest option remains an open-weight model on your own hardware: then no dat
 
 Mistral works with the demo's Node.js track, too.
 Mastra's model router knows the provider, so `MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint.
-For the EU endpoint, Mastra accepts a model object with its own address instead of the string, `{ id: 'mistral/mistral-large-latest', url: 'https://api.eu.mistral.ai/v1', apiKey }`, and then talks to it as an OpenAI-compatible API.
+For the EU endpoint, add `MISTRAL_BASE_URL=https://api.eu.mistral.ai/v1`; Mastra reads the address of every provider from `<PROVIDER>_BASE_URL`.
 As with every model change, try your questions first: the model has to fill the tool schemas reliably.
 
 ## Telemetry: Who Phones Home?
