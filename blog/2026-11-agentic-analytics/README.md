@@ -57,28 +57,22 @@ This first part lays the foundation: the vocabulary, the protocols, the architec
 
 [[toc]]
 
-## Inspired by Manfred Steyer
+## Where the Idea Comes From
 
-The idea for this series comes from a workshop I enjoyed a lot.
-On October 23, 2026, [Manfred Steyer](https://www.angulararchitects.io/) gave a free online live-coding workshop for AI Poland: *Build an Agentic Analytics App with Angular*.
-In about two hours, he built a sales analytics app with Angular, [CopilotKit](https://www.copilotkit.ai/), the AG-UI protocol and the agent framework [Mastra](https://mastra.ai/).
-The [recording](https://ai-poland.pl/free-workshops/recordings) and his [code](https://github.com/manfredsteyer/agentic-sales) are public, and I can only recommend both.
+The starting point was a free online workshop that [Manfred Steyer](https://www.angulararchitects.io/) gave for AI Poland on October 23, 2026: *Build an Agentic Analytics App with Angular* ([recording](https://ai-poland.pl/free-workshops/recordings), [code](https://github.com/manfredsteyer/agentic-sales)).
+His demo combined Angular with [CopilotKit](https://www.copilotkit.ai/), the AG-UI protocol and the agent framework [Mastra](https://mastra.ai/), on an obfuscated Google Analytics sample dataset from BigQuery, loaded into DuckDB.
 
-Two of his thoughts stuck with me.
-First: the chat is only the input channel. **The result is the dashboard**, which the user and the agent build together.
-Second: when the model gets something wrong, the engineers have to improve the *harness* around it: guardrails, metadata, deterministic code.
+The core idea comes from there, and I thank Manfred for it: **with CopilotKit, the agent answers with Angular components**.
+The chat is only the input channel; the result is the dashboard that the user and the agent build together.
 
-Manfred's demo works with an obfuscated Google Analytics sample dataset from BigQuery, loaded into DuckDB.
-I wanted to see how the architecture holds up in a setting that looks more like our customer projects:
+This series takes the idea a good deal further, with its own demo:
 
-- a **relational database** with a classic data warehouse schema,
-- **two typical backend stacks** that are interchangeable: ASP.NET Core with Entity Framework Core and SQL Server, or NestJS with Drizzle and PostgreSQL,
-- and **data that contains people**, so we have to decide what the LLM may see.
-
-So this series does not repeat Manfred's code.
-It retells the idea with its own demo, its own data, and a few decisions of its own.
-The building blocks are the same as his: CopilotKit in Angular, AG-UI in between, Mastra on the server. For the .NET track, the Microsoft Agent Framework takes Mastra's place.
-Many thanks to Manfred for the inspiring workshop!
+- **Data:** a classic data warehouse (AdventureWorksDW) in SQL Server or PostgreSQL instead of an analytics export in DuckDB, and data about people that must never reach the model.
+- **Backends:** two interchangeable stacks with one HTTP contract, ASP.NET Core with Entity Framework Core, or NestJS with Drizzle.
+- **Agents:** Mastra and the Microsoft Agent Framework, inside the backend or as a separate service.
+- **Data protection:** views without personal data, row-level security that fails closed, a semantic layer instead of text-to-SQL, and a close look at providers, processing in the EU and telemetry.
+- **Models:** Claude, GPT, Gemini and Mistral, in both backends.
+- **Practice:** a traffic window that shows every message, fine-tuning of the defaults, and tests that run without a model.
 
 ## What We Build
 
@@ -116,7 +110,7 @@ The [glossary](#glossary) at the end lists the names per framework.
 **Agent.**
 An agent is an LLM in a loop: the model writes, calls a tool, reads the result, maybe calls the next tool, and finally answers.
 In our app, the agent has a system prompt (its standing instructions), two tools, and access to a model.
-Everything around the model that keeps it on track (prompt, tool schemas, validation, limits) is what Manfred calls the *harness*.
+Everything around the model that keeps it on track (prompt, tool schemas, validation, limits) is what Manfred calls the *harness*: when the model gets something wrong, that is where the engineers improve the app.
 
 **Agent framework.**
 You can write that loop yourself, but you will soon want streaming, retries, validation of tool arguments, switching providers, and logs.
@@ -273,7 +267,7 @@ And here they are as a table, with vendor and license:
 | Agent | Microsoft Agent Framework (.NET) **or** Mastra (Node.js) | Microsoft / Kepler Software, Inc. | MIT / Apache 2.0 (except the enterprise `ee/` folders, see layer 3) |
 | Protocol | AG-UI | started by CopilotKit, open source | MIT |
 | Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT |
-| Model | Claude, GPT, Gemini or Mistral (the demo wires Gemini and Mistral on the Node.js track only) | Anthropic, OpenAI, Google, Mistral AI | commercial API |
+| Model | Claude, GPT, Gemini or Mistral | Anthropic, OpenAI, Google, Mistral AI | commercial API |
 
 Throughout the series, a small table for each layer says what it is, who makes it, why we need it, and what you could use instead.
 
@@ -461,9 +455,9 @@ Mistral is the obvious candidate: a European company with an EU endpoint.
 Check its list of subprocessors, though: if a US cloud runs the data centres, the same question comes back one level lower.
 The safest option remains an open-weight model on your own hardware: then no data leaves your servers at all.
 
-Mistral works with the demo's Node.js track, too.
-Mastra's model router knows the provider, so `MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint.
-For the EU endpoint, add `MISTRAL_BASE_URL=https://api.eu.mistral.ai/v1`; Mastra reads the address of every provider from `<PROVIDER>_BASE_URL`.
+Mistral works with both backends of the demo.
+`MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint; for the EU endpoint, add `MISTRAL_BASE_URL=https://api.eu.mistral.ai/v1`.
+Mastra reads the address of every provider from `<PROVIDER>_BASE_URL`, and the .NET backend reads the same variables.
 As with every model change, try your questions first: the model has to fill the tool schemas reliably.
 
 ## Telemetry: Who Phones Home?

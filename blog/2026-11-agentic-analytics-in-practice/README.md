@@ -118,7 +118,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
-The demo wires Google and Mistral only on the Node.js track; in .NET, Gemini works through Google's own SDK or its OpenAI-compatible endpoint, the demo just does not include it.
+Gemini and Mistral work in .NET, too: both offer an OpenAI-compatible endpoint, so the demo's .NET backend talks to them with OpenAI's SDK. For Gemini, Google also publishes its own .NET SDK, [Google.GenAI](https://www.nuget.org/packages/Google.GenAI), which builds on Microsoft.Extensions.AI.
 Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
@@ -251,7 +251,7 @@ A few directions go further than this demo, and I deliberately skipped them:
 - **JSONata** as a sandbox in which the model can compute derived figures.
 - **Human-in-the-loop** approvals for large queries.
 
-The workshop that inspired this series, mentioned in [part 1](/blog/2026-11-agentic-analytics#inspired-by-manfred-steyer), shows several of them. In my opinion, that is the natural next step after this series.
+The workshop that inspired this series, mentioned in [part 1](/blog/2026-11-agentic-analytics#where-the-idea-comes-from), shows several of them. In my opinion, that is the natural next step after this series.
 
 ## Conclusion
 

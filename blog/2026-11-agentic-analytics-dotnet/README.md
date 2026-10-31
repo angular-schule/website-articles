@@ -207,7 +207,8 @@ On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at t
 ### Switching the Model
 
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
-Set `MODEL` and the provider's API key in `agent/.env`. The demo's .NET backend is wired for Anthropic and OpenAI. That is a choice of the demo, not a limit of .NET: Google publishes an official .NET SDK for Gemini ([Google.GenAI](https://www.nuget.org/packages/Google.GenAI)) that builds on Microsoft.Extensions.AI, and Gemini also offers an [OpenAI-compatible endpoint](https://ai.google.dev/gemini-api/docs/openai) that OpenAI's SDK can talk to.
+Set `MODEL` and the provider's API key in `agent/.env`; the variables are the same as on the Node.js track.
+The demo's .NET backend supports all four big providers: Anthropic through its own SDK, and OpenAI, Gemini and Mistral through OpenAI's SDK. Gemini and Mistral both offer an [OpenAI-compatible endpoint](https://ai.google.dev/gemini-api/docs/openai), so the same `IChatClient` only needs a different address (`GOOGLE_BASE_URL`, `MISTRAL_BASE_URL`, e.g. Mistral's EU endpoint `https://api.eu.mistral.ai/v1`). For Gemini, Google also publishes its own .NET SDK, [Google.GenAI](https://www.nuget.org/packages/Google.GenAI), which builds on Microsoft.Extensions.AI.
 One trap: Anthropic's `IChatClient` adapter limits answers to 1,024 tokens unless the request sets `MaxOutputTokens`; [part 4](/blog/2026-11-agentic-analytics-in-practice#example-the-answer-language) shows the fix.
 
 [Part 4](/blog/2026-11-agentic-analytics-in-practice#switching-the-model) compares the providers, and [part 1](/blog/2026-11-agentic-analytics#what-goes-to-the-llm-provider) explains which of them can process data in Europe.
