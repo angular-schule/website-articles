@@ -272,7 +272,7 @@ And here they are as a table, with vendor and license:
 | Agent | Microsoft Agent Framework (.NET) **or** Mastra (Node.js) | Microsoft / Kepler Software, Inc. | MIT / Apache 2.0 (except the enterprise `ee/` folders, see layer 3) |
 | Protocol | AG-UI | started by CopilotKit, open source | MIT |
 | Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT |
-| Model | Claude, GPT, Gemini or Mistral (Gemini and Mistral on the Node.js track only) | Anthropic, OpenAI, Google, Mistral AI | commercial API |
+| Model | Claude, GPT, Gemini or Mistral (the demo wires Gemini and Mistral on the Node.js track only) | Anthropic, OpenAI, Google, Mistral AI | commercial API |
 
 Throughout the series, a small table for each layer says what it is, who makes it, why we need it, and what you could use instead.
 

@@ -118,7 +118,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
-Google and Mistral models run on the Node.js track only.
+The demo wires Google and Mistral only on the Node.js track; in .NET, Gemini works through Google's own SDK or its OpenAI-compatible endpoint, the demo just does not include it.
 Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
