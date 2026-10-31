@@ -81,6 +81,7 @@ The agent answers with **Angular components**: line and bar charts, stat tiles, 
 Every chart can be pinned to the dashboard on the right.
 A pinned tile stores only the *query*, not the numbers, and asks the database again on every visit, **without the LLM**.
 That is fast, deterministic, and costs no tokens.
+Below both, a [traffic window](#watching-the-traffic) shows every message between browser, agent and LLM provider, so you can see what really goes over the wire.
 
 Before we build it, let's sort out the vocabulary.
 
@@ -679,7 +680,7 @@ Try your questions with two or three models before you decide.
 
 ### Pitfalls: Telemetry and Peer Dependencies
 
-- **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss.
+- **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss. [Telemetry: Who Phones Home?](#telemetry-who-phones-home) lists every layer of the stack.
 - `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as peer dependencies, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it installs peers explicitly instead (`legacy-peer-deps=true` in `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
 
 The server side is complete. Now to the part where Angular developers feel at home.
@@ -843,7 +844,32 @@ That is the right choice when tools need database access that must never reach t
 
 The Angular team itself does not offer a chat or generative UI library; [angular.dev/ai](https://angular.dev/ai) points to Genkit, Firebase AI Logic and the Gemini API for AI features.
 
-With that, the app is complete on path A. Before we move the agent into its own service, a look at how much small settings change the result.
+With that, the app is complete on path A. Before we move the agent into its own service, two things that help you understand and tune it: a window into the traffic, and a look at how much small settings change the result.
+
+## Watching the Traffic
+
+For learning, the most useful part of the demo is a debug feature: below the chat, a traffic window shows every message on both lines.
+
+- **Browser ↔ agent (AG-UI):** the `RunAgentInput` that the browser posts, with the whole conversation and the frontend tools, and every event that comes back: `RUN_STARTED`, the tool call arriving piece by piece in `TOOL_CALL_ARGS`, the result, the text deltas and `RUN_FINISHED`.
+- **Agent ↔ LLM provider:** the request in the provider's own format, with the system prompt, the tool schemas and the tool results, and the streamed answer. This is what the model really gets, including the defaults that the framework adds.
+
+![The traffic window below the chat: the AG-UI events of one run](traffic-window.png "Every AG-UI event of one run. The second tab shows the requests to the LLM provider.")
+
+Each part is built in the language of its layer:
+
+- **Angular:** `HttpAgent` accepts a `fetch` function. The demo's version passes the request through unchanged and reads a copy of the event stream (`ReadableStream.tee()`).
+- **Node.js:** a small proxy on a free port of 127.0.0.1, in the same process. The provider SDKs read their address from `ANTHROPIC_BASE_URL` and `OPENAI_BASE_URL`, so pointing these at the proxy is enough, and the agent code stays unchanged.
+- **.NET:** the Anthropic SDK accepts `DelegatingHandler`s for its HTTP pipeline (`Handlers` on the client). The demo's handler records the request body and the streamed answer while passing both through.
+
+Headers, and with them the API key, are never recorded.
+
+> **Debug feature, not for production.** The window shows the system prompt, every tool result and the whole conversation to whoever opens the app. It is on by default because the demo is meant for learning. Switch it off with `DEBUG_TRAFFIC=off`, and remove everything marked `DEBUG ONLY` from a production application.
+
+The window pays off quickly.
+In every answer from Anthropic, the `usage` block contains `"inference_geo": "global"`.
+According to [Anthropic's documentation](https://platform.claude.com/docs/en/manage-claude/data-residency), that is the default, and it means that "inference may run in any available geography".
+The only alternative is `"us"`; there is no EU option on Anthropic's own API at the time of writing.
+That is exactly the kind of detail your data protection officer will ask about, and one you would never see in the chat.
 
 ## Fine-Tuning: Do Not Settle for the First Result
 
@@ -861,8 +887,7 @@ Nothing in the request was German.
 With Mastra, the same prompt did not produce a single German answer in my runs.
 
 Did Mastra add a hidden instruction?
-To find out, I recorded what both agents send to the Anthropic API.
-Both read the API address from the environment variable `ANTHROPIC_BASE_URL`, so a small proxy that writes every request to a file before forwarding it is enough.
+To find out, I recorded what both agents send to the Anthropic API, the same way the [traffic window](#watching-the-traffic) does.
 The answer: no hidden prompt, the system prompt was identical character for character.
 The differences were in the details:
 
@@ -968,6 +993,40 @@ In both agent frameworks, switching the provider is a small change.
 One more number for your planning: CopilotKit is not small.
 It brings Markdown rendering, syntax highlighting, KaTeX and web components, and the initial bundle of the demo is about 1.5 MB compressed.
 In my opinion, that is fine for an internal analytics tool, but not for a public landing page.
+
+## Telemetry: Who Phones Home?
+
+The LLM provider is not the only one that receives data.
+Several of the tools in this stack report usage to their makers, and some of them do it by default.
+In a German company, leaving that on is not an option for me.
+Every report goes to a third party, often outside the EU, and it quickly raises questions that you do not want to answer for a demo: what exactly is sent, on what legal basis, and who processes it?
+So all telemetry must be off before the app touches real data.
+
+Here is every layer of the demo and what it does:
+
+| Layer | Telemetry | How to switch it off |
+| --- | --- | --- |
+| Angular, CopilotKit for Angular, AG-UI client | none from the app at runtime; the browser talks to its own origin only | – |
+| CopilotKit Inspector | reports usage when opened | `enableInspector: false` (the demo does) |
+| CopilotKit runtime (not used by the demo) | usage events to Segment | `COPILOTKIT_TELEMETRY_DISABLED=true` or `DO_NOT_TRACK=1` |
+| Angular CLI | usage data only after you opt in | `"analytics": false` in `angular.json` (the demo does), or `ng analytics disable` |
+| Mastra | usage telemetry to PostHog, **on by default** | `MASTRA_TELEMETRY_DISABLED=1` (the demo does) |
+| Microsoft Agent Framework, Microsoft.Extensions.AI | none; OpenTelemetry only if you add it, and only to the exporter you configure | – |
+| Anthropic SDKs | none; OpenTelemetry in the .NET SDK only on request | – |
+| NestJS, Drizzle, postgres.js, ASP.NET Core, EF Core | none | – |
+| .NET CLI (`dotnet restore`, `build`, `publish`) | usage data to Microsoft, **on by default**, [among it](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry) three octets of the IP address and a hashed MAC address | `DOTNET_CLI_TELEMETRY_OPTOUT=1` (the demo's Dockerfile does) |
+| `swagger-ui-dist` | depends on `@scarf/scarf`, which reports the install from a `postinstall` script | `ignore-scripts=true` in `.npmrc` (the demo does) or `SCARF_ANALYTICS=false` |
+| Swagger UI | sends the URL of the OpenAPI document to validator.swagger.io when it is not served from localhost | `validatorUrl: null` (the demo does; Swashbuckle does it by default) |
+| PostgreSQL | none | – |
+| SQL Server | usage and diagnostic data to Microsoft; according to Microsoft without table contents or personal data | only in paid editions: `telemetry.customerfeedback = false`. The free Developer edition of the demo cannot switch it off |
+
+SQL Server is acceptable here because it only holds the sample data and only serves the demo.
+For production, the .NET track works just as well with a paid edition and telemetry off.
+
+Two habits help with every new package:
+
+- **Search the package for telemetry before you install it.** Words like `telemetry`, `posthog`, `segment` or `scarf` in its source and a `postinstall` script in its `package.json` are the usual signs.
+- **Watch the network.** The browser's developer tools show every request of the app; on the server, the [traffic window](#watching-the-traffic) shows what goes to the LLM provider.
 
 ## What This Demo Leaves Out
 
