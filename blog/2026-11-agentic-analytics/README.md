@@ -992,6 +992,7 @@ Here the providers differ a lot at the time of writing:
 
 - **Anthropic's own API cannot process data in Europe.** [`inference_geo`](https://platform.claude.com/docs/en/manage-claude/data-residency) knows only `"global"` (the default, "any available geography") and `"us"`. Claude models can run in EU regions through Amazon Bedrock, but then AWS is your contract partner, not Anthropic.
 - **OpenAI offers [data residency in Europe](https://developers.openai.com/api/docs/guides/your-data)** (EEA and Switzerland) with storage *and* inference in the region, through the endpoint `eu.api.openai.com`. It is a contract option: you need an EU project, an arrangement such as Zero Data Retention, and a talk with OpenAI's sales team, and it costs a surcharge for newer models.
+- **Mistral AI** is a French company. Its [EU endpoint](https://docs.mistral.ai/inference/regional-inference) `api.eu.mistral.ai` keeps inference in the EU and EFTA countries; the default endpoint `api.mistral.ai` makes no promise about the location. Function calling works on the regional endpoint, and that is all this agent needs. Agents, batch processing and files are not available there, and account data, keys and billing are not regional.
 
 So for an analytics tool with real company data in a German company, I would point you to OpenAI's models in the EU region today: a clean AVV with processing on European servers is much easier to get there.
 A company I work for chose OpenAI over Anthropic for exactly this reason.
@@ -1002,7 +1003,15 @@ Where the server stands does not change who can access the data.
 Neither company is listed in the [EU-U.S. Data Privacy Framework](https://www.dataprivacyframework.gov/list) at the time of writing, so transfers rest on standard contractual clauses.
 What the EU region does change is the paperwork: processing in Europe is what data protection officers, works councils and procurement departments ask for, and it is far easier to document and defend.
 In practice, that is often what decides the choice of provider.
-If you need more than that, only a model on your own hardware or a provider without US ties keeps the data out of reach of US authorities.
+If you need more than that, look at providers without US ties.
+Mistral is the obvious candidate: a European company with an EU endpoint.
+Check its list of subprocessors, though: if a US cloud runs the data centers, the same question comes back one level lower.
+The safest option remains a model on your own hardware.
+
+Mistral works with the demo, too.
+Mastra's model router knows the provider, so `MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint.
+For the EU endpoint, Mastra accepts a model object with its own address instead of the string, `{ id: 'mistral/mistral-large-latest', url: 'https://api.eu.mistral.ai/v1', apiKey }`, and then talks to it as an OpenAI-compatible API.
+As with every model change, try your questions first: the model has to fill the tool schemas reliably.
 On the Node.js track of the demo, that is configuration only: `MODEL=openai/…`, the API key, and `OPENAI_BASE_URL=https://eu.api.openai.com/v1`.
 The .NET track talks to Anthropic only; in the Agent Framework, you would swap the `IChatClient` for one from OpenAI's SDK.
 Or you host an open-weight model yourself, then no data leaves your servers at all.
