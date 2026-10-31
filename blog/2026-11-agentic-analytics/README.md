@@ -93,6 +93,7 @@ If you already know what a tool call is, skip ahead to [the protocols](#the-prot
 An LLM such as Claude, GPT or Gemini reads text and writes text.
 It runs at a provider (Anthropic, OpenAI, Google) or on your own hardware, and you talk to it over an HTTP API.
 On its own, it knows nothing about your database, and it cannot run code.
+It reads and writes text in *tokens*, pieces of a few characters; providers bill per token, and every request sets a limit for the answer.
 
 **Tool and tool call.**
 A *tool* is a function you describe to the model: a name, a description, and a JSON schema for the parameters.
@@ -464,7 +465,7 @@ On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framew
 
 | Agent (.NET track) | Microsoft Agent Framework |
 | --- | --- |
-| What it is | Microsoft's framework for agents in .NET and Python: agents from any `IChatClient` (the provider-neutral chat interface of Microsoft.Extensions.AI), tools from plain C# methods, workflows, memory and hosting for ASP.NET Core |
+| What it is | Microsoft's framework for agents in C#, Python and Go (preview): agents from any `IChatClient` (the provider-neutral chat interface of Microsoft.Extensions.AI), tools from plain C# methods, workflows, memory and hosting for ASP.NET Core |
 | Made by | Microsoft, MIT license; [the direct successor of Semantic Kernel and AutoGen](https://learn.microsoft.com/en-us/agent-framework/overview/), "created by the same teams" |
 | Why we need it | It runs the loop between model and tools in the ASP.NET Core process and serves AG-UI with `MapAGUIServer()` |
 | Alternatives | The plain `IChatClient` of `Microsoft.Extensions.AI` with your own loop, Semantic Kernel (its predecessor), or path B with Mastra |
@@ -621,8 +622,9 @@ For a demo, that is ideal: no conversation ends up in a database on the server.
 
 Are the two equivalent? For this app, yes.
 The Angular app does not know which framework answers; only the status line in the header shows it.
-With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions that the chat offers above the input field in the same way: a line chart for the quarterly revenue per channel, product cards for the Mountain-200 (a mountain bike in the AdventureWorks catalogue), and the polite refusal for the key account manager, which [the test below](#test-who-is-the-key-account-manager) looks at in detail.
-Pinning a chart by chat works with both, including the confirmation after the frontend tool has run.
+With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions above the chat's input field in the same way.
+The quarterly revenue per channel became a line chart, the Mountain-200 (a mountain bike in the AdventureWorks catalogue) became product cards, and the question about the key account manager got the polite refusal that [the test below](#test-who-is-the-key-account-manager) looks at in detail.
+Pinning a chart by chat (a frontend tool, see layer 4) works with both, including the confirmation after the frontend tool has run.
 The texts differ from run to run, as they do with the same framework, too.
 
 That is no coincidence: both frameworks are built from the same parts.
@@ -644,7 +646,7 @@ What differs is the work around it:
 
 So the choice follows your backend: a Node.js team takes Mastra, a .NET team the Agent Framework.
 The differences that matter most are invisible at first: the defaults with which each framework talks to the model. The section [Fine-Tuning: Do Not Settle for the First Result](#fine-tuning-do-not-settle-for-the-first-result) shows how much they can change.
-Neither is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
+None of these differences is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
 
 On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at the time of writing, while the rest of the framework is stable.
 
@@ -655,7 +657,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 | Framework | Maker | Languages | AG-UI |
 | --- | --- | --- | --- |
 | [Mastra](https://mastra.ai/) | Kepler Software | TypeScript | yes, `@ag-ui/mastra` |
-| [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/overview/) | Microsoft | .NET, Python | yes |
+| [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/overview/) | Microsoft | C#, Python, Go (preview) | yes |
 | [LangGraph](https://www.langchain.com/langgraph) | LangChain | Python, TypeScript | yes |
 | [Vercel AI SDK](https://ai-sdk.dev/) | Vercel | TypeScript | yes, via `@ag-ui/vercel-ai-sdk` |
 | [Google ADK](https://google.github.io/adk-docs/) | Google | Python, TypeScript, Go, Java | yes |
@@ -674,6 +676,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
+Google and Mistral models run on the Node.js track only.
 Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
@@ -681,7 +684,7 @@ Try your questions with two or three models before you decide.
 ### Pitfalls: Telemetry and Peer Dependencies
 
 - **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss. [Telemetry: Who Phones Home?](#telemetry-who-phones-home) lists every layer of the stack.
-- `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as peer dependencies, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it installs peers explicitly instead (`legacy-peer-deps=true` in `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
+- **Peer dependencies pull in more than you need.** `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as *peer dependencies* (packages it expects the app to provide), and npm installs those automatically. CopilotKit's runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it switches the automatic installation off (`legacy-peer-deps=true` in `.npmrc`) and lists the packages it uses itself. Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
 
 The server side is complete. Now to the part where Angular developers feel at home.
 
@@ -844,13 +847,17 @@ That is the right choice when tools need database access that must never reach t
 
 The Angular team itself does not offer a chat or generative UI library; [angular.dev/ai](https://angular.dev/ai) points to Genkit, Firebase AI Logic and the Gemini API for AI features.
 
+One thing to plan for: CopilotKit is not small.
+It brings Markdown rendering, syntax highlighting, KaTeX and web components, and the initial bundle of the demo is about 1.5 MB compressed.
+In my opinion, that is fine for an internal analytics tool, but not for a public landing page.
+
 With that, the app is complete on path A. Before we move the agent into its own service, two things that help you understand and tune it: a window into the traffic, and a look at how much small settings change the result.
 
 ## Watching the Traffic
 
-For learning, the most useful part of the demo is a debug feature: below the chat, a traffic window shows every message on both lines.
+For learning, the most useful part of the demo is a debug feature: below the chat and the dashboard, a traffic window shows every message on both connections, in two tabs:
 
-- **Browser ↔ agent (AG-UI):** the `RunAgentInput` that the browser posts, with the whole conversation and the frontend tools, and every event that comes back: `RUN_STARTED`, the tool call arriving piece by piece in `TOOL_CALL_ARGS`, the result, the text deltas and `RUN_FINISHED`.
+- **Browser ↔ agent (AG-UI):** the `RunAgentInput` that the browser posts, with the whole conversation and the frontend tools, and every event that comes back: `RUN_STARTED`, the tool call arriving piece by piece in `TOOL_CALL_ARGS`, the result (`TOOL_CALL_RESULT`), the pieces of text (`TEXT_MESSAGE_CONTENT`) and `RUN_FINISHED`.
 - **Agent ↔ LLM provider:** the request in the provider's own format, with the system prompt, the tool schemas and the tool results, and the streamed answer. This is what the model really gets, including the defaults that the framework adds.
 
 ![The traffic window below the chat: the AG-UI events of one run, with the product cards it produced above](traffic-window.png "Browser ↔ agent: the findProducts call arrives piece by piece, its result becomes the product cards.")
@@ -860,8 +867,8 @@ For learning, the most useful part of the demo is a debug feature: below the cha
 Each part is built in the language of its layer:
 
 - **Angular:** `HttpAgent` accepts a `fetch` function. The demo's version passes the request through unchanged and reads a copy of the event stream (`ReadableStream.tee()`).
-- **Node.js:** a small proxy on a free port of 127.0.0.1, in the same process. The provider SDKs read their address from `ANTHROPIC_BASE_URL` and `OPENAI_BASE_URL`, so pointing these at the proxy is enough, and the agent code stays unchanged.
-- **.NET:** the Anthropic SDK accepts `DelegatingHandler`s for its HTTP pipeline (`Handlers` on the client). The demo's handler records the request body and the streamed answer while passing both through.
+- **Node.js:** a small proxy on a free port of 127.0.0.1, in the same process. The provider SDKs read their address from `ANTHROPIC_BASE_URL` and `OPENAI_BASE_URL`, so pointing these at the proxy is enough, and the agent code stays unchanged. The proxy forwards each request to the address that was configured before, so the EU endpoint of OpenAI works with the window, too.
+- **.NET:** the Anthropic SDK accepts `DelegatingHandler`s for its HTTP pipeline (`Handlers` on the client), and OpenAI's SDK accepts an `HttpClient` as its transport. The same handler sits in both: it records the request body and the streamed answer while passing both through.
 
 Headers, and with them the API key, are never recorded.
 
@@ -890,7 +897,7 @@ With Mastra, the same prompt did not produce a single German answer in my runs.
 
 Did Mastra add a hidden instruction?
 To find out, I recorded what both agents send to the Anthropic API, the same way the [traffic window](#watching-the-traffic) does.
-The answer: no hidden prompt, the system prompt was identical character for character.
+The answer: no hidden prompt. The system prompt was identical, character for character.
 The differences were in the details:
 
 | | Mastra | Microsoft Agent Framework |
@@ -907,10 +914,10 @@ So this is not a weakness of one framework: the rule itself made the model unsta
 Why the model picks German of all languages is unknown.
 
 The solution was to delete the rule.
-Without it, both agents answered every English question in my runs in English, and German or Spanish questions in German or Spanish.
+Without it, in my runs both agents answered every English question in English and every German or Spanish question in German or Spanish.
 Current models do this by themselves, and the rule only added a way to get it wrong.
 
-Two of the switches stay changed in the .NET agent anyway.
+The .NET agent keeps two of the changes anyway.
 Tool results go to the model as compact JSON, which saves tokens, and the agent sets its own output limit, because 1,024 tokens can cut off a longer answer:
 
 ```csharp
@@ -935,7 +942,7 @@ What I take from this:
 - **One run says nothing.** Ask the same question many times and change one thing at a time. A behaviour that shows up in every fourth answer slips through a quick manual test.
 - **Fewer rules are often better.** Every rule in the prompt is something the model can misapply. Keep the rules that the model cannot know by itself, such as the ones about personal data.
 
-With that, path A is finished. What changes when the agent gets its own service?
+That completes path A. What changes when the agent gets its own service?
 
 ## Path B: The Agent as a Separate Service
 
@@ -995,7 +1002,7 @@ Here the providers differ a lot at the time of writing:
 
 - **Anthropic's own API cannot process data in Europe.** [`inference_geo`](https://platform.claude.com/docs/en/manage-claude/data-residency) knows only `"global"` (the default, "any available geography") and `"us"`. Claude models can run in EU regions through Amazon Bedrock, but then AWS is your contract partner, not Anthropic.
 - **OpenAI offers [data residency in Europe](https://developers.openai.com/api/docs/guides/your-data)** (EEA and Switzerland) with storage *and* inference in the region, through the endpoint `eu.api.openai.com`. It is a contract option: you need an EU project, an arrangement such as Zero Data Retention, and a talk with OpenAI's sales team, and it costs a surcharge for newer models.
-- **Mistral AI** is a French company. Its [EU endpoint](https://docs.mistral.ai/inference/regional-inference) `api.eu.mistral.ai` keeps inference in the EU and EFTA countries; the default endpoint `api.mistral.ai` makes no promise about the location. Function calling works on the regional endpoint, and that is all this agent needs. Agents, batch processing and files are not available there, and account data, keys and billing are not regional.
+- **Mistral AI** is a French company. Its [EU endpoint](https://docs.mistral.ai/inference/regional-inference) `api.eu.mistral.ai` keeps inference in the EU and EFTA countries; the default endpoint `api.mistral.ai` makes no promise about the location. Function calling works on the regional endpoint, and that is all this agent needs. Mistral's own Agents API, batch processing and file uploads are not available there, and account data, keys and billing are not regional.
 
 So for an analytics tool with real company data in a German company, I would point you to OpenAI's models in the EU region today: a clean AVV with processing on European servers is much easier to get there.
 A company I work for chose OpenAI over Anthropic for exactly this reason.
@@ -1010,25 +1017,20 @@ What the EU region does change is the paperwork: processing in Europe is what da
 In practice, that is often what decides the choice of provider.
 If you need more than that, look at providers without US ties.
 Mistral is the obvious candidate: a European company with an EU endpoint.
-Check its list of subprocessors, though: if a US cloud runs the data centers, the same question comes back one level lower.
+Check its list of subprocessors, though: if a US cloud runs the data centres, the same question comes back one level lower.
 The safest option remains an open-weight model on your own hardware: then no data leaves your servers at all.
 
-Mistral works with the demo, too.
+Mistral works with the demo's Node.js track, too.
 Mastra's model router knows the provider, so `MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint.
 For the EU endpoint, Mastra accepts a model object with its own address instead of the string, `{ id: 'mistral/mistral-large-latest', url: 'https://api.eu.mistral.ai/v1', apiKey }`, and then talks to it as an OpenAI-compatible API.
-The .NET track of the demo supports Anthropic and OpenAI only.
 As with every model change, try your questions first: the model has to fill the tool schemas reliably.
-
-One more number for your planning: CopilotKit is not small.
-It brings Markdown rendering, syntax highlighting, KaTeX and web components, and the initial bundle of the demo is about 1.5 MB compressed.
-In my opinion, that is fine for an internal analytics tool, but not for a public landing page.
 
 ## Telemetry: Who Phones Home?
 
 The LLM provider is not the only one that receives data.
 Several of the tools in this stack report usage to their makers, and some of them do it by default.
 In a German company, leaving that on is not an option for me.
-Every report goes to a third party, often outside the EU, and it quickly raises questions that you do not want to answer for a demo: what exactly is sent, on what legal basis, and who processes it?
+Every report goes to a third party, often outside the EU, and it quickly raises questions that you do not want to answer for an internal tool: what exactly is sent, on what legal basis, and who processes it?
 So all telemetry must be off before the app touches real data.
 
 Here is every layer of the demo and what it does:
@@ -1043,11 +1045,11 @@ Here is every layer of the demo and what it does:
 | Microsoft Agent Framework, Microsoft.Extensions.AI | none; OpenTelemetry only if you add it, and only to the exporter you configure | – |
 | Anthropic SDKs | none; OpenTelemetry in the .NET SDK only on request | – |
 | NestJS, Drizzle, postgres.js, ASP.NET Core, EF Core | none | – |
-| .NET CLI (`dotnet restore`, `build`, `publish`) | usage data to Microsoft, **on by default**, [among it](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry) three octets of the IP address and a hashed MAC address | `DOTNET_CLI_TELEMETRY_OPTOUT=1` (the demo's Dockerfile does) |
+| .NET CLI (`dotnet restore`, `build`, `publish`) | usage data to Microsoft, **on by default**, [including](https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry) three octets of the IP address and a hashed MAC address | `DOTNET_CLI_TELEMETRY_OPTOUT=1` (the demo's Dockerfile does) |
 | `swagger-ui-dist` | depends on `@scarf/scarf`, which reports the install from a `postinstall` script | `ignore-scripts=true` in `.npmrc` (the demo does) or `SCARF_ANALYTICS=false` |
 | Swagger UI | sends the URL of the OpenAPI document to validator.swagger.io when it is not served from localhost | `validatorUrl: null` (the demo does; Swashbuckle does it by default) |
 | PostgreSQL | none | – |
-| SQL Server | usage and diagnostic data to Microsoft; according to Microsoft without table contents or personal data | only in paid editions: `telemetry.customerfeedback = false`. The free Developer edition of the demo cannot switch it off |
+| SQL Server | usage and diagnostic data to Microsoft; according to Microsoft without table contents or personal data | only in paid editions: `telemetry.customerfeedback = false`. The free Developer edition that the demo uses cannot switch it off |
 
 SQL Server is acceptable here because it only holds the sample data and only serves the demo.
 For production, the .NET track works just as well with a paid edition and telemetry off.
@@ -1055,7 +1057,7 @@ For production, the .NET track works just as well with a paid edition and teleme
 Two habits help with every new package:
 
 - **Search the package for telemetry before you install it.** Words like `telemetry`, `posthog`, `segment` or `scarf` in its source and a `postinstall` script in its `package.json` are the usual signs.
-- **Watch the network.** The browser's developer tools show every request of the app; on the server, the [traffic window](#watching-the-traffic) shows what goes to the LLM provider.
+- **Watch the network.** The browser's developer tools show every request of the app; on the server, the [traffic window](#watching-the-traffic) shows only the requests to the LLM provider; to catch other outgoing connections, watch the network traffic of the containers.
 
 ## What This Demo Leaves Out
 
@@ -1099,11 +1101,12 @@ The first table explains the terms as this article uses them, the second one sho
 | Term | Meaning | Also known as |
 | --- | --- | --- |
 | **LLM** (large language model) | The model that reads the conversation and writes the answer or a tool call | Model, chat model |
-| **LLM provider** | The company whose API runs the model | Anthropic, OpenAI, Google; or your own hardware via Ollama or vLLM |
+| **LLM provider** | The company whose API runs the model | Provider, model provider. Examples: Anthropic, OpenAI, Google, Mistral; or your own hardware via Ollama or vLLM |
+| **Token** | The unit in which a model reads and writes text, a few characters each; the basis for billing and output limits | – |
 | **System prompt** | Standing instructions that apply to the whole conversation | Instructions. OpenAI: also *developer* messages. In Microsoft.Extensions.AI, a message with `ChatRole.System` |
 | **Tool** | A function described to the model by name, description and JSON schema | OpenAI: function tool. Anthropic: tool use, "also called function calling" |
 | **Tool call** | The model's request to run a tool with certain arguments | OpenAI: function call. AG-UI: the events `TOOL_CALL_START`, `TOOL_CALL_ARGS`, `TOOL_CALL_END`, `TOOL_CALL_RESULT` |
-| **Backend tool** | A tool that runs on the server, next to the agent | Server-side tool. Not to be confused with Anthropic's *server tools* (next row but one) |
+| **Backend tool** | A tool that runs on the server, next to the agent | Server-side tool. Not to be confused with Anthropic's *server tools* (see *Provider-run tool* below) |
 | **Frontend tool** | A tool that the browser offers and runs, e.g. `pinToDashboard` | Client tool, client-side tool |
 | **Provider-run tool** | A tool that the LLM provider runs on its own infrastructure, e.g. web search | Anthropic: server tools, as opposed to *client tools*, which run in your application (backend included). Vercel AI SDK: provider-executed tools |
 | **Tool rendering** | The frontend draws a tool call and its result as a component | Tool call rendering |
@@ -1113,8 +1116,8 @@ The first table explains the terms as this article uses them, the second one sho
 | **Generative UI** | User interface that the agent's answer produces, beyond text | |
 | **Shared state** | A data structure that agent and app both read and write | Agent state |
 | **Human-in-the-loop** | The agent pauses until a person approves or answers | Tool approval |
-| **AG-UI** | Protocol between app and agent: events over HTTP | CopilotKit, see [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a) |
-| **A2UI** | Format for a declarative UI description | Google |
+| **AG-UI** | Protocol between app and agent: events over HTTP | Agent-User Interaction Protocol, started by CopilotKit, see [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a) |
+| **A2UI** | Format for a declarative UI description | started by Google |
 | **MCP** | Protocol between agent and external tools or data | Model Context Protocol, from Anthropic, now at the Linux Foundation |
 | **A2A** | Protocol between agents | Agent2Agent, from Google, now at the Linux Foundation |
 | **SSE** (server-sent events) | An HTTP response that stays open and delivers one event after another | Web standard (`EventSource`); AG-UI's HTTP client receives its events this way |
