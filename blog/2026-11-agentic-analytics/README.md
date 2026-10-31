@@ -869,7 +869,7 @@ The window pays off quickly.
 In every answer from Anthropic, the `usage` block contains `"inference_geo": "global"`.
 According to [Anthropic's documentation](https://platform.claude.com/docs/en/manage-claude/data-residency), that is the default, and it means that "inference may run in any available geography".
 The only alternative is `"us"`; there is no EU option on Anthropic's own API at the time of writing.
-That is exactly the kind of detail your data protection officer will ask about, and one you would never see in the chat.
+That is exactly the kind of detail your data protection officer will ask about, and one you would never see in the chat. [What Goes to the LLM Provider?](#what-goes-to-the-llm-provider) shows the way out.
 
 ## Fine-Tuning: Do Not Settle for the First Result
 
@@ -987,8 +987,25 @@ The protection has limits, and you should know them.
 - **The browser talks to one origin only.** The app loads no fonts, scripts or telemetry from third parties, and the CopilotKit Inspector (which [reports usage](https://github.com/CopilotKit/CopilotKit/blob/main/packages/web-inspector/src/lib/telemetry.ts) when opened) is disabled.
 - **Removing a column does not prevent every inference.** In AdventureWorks, only two to six sales representatives sold in each region, and in Germany only two. Anyone who knows who looks after the German bike shops gets very close to their figures with "revenue per country", although the system knows nothing about them. In a real project, agree on the granularity with your data protection officer and the works council: suppress small groups, use coarser regions, or leave a dimension out entirely. Technically, that is the same principle as the views: what is not in the semantic layer cannot be asked for. Only this time it applies to the dimensions instead of the columns.
 
-For real customer data, you also need a data processing agreement with the LLM provider, ideally with EU data residency, or a model you host yourself.
-In both agent frameworks, switching the provider is a small change.
+For real customer data, you also need a data processing agreement (in Germany: an *Auftragsverarbeitungsvertrag*, AVV) with the LLM provider, and the data should be processed in Europe.
+Here the providers differ a lot at the time of writing:
+
+- **Anthropic's own API cannot process data in Europe.** [`inference_geo`](https://platform.claude.com/docs/en/manage-claude/data-residency) knows only `"global"` (the default, "any available geography") and `"us"`. Claude models can run in EU regions through Amazon Bedrock, but then AWS is your contract partner, not Anthropic.
+- **OpenAI offers [data residency in Europe](https://developers.openai.com/api/docs/guides/your-data)** (EEA and Switzerland) with storage *and* inference in the region, through the endpoint `eu.api.openai.com`. It is a contract option: you need an EU project, an arrangement such as Zero Data Retention, and a talk with OpenAI's sales team, and it costs a surcharge for newer models.
+
+So for an analytics tool with real company data in a German company, I would point you to OpenAI's models in the EU region today: a clean AVV with processing on European servers is much easier to get there.
+A company I work for chose OpenAI over Anthropic for exactly this reason.
+
+Let's be honest about what the European server buys you, though.
+OpenAI and Anthropic are US companies, and the US [CLOUD Act](https://www.law.cornell.edu/uscode/text/18/2713) obliges US providers to hand over data on request "regardless of whether such communication, record, or other information is located within or outside of the United States".
+Where the server stands does not change who can access the data.
+Neither company is listed in the [EU-U.S. Data Privacy Framework](https://www.dataprivacyframework.gov/list) at the time of writing, so transfers rest on standard contractual clauses.
+What the EU region does change is the paperwork: processing in Europe is what data protection officers, works councils and procurement departments ask for, and it is far easier to document and defend.
+In practice, that is often what decides the choice of provider.
+If you need more than that, only a model on your own hardware or a provider without US ties keeps the data out of reach of US authorities.
+On the Node.js track of the demo, that is configuration only: `MODEL=openai/…`, the API key, and `OPENAI_BASE_URL=https://eu.api.openai.com/v1`.
+The .NET track talks to Anthropic only; in the Agent Framework, you would swap the `IChatClient` for one from OpenAI's SDK.
+Or you host an open-weight model yourself, then no data leaves your servers at all.
 
 One more number for your planning: CopilotKit is not small.
 It brings Markdown rendering, syntax highlighting, KaTeX and web components, and the initial bundle of the demo is about 1.5 MB compressed.
