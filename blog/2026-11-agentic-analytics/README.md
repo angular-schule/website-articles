@@ -130,9 +130,15 @@ A plain HTTP response that stays open and delivers one message after another.
 The browser can show the first words of an answer while the model is still writing the rest.
 
 **Semantic layer.**
-A fixed list of business terms (measures such as "revenue", dimensions such as "country") that a query may use, mapped to the database by the backend.
+A layer between the database and whoever asks the questions: a BI tool, a person, or in our case the model.
+It defines the business vocabulary once.
+*Measures* are numbers that can be aggregated, each with a fixed formula: revenue is the sum of the sales amount, gross margin is revenue minus product cost.
+*Dimensions* are the attributes you group and filter by: year, country, product category.
+A query names only these terms, for example "revenue and margin per product category in Europe", and the semantic layer translates it into SQL with the right columns, joins and aggregates.
+What it does not define cannot be asked for.
 It is not the ORM: EF Core or Drizzle map tables to objects for developers, while the semantic layer sits on top of them and decides which business questions may be asked at all.
-The term comes from business intelligence, where products such as Cube or dbt provide one.
+The term comes from business intelligence, where Cube, dbt (MetricFlow), Looker (LookML) and Power BI (semantic models) offer one as a product.
+Our demo builds a small one itself.
 We will spend a whole section on it, because it decides what the model can and cannot ask for.
 
 ## The Protocols: AG-UI, A2UI, MCP and A2A
