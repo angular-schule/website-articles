@@ -36,6 +36,8 @@ header: agentic-analytics.jpg
 The backend from part 2, [.NET](/blog/2026-11-agentic-analytics-dotnet) or [Node.js](/blog/2026-11-agentic-analytics-node), serves the agent under `/agent` and the data under `/api`.
 The Angular app does not care which one answers: both speak AG-UI and serve the same contract.
 
+**What you get from this article:** how CopilotKit for Angular connects an app to any AG-UI agent without a CopilotKit server, three ways to turn the agent's answers into your own Angular components, charts that cannot mislabel what they show, a dashboard that runs without the model, and an overview of the alternatives to CopilotKit.
+
 ![The finished app: chat on the left, the pinned dashboard on the right](screenshot.png "The result of this part: chat on the left, dashboard on the right.")
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
@@ -44,6 +46,17 @@ The Angular app does not care which one answers: both speak AG-UI and serve the 
 ## Contents
 
 [[toc]]
+
+## What You Need from Parts 1 and 2
+
+The Angular app talks to a backend that you can build in [part 2 with .NET](/blog/2026-11-agentic-analytics-dotnet) or [part 2 with Node.js](/blog/2026-11-agentic-analytics-node). For this article, it is enough to know what that backend offers:
+
+- **`/agent`:** an AG-UI endpoint. The browser posts the conversation, and the agent answers with a stream of events: text in pieces, and *tool calls* with their arguments and results.
+- **Two backend tools:** `querySales` takes a title, a chart kind (`line`, `bar`, `kpi` or `table`) and a query of measures, dimensions and filters, and returns columns and rows. `findProducts` returns products with a photo URL. Both run on the server; the browser only sees their results.
+- **`/api`:** the same data without the model, e.g. `POST /api/sales/aggregate` for a query and the product photos.
+- **No personal data:** the model can only ask for what the semantic layer offers, and that contains companies and products, but no people. [Part 1](/blog/2026-11-agentic-analytics) explains how the database enforces this.
+
+Terms such as *tool*, *frontend tool* and *generative UI* are explained in [part 1](/blog/2026-11-agentic-analytics#the-vocabulary-in-five-minutes) and in the glossary at the end of this article.
 
 ## Layer 4: Angular with CopilotKit
 
@@ -222,7 +235,8 @@ And if the model had tried anyway, there would have been nothing to find.
 
 ## How the Series Continues
 
-With that, the app is complete. [Part 4](/blog/2026-11-agentic-analytics-in-practice) takes a step back: are Mastra and the Microsoft Agent Framework equivalent, how do you watch what really goes over the wire, and why should you not settle for the first result?
+With that, the app is complete: a chat that answers with Angular components, a dashboard that keeps them, and a data layer that keeps people out.
+[Part 4](/blog/2026-11-agentic-analytics-in-practice) takes a step back and looks at the app in practice. Are Mastra and the Microsoft Agent Framework really equivalent? A traffic window shows every message between browser, agent and LLM provider, and with it, the defaults that each framework sends without asking. One of them, together with a single well-meant sentence in the prompt, made every third or fourth answer come back in German. Part 4 shows how I tracked it down, and how to test an agent without paying for a single token.
 
 ## Glossary
 

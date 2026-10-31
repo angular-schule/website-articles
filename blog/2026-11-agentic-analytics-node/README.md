@@ -38,12 +38,28 @@ header: agentic-analytics.jpg
 This part builds the Node.js track on top of it: NestJS, Drizzle and PostgreSQL, with Mastra as the agent, first inside the backend (path A) and then as a separate service (path B).
 If your team works with .NET, read [part 2 for .NET](/blog/2026-11-agentic-analytics-dotnet) instead; both lead to the same Angular app in part 3.
 
+**What you get from this article:** a semantic layer in TypeScript with Drizzle, an agent with Mastra whose tool schemas are generated from that layer, so the model only knows names that exist, and an AG-UI endpoint in NestJS. Plus two pitfalls that are easy to miss, and the same agent as a separate service for teams that want it independent of the backend.
+
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
 > Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up`, and open http://localhost:8080.
 
 ## Contents
 
 [[toc]]
+
+## What You Need from Part 1
+
+[Part 1](/blog/2026-11-agentic-analytics) explains the architecture and why every decision keeps personal data away from the model. In short:
+
+- **The app:** an Angular chat in which questions about sales data become charts, and a dashboard of pinned charts that runs without the LLM.
+- **The agent:** an LLM in a loop with *tools*, functions it may call. It never writes SQL. It calls `querySales` with a structured query and `findProducts` for the product catalogue; the frontend adds a third tool, `pinToDashboard`.
+- **The semantic layer:** a fixed list of *measures* (revenue, cost, margin, quantity, orders) and *dimensions* (year, quarter, country, reseller, …). The backend turns a JSON request into parameterized SQL and rejects every other name.
+- **The data:** AdventureWorksDW, read through views in the schema `analytics` that contain no column about people, with a read-only account. Row-level security (`DATA_SCOPE`) limits each connection to one territory group and shows nothing if the value is missing.
+- **The contract:** both backends serve the same HTTP API under `/api`, described with OpenAPI.
+- **AG-UI:** the protocol between the Angular app and the agent, events streamed as server-sent events.
+- **Path A and path B:** the agent runs inside the existing backend (path A, as in this article) or as a separate service (path B, at the end of this article).
+
+If any of these is new to you, part 1 and its glossary are worth the detour; this article builds on them without repeating the reasons.
 
 ## Layer 2: The Semantic Layer with Drizzle
 
@@ -210,8 +226,9 @@ For a workshop with interchangeable backends, path B is handy. In a customer pro
 
 ## How the Series Continues
 
-The server side is complete. [Part 3](/blog/2026-11-agentic-analytics-angular) is where Angular developers feel at home: CopilotKit connects the app to this AG-UI endpoint and draws the tool calls as Angular components.
-The .NET variant of this part, [with the Microsoft Agent Framework](/blog/2026-11-agentic-analytics-dotnet), is worth a look, too: [part 4](/blog/2026-11-agentic-analytics-in-practice) compares both frameworks and shows the fine print in which they differ.
+The server side is complete: a semantic layer that the model cannot talk past, and an agent that streams its tool calls over AG-UI, in the backend or as its own service.
+[Part 3](/blog/2026-11-agentic-analytics-angular) is where Angular developers feel at home. CopilotKit connects the app to this endpoint, and every `querySales` call becomes an Angular component: a line or bar chart, a stat tile or a table that you can pin to a dashboard. You will also see why a chart has to label what it plots, and why the dashboard never needs the model again.
+And if you wonder how the Microsoft Agent Framework compares: [part 4](/blog/2026-11-agentic-analytics-in-practice) puts both frameworks side by side, and shows why the same prompt made one of them answer in German.
 
 ## Glossary
 

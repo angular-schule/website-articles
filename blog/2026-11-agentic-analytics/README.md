@@ -501,7 +501,8 @@ Two habits help with every new package:
 ## How the Series Continues
 
 We now have data without personal references, row-level security that fails closed, and a semantic layer that both backends serve with the same contract.
-Part 2 puts the agent on top of it. Pick the stack you work with; both lead to the same Angular app in part 3:
+Part 2 puts the agent on top of it. You will see how the tool schemas are generated from the semantic layer, so the model only knows the names that exist, and how little code it takes to serve the agent over AG-UI from the backend you already have.
+Pick the stack you work with; both lead to the same Angular app in part 3:
 
 - [Part 2 for .NET](/blog/2026-11-agentic-analytics-dotnet): the semantic layer with Entity Framework Core and expression trees, the agent with the Microsoft Agent Framework in ASP.NET Core.
 - [Part 2 for Node.js](/blog/2026-11-agentic-analytics-node): the semantic layer with Drizzle, the agent with Mastra in NestJS, and the agent as a separate service (path B).

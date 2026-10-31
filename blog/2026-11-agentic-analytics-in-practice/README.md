@@ -38,12 +38,26 @@ header: agentic-analytics.jpg
 The first three parts built the app: the data layer, the backend with the agent, and the Angular UI.
 This last part looks at it in practice: how the two frameworks compare, how to choose another framework or model, how to watch every message, why you should not settle for the first result, and how to test an agent without a model.
 
+**What you get from this article:** a comparison of two agent frameworks that goes beyond feature lists, a technique to see exactly what your agent sends to the model, a real case in which one sentence in the prompt changed the answer language, and a way to test agents without cost and without chance.
+
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
 > Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
 
 ## Contents
 
 [[toc]]
+
+## What You Need from Parts 1 to 3
+
+The demo app is a chat in Angular in which questions about sales data become charts that you can pin to a dashboard. This article refers to it as follows:
+
+- **Two agents, one app:** the same agent exists twice, with the [Microsoft Agent Framework in ASP.NET Core](/blog/2026-11-agentic-analytics-dotnet) and with [Mastra in NestJS](/blog/2026-11-agentic-analytics-node). Both get the same system prompt and the same tools, `querySales` for the sales data and `findProducts` for the product catalogue. The tool schemas are generated from the *semantic layer*, a fixed list of measures and dimensions, so the model only knows names that exist.
+- **AG-UI:** the agent streams events to the Angular app, which draws tool calls as components with CopilotKit ([part 3](/blog/2026-11-agentic-analytics-angular)). The browser adds its own *frontend tool*, `pinToDashboard`.
+- **The model:** Claude Sonnet 5.5 by default, set with `MODEL` and the provider's API key in `agent/.env`.
+- **Path A and path B:** the agent runs inside the backend, or as a separate Mastra service in front of either backend.
+- **No personal data:** the database views contain no column about people, which [part 1](/blog/2026-11-agentic-analytics) explains in detail. Whatever a tool returns goes to the LLM provider.
+
+You can read this article on its own; the links lead to the details.
 
 ## Mastra and the Agent Framework in Practice
 
