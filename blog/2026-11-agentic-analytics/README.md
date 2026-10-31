@@ -644,8 +644,7 @@ What differs is the work around it:
 So the choice follows your backend: a Node.js team takes Mastra, a .NET team the Agent Framework.
 Neither is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
 
-On the .NET side, the AG-UI hosting package is a preview (`1.25.0-preview`) at the time of writing, while the rest of the framework is stable.
-The browser console also shows compatibility warnings from the AG-UI client about fields that the .NET server sends as `null`; they do not affect the app.
+On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at the time of writing, while the rest of the framework is stable.
 
 ### Choosing Another Agent Framework
 
@@ -677,10 +676,11 @@ Either way, the setting is one line (`MODEL`) plus the provider's API key in `ag
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
 
-### Pitfalls: Telemetry and Peer Dependencies
+### Pitfalls: Telemetry, Peer Dependencies and the Answer Language
 
 - **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss.
 - `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as peer dependencies, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it installs peers explicitly instead (`legacy-peer-deps=true` in `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
+- **Do not tell the model which language to answer in.** With the rule "Answer in the language of the user's latest message" in the system prompt, about one in four answers to an English question came back in German, although nothing in the request was German. The same happened when I sent the identical request straight to the Anthropic API, so it is the model, not the framework. Why it happens is unknown. One possible trap: in the Anthropic API, a tool result is sent as a message with the role `user`, so the "latest message" can be JSON without any language. Without the rule, English questions got English answers, and German or Spanish questions got answers in their own language. The model does this by itself; the rule only added a way to get it wrong.
 
 The server side is complete. Now to the part where Angular developers feel at home.
 
@@ -939,25 +939,27 @@ How do you keep personal data away from your agents? I'm curious about your appr
 ## Glossary
 
 Many of these concepts have different names in different frameworks.
-The first column is the term used in this article.
+The first table explains the terms as this article uses them, the second one shows what the frameworks call them.
 
-| Term | Meaning | Names in the frameworks and products |
+### Terms
+
+| Term | Meaning | Also known as |
 | --- | --- | --- |
-| **LLM** (large language model) | The model that reads the conversation and writes the answer or a tool call | Mastra: `model`, a string such as `anthropic/claude-sonnet-5-5`. .NET (Microsoft.Extensions.AI): `IChatClient`, a "chat client". Microsoft Agent Framework: a `ChatClientAgent` is backed by an `IChatClient` |
+| **LLM** (large language model) | The model that reads the conversation and writes the answer or a tool call | Model, chat model |
 | **LLM provider** | The company whose API runs the model | Anthropic, OpenAI, Google; or your own hardware via Ollama or vLLM |
-| **System prompt** | Standing instructions that apply to the whole conversation | Mastra and Agent Framework: `instructions`. .NET: a message with `ChatRole.System`. OpenAI: `instructions` and *developer* messages. Anthropic: system prompt |
-| **Tool** | A function described to the model by name, description and JSON schema | Mastra: tool (`createTool`). .NET: `AIFunction`, created with `AIFunctionFactory`. OpenAI: function tool. Anthropic: tool use, "also called function calling" |
+| **System prompt** | Standing instructions that apply to the whole conversation | Instructions. OpenAI: also *developer* messages. In Microsoft.Extensions.AI, a message with `ChatRole.System` |
+| **Tool** | A function described to the model by name, description and JSON schema | OpenAI: function tool. Anthropic: tool use, "also called function calling" |
 | **Tool call** | The model's request to run a tool with certain arguments | OpenAI: function call. AG-UI: the events `TOOL_CALL_START`, `TOOL_CALL_ARGS`, `TOOL_CALL_END`, `TOOL_CALL_RESULT` |
-| **Backend tool** | A tool that runs on the server, next to the agent | AG-UI and Agent Framework: backend tools. CopilotKit: *server tools* for its own built-in agent, *backend tool calls* for an external agent. Vercel AI SDK: server-side tools. Mastra: a tool with an `execute` function. Not to be confused with Anthropic's *server tools* (see below) |
-| **Frontend tool** | A tool that the browser offers and runs, e.g. `pinToDashboard` | CopilotKit, AG-UI and Agent Framework: frontend tools (`registerFrontendTool()` in Angular). AG-UI also: client-defined tools. Mastra: client tools (`clientTools`). Vercel AI SDK: client-side tools |
+| **Backend tool** | A tool that runs on the server, next to the agent | Server-side tool. Not to be confused with Anthropic's *server tools* (next row but one) |
+| **Frontend tool** | A tool that the browser offers and runs, e.g. `pinToDashboard` | Client tool, client-side tool |
 | **Provider-run tool** | A tool that the LLM provider runs on its own infrastructure, e.g. web search | Anthropic: server tools, as opposed to *client tools*, which run in your application (backend included). Vercel AI SDK: provider-executed tools |
-| **Tool rendering** | The frontend draws a tool call and its result as a component | CopilotKit: tool call rendering, `registerRenderToolCall()`. AG-UI and Agent Framework: backend tool rendering |
-| **Agent** | An LLM in a loop with tools and instructions | Mastra: `Agent`. Agent Framework: `AIAgent`, concretely `ChatClientAgent` (.NET) or `Agent` (Python). Vercel AI SDK: `ToolLoopAgent` |
+| **Tool rendering** | The frontend draws a tool call and its result as a component | Tool call rendering |
+| **Agent** | An LLM in a loop with tools and instructions | |
 | **Agent framework** | A library that runs the loop, the tools, streaming and the model connection | Mastra, Microsoft Agent Framework, LangGraph, Vercel AI SDK, Google ADK and others |
 | **Harness** | Everything around the model that keeps it on track: prompt, tool schemas, validation, limits | Manfred Steyer's term. The Agent Framework also ships a *Harness Agent*, an agent with planning, context compaction and tool approval built in |
-| **Generative UI** | User interface that the agent's answer produces, beyond text | CopilotKit: controlled, declarative and open-ended generative UI. AG-UI: static and declarative generative UI. Agent Framework: tool-based and agentic generative UI. Vercel AI SDK: connecting the result of a tool call to a component |
-| **Shared state** | A data structure that agent and app both read and write | AG-UI: state with `STATE_SNAPSHOT` and `STATE_DELTA`. CopilotKit: shared state or agent state |
-| **Human-in-the-loop** | The agent pauses until a person approves or answers | AG-UI: interrupts. Agent Framework: `ApprovalRequiredAIFunction`. Mastra: `requireApproval`. CopilotKit: `registerHumanInTheLoop()` |
+| **Generative UI** | User interface that the agent's answer produces, beyond text | |
+| **Shared state** | A data structure that agent and app both read and write | Agent state |
+| **Human-in-the-loop** | The agent pauses until a person approves or answers | Tool approval |
 | **AG-UI** | Protocol between app and agent: events over HTTP | CopilotKit, see [the protocols](#the-protocols-ag-ui-a2ui-mcp-and-a2a) |
 | **A2UI** | Format for a declarative UI description | Google |
 | **MCP** | Protocol between agent and external tools or data | Model Context Protocol, from Anthropic, now at the Linux Foundation |
@@ -973,3 +975,25 @@ The first column is the term used in this article.
 | **API contract** | The machine-readable description of an HTTP API that both backends implement | OpenAPI |
 | **Path A / path B** | Agent in the existing backend, or as a separate service | Terms of this article |
 
+### Same Concept, Different Names
+
+The same idea often has a different name in each framework, and sometimes the same name means different things.
+A dash means that the framework has no name of its own for it or that this article does not use it.
+
+| Concept | Mastra | Microsoft Agent Framework (.NET) | AG-UI | CopilotKit | Vercel AI SDK |
+| --- | --- | --- | --- | --- | --- |
+| **LLM** | `model`, a string like `anthropic/claude-sonnet-5-5` | `IChatClient` from Microsoft.Extensions.AI | – | – | `model` |
+| **System prompt** | `instructions` | `instructions` | – | – | `instructions` |
+| **Agent** | `Agent` | `AIAgent`, concretely `ChatClientAgent` | agent; `HttpAgent` on the client | agent | `ToolLoopAgent` |
+| **Tool** | tool, `createTool()` | `AIFunction`, created with `AIFunctionFactory` | tool | – | tool, `tool()` |
+| **Backend tool** | a tool with an `execute` function | backend tool | backend tool | *server tool* for its built-in agent, *backend tool call* for an external agent | server-side tool |
+| **Frontend tool** | client tool (`clientTools`) | frontend tool | frontend tool, also client-defined tool | frontend tool, `registerFrontendTool()` | client-side tool |
+| **Tool rendering** | – | backend tool rendering | backend tool rendering | tool call rendering, `registerRenderToolCall()` | – |
+| **Generative UI** | – | tool-based and agentic generative UI | static and declarative generative UI | controlled, declarative and open-ended generative UI | the result of a tool call rendered as a component |
+| **Shared state** | – | – | state, sent with `STATE_SNAPSHOT` and `STATE_DELTA` | shared state, agent state | – |
+| **Human-in-the-loop** | `requireApproval` | `ApprovalRequiredAIFunction` | interrupts | `registerHumanInTheLoop()` | `toolApproval` |
+| **Trying agents locally** | Mastra Studio | DevUI (preview) | – | – | – |
+
+Two names are easy to mix up.
+**"Server tool"** means a tool on your server in CopilotKit, but a tool that Anthropic runs on its own servers in the Anthropic API.
+**"Client tool"** means a tool in the browser in Mastra, but any tool that runs in your application, the backend included, in the Anthropic API.
