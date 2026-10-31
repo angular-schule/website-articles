@@ -642,6 +642,7 @@ What differs is the work around it:
 | License | Apache 2.0, except the source-available `ee/` folders | MIT |
 
 So the choice follows your backend: a Node.js team takes Mastra, a .NET team the Agent Framework.
+The differences that matter most are invisible at first: the defaults with which each framework talks to the model. The section [Fine-Tuning: Do Not Settle for the First Result](#fine-tuning-do-not-settle-for-the-first-result) shows how much they can change.
 Neither is a reason to switch the backend language, and with path B you can even combine a .NET backend with a Mastra agent.
 
 On the .NET side, the AG-UI hosting package is a preview (`1.27.0-preview`) at the time of writing, while the rest of the framework is stable.
@@ -676,11 +677,10 @@ Either way, the setting is one line (`MODEL`) plus the provider's API key in `ag
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
 
-### Pitfalls: Telemetry, Peer Dependencies and the Answer Language
+### Pitfalls: Telemetry and Peer Dependencies
 
 - **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss.
 - `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as peer dependencies, and npm installs peers automatically. The runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it installs peers explicitly instead (`legacy-peer-deps=true` in `.npmrc`). Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
-- **Do not tell the model which language to answer in.** With the rule "Answer in the language of the user's latest message" in the system prompt, about one in four answers to an English question came back in German, although nothing in the request was German. The same happened when I sent the identical request straight to the Anthropic API, so it is the model, not the framework. Why it happens is unknown. One possible trap: in the Anthropic API, a tool result is sent as a message with the role `user`, so the "latest message" can be JSON without any language. Without the rule, English questions got English answers, and German or Spanish questions got answers in their own language. The model does this by itself; the rule only added a way to get it wrong.
 
 The server side is complete. Now to the part where Angular developers feel at home.
 
@@ -843,7 +843,72 @@ That is the right choice when tools need database access that must never reach t
 
 The Angular team itself does not offer a chat or generative UI library; [angular.dev/ai](https://angular.dev/ai) points to Genkit, Firebase AI Logic and the Gemini API for AI features.
 
-With that, the app is complete on path A. What changes when the agent gets its own service?
+With that, the app is complete on path A. Before we move the agent into its own service, a look at how much small settings change the result.
+
+## Fine-Tuning: Do Not Settle for the First Result
+
+When the demo ran for the first time, both agents gave good answers, and it would have been easy to stop there.
+But an agent has many switches, and several of them change the result considerably: the wording of the system prompt, the tool descriptions, which tools are offered, how tool results are serialized, the token limit and of course the model.
+Some of these switches you set yourself.
+Others are defaults of the framework or the SDK that you never see unless you look at the request that actually goes to the provider.
+So take the time to try the same question many times and with small changes before you trust the result.
+
+### Example: The Answer Language
+
+The system prompt contained a well-meant rule: "Answer in the language of the user's latest message."
+With the Agent Framework, every third or fourth answer to an English question came back in German, with German date formats like 29.12.2010.
+Nothing in the request was German.
+With Mastra, the same prompt did not produce a single German answer in my runs.
+
+Did Mastra add a hidden instruction?
+To find out, I recorded what both agents send to the Anthropic API.
+Both read the API address from the environment variable `ANTHROPIC_BASE_URL`, so a small proxy that writes every request to a file before forwarding it is enough.
+The answer: no hidden prompt, the system prompt was identical character for character.
+The differences were in the details:
+
+| | Mastra | Microsoft Agent Framework |
+| --- | --- | --- |
+| Output limit (`max_tokens`) | 128,000 | 1,024, the default of Anthropic's `IChatClient` adapter when the request sets no limit |
+| Tool results | compact JSON | indented JSON, written with the default options of Microsoft.Extensions.AI |
+| Tool definitions | from the Zod schemas | generated from the C# types |
+
+Then I sent the recorded requests straight to the API, changed one detail at a time, and repeated each variant 24 times.
+With the language rule, the share of German answers ranged from none to four out of five, depending on details that have nothing to do with language: whether the frontend tool was in the list, whether the query had a sort order, how the JSON was indented.
+Mastra's request happened to land on the safe side, the Agent Framework's did not.
+Give Mastra's request the tool definitions, the indented JSON and the token limit of the Agent Framework, and it answers in German just as often.
+So this is not a weakness of one framework: the rule itself made the model unstable, and the framework details only decided how often it showed.
+Why the model picks German of all languages is unknown.
+
+The solution was to delete the rule.
+Without it, both agents answered every English question in my runs in English, and German or Spanish questions in German or Spanish.
+Current models do this by themselves, and the rule only added a way to get it wrong.
+
+Two of the switches stay changed in the .NET agent anyway.
+Tool results go to the model as compact JSON, which saves tokens, and the agent sets its own output limit, because 1,024 tokens can cut off a longer answer:
+
+```csharp
+AIFunctionFactoryOptions Tool(string name) => new()
+{
+    Name = name,
+    SerializerOptions = Json,
+    JsonSchemaCreateOptions = schemaOptions,
+    MarshalResult = (result, type, _) => new(JsonSerializer.Serialize(result, type ?? typeof(object), Json)),
+};
+
+return model
+    .AsBuilder()
+    .ConfigureOptions(options => options.MaxOutputTokens ??= 8192)
+    .Build()
+    .AsAIAgent(name: Id, instructions: Instructions(schema), tools: tools);
+```
+
+What I take from this:
+
+- **Look at the real request.** What the framework sends is not what you wrote. Defaults like the token limit or the JSON format only show up there.
+- **One run says nothing.** Ask the same question many times and change one thing at a time. A behaviour that shows up in every fourth answer slips through a quick manual test.
+- **Fewer rules are often better.** Every rule in the prompt is something the model can misapply. Keep the rules that the model cannot know by itself, such as the ones about personal data.
+
+With that, path A is finished. What changes when the agent gets its own service?
 
 ## Path B: The Agent as a Separate Service
 
