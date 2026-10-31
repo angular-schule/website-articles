@@ -936,11 +936,23 @@ new AnthropicClient { ApiKey = model.ApiKey }
     .Build();
 ```
 
+### Example: A Rule Is a Wish
+
+The description of `querySales` says: "The user sees the visualization right away, so do not repeat the numbers as a table in the answer; comment on what stands out instead."
+Usually the model sticks to it.
+But while I took the screenshots for this article, it answered the question about the margin per product category with the bar chart *and* a Markdown table of the same numbers below it.
+Nothing was wrong with the request; the model simply decided otherwise this time.
+
+A rule in the prompt raises the probability of a behaviour, it does not guarantee it.
+Whatever must hold every time belongs in code: the semantic layer decides which data exists, the Zod schema decides which chart requests the app accepts, and the database decides which rows a connection sees.
+For the rest, such as the length and form of the comment, the prompt is the right place, and an occasional table is a cosmetic slip, not a failure.
+
 What I take from this:
 
 - **Look at the real request.** What the framework sends is not what you wrote. Defaults like the token limit or the JSON format only show up there.
 - **One run says nothing.** Ask the same question many times and change one thing at a time. A behaviour that shows up in every fourth answer slips through a quick manual test.
 - **Fewer rules are often better.** Every rule in the prompt is something the model can misapply. Keep the rules that the model cannot know by itself, such as the ones about personal data.
+- **Enforce in code what must always hold.** A prompt rule is a wish. The guarantees come from the semantic layer, the schemas and the database.
 
 That completes path A. What changes when the agent gets its own service?
 
