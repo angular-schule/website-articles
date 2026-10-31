@@ -36,7 +36,7 @@ header: agentic-analytics.jpg
 
 You type a question, and a chart appears.
 "How did revenue develop per quarter, split by sales channel?" The app answers with a line chart, a short analysis, and a button to pin the chart to a dashboard.
-No SQL, no report designer, no ticket for the BI team.
+No SQL, no report designer, no ticket for the business intelligence (BI) team.
 
 That is the promise of **agentic analytics**.
 In this article, I build such an app with Angular, piece by piece, from the database up to the chat, with a backend in .NET or in Node.js, as you prefer.
@@ -44,7 +44,7 @@ If you have never built an app with an AI agent before, that is fine: the articl
 And because this is a German blog at heart, we take a close look at the question that comes first in every real project here: **what happens to personal data?**
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> One `docker compose --profile node up` (or `--profile dotnet`) starts everything.
+> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
 
 ## Contents
 
@@ -138,8 +138,7 @@ It defines the business vocabulary once.
 *Measures* are numbers that can be aggregated, each with a fixed formula: revenue is the sum of the sales amount, gross margin is revenue minus product cost.
 *Dimensions* are the attributes you group and filter by: year, country, product category.
 A query names only these terms, for example "revenue and margin per product category in Europe", and the semantic layer translates it into SQL with the right columns, joins and aggregates.
-What it does not define cannot be asked for.
-It is not the ORM: EF Core or Drizzle map tables to objects for developers, while the semantic layer sits on top of them and decides which business questions may be asked at all.
+It is not the ORM (object-relational mapper): EF Core or Drizzle map tables to objects for developers, while the semantic layer sits on top of them and decides which business questions may be asked at all.
 The term comes from business intelligence, where Cube, dbt (MetricFlow), Looker (LookML) and Power BI (semantic models) offer one as a product.
 Our demo builds a small one itself.
 We will spend a whole section on it, because it decides what the model can and cannot ask for.
@@ -156,7 +155,6 @@ They do different jobs, and an app can use several of them at once.
 [AG-UI](https://docs.ag-ui.com/) (*Agent-User Interaction Protocol*) connects an agent with the app in front of the user.
 CopilotKit [announced it in May 2025](https://www.copilotkit.ai/blog/introducing-ag-ui-the-protocol-where-agents-meet-users); it grew out of CopilotKit's work with LangChain and CrewAI, and it is [MIT-licensed on GitHub](https://github.com/ag-ui-protocol/ag-ui).
 
-The idea is simple.
 The app sends the agent a request with the conversation so far, the tools that the frontend offers, and optionally a shared state.
 The agent answers with a stream of typed **events**:
 
@@ -204,7 +202,7 @@ An MCP server would make sense if other agents, or a chat client such as Claude,
 Google [launched it in April 2025](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/), and since June 2025 it is a [Linux Foundation project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents).
 Our app has a single agent, so A2A plays no role here.
 
-### At a Glance
+### The Protocols at a Glance
 
 | | Connects | Started by | Our demo |
 | --- | --- | --- | --- |
@@ -262,7 +260,7 @@ And here they are as a table, with vendor and license:
 | Database | SQL Server 2025 **or** PostgreSQL 17 | Microsoft / PostgreSQL Global Development Group | Developer edition (free for development, not for production) / PostgreSQL License |
 | Data access | EF Core **or** Drizzle with postgres.js | Microsoft (.NET Foundation) / Drizzle Team / Rasmus Porsager | MIT / Apache 2.0 / Unlicense |
 | Backend | ASP.NET Core **or** NestJS | Microsoft / NestJS team | MIT / MIT |
-| Agent | Microsoft Agent Framework (.NET) **or** Mastra (Node.js) | Microsoft / Kepler Software, Inc. | MIT / Apache 2.0 (except the `ee/` folders) |
+| Agent | Microsoft Agent Framework (.NET) **or** Mastra (Node.js) | Microsoft / Kepler Software, Inc. | MIT / Apache 2.0 (except the enterprise `ee/` folders, see layer 3) |
 | Protocol | AG-UI | started by CopilotKit, open source | MIT |
 | Frontend | Angular with CopilotKit for Angular | Google / CopilotKit | MIT / MIT |
 | Model | Claude, GPT or Gemini | Anthropic, OpenAI, Google | commercial API |
@@ -278,10 +276,11 @@ In each of the following sections, a small table says what the layer is, who mak
 | Why we need it | Realistic sales data with two channels, products, regions and companies, and with people in it, so data protection is a real question |
 | Alternatives | Northwind or Contoso as sample data, or your own data warehouse |
 
-### AdventureWorks
+### The Sample Data: AdventureWorks
 
 AdventureWorks sells bicycles online to consumers and through resellers to bike shops, between December 2010 and January 2014.
-The data warehouse variant **AdventureWorksDW** has exactly what an analytics demo needs: fact tables for both sales channels, plus dimensions for time, products, territories, resellers, customers and employees.
+The data warehouse variant **AdventureWorksDW** has exactly what an analytics demo needs: *fact tables* for both sales channels (one row per order line with the amounts), plus *dimension tables* for time, products, territories, resellers, customers and employees (the descriptive data).
+The semantic layer's dimensions are built from the columns of these tables.
 It is MIT-licensed, so we can use and redistribute it freely.
 
 For SQL Server, the Docker image restores Microsoft's original backup.
@@ -297,13 +296,12 @@ Both downloads are pinned to a commit and come with SHA-256 checksums that the i
 
 ### Company Names: Yes. People: No.
 
-Now the interesting part.
 Every reseller order in AdventureWorks has a sales representative: the **key account manager** for that bike shop.
 In the warehouse, that is the column `FactResellerSales.EmployeeKey`, and behind it in `DimEmployee` are the name, email address, phone number, hourly rate, birth date and even a photo.
 
-From the GDPR point of view, the distinction is clear:
+From the point of view of the GDPR (General Data Protection Regulation), the distinction is clear:
 
-- **The name of a company is not personal data.** A company is not a person. "Brakes and Gears bought for $877,107" is a business fact.
+- **The name of a company is not personal data.** The GDPR protects natural persons and, according to [recital 14](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679), does not cover the name and contact details of a legal person. "Brakes and Gears bought for $877,107" is a business fact. Be careful with sole traders, whose company name is often their own name.
 - **The name of a key account manager is personal data.** And as soon as we can group revenue by sales representative, we have built a performance evaluation of individual employees, and the works council will want to have a word about that.
 
 So the rule for our app is: **the agent may analyse resellers, but never the people behind the sales.**
@@ -333,6 +331,7 @@ Each backend may be restricted to one territory group, e.g. `Europe`.
 The backend states its scope for every database connection: in SQL Server as a read-only session context, in PostgreSQL as a connection parameter.
 **Without that value, the views return no rows.**
 A forgotten configuration therefore shows nothing instead of everything.
+The setting is called `DATA_SCOPE`, with the values `Europe`, `North America`, `Pacific`, or `*` for everything. For convenience, the demo's Compose file defaults to `*`; in production, set the value explicitly.
 This principle is called *row-level security*: the database decides per connection which rows exist.
 The demo writes the filter into the views themselves; SQL Server (security policies) and PostgreSQL (row security policies) also offer it as a built-in feature on the tables.
 The scope belongs to the deployment, not to a logged-in user; the demo has no login. With authentication, the backend would write the user's scope into the same session value.
@@ -386,6 +385,8 @@ new("revenue", "Revenue", "Sum of the sales amount.", "USD",
     g => Math.Round(g.Sum(s => s.SalesAmount) ?? 0m, 2)),
 ```
 
+`listValues` decides whether the allowed values of a dimension go into the system prompt: the countries do, the resellers do not, because there are too many of them.
+
 At runtime, the requested dimensions are combined into one `GroupBy` key with the `System.Linq.Expressions` API, and Entity Framework Core translates the result into parameterized SQL:
 
 ```csharp
@@ -433,7 +434,7 @@ Each measure carries its SQL fragment, built with Drizzle's `sql` template tag, 
 Both backends serve the same HTTP contract: `GET /api/schema`, `POST /api/sales/aggregate`, plus a small product catalogue with photos.
 Errors are [RFC 9457 problem details](https://www.rfc-editor.org/rfc/rfc9457) in both.
 
-Each backend generates an [OpenAPI](https://www.openapis.org/) 3.1 document from its own code: ASP.NET Core from its endpoints and records, NestJS from its controllers and DTO classes.
+Each backend generates an [OpenAPI](https://www.openapis.org/) 3.1 document from its own code: ASP.NET Core from its endpoints and records, NestJS from its controllers and DTO (data transfer object) classes.
 Open a backend's port in the browser, and you land in Swagger UI: <http://localhost:8081> for .NET, <http://localhost:8082> for Node.
 Start both, and the two pages show the same endpoints, the same schemas and the same types.
 
@@ -462,7 +463,7 @@ On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framew
 
 | Agent (.NET track) | Microsoft Agent Framework |
 | --- | --- |
-| What it is | Microsoft's framework for agents in .NET and Python: agents from any `IChatClient`, tools from plain C# methods, workflows, memory and hosting for ASP.NET Core |
+| What it is | Microsoft's framework for agents in .NET and Python: agents from any `IChatClient` (the provider-neutral chat interface of Microsoft.Extensions.AI), tools from plain C# methods, workflows, memory and hosting for ASP.NET Core |
 | Made by | Microsoft, MIT license; [the direct successor of Semantic Kernel and AutoGen](https://learn.microsoft.com/en-us/agent-framework/overview/), "created by the same teams" |
 | Why we need it | It runs the loop between model and tools in the ASP.NET Core process and serves AG-UI with `MapAGUIServer()` |
 | Alternatives | The plain `IChatClient` of `Microsoft.Extensions.AI` with your own loop, Semantic Kernel (its predecessor), or path B with Mastra |
@@ -565,10 +566,10 @@ switch (context.DeclaringType?.Name, context.PropertyInfo?.Name)
 }
 ```
 
-Two details cost me some time, and both show how much the model depends on the schema:
+Two details are easy to get wrong, and both show how much the model depends on the schema:
 
 - **Enums need a string converter.** Without `[JsonConverter(typeof(JsonStringEnumConverter<ChartKind>))]`, the schema describes `ChartKind` as a number, and the model sends `"chart": 1` instead of `"chart": "line"`.
-- **Optional is not nullable.** C# records with `string?` and `int?` become schema types like `["array", "null"]`. The model then sends `"filters": null`, and the Angular side, whose Zod schema says "optional", rejects the view. The callback therefore removes `null` from optional fields, so both agents describe exactly the same tool.
+- **Optional is not nullable.** C# records with `string?` and `int?` become schema types like `["array", "null"]`. The model then sends `"filters": null`, and the Angular app, which checks every chart request against its own Zod schema (shown in layer 4) where `filters` is optional, rejects it. The callback therefore removes `null` from optional fields, so both agents describe exactly the same tool.
 
 ### Serving AG-UI
 
@@ -619,7 +620,7 @@ For a demo, that is ideal: no conversation ends up in a database on the server.
 
 Are the two equivalent? For this app, yes.
 The Angular app does not know which framework answers; only the status line in the header shows it.
-With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions with the same kind of charts: a line chart for the quarterly revenue per channel, product cards for the Mountain-200, and the polite refusal for the key account manager.
+With the same model (Claude Sonnet 5.5), the same prompt and the same tools, both agents answered the example questions that the chat offers above the input field in the same way: a line chart for the quarterly revenue per channel, product cards for the Mountain-200 (a mountain bike in the AdventureWorks catalogue), and the polite refusal for the key account manager, which [the test below](#test-who-is-the-key-account-manager) looks at in detail.
 Pinning a chart by chat works with both, including the confirmation after the frontend tool has run.
 The texts differ from run to run, as they do with the same framework, too.
 
@@ -646,7 +647,7 @@ Neither is a reason to switch the backend language, and with path B you can even
 On the .NET side, the AG-UI hosting package is a preview (`1.25.0-preview`) at the time of writing, while the rest of the framework is stable.
 The browser console also shows compatibility warnings from the AG-UI client about fields that the .NET server sends as `null`; they do not affect the app.
 
-### Other Agent Frameworks
+### Choosing Another Agent Framework
 
 Which framework fits depends mostly on your language and on whether it speaks AG-UI, because then the Angular side stays the same:
 
@@ -672,7 +673,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
 In the Microsoft Agent Framework, you swap the `IChatClient`; the demo's .NET backend uses Anthropic only.
-Either way, the setting is one line in `agent/.env`.
+Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
 
@@ -790,10 +791,10 @@ registerFrontendTool({
 ```
 
 The handler validates again, and that is a trap worth knowing: the Zod schema describes the tool for the model, but CopilotKit does not validate the arguments.
-Without the check, a single malformed pin is stored as is, and on the next page load the dashboard's validation discards *all* tiles.
+Without the check, a single malformed pin is stored as is, and on the next page load, the dashboard validates the tiles it stored in `localStorage` and discards *all* of them.
 **Treat everything the model sends as untrusted input**, just like a form submitted from the internet.
 
-### Charts: Telling the Truth
+### Charts: Label What Is Plotted
 
 The charts are plain Angular components (bars in HTML and CSS, lines in SVG) with tooltips, a legend for several series, a colour palette that works for colour-blind readers, and a switch to a table view.
 No chart library is needed for that.
@@ -804,10 +805,12 @@ A chart that simply plots the first measure then shows revenue under a margin ti
 Two things prevent that here: the tool description tells the model that the first measure is plotted, and the chart does not guess.
 Measures with the same unit are drawn side by side, and the chart always says what it shows ("Revenue (USD)", "Values (USD)"), taken from the query and not from the title.
 
+The text answer below the chart is a different matter: the numbers in the chart come from the database, while the short analysis comes from the model and can misstate a number or see a trend that is not there. Nothing checks it, so the chart is what counts.
+
 ### Dashboard: Running Without the Model
 
 A pinned tile is a `SalesView`: title, chart type, query.
-It is stored in `localStorage` and loaded with `httpResource()` directly from the backend:
+It is stored in `localStorage`, so in the demo each browser has its own dashboard; a real project would store the views on the server per user or team. Each tile is loaded with `httpResource()` directly from the backend:
 
 ```ts
 protected readonly data = httpResource<AggregateResponse>(() => ({
@@ -840,6 +843,8 @@ That is the right choice when tools need database access that must never reach t
 
 The Angular team itself does not offer a chat or generative UI library; [angular.dev/ai](https://angular.dev/ai) points to Genkit, Firebase AI Logic and the Gemini API for AI features.
 
+With that, the app is complete on path A. What changes when the agent gets its own service?
+
 ## Path B: The Agent as a Separate Service
 
 Path B moves the agent out of the backend into its own Node.js service.
@@ -857,7 +862,7 @@ execute: ({ query }) => orError(() => dataApi.aggregate(query)),   // POST /api/
 
 Second, the service needs its own small HTTP server for AG-UI. A plain `node:http` server with the same `MastraAgent` code as in the NestJS controller is enough.
 
-The browser then talks to two servers: `/agent` goes to the agent service, `/api` (dashboard tiles, photos) still goes directly to the backend.
+The browser still talks to one origin: the web server in front of the app forwards `/agent` to the agent service and `/api` (dashboard tiles, photos) directly to the backend.
 In the demo, one more Compose profile and one variable switch to path B:
 
 ```bash
@@ -926,7 +931,7 @@ Six architectural decisions make the app work:
 6. **Pin the result** and run it without the model from then on.
 
 The complete code with both backends and both paths is on GitHub: **[angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics)**.
-Clone it, run `docker compose --profile node up` or `docker compose --profile dotnet up`, and ask your own questions.
+Clone it, copy the two `.env.example` files, add your API key, run `docker compose --profile node up` or `docker compose --profile dotnet up`, open http://localhost:8080, and ask your own questions.
 Many thanks to Manfred Steyer for the inspiring workshop!
 
 How do you keep personal data away from your agents? I'm curious about your approaches, so let me know.
