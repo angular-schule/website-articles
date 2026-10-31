@@ -673,7 +673,7 @@ Which framework fits depends mostly on your language and on whether it speaks AG
 | Alternatives | Any provider with an SDK for your agent framework, or an open-weight model on your own hardware via Ollama or vLLM |
 
 Mastra has a [model router](https://mastra.ai/models): the model is a single string like `anthropic/claude-sonnet-5-5`, `openai/gpt-5.6-terra` or `google/gemini-3-flash-preview`, and the API key comes from the provider's usual environment variable.
-In the Microsoft Agent Framework, you swap the `IChatClient`; the demo's .NET backend uses Anthropic only.
+In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
 Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
@@ -996,6 +996,8 @@ Here the providers differ a lot at the time of writing:
 
 So for an analytics tool with real company data in a German company, I would point you to OpenAI's models in the EU region today: a clean AVV with processing on European servers is much easier to get there.
 A company I work for chose OpenAI over Anthropic for exactly this reason.
+In the demo, that is configuration only: `MODEL=openai/…`, the API key, and `OPENAI_BASE_URL=https://eu.api.openai.com/v1`.
+Mastra reads these settings on the Node.js track, and the .NET track reads the same three and takes its `IChatClient` from OpenAI's SDK.
 
 Let's be honest about what the European server buys you, though.
 OpenAI and Anthropic are US companies, and the US [CLOUD Act](https://www.law.cornell.edu/uscode/text/18/2713) obliges US providers to hand over data on request "regardless of whether such communication, record, or other information is located within or outside of the United States".
@@ -1006,15 +1008,13 @@ In practice, that is often what decides the choice of provider.
 If you need more than that, look at providers without US ties.
 Mistral is the obvious candidate: a European company with an EU endpoint.
 Check its list of subprocessors, though: if a US cloud runs the data centers, the same question comes back one level lower.
-The safest option remains a model on your own hardware.
+The safest option remains an open-weight model on your own hardware: then no data leaves your servers at all.
 
 Mistral works with the demo, too.
 Mastra's model router knows the provider, so `MODEL=mistral/mistral-large-latest` and `MISTRAL_API_KEY` are enough for the default endpoint.
 For the EU endpoint, Mastra accepts a model object with its own address instead of the string, `{ id: 'mistral/mistral-large-latest', url: 'https://api.eu.mistral.ai/v1', apiKey }`, and then talks to it as an OpenAI-compatible API.
+The .NET track of the demo supports Anthropic and OpenAI only.
 As with every model change, try your questions first: the model has to fill the tool schemas reliably.
-On the Node.js track of the demo, that is configuration only: `MODEL=openai/…`, the API key, and `OPENAI_BASE_URL=https://eu.api.openai.com/v1`.
-The .NET track talks to Anthropic only; in the Agent Framework, you would swap the `IChatClient` for one from OpenAI's SDK.
-Or you host an open-weight model yourself, then no data leaves your servers at all.
 
 One more number for your planning: CopilotKit is not small.
 It brings Markdown rendering, syntax highlighting, KaTeX and web components, and the initial bundle of the demo is about 1.5 MB compressed.
