@@ -131,6 +131,8 @@ The browser can show the first words of an answer while the model is still writi
 
 **Semantic layer.**
 A fixed list of business terms (measures such as "revenue", dimensions such as "country") that a query may use, mapped to the database by the backend.
+It is not the ORM: EF Core or Drizzle map tables to objects for developers, while the semantic layer sits on top of them and decides which business questions may be asked at all.
+The term comes from business intelligence, where products such as Cube or dbt provide one.
 We will spend a whole section on it, because it decides what the model can and cannot ask for.
 
 ## The Protocols: AG-UI, A2UI, MCP and A2A
