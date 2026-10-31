@@ -853,7 +853,9 @@ For learning, the most useful part of the demo is a debug feature: below the cha
 - **Browser ↔ agent (AG-UI):** the `RunAgentInput` that the browser posts, with the whole conversation and the frontend tools, and every event that comes back: `RUN_STARTED`, the tool call arriving piece by piece in `TOOL_CALL_ARGS`, the result, the text deltas and `RUN_FINISHED`.
 - **Agent ↔ LLM provider:** the request in the provider's own format, with the system prompt, the tool schemas and the tool results, and the streamed answer. This is what the model really gets, including the defaults that the framework adds.
 
-![The traffic window below the chat: the AG-UI events of one run](traffic-window.png "Every AG-UI event of one run. The second tab shows the requests to the LLM provider.")
+![The traffic window below the chat: the AG-UI events of one run, with the product cards it produced above](traffic-window.png "Browser ↔ agent: the findProducts call arrives piece by piece, its result becomes the product cards.")
+
+![The second tab: the request to Anthropic with model, token limit and the system prompt](traffic-llm.png "Agent ↔ LLM provider: the request as Anthropic receives it, starting with the system prompt.")
 
 Each part is built in the language of its layer:
 
@@ -965,11 +967,12 @@ For a workshop with interchangeable backends, path B is handy. In a customer pro
 ## Test: Who Is the Key Account Manager?
 
 Time for the question the whole data layer was built for.
-The chat offers a few example questions above the input field. One of them is "Who is the key account manager of our biggest reseller?", and the agent answered:
+The chat offers a few example questions above the input field. One of them is "Who is the key account manager of our biggest reseller?":
 
-> I can't tell you that. Data on people, such as key account managers and sales representatives, is deliberately not available to me. I can show you the biggest reseller as a company, though.
+![The agent declines to name the key account manager and offers to look up the biggest reseller instead](key-account-manager.png "Company names yes, people no: the polite refusal from the system prompt.")
 
-Then it called `querySales`, showed the top 10 resellers as a bar chart, and named the biggest one: Brakes and Gears, with $877K from 12 orders.
+The wording changes from run to run, the content does not: no names of people, but an offer to analyse the reseller as a company.
+In some runs, the agent went on right away, called `querySales`, showed the top 10 resellers as a bar chart, and named the biggest one: Brakes and Gears, with $877K from 12 orders.
 That is exactly the line we drew: **company names yes, people no.**
 And if the model had tried anyway, there would have been nothing to find.
 
