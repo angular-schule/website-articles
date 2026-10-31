@@ -106,7 +106,6 @@ On path A, it lives in the backend, here in NestJS.
 [Mastra](https://mastra.ai/) is made by Kepler Software, Inc., a company from San Francisco.
 Its founders [built Gatsby](https://www.ycombinator.com/companies/mastra), the React web framework, before they started on Mastra in October 2024.
 Mastra went through Y Combinator in Winter 2025 and [released version 1.0 in January 2026](https://mastra.ai/blog/announcing-mastra-1).
-Manfred Steyer, whose [workshop](https://ai-poland.pl/free-workshops/recordings) inspired this series, uses Mastra, too.
 
 For a TypeScript developer, Mastra feels familiar: tools are objects with a [Zod](https://zod.dev/) schema, agents are objects with instructions, tools and a model, and everything is plain TypeScript.
 The framework is Apache 2.0, with one exception: everything in folders named `ee/` (enterprise features such as parts of the authentication) is under a separate, source-available license that does not allow production use without a contract. Our demo does not use those parts.
@@ -201,7 +200,7 @@ Mastra's model router takes one string such as `anthropic/claude-sonnet-5-5`, `o
 ### Pitfalls: Telemetry and Peer Dependencies
 
 - **Mastra sends usage telemetry by default** to PostHog, including token usage of the agents ([source](https://github.com/mastra-ai/mastra/blob/main/packages/core/src/telemetry/posthog.ts)). The demo switches it off with `MASTRA_TELEMETRY_DISABLED=1`. Check this in your own projects; it is easy to miss. The section [Telemetry: Who Phones Home?](/blog/2026-11-agentic-analytics#telemetry-who-phones-home) in part 1 lists every layer of the stack.
-- **Peer dependencies pull in more than you need.** `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as *peer dependencies* (packages it expects the app to provide), and npm installs those automatically. CopilotKit's runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it switches the automatic installation off (`legacy-peer-deps=true` in `.npmrc`) and lists the packages it uses itself. Manfred solves the same problem with an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub).
+- **Peer dependencies pull in more than you need.** `@ag-ui/mastra` declares `@copilotkit/runtime` and `@mastra/client-js` as *peer dependencies* (packages it expects the app to provide), and npm installs those automatically. CopilotKit's runtime brings a long list of dependencies, including analytics packages. The demo needs neither, so it switches the automatic installation off (`legacy-peer-deps=true` in `.npmrc`) and lists the packages it uses itself. An alternative is an [empty stub package](https://github.com/manfredsteyer/agentic-sales/tree/main/agent/libs/copilotkit-runtime-stub) in place of `@copilotkit/runtime`.
 
 ## Path B: The Agent as a Separate Service
 
@@ -227,7 +226,6 @@ In the demo, one more Compose profile and one variable switch to path B:
 AGENT_URL=http://agent:4111 docker compose --profile dotnet --profile agent up
 ```
 
-Manfred's workshop uses this path, too: his agent runs on Mastra's own server next to an aggregation server.
 For a workshop with interchangeable backends, path B is handy. In a customer project with one backend, I would start with path A.
 
 ## How the Series Continues

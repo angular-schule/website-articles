@@ -78,6 +78,7 @@ I wanted to see how the architecture holds up in a setting that looks more like 
 So this series does not repeat Manfred's code.
 It retells the idea with its own demo, its own data, and a few decisions of its own.
 The building blocks are the same as his: CopilotKit in Angular, AG-UI in between, Mastra on the server. For the .NET track, the Microsoft Agent Framework takes Mastra's place.
+Many thanks to Manfred for the inspiring workshop!
 
 ## What We Build
 

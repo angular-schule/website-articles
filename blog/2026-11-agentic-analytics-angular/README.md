@@ -95,7 +95,7 @@ In the template, the chat is one element:
 ### Three Ways to Generate UI
 
 CopilotKit offers three ways to connect an Angular component to the agent.
-Manfred Steyer, whose [workshop](https://ai-poland.pl/free-workshops/recordings) inspired this series, summed up the difference nicely: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a backend tool.
+The difference in one sentence: with `registerComponent()` and `registerFrontendTool()`, **the model decides** to show something; with `registerRenderToolCall()`, **CopilotKit decides** to draw the result of a backend tool.
 
 | API | Who defines the tool? | What happens? |
 | --- | --- | --- |
@@ -195,7 +195,7 @@ protected readonly data = httpResource<AggregateResponse>(() => ({
 }));
 ```
 
-Manfred calls this the difference between *design mode* and *runtime mode*: the agent helps to design the view once, and from then on it runs like any other report.
+You can call this the difference between *design mode* and *runtime mode*: the agent helps to design the view once, and from then on it runs like any other report.
 
 ### Alternatives to CopilotKit
 

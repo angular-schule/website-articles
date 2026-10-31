@@ -244,14 +244,14 @@ The fake LLM also made a few differences between the frameworks visible that you
 
 ## What This Demo Leaves Out
 
-The workshop by Manfred Steyer that inspired this series ([recording](https://ai-poland.pl/free-workshops/recordings)) goes further in a few directions that I deliberately skipped:
+A few directions go further than this demo, and I deliberately skipped them:
 
 - **Shared agent state** (AG-UI's `STATE_SNAPSHOT` and `STATE_DELTA`), where the agent itself edits the dashboard, e.g. "change every tile to a bar chart".
 - **A2UI**, so the agent can assemble UI from a catalogue of components at runtime.
 - **JSONata** as a sandbox in which the model can compute derived figures.
 - **Human-in-the-loop** approvals for large queries.
 
-If you want to see these, watch his recording and read his code. In my opinion, that is the natural next step after this series.
+The workshop that inspired this series, mentioned in [part 1](/blog/2026-11-agentic-analytics#inspired-by-manfred-steyer), shows several of them. In my opinion, that is the natural next step after this series.
 
 ## Conclusion
 
@@ -270,7 +270,6 @@ Six architectural decisions make the app work:
 
 The complete code with both backends and both paths is on GitHub: **[angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics)**.
 Clone it, copy the two `.env.example` files, add your API key, run `docker compose --profile node up` or `docker compose --profile dotnet up`, open http://localhost:8080, and ask your own questions.
-Many thanks to Manfred Steyer for the inspiring workshop!
 
 How do you keep personal data away from your agents? I'm curious about your approaches, so let me know.
 
