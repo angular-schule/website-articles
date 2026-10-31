@@ -616,7 +616,7 @@ export class AgentController {
 Neither agent keeps a memory: CopilotKit sends the whole thread with every request.
 For a demo, that is ideal: no conversation ends up in a database on the server.
 
-### Mastra and the Agent Framework Side by Side
+### Mastra or the Agent Framework: Are They Equivalent?
 
 Are the two equivalent? For this app, yes.
 The Angular app does not know which framework answers; only the status line in the header shows it.
@@ -634,7 +634,7 @@ What differs is the work around it:
 | --- | --- | --- |
 | Languages | TypeScript | C#, Python, Go (preview) |
 | Model access | a model router: one string per model, e.g. `anthropic/claude-sonnet-5-5` | an `IChatClient` from Microsoft.Extensions.AI, created by the provider's SDK |
-| Tool schema | written by hand in Zod | derived from C# types, adjusted in a callback |
+| Tool schema | written by hand in Zod | derived from C# types, adjusted in a callback (enums, optional without `null`) |
 | Validation of tool arguments | Mastra checks against the Zod schema | deserialization into the C# types; names are checked by the semantic layer |
 | AG-UI | adapter package plus a few lines of streaming | `MapAGUIServer()`, still a preview package |
 | Trying agents locally | Mastra Studio, a local web UI | DevUI, a preview package |
