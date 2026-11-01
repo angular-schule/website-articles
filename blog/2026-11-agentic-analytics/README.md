@@ -109,7 +109,7 @@ The [glossary](#glossary) at the end lists the names per framework.
 
 **Agent.**
 An agent is an LLM in a loop: the model writes, calls a tool, reads the result, maybe calls the next tool, and finally answers.
-In our app, the agent has a system prompt (its standing instructions), two tools, and access to a model.
+In our app, the agent has a system prompt (its standing instructions), three backend tools, a fourth one from the browser, and access to a model.
 Everything around the model that keeps it on track (prompt, tool schemas, validation, limits) is what Manfred calls the *harness*: when the model gets something wrong, that is where the engineers improve the app.
 
 **Agent framework.**
@@ -197,7 +197,7 @@ Anthropic [published it in November 2024](https://www.anthropic.com/news/model-c
 An MCP server offers tools in a standard way, so every MCP-capable agent or chat client can use them without custom code.
 The extension [MCP Apps](https://blog.modelcontextprotocol.io/posts/2025-11-21-mcp-apps/) lets an MCP server also deliver interactive UI, which the host shows in a sandboxed iframe: that is the open-ended kind of generative UI.
 
-Our two tools are tailored to this one app, and they call the semantic layer directly.
+Our tools are tailored to this one app, and they call the semantic layer directly.
 An MCP server would make sense if other agents, or a chat client such as Claude, should use the same sales tools.
 
 ### A2A: Agent ↔ Agent
@@ -247,7 +247,7 @@ That gives us two tracks with the same Angular app on top:
 - **Node.js track:** NestJS + Drizzle + PostgreSQL, with **Mastra** as the agent.
 - **.NET track:** ASP.NET Core + Entity Framework Core + SQL Server, with the **Microsoft Agent Framework** as the agent.
 
-Both agents get the same system prompt and the same two tools, so we can also see whether the two frameworks give similar results.
+Both agents get the same system prompt and the same tools, so we can also see whether the two frameworks give similar results.
 Path B has [its own section](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service) in the Node.js part of this series; the demo runs it with one more Compose profile.
 For simplicity, the demo builds path B only once, with Mastra: a separate service talks HTTP and works in front of either backend, so a second agent service in C# would only repeat the same agent.
 
@@ -311,24 +311,37 @@ From the point of view of the GDPR (General Data Protection Regulation), the dis
 
 So the rule for our app is: **the agent may analyse resellers, but never the people behind the sales.**
 The same applies to online customers, who are private persons.
+That is also why the demo leaves out the best-known AdventureWorks analysis: the *bike buyer* scenario from [Microsoft's tutorials](https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-get-started-analyze-with-azure-machine-learning), which predicts from age, income, marital status, children, cars owned and commute distance which customer is likely to buy a bike, for a targeted marketing campaign.
+Those are attributes of private persons, so `DimCustomer` stays in the warehouse.
 
 A prompt ("please don't talk about employees") cannot enforce this. The semantic layer can (layer 2 below): it offers no dimension for sales representatives or customers, so the model has no way to ask for them.
 What the semantic layer does not list cannot be queried.
 
-### Views: The Warehouse as Flat Tables
+### Views: A Flat View of the Warehouse
 
 The warehouse spreads a single order line over a fact table and half a dozen dimension tables, and the two sales channels even have separate fact tables.
-We create a schema `analytics` with three views that join all this into flat, *denormalized* tables: the sales lines of both channels in one table, the resellers, and the products.
+For the app, we create a schema `analytics` with three **SQL views**.
+A view is a stored `SELECT`: it holds no data of its own, but the database offers its result like a table, so the backends query it with their ORM as if it were one.
+Our views are *denormalized*: they join the fact and dimension tables into one wide row per entry.
 That is their main job in this demo.
-Both backends map three flat tables instead of ten, and every dimension of the semantic layer points to exactly one column.
+Both backends map three views instead of ten tables, and every dimension of the semantic layer points to exactly one column.
+
+| View | Built from | One row per |
+| --- | --- | --- |
+| `analytics.AgentViewSales` | both fact tables, joined with date, product, subcategory, category, territory, promotion and reseller | order line of both channels. This is the main view, the semantic layer is built on it |
+| `analytics.AgentViewProducts` | product, subcategory, category | product, with description and photo |
+| `analytics.AgentViewResellers` | reseller, geography, territory | reseller company, with city, size and year opened |
+
+All three carry the prefix `AgentView` (`agent_view_` in PostgreSQL), just as the warehouse marks its tables with `Fact` and `Dim`.
+Anyone who comes across them in the database later can tell at once that they are views, what they are for, and which application reads them.
 
 On the way, the views leave out the people: they contain **no reference to a natural person**, not even as a key:
 
 ```sql
 -- One row per order line of both sales channels.
 -- Customers and sales representatives stay in the warehouse and never appear here.
-CREATE VIEW analytics.Sales AS
-SELECT ...                       -- channel, order date, product, territory, reseller, amounts
+CREATE VIEW analytics.AgentViewSales AS
+SELECT ...                       -- channel, order date, product, promotion, territory, reseller, amounts
 FROM ... AS lines
 JOIN dbo.DimSalesTerritory AS t ON ...
 WHERE CAST(SESSION_CONTEXT(N'TerritoryGroup') AS nvarchar(50)) IN (N'*', t.SalesTerritoryGroup);
@@ -367,7 +380,7 @@ The obvious idea would be to let the LLM write SQL.
 Please don't.
 A model that writes SQL can read every column the database account can read, can write queries that run for minutes, and can be talked into almost anything by a cleverly worded question.
 
-Instead, both backends offer a small **semantic layer**: a fixed list of *dimensions* (year, quarter, month, channel, product category, country, reseller, …) and *measures* (revenue, cost, margin, quantity, orders).
+Instead, both backends offer a small **semantic layer**: a fixed list of *dimensions* (year, quarter, month, channel, product category, colour, product line, country, reseller, reseller size, promotion, …) and *measures* (revenue, cost, margin, quantity, orders, average order value, discount, freight).
 A request is plain JSON:
 
 ```json
@@ -388,9 +401,13 @@ Fixed limits keep queries small: at most three dimensions, ten filters and 1,000
 There is no dimension `salesRep`.
 **The model cannot ask for what does not exist.**
 
+The reverse also holds: a new question needs a new dimension or measure, not a new tool.
+"Do volume discounts pay off?" is the dimension `promotionType` and the measure `discount`; "Do bigger shops place bigger orders?" is the dimension `resellerAnnualRevenue` and the measure `averageOrderValue`.
+Each is a few lines in both backends and one more column in the sales view.
+
 ### Two Backends, One Contract
 
-Both backends serve the same HTTP contract: `GET /api/schema`, `POST /api/sales/aggregate`, plus a small product catalogue with photos.
+Both backends serve the same HTTP contract: `GET /api/schema`, `POST /api/sales/aggregate`, plus a small catalogue of products (with photos) and resellers.
 Errors are [RFC 9457 problem details](https://www.rfc-editor.org/rfc/rfc9457) in both.
 
 Each backend generates an [OpenAPI](https://www.openapis.org/) 3.1 document from its own code: ASP.NET Core from its endpoints and records, NestJS from its controllers and DTO (data transfer object) classes.
@@ -410,7 +427,7 @@ With a safe and stable data API in place, the agent can use it. Part 2 shows in 
 ## Layer 3: The Agent, with Mastra or the Microsoft Agent Framework
 
 The agent is the part that talks to the model.
-It has a system prompt, two backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the frontend adds a third one later.
+It has a system prompt, three backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue, `findResellers` for the reseller directory), and the frontend adds a fourth one later.
 On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framework in ASP.NET Core.
 
 | Agent (Node.js track) | Mastra |
@@ -426,6 +443,43 @@ On path A, it lives in the backend: Mastra in NestJS, the Microsoft Agent Framew
 | Made by | Microsoft, MIT license; [the direct successor of Semantic Kernel and AutoGen](https://learn.microsoft.com/en-us/agent-framework/overview/), "created by the same teams" |
 | Why we need it | It runs the loop between model and tools in the ASP.NET Core process and serves AG-UI with `MapAGUIServer()` |
 | Alternatives | The plain `IChatClient` of `Microsoft.Extensions.AI` with your own loop, Semantic Kernel (its predecessor), or path B with Mastra |
+
+### From the View to the Tool
+
+Three views and three backend tools: it is tempting to assume that each tool has its own view.
+That is almost the case here, but it is not the rule. The views are cut along the data, the tools along the tasks:
+
+| Tool | Runs in | Task | Reads |
+| --- | --- | --- | --- |
+| `querySales` | backend | evaluate: aggregate, group, filter | `AgentViewSales`, through the semantic layer |
+| `findProducts` | backend | look up products | `AgentViewProducts`. The product cards then load the photos from the same view, without the model |
+| `findResellers` | backend | look up resellers | `AgentViewResellers`: business type, location, size, year opened |
+| `pinToDashboard` | browser | act in the UI | no database. It stores only the query; the dashboard tiles send it to `POST /api/sales/aggregate`, which reads `AgentViewSales` again |
+
+What runs through all layers is this connection: from the tools at the top down to the database, every path leads through the semantic layer or the catalogue to a view, and every view is read with the read-only account.
+
+How finely should tools be cut? As coarsely as possible.
+A tool stands for a kind of task, not for a question.
+"Revenue per country" and "top 10 resellers in Germany" are both `querySales`, only with different dimensions and filters; a tool per question would make the model guess which one fits, and every new question would need new code.
+Questions about resellers as a group ("Which 10 resellers bought the most?") therefore go to `querySales`, with the dimensions `reseller`, `resellerBusinessType` and `resellerAnnualRevenue` from the sales view.
+Only "Who is Brakes and Gears, and where are they?" is a different task, a lookup of one company, and that is `findResellers`.
+
+### What Can You Do for Me?
+
+Users rarely know which questions a data model can answer, so the first question is often exactly that.
+Does the agent need a tool that returns example questions?
+No. At startup, the agent loads the semantic layer from `GET /api/schema` and writes it into the system prompt: every dimension and measure with its description, and the allowed values of the small dimensions.
+The model therefore already knows what it can answer, and one rule in the prompt tells it to use that knowledge:
+
+```text
+- If the user asks what you can do, suggest a few concrete questions that the dimensions and
+  measures above can answer, and mention that you can show products and look up resellers.
+```
+
+With that, Claude answered with questions grouped by sales, products, regions, resellers and promotions, all of them answerable, and added on its own that it has no personal data.
+A tool for this would only pay off when the vocabulary is too large for the prompt, for example with hundreds of measures across several data models; then the agent would load the descriptions on demand instead.
+For one data model, the prompt is the cheaper and simpler place.
+The example questions above the chat input serve the same purpose for users who prefer to click.
 
 Part 2 builds this agent, in the stack of your choice. Before that, two questions that every data protection officer asks about such an app: what does the LLM provider receive, and which tool reports to its maker?
 

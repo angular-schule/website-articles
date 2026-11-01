@@ -52,8 +52,8 @@ If your team works with .NET, read [part 2 for .NET](/blog/2026-11-agentic-analy
 [Part 1](/blog/2026-11-agentic-analytics) explains the architecture and why every decision keeps personal data away from the model. In short:
 
 - **The app:** an Angular chat in which questions about sales data become charts, and a dashboard of pinned charts that runs without the LLM.
-- **The agent:** an LLM in a loop with *tools*, functions it may call. It never writes SQL. It calls `querySales` with a structured query and `findProducts` for the product catalogue; the frontend adds a third tool, `pinToDashboard`.
-- **The semantic layer:** a fixed list of *measures* (revenue, cost, margin, quantity, orders) and *dimensions* (year, quarter, country, reseller, …). The backend turns a JSON request into parameterized SQL and rejects every other name.
+- **The agent:** an LLM in a loop with *tools*, functions it may call. It never writes SQL. It calls `querySales` with a structured query, `findProducts` for the product catalogue and `findResellers` for the reseller directory; the frontend adds a fourth tool, `pinToDashboard`.
+- **The semantic layer:** a fixed list of *measures* (revenue, cost, margin, quantity, orders, average order value, discount, freight) and *dimensions* (year, quarter, country, product line, reseller, promotion, …). The backend turns a JSON request into parameterized SQL and rejects every other name.
 - **The data:** AdventureWorksDW, read through views in the schema `analytics` that contain no column about people, with a read-only account. Row-level security (`DATA_SCOPE`) limits each connection to one territory group and shows nothing if the value is missing.
 - **The contract:** both backends serve the same HTTP API under `/api`, described with OpenAPI.
 - **AG-UI:** the protocol between the Angular app and the agent, events streamed as server-sent events.
@@ -91,7 +91,7 @@ Each measure carries its SQL fragment, built with Drizzle's `sql` template tag, 
 ## Layer 3: The Agent with Mastra
 
 The agent is the part that talks to the model.
-It has a system prompt, two backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue), and the Angular app adds a third, `pinToDashboard` ([part 3](/blog/2026-11-agentic-analytics-angular#three-ways-to-generate-ui)).
+It has a system prompt, three backend tools (`querySales` for the semantic layer, `findProducts` for the product catalogue, `findResellers` for the reseller directory), and the Angular app adds a fourth, `pinToDashboard` ([part 3](/blog/2026-11-agentic-analytics-angular#three-ways-to-generate-ui)).
 On path A, it lives in the backend, here in NestJS.
 
 | Agent (Node.js track) | Mastra |

@@ -24,7 +24,7 @@ language: en
 header: agentic-analytics.jpg
 ---
 
-**The agent answers with Angular components, not with text: CopilotKit for Angular connects the app to the AG-UI endpoint, and every tool call becomes a chart, a table or a product card that you can pin to a dashboard.**
+**The agent answers with Angular components, not with text: CopilotKit for Angular connects the app to the AG-UI endpoint, and every tool call becomes a chart, a table, a product card or a reseller card, and charts can be pinned to a dashboard.**
 
 > **Agentic Analytics with Angular** is a series in four parts:
 >
@@ -52,7 +52,7 @@ The Angular app does not care which one answers: both speak AG-UI and serve the 
 The Angular app talks to a backend that you can build in [part 2 with .NET](/blog/2026-11-agentic-analytics-dotnet) or [part 2 with Node.js](/blog/2026-11-agentic-analytics-node). For this article, it is enough to know what that backend offers:
 
 - **`/agent`:** an AG-UI endpoint. The browser posts the conversation, and the agent answers with a stream of events: text in pieces, and *tool calls* with their arguments and results.
-- **Two backend tools:** `querySales` takes a title, a chart kind (`line`, `bar`, `kpi` or `table`) and a query of measures, dimensions and filters, and returns columns and rows. `findProducts` returns products with a photo URL. Both run on the server; the browser only sees their results.
+- **Three backend tools:** `querySales` takes a title, a chart kind (`line`, `bar`, `kpi` or `table`) and a query of measures, dimensions and filters, and returns columns and rows. `findProducts` returns products with a photo URL, `findResellers` reseller companies with location and size. All three run on the server; the browser only sees their results.
 - **`/api`:** the same data without the model, e.g. `POST /api/sales/aggregate` for a query and the product photos.
 - **No personal data:** the model can only ask for what the semantic layer offers, and that contains companies and products, but no people. [Part 1](/blog/2026-11-agentic-analytics) explains how the database enforces this.
 
@@ -81,7 +81,7 @@ export const copilotKitConfig: CopilotKitConfig = {
   selfManagedAgents: {
     analyst: new HttpAgent({ url: '/agent/ag-ui/analyst' }),
   },
-  renderToolCalls: [salesViewRenderer, productCardsRenderer],
+  renderToolCalls: [salesViewRenderer, productCardsRenderer, resellerCardsRenderer],
   enableInspector: false,
 };
 ```

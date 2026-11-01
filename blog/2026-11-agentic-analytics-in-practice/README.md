@@ -51,7 +51,7 @@ This last part looks at it in practice: how the two frameworks compare, how to c
 
 The demo app is a chat in Angular in which questions about sales data become charts that you can pin to a dashboard. This article refers to it as follows:
 
-- **Two agents, one app:** the same agent exists twice, with the [Microsoft Agent Framework in ASP.NET Core](/blog/2026-11-agentic-analytics-dotnet) and with [Mastra in NestJS](/blog/2026-11-agentic-analytics-node). Both get the same system prompt and the same tools, `querySales` for the sales data and `findProducts` for the product catalogue. The tool schemas are generated from the *semantic layer*, a fixed list of measures and dimensions, so the model only knows names that exist.
+- **Two agents, one app:** the same agent exists twice, with the [Microsoft Agent Framework in ASP.NET Core](/blog/2026-11-agentic-analytics-dotnet) and with [Mastra in NestJS](/blog/2026-11-agentic-analytics-node). Both get the same system prompt and the same tools, `querySales` for the sales data, `findProducts` for the product catalogue and `findResellers` for the reseller directory. The tool schemas are generated from the *semantic layer*, a fixed list of measures and dimensions, so the model only knows names that exist.
 - **AG-UI:** the agent streams events to the Angular app, which draws tool calls as components with CopilotKit ([part 3](/blog/2026-11-agentic-analytics-angular)). The browser adds its own *frontend tool*, `pinToDashboard`.
 - **The model:** Claude Sonnet 5.5 by default, set with `MODEL` and the provider's API key in `agent/.env`.
 - **Path A and path B:** the agent runs inside the backend, or as a separate Mastra service in front of either backend ([path B](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service)).
@@ -257,9 +257,10 @@ It reads the measures, dimensions and filter values from the system prompt, exac
 - **Filters:** values from the data that appear in the question, such as "Germany", "Mountain Bikes" or "2013".
 - **Ranking:** "top 10" or "the most" set the order and the limit.
 - **Chart:** a time dimension becomes a line chart, categories become bars, a total becomes a key figure.
-- **Products, pinning, people:** a product model or "look like" searches the catalogue, "pin" pins the last chart, and a question about a key account manager gets the refusal from the rules.
+- **Products, resellers, pinning, people:** a product model or "look like" searches the catalogue, "who is" with a company name looks up the reseller, "pin" pins the last chart, and a question about a key account manager gets the refusal from the rules.
+- **"What can you do?"** lists measures, dimensions and a few example questions.
 
-That covers all five example questions of the app, and a good number of variations.
+That covers every example question of the app, and a good number of variations.
 What it does not understand gets an honest "I cannot answer that", and revenue per year instead.
 After a tool call, it does not comment on the numbers, because it cannot read them; it says that a real model would do that.
 
