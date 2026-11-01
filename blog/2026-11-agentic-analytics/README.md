@@ -335,9 +335,10 @@ WHERE CAST(SESSION_CONTEXT(N'TerritoryGroup') AS nvarchar(50)) IN (N'*', t.Sales
 ```
 
 The backends connect with a dedicated read-only account that may read the `analytics` schema and nothing else.
-This enforces the rule about people a second time, in the database: a dimension "sales representative" would not be one more line in the backend, but a change to the database that someone has to make on purpose.
-This extra layer is optional.
-If your team does not manage the database, or the effort is not worth it, the semantic layer alone keeps people away from the model, as long as none of its dimensions points to them.
+That makes the views the last line of defense: what they do not contain cannot be loaded, whatever the backend asks for.
+So there are two protections, one behind the other.
+The semantic layer keeps the model away from data it should not have, and the views keep the backend away from it.
+A dimension "sales representative" would therefore not be one more line in the backend, but a change to the database that someone has to make on purpose.
 
 ### Row-Level Security That Fails Closed
 

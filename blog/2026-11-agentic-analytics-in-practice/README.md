@@ -288,7 +288,7 @@ Every piece can be replaced on its own.
 Six architectural decisions make the app work:
 
 1. **Put the agent where your team already works.** In the existing backend (path A), with the agent framework of its language, or as a separate service (path B) when several backends share it.
-2. **Keep personal data out of the semantic layer**, not just out of the prompt, and if you like, out of the views as well.
+2. **Keep personal data out of the semantic layer and out of the views**, not just out of the prompt.
 3. **Give the model a semantic layer instead of SQL.** Typed in C# or TypeScript, validated on the server.
 4. **Let the agent call tools, and let Angular draw them.** CopilotKit and AG-UI do the plumbing.
 5. **Treat model output as untrusted input**, and let components decide what is true.
