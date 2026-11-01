@@ -462,7 +462,9 @@ How finely should tools be cut? As coarsely as possible.
 A tool stands for a kind of task, not for a question.
 "Revenue per country" and "top 10 resellers in Germany" are both `querySales`, only with different dimensions and filters; a tool per question would make the model guess which one fits, and every new question would need new code.
 Questions about resellers as a group ("Which 10 resellers bought the most?") therefore go to `querySales`, with the dimensions `reseller`, `resellerBusinessType` and `resellerAnnualRevenue` from the sales view.
-Only "Who is Brakes and Gears, and where are they?" is a different task, a lookup of one company, and that is `findResellers`.
+Only "Who is Brakes and Gears, and where are they?" is a different task, a lookup of one company, and that is `findResellers`:
+
+![The agent answers the question about Brakes and Gears with a reseller card: business type, location, employees, annual revenue and year opened](reseller-card.png "A lookup, not an aggregation: findResellers draws a card for the company.")
 
 ### What Can You Do for Me?
 
@@ -476,10 +478,16 @@ The model therefore already knows what it can answer, and one rule in the prompt
   measures above can answer, and mention that you can show products and look up resellers.
 ```
 
-With that, Claude answered with questions grouped by sales, products, regions, resellers and promotions, all of them answerable, and added on its own that it has no personal data.
+With that, the model answers with concrete questions across sales, products, regions, resellers and promotions. The wording changes from run to run:
+
+![The agent lists questions it can answer, what else it can do, and that it has no data on individual people](what-can-you-do.png "No extra tool: the model suggests questions from the semantic layer in its prompt.")
+
 A tool for this would only pay off when the vocabulary is too large for the prompt, for example with hundreds of measures across several data models; then the agent would load the descriptions on demand instead.
 For one data model, the prompt is the cheaper and simpler place.
-The example questions above the chat input serve the same purpose for users who prefer to click.
+
+For users who prefer to click, the app also offers example questions above the chat, visible in both screenshots.
+They are a plain list of labels and prompts in the Angular component, written by hand; a click sends the prompt like a typed question.
+So they appear before the first message and cost no tokens, but when the semantic layer grows, someone has to add new ones.
 
 Part 2 builds this agent, in the stack of your choice. Before that, two questions that every data protection officer asks about such an app: what does the LLM provider receive, and which tool reports to its maker?
 
