@@ -42,7 +42,7 @@ If your team works with Node.js, read [part 2 for Node.js](/blog/2026-11-agentic
 **What you get from this article:** a semantic layer in C# that builds parameterized SQL from typed lambdas instead of parsing strings, and an agent whose tools are plain C# methods, with the JSON schema the model sees generated from your types. Along the way: two schema details that decide whether the model sends usable arguments, and the one line that serves the agent over AG-UI.
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile dotnet up`, and open http://localhost:8080.
+> Copy `.env.example` to `.env`, and `agent/.env.example` to `agent/.env` with your API key (without it, a demo model answers by keywords, no LLM needed), run `docker compose --profile dotnet up`, and open http://localhost:8080.
 
 ## Contents
 

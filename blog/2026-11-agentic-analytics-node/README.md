@@ -41,7 +41,7 @@ If your team works with .NET, read [part 2 for .NET](/blog/2026-11-agentic-analy
 **What you get from this article:** a semantic layer in TypeScript with Drizzle, an agent with Mastra whose tool schemas are generated from that layer, so the model only knows names that exist, and an AG-UI endpoint in NestJS. Plus two pitfalls that are easy to miss, and the same agent as a separate service for teams that want it independent of the backend.
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up`, and open http://localhost:8080.
+> Copy `.env.example` to `.env`, and `agent/.env.example` to `agent/.env` with your API key (without it, a demo model answers by keywords, no LLM needed), run `docker compose --profile node up`, and open http://localhost:8080.
 
 ## Contents
 

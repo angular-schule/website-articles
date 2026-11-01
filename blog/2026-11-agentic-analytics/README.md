@@ -51,7 +51,7 @@ And because this is a German blog at heart, we take a close look at the question
 This first part lays the foundation: the vocabulary, the protocols, the architecture, and the data layer that keeps personal data away from the model.
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
+> Copy `.env.example` to `.env`, and `agent/.env.example` to `agent/.env` with your API key (without it, a demo model answers by keywords, no LLM needed), run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
 
 ## Contents
 
@@ -444,6 +444,23 @@ So for an analytics tool with real company data in a German company, I would poi
 A company I work for chose OpenAI over Anthropic for exactly this reason.
 In the demo, that is configuration only: `MODEL=openai/…`, the API key, and `OPENAI_BASE_URL=https://eu.api.openai.com/v1`.
 Mastra reads these settings on the Node.js track, and the .NET track reads the same three and takes its `IChatClient` from OpenAI's SDK.
+
+One more switch matters with OpenAI, and it is easy to miss: who keeps the conversation?
+Our agents keep nothing; the browser sends the whole chat with every request.
+But OpenAI's newer [Responses API](https://developers.openai.com/api/reference/resources/responses/methods/create) has a parameter `store` that "defaults to true when omitted. If set to true, response data will be stored for at least 30 days".
+Mastra calls OpenAI's models through exactly this API, and it sends no `store` field, so by default every answer, including the tool results with your sales figures, stays on OpenAI's servers.
+The demo switches that off in both Mastra agents:
+
+```ts
+new Agent({
+  // …
+  defaultOptions: { providerOptions: { openai: { store: false } } },
+});
+```
+
+The .NET backend talks to OpenAI through the older Chat Completions API, where `store` is false by default.
+That is not a property of the agent framework: Microsoft.Extensions.AI also has a client for the Responses API, and it leaves `store` at OpenAI's default as well. It even uses the stored answer on purpose: the next request then only sends a `previous_response_id`, and the conversation lives at OpenAI.
+So whichever framework you use: with the Responses API, set `store: false` yourself, and check it in the traffic window.
 
 Let's be honest about what the European server buys you, though.
 OpenAI and Anthropic are US companies, and the US [CLOUD Act](https://www.law.cornell.edu/uscode/text/18/2713) obliges US providers to hand over data on request "regardless of whether such communication, record, or other information is located within or outside of the United States".

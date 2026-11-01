@@ -41,7 +41,7 @@ The Angular app does not care which one answers: both speak AG-UI and serve the 
 ![The finished app: chat on the left, the pinned dashboard on the right](screenshot.png "The result of this part: chat on the left, dashboard on the right.")
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
+> Copy `.env.example` to `.env`, and `agent/.env.example` to `agent/.env` with your API key (without it, a demo model answers by keywords, no LLM needed), run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
 
 ## Contents
 

@@ -38,10 +38,10 @@ header: agentic-analytics.jpg
 The first three parts built the app: the data layer, the backend with the agent, and the Angular UI.
 This last part looks at it in practice: how the two frameworks compare, how to choose another framework or model, how to watch every message, why you should not settle for the first result, and how to test an agent without a model.
 
-**What you get from this article:** a comparison of two agent frameworks that goes beyond feature lists, a technique to see exactly what your agent sends to the model, a real case in which one sentence in the prompt changed the answer language, and a way to test agents without cost and with repeatable results.
+**What you get from this article:** a comparison of two agent frameworks that goes beyond feature lists, a technique to see exactly what your agent sends to the model, a real case in which one sentence in the prompt changed the answer language, a way to test agents without cost and with repeatable results, and a demo model that lets the app run without any API key.
 
 > The complete demo is on GitHub: [angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics).
-> Copy `.env.example` to `.env` and `agent/.env.example` to `agent/.env`, add your API key, run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
+> Copy `.env.example` to `.env`, and `agent/.env.example` to `agent/.env` with your API key (without it, a demo model answers by keywords, no LLM needed), run `docker compose --profile node up` (or `--profile dotnet`), and open http://localhost:8080.
 
 ## Contents
 
@@ -120,6 +120,7 @@ Mastra has a [model router](https://mastra.ai/models): the model is a single str
 In the Microsoft Agent Framework, you swap the `IChatClient`: the demo's .NET backend creates one from Anthropic's SDK or, for `MODEL=openai/…`, from OpenAI's SDK through the package `Microsoft.Extensions.AI.OpenAI`.
 Gemini and Mistral work in .NET, too: both offer an OpenAI-compatible endpoint, so the demo's .NET backend talks to them with OpenAI's SDK. For Gemini, Google also publishes its own .NET SDK, [Google.GenAI](https://www.nuget.org/packages/Google.GenAI), which builds on Microsoft.Extensions.AI.
 Either way, the setting is one line (`MODEL`) plus the provider's API key in `agent/.env`, which both backends and the separate agent service read.
+One difference stays hidden: for OpenAI's models, Mastra uses the newer Responses API, the demo's .NET backend the older Chat Completions API. That matters for data protection, because the Responses API stores the answers unless told otherwise; [part 1](/blog/2026-11-agentic-analytics#what-goes-to-the-llm-provider) shows the switch.
 How well the agent works depends on the model: it has to pick the right tool, fill the query schema correctly and stick to the rules of the system prompt.
 Try your questions with two or three models before you decide.
 
@@ -227,11 +228,12 @@ What I take from this:
 ## Testing an Agent Without a Model
 
 An agent is hard to test against a real model: every answer costs tokens and is a little different.
-The demo therefore tests against a fake LLM: a small Node.js server that imitates Anthropic's Messages API and answers with scripted tool calls and texts.
-Both agent frameworks read the provider's address from `ANTHROPIC_BASE_URL`, so a Compose override (`compose.test.yaml`) points every agent at the fake, without touching the agent code.
+The demo therefore tests against a fake LLM: a small Node.js server that answers with scripted tool calls and texts.
+It speaks the three API formats the agents use: Anthropic's Messages API, OpenAI's Chat Completions (which Gemini and Mistral offer as well) and OpenAI's Responses API.
+Both agent frameworks read the provider's address from an environment variable such as `ANTHROPIC_BASE_URL` or `OPENAI_BASE_URL`, so a Compose override (`compose.test.yaml`) points every agent at the fake, without touching the agent code.
 The tests run on every layer:
 
-- **Agents:** every agent (the Microsoft Agent Framework in ASP.NET Core, Mastra in NestJS and Mastra as a separate service) answers the same AG-UI requests. The tests check that a question becomes a `querySales` call whose result matches the HTTP API, that the frontend tool is left to the browser, that a rejected request comes back as a tool error, what the model receives (rules, tools, compact tool results, token limit), that the traffic window records the exchange without the API key, and that stopping a run stops the model.
+- **Agents:** every agent (the Microsoft Agent Framework in ASP.NET Core, Mastra in NestJS and Mastra as a separate service, each with a Claude model, plus both backends with a Mistral model and Mastra with an OpenAI model) answers the same AG-UI requests. The tests check that a question becomes a `querySales` call whose result matches the HTTP API, that the frontend tool is left to the browser, that a rejected request comes back as a tool error, what the model receives (rules, tools, compact tool results, token limit), that the provider is not asked to store the conversation, that the traffic window records the exchange without the API key, and that stopping a run stops the model.
 - **Contract:** both backends publish the same OpenAPI document and give the same answers, as described in [part 1](/blog/2026-11-agentic-analytics#two-backends-one-contract).
 - **Angular:** unit tests with Vitest through `ng test`, e.g. for the view schema (optional is not nullable), the chart model and the dashboard.
 - **Browser:** Playwright drives the app: chart, pinning by button and by chat, the dashboard after a reload without a single request to the model, the product photos and the traffic window.
@@ -241,6 +243,30 @@ The fake LLM also made a few differences between the frameworks visible that you
 - **Optional parameters.** In C#, a parameter without a default value is required in the generated schema, even if its type is nullable. The .NET tool `findProducts` demanded a `limit` that the Mastra tool treats as optional. A default value (`int? limit = null`) fixes it.
 - **Rejected names.** Mastra rejects an unknown measure against the Zod schema before the tool runs; the .NET tool lets the semantic layer reject it. Both tell the model which measures exist, in different words.
 - **Streaming of tool arguments.** Mastra forwards the arguments of a tool call piece by piece (`TOOL_CALL_ARGS` many times); the Agent Framework sends them in one piece. The chat card can show the title earlier with Mastra; the result is the same.
+
+## A Demo Without an API Key
+
+The fake LLM had a second use waiting: a demo that starts without any access to an LLM.
+If `agent/.env` is missing, the agent talks to a *demo model* instead, a small server next to the backend.
+It is not a language model, and it says so at the start of every answer: "Demo mode, no real LLM".
+
+What it does is keyword matching against the semantic layer.
+It reads the measures, dimensions and filter values from the system prompt, exactly as a real model gets them, and builds a query from the words of the question:
+
+- **Measures and dimensions:** "revenue", "margin", "per quarter", "channel", "resellers" become measures and `groupBy`, in English and German.
+- **Filters:** values from the data that appear in the question, such as "Germany", "Mountain Bikes" or "2013".
+- **Ranking:** "top 10" or "the most" set the order and the limit.
+- **Chart:** a time dimension becomes a line chart, categories become bars, a total becomes a key figure.
+- **Products, pinning, people:** a product model or "look like" searches the catalogue, "pin" pins the last chart, and a question about a key account manager gets the refusal from the rules.
+
+That covers all five example questions of the app, and a good number of variations.
+What it does not understand gets an honest "I cannot answer that", and revenue per year instead.
+After a tool call, it does not comment on the numbers, because it cannot read them; it says that a real model would do that.
+
+The demo model needs no special code in the agents: it answers in OpenAI's formats, so every agent reaches it as an OpenAI model.
+A file `agent/demo.env` sets `MODEL=openai/demo-no-llm` and points `OPENAI_BASE_URL` at the demo model; Compose loads `agent/.env` after it, so a real model there wins.
+The alternative would have been a small open-weight model on your own machine, e.g. with Ollama. It would understand far more, but it needs a download of several gigabytes and a few gigabytes of memory, and whether a small model fills our nested tool schema reliably would be a test of its own.
+For "the app starts and shows what it can do", keywords are enough. Everything else needs a real model.
 
 ## What This Demo Leaves Out
 
@@ -269,7 +295,7 @@ Six architectural decisions make the app work:
 6. **Pin the result** and run it without the model from then on.
 
 The complete code with both backends and both paths is on GitHub: **[angular-schule/demo-agentic-analytics](https://github.com/angular-schule/demo-agentic-analytics)**.
-Clone it, copy the two `.env.example` files, add your API key, run `docker compose --profile node up` or `docker compose --profile dotnet up`, open http://localhost:8080, and ask your own questions.
+Clone it, copy the two `.env.example` files, add your API key (or start without one, with the demo model), run `docker compose --profile node up` or `docker compose --profile dotnet up`, open http://localhost:8080, and ask your own questions.
 
 How do you keep personal data away from your agents? I'm curious about your approaches, so let me know.
 
