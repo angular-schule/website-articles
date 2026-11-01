@@ -487,7 +487,7 @@ For one data model, the prompt is the cheaper and simpler place.
 
 For users who prefer to click, the app also offers example questions above the chat, visible in both screenshots.
 They are a plain list of labels and prompts in the Angular component, written by hand; a click sends the prompt like a typed question.
-So they appear before the first message and cost no tokens, but when the semantic layer grows, someone has to add new ones.
+So they appear before the first message, and showing them costs no tokens, but when the semantic layer grows, someone has to add new ones.
 
 Part 2 builds this agent, in the stack of your choice. Before that, two questions that every data protection officer asks about such an app: what does the LLM provider receive, and which tool reports to its maker?
 
