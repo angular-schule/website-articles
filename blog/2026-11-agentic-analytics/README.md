@@ -296,7 +296,7 @@ Both downloads are pinned to a commit and come with SHA-256 checksums that the i
 | --- | --- |
 | What it is | The relational database that stores the data warehouse and the views the app may read |
 | Made by | Microsoft (SQL Server, the Developer edition is free for development) / the PostgreSQL Global Development Group (PostgreSQL License) |
-| Why we need it | It enforces the data protection rules: views, a read-only account, row-level security per connection |
+| Why we need it | It joins the warehouse into flat views and enforces two protections below the semantic layer: a read-only account and row-level security per connection |
 | Alternatives | MySQL, MariaDB, DuckDB for local analytics, or a cloud warehouse such as BigQuery or Snowflake |
 
 ### Company Names: Yes. People: No.
@@ -312,9 +312,17 @@ From the point of view of the GDPR (General Data Protection Regulation), the dis
 So the rule for our app is: **the agent may analyse resellers, but never the people behind the sales.**
 The same applies to online customers, who are private persons.
 
-A prompt ("please don't talk about employees") cannot enforce this. The database can.
-We create a schema `analytics` with three views.
-They contain the sales lines of both channels, the resellers, and the products, and **no reference to a natural person**, not even as a key:
+A prompt ("please don't talk about employees") cannot enforce this. The semantic layer can (layer 2 below): it offers no dimension for sales representatives or customers, so the model has no way to ask for them.
+What the semantic layer does not list cannot be queried.
+
+### Views: The Warehouse as Flat Tables
+
+The warehouse spreads a single order line over a fact table and half a dozen dimension tables, and the two sales channels even have separate fact tables.
+We create a schema `analytics` with three views that join all this into flat, *denormalized* tables: the sales lines of both channels in one table, the resellers, and the products.
+That is their main job in this demo.
+Both backends map three flat tables instead of ten, and every dimension of the semantic layer points to exactly one column.
+
+On the way, the views leave out the people: they contain **no reference to a natural person**, not even as a key:
 
 ```sql
 -- One row per order line of both sales channels.
@@ -327,7 +335,9 @@ WHERE CAST(SESSION_CONTEXT(N'TerritoryGroup') AS nvarchar(50)) IN (N'*', t.Sales
 ```
 
 The backends connect with a dedicated read-only account that may read the `analytics` schema and nothing else.
-Even with a bug in the backend, there is no way to reach `DimEmployee`.
+This enforces the rule about people a second time, in the database: a dimension "sales representative" would not be one more line in the backend, but a change to the database that someone has to make on purpose.
+This extra layer is optional.
+If your team does not manage the database, or the effort is not worth it, the semantic layer alone keeps people away from the model, as long as none of its dimensions points to them.
 
 ### Row-Level Security That Fails Closed
 
@@ -341,7 +351,7 @@ This principle is called *row-level security*: the database decides per connecti
 The demo writes the filter into the views themselves; SQL Server (security policies) and PostgreSQL (row security policies) also offer it as a built-in feature on the tables.
 The scope belongs to the deployment, not to a logged-in user; the demo has no login. With authentication, the backend would write the user's scope into the same session value.
 
-Secure views protect the data. But they do not yet stop a model from writing arbitrary SQL against them.
+Flat views and a read-only account are a good basis for queries. But they do not stop a model from writing arbitrary SQL against them.
 
 ## Layer 2: A Semantic Layer Instead of Text-to-SQL
 
@@ -431,7 +441,7 @@ The protection has limits, and you should know them.
 - **The dashboard does not.** Pinned tiles never touch the model.
 - **The traffic window is a debug feature.** It shows the whole conversation and every tool result to whoever opens the app. It is on by default for learning; switch it off with `DEBUG_TRAFFIC=off` in `agent/.env`.
 - **The browser talks to one origin only.** The app loads no fonts, scripts or telemetry from third parties, and the CopilotKit Inspector (which [reports usage](https://github.com/CopilotKit/CopilotKit/blob/main/packages/web-inspector/src/lib/telemetry.ts) when opened) is disabled.
-- **Removing a column does not prevent every inference.** In AdventureWorks, only two to six sales representatives sold in each region, and in Germany only two. Anyone who knows who looks after the German bike shops gets very close to their figures with "revenue per country", although the system knows nothing about them. In a real project, agree on the granularity with your data protection officer and the works council: suppress small groups, use coarser regions, or leave a dimension out entirely. Technically, that is the same principle as the views: what is not in the semantic layer cannot be asked for. Only this time it applies to the dimensions instead of the columns.
+- **Removing a column does not prevent every inference.** In AdventureWorks, only two to six sales representatives sold in each region, and in Germany only two. Anyone who knows who looks after the German bike shops gets very close to their figures with "revenue per country", although the system knows nothing about them. In a real project, agree on the granularity with your data protection officer and the works council: suppress small groups, use coarser regions, or leave a dimension out entirely. Technically, that is the same principle as for the people: what is not in the semantic layer cannot be asked for.
 
 For real customer data, you also need a data processing agreement (in Germany: an *Auftragsverarbeitungsvertrag*, AVV) with the LLM provider, and the data should be processed in Europe.
 Here the providers differ a lot at the time of writing:
