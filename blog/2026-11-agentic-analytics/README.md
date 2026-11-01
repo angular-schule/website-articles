@@ -249,6 +249,7 @@ That gives us two tracks with the same Angular app on top:
 
 Both agents get the same system prompt and the same two tools, so we can also see whether the two frameworks give similar results.
 Path B has [its own section](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service) in the Node.js part of this series; the demo runs it with one more Compose profile.
+For simplicity, the demo builds path B only once, with Mastra: a separate service talks HTTP and works in front of either backend, so a second agent service in C# would only repeat the same agent.
 
 ## The Stack from Bottom to Top
 

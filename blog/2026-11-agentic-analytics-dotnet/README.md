@@ -58,7 +58,7 @@ If your team works with Node.js, read [part 2 for Node.js](/blog/2026-11-agentic
 - **The data:** AdventureWorksDW, read through views in the schema `analytics` that contain no column about people, with a read-only account. Row-level security (`DATA_SCOPE`) limits each connection to one territory group and shows nothing if the value is missing.
 - **The contract:** both backends serve the same HTTP API under `/api`, described with OpenAPI.
 - **AG-UI:** the protocol between the Angular app and the agent, events streamed as server-sent events.
-- **Path A and path B:** the agent runs inside the existing backend (path A, as in this article) or as a separate service (path B, in the [Node.js article](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service)).
+- **Path A and path B:** the agent runs inside the existing backend (path A, as in this article) or as a separate service (path B, in the [Node.js article](/blog/2026-11-agentic-analytics-node#path-b-the-agent-as-a-separate-service)). The demo builds path B only with Mastra, which works in front of the ASP.NET Core backend as well.
 
 The layer numbers in the headings follow [the stack in part 1](/blog/2026-11-agentic-analytics#the-stack-from-bottom-to-top): data (1), semantic layer (2), agent (3), Angular (4).
 
