@@ -227,10 +227,11 @@ In my opinion, that is fine for an internal analytics tool, but not for a public
 Time for the question that the data layer from part 1 was built for.
 The chat offers a few example questions above the input field. One of them is "Who is the key account manager of our biggest reseller?":
 
-![The agent declines to name the key account manager and offers to look up the biggest reseller instead](key-account-manager.png "Company names yes, people no: the polite refusal from the system prompt.")
+![The agent declines to name the key account manager, names the biggest reseller instead and offers further analysis](key-account-manager.png "Company names yes, people no: the polite refusal from the system prompt.")
 
 The wording changes from run to run, the content does not: no names of people, but an offer to analyse the reseller as a company.
-In some runs, the agent went on right away, called `querySales`, showed the top 10 resellers as a bar chart, and named the biggest one: Brakes and Gears, with $877K from 12 orders.
+In this run, the agent went on right away, called `querySales`, showed the top resellers as a bar chart, and named the biggest one: Brakes and Gears, with about $877K.
+In other runs, it only offers the analysis.
 That is exactly the line we drew: **company names yes, people no.**
 And if the model had tried anyway, there would have been nothing to find.
 
