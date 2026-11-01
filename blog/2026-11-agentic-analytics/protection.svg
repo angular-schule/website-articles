@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Who keeps personal data out</title>
+  <desc id="desc">Six layers, from the strongest at the bottom to the weakest at the top. Database: a read-only account that may read the schema analytics only. Views: no column about natural persons. Row-level security: without a scope per connection, the views return no rows. Semantic layer: fixed dimensions and measures, values as parameters, limits. Tool schema: enums with exactly the names that exist. System prompt: explains politely why there is no data about people. The LLM sees only what passed all layers below the prompt.</desc>
+  <rect width="880" height="470" rx="16" fill="#ffffff"/>
+
+  <text x="30" y="40" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">LAYER, WHERE IT LIVES</text>
+  <text x="300" y="40" font-size="13" font-weight="600" fill="#6b7280" letter-spacing="0.08em">WHAT IT DOES</text>
+
+  <!-- 6 prompt (weakest) -->
+  <rect x="30" y="56" width="820" height="54" rx="10" fill="#fefce8" stroke="#a16207" stroke-dasharray="6 4" stroke-width="1.5"/>
+  <text x="50" y="81" font-size="16" font-weight="700" fill="#713f12">System prompt</text>
+  <text x="50" y="99" font-size="12" fill="#a16207">a request to the model</text>
+  <text x="300" y="88" font-size="14" fill="#1f2937">explains politely that there is no data about people and offers an alternative</text>
+
+  <!-- 5 tool schema -->
+  <rect x="30" y="120" width="820" height="54" rx="10" fill="#fff4e5" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="50" y="145" font-size="16" font-weight="700" fill="#7c2d12">Tool schema</text>
+  <text x="50" y="163" font-size="12" fill="#c2410c">agent, Zod</text>
+  <text x="300" y="152" font-size="14" fill="#1f2937">enums with exactly the dimension and measure names that exist</text>
+
+  <!-- 4 semantic layer -->
+  <rect x="30" y="184" width="820" height="54" rx="10" fill="#e7f6ec" stroke="#15803d" stroke-width="1.5"/>
+  <text x="50" y="209" font-size="16" font-weight="700" fill="#14532d">Semantic layer</text>
+  <text x="50" y="227" font-size="12" fill="#15803d">backend</text>
+  <text x="300" y="216" font-size="14" fill="#1f2937">fixed dimensions and measures, values as parameters, limits per request</text>
+
+  <!-- 3 row-level security -->
+  <rect x="30" y="248" width="820" height="54" rx="10" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+  <text x="50" y="273" font-size="16" font-weight="700" fill="#1e293b">Row-level security</text>
+  <text x="50" y="291" font-size="12" fill="#475569">database session</text>
+  <text x="300" y="280" font-size="14" fill="#1f2937">one territory group per connection; without it, the views return no rows</text>
+
+  <!-- 2 views -->
+  <rect x="30" y="312" width="820" height="54" rx="10" fill="#cbd5e1" stroke="#334155" stroke-width="1.5"/>
+  <text x="50" y="337" font-size="16" font-weight="700" fill="#0f172a">Views</text>
+  <text x="50" y="355" font-size="12" fill="#334155">database</text>
+  <text x="300" y="344" font-size="14" fill="#1f2937">sales lines, resellers, products; no column about a natural person, not even a key</text>
+
+  <!-- 1 account (strongest) -->
+  <rect x="30" y="376" width="820" height="54" rx="10" fill="#94a3b8" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="50" y="401" font-size="16" font-weight="700" fill="#0f172a">Database account</text>
+  <text x="50" y="419" font-size="12" fill="#1e293b">database</text>
+  <text x="300" y="408" font-size="14" fill="#0f172a">read-only, may read the schema analytics and nothing else</text>
+
+  <text x="30" y="456" font-size="12" fill="#6b7280">Bottom to top: from what the database guarantees to what the model is asked to do. Only the top layer depends on the model.</text>
+</svg>
